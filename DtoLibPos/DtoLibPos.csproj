@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FE601764-384C-4055-9983-BFAEA6B2D250}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DtoLibPos</RootNamespace>
+    <AssemblyName>DtoLibPos</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Auditoria\Buscar\Ficha.cs" />
+    <Compile Include="Auditoria\Entidad\Ficha.cs" />
+    <Compile Include="ClienteGrupo\Agregar\Ficha.cs" />
+    <Compile Include="ClienteGrupo\Editar\Ficha.cs" />
+    <Compile Include="ClienteGrupo\Entidad\Ficha.cs" />
+    <Compile Include="ClienteGrupo\Lista\Ficha.cs" />
+    <Compile Include="ClienteGrupo\Lista\Filtro.cs" />
+    <Compile Include="ClienteZona\Agregar\Ficha.cs" />
+    <Compile Include="ClienteZona\Editar\Ficha.cs" />
+    <Compile Include="ClienteZona\Entidad\Ficha.cs" />
+    <Compile Include="ClienteZona\Lista\Ficha.cs" />
+    <Compile Include="ClienteZona\Lista\Filtro.cs" />
+    <Compile Include="Cliente\Agregar\Ficha.cs" />
+    <Compile Include="Cliente\Agregar\FichaValidar.cs" />
+    <Compile Include="Cliente\Editar\Actualizar\Ficha.cs" />
+    <Compile Include="Cliente\Editar\Actualizar\FichaValidar.cs" />
+    <Compile Include="Cliente\Entidad\Ficha.cs" />
+    <Compile Include="Cliente\Lista\Enumerados.cs" />
+    <Compile Include="Cliente\Lista\Ficha.cs" />
+    <Compile Include="Cliente\Lista\Filtro.cs" />
+    <Compile Include="Cobrador\Entidad\Ficha.cs" />
+    <Compile Include="Cobrador\Lista\Ficha.cs" />
+    <Compile Include="Cobrador\Lista\Filtro.cs" />
+    <Compile Include="Concepto\Entidad\Ficha.cs" />
+    <Compile Include="Concepto\Lista\Ficha.cs" />
+    <Compile Include="Concepto\Lista\Filtro.cs" />
+    <Compile Include="Configuracion\Actualizar\Ficha.cs" />
+    <Compile Include="Configuracion\BusquedaCliente\Entidad\Enumerados.cs" />
+    <Compile Include="Configuracion\BusquedaCliente\Entidad\Ficha.cs" />
+    <Compile Include="Configuracion\BusquedaProducto\Enumerados.cs" />
+    <Compile Include="Configuracion\CambioDepositoSucursal\Ficha.cs" />
+    <Compile Include="Configuracion\Entidad\Ficha.cs" />
+    <Compile Include="Deposito\Entidad\Ficha.cs" />
+    <Compile Include="Deposito\Lista\Ficha.cs" />
+    <Compile Include="Deposito\Lista\Filtro.cs" />
+    <Compile Include="DocumentoAdm\Agregar\BaseFicha.cs" />
+    <Compile Include="DocumentoAdm\Agregar\BaseFichaDetalle.cs" />
+    <Compile Include="DocumentoAdm\Agregar\BaseFichaItemDepositoBloquear.cs" />
+    <Compile Include="DocumentoAdm\Agregar\BaseFichaTemporalVenta.cs" />
+    <Compile Include="DocumentoAdm\Agregar\Pedido\Ficha.cs" />
+    <Compile Include="DocumentoAdm\Agregar\Pedido\FichaDetalle.cs" />
+    <Compile Include="DocumentoAdm\Agregar\Pedido\FichaEncabezado.cs" />
+    <Compile Include="DocumentoAdm\Agregar\Pedido\FichaItemDepositoBloquear.cs" />
+    <Compile Include="DocumentoAdm\Agregar\Pedido\FichaTemporalVenta.cs" />
+    <Compile Include="DocumentoAdm\Agregar\Presupuesto\Ficha.cs" />
+    <Compile Include="DocumentoAdm\Agregar\Presupuesto\FichaDetalle.cs" />
+    <Compile Include="DocumentoAdm\Agregar\Presupuesto\FichaTemporalVenta.cs" />
+    <Compile Include="DocumentoAdm\Anular\BaseAuditoria.cs" />
+    <Compile Include="DocumentoAdm\Anular\BaseFicha.cs" />
+    <Compile Include="DocumentoAdm\Anular\CapturarData\Ficha.cs" />
+    <Compile Include="DocumentoAdm\Anular\Prersupuesto\Ficha.cs" />
+    <Compile Include="DocumentoAdm\Anular\Prersupuesto\FichaAuditoria.cs" />
+    <Compile Include="DocumentoAdm\Entidad\Ficha.cs" />
+    <Compile Include="DocumentoAdm\Entidad\Item.cs" />
+    <Compile Include="Documento\Agregar\Factura\Ficha.cs" />
+    <Compile Include="Documento\Agregar\Factura\FichaCxC.cs" />
+    <Compile Include="Documento\Agregar\Factura\FichaCxCDocumento.cs" />
+    <Compile Include="Documento\Agregar\Factura\FichaCxCMetodoPago.cs" />
+    <Compile Include="Documento\Agregar\Factura\FichaCxcPago.cs" />
+    <Compile Include="Documento\Agregar\Factura\FichaCxcRecibo.cs" />
+    <Compile Include="Documento\Agregar\Factura\FichaDeposito.cs" />
+    <Compile Include="Documento\Agregar\Factura\FichaDetalle.cs" />
+    <Compile Include="Documento\Agregar\Factura\FichaKardex.cs" />
+    <Compile Include="Documento\Agregar\Factura\FichaPosResumen.cs" />
+    <Compile Include="Documento\Agregar\Factura\FichaPosVenta.cs" />
+    <Compile Include="Documento\Agregar\Factura\FichaSerie.cs" />
+    <Compile Include="Documento\Agregar\NotaCredito\Ficha.cs" />
+    <Compile Include="Documento\Agregar\NotaCredito\FichaCxC.cs" />
+    <Compile Include="Documento\Agregar\NotaCredito\FichaDeposito.cs" />
+    <Compile Include="Documento\Agregar\NotaCredito\FichaDetalle.cs" />
+    <Compile Include="Documento\Agregar\NotaCredito\FichaKardex.cs" />
+    <Compile Include="Documento\Agregar\NotaCredito\FichaPosResumen.cs" />
+    <Compile Include="Documento\Agregar\NotaCredito\FichaSerie.cs" />
+    <Compile Include="Documento\Agregar\NotaEntrega\Ficha.cs" />
+    <Compile Include="Documento\Agregar\NotaEntrega\FichaDeposito.cs" />
+    <Compile Include="Documento\Agregar\NotaEntrega\FichaDetalle.cs" />
+    <Compile Include="Documento\Agregar\NotaEntrega\FichaKardex.cs" />
+    <Compile Include="Documento\Agregar\NotaEntrega\FichaPosResumen.cs" />
+    <Compile Include="Documento\Agregar\NotaEntrega\FichaPosVenta.cs" />
+    <Compile Include="Documento\Agregar\NotaEntrega\FichaSerie.cs" />
+    <Compile Include="Documento\Anular\Auditoria.cs" />
+    <Compile Include="Documento\Anular\Deposito.cs" />
+    <Compile Include="Documento\Anular\Factura\Ficha.cs" />
+    <Compile Include="Documento\Anular\Factura\FichaAuditoria.cs" />
+    <Compile Include="Documento\Anular\Factura\FichaDeposito.cs" />
+    <Compile Include="Documento\Anular\Factura\FichaResumen.cs" />
+    <Compile Include="Documento\Anular\NotaCredito\Ficha.cs" />
+    <Compile Include="Documento\Anular\NotaCredito\FichaAuditoria.cs" />
+    <Compile Include="Documento\Anular\NotaCredito\FichaDeposito.cs" />
+    <Compile Include="Documento\Anular\NotaCredito\FichaResumen.cs" />
+    <Compile Include="Documento\Anular\NotaEntrega\Ficha.cs" />
+    <Compile Include="Documento\Anular\NotaEntrega\FichaAuditoria.cs" />
+    <Compile Include="Documento\Anular\NotaEntrega\FichaDeposito.cs" />
+    <Compile Include="Documento\Anular\NotaEntrega\FichaResumen.cs" />
+    <Compile Include="Documento\Anular\Resumen.cs" />
+    <Compile Include="Documento\Entidad\Ficha.cs" />
+    <Compile Include="Documento\Entidad\FichaItem.cs" />
+    <Compile Include="Documento\Entidad\FichaMetodoPago.cs" />
+    <Compile Include="Documento\Lista\Ficha.cs" />
+    <Compile Include="Documento\Lista\Filtro.cs" />
+    <Compile Include="Fiscal\Entidad\Ficha.cs" />
+    <Compile Include="Fiscal\Lista\Filtro.cs" />
+    <Compile Include="MedioPago\Entidad\Ficha.cs" />
+    <Compile Include="MedioPago\Lista\Ficha.cs" />
+    <Compile Include="MedioPago\Lista\Filtro.cs" />
+    <Compile Include="ModuloAdm\Configuracion\Actualizar\Ficha.cs" />
+    <Compile Include="ModuloAdm\Configuracion\Capturar\Ficha.cs" />
+    <Compile Include="Pendiente\Cnt\Filtro.cs" />
+    <Compile Include="Pendiente\Dejar\Ficha.cs" />
+    <Compile Include="Pendiente\Dejar\FichaItem.cs" />
+    <Compile Include="Pendiente\Lista\Ficha.cs" />
+    <Compile Include="Pendiente\Lista\Filtro.cs" />
+    <Compile Include="Permiso\Entidad\Ficha.cs" />
+    <Compile Include="Pos\Abrir\Arqueo.cs" />
+    <Compile Include="Pos\Abrir\Ficha.cs" />
+    <Compile Include="Pos\Abrir\Operador.cs" />
+    <Compile Include="Pos\Abrir\Resumen.cs" />
+    <Compile Include="Pos\Cerrar\arqueo.cs" />
+    <Compile Include="Pos\Cerrar\Ficha.cs" />
+    <Compile Include="Pos\EnUso\Ficha.cs" />
+    <Compile Include="Pos\Resumen\Ficha.cs" />
+    <Compile Include="ProductoAdm\Entidad\Ficha.cs" />
+    <Compile Include="ProductoAdm\Existencia\Ficha.cs" />
+    <Compile Include="ProductoAdm\ListaResumen\Enumerados.cs" />
+    <Compile Include="ProductoAdm\ListaResumen\Ficha.cs" />
+    <Compile Include="ProductoAdm\ListaResumen\Filtro.cs" />
+    <Compile Include="ProductoAdm\Lista\Enumerados.cs" />
+    <Compile Include="ProductoAdm\Lista\Ficha.cs" />
+    <Compile Include="ProductoAdm\Lista\Filtro.cs" />
+    <Compile Include="Producto\Entidad\Ficha.cs" />
+    <Compile Include="Producto\Existencia\Bloquear\Ficha.cs" />
+    <Compile Include="Producto\Existencia\Buscar\Ficha.cs" />
+    <Compile Include="Producto\Existencia\Entidad\Ficha.cs" />
+    <Compile Include="Producto\Lista\Ficha.cs" />
+    <Compile Include="Producto\Lista\Filtro.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reportes\Clientes\Maestro\Ficha.cs" />
+    <Compile Include="Reportes\Clientes\Maestro\Filtro.cs" />
+    <Compile Include="Reportes\POS\Filtro.cs" />
+    <Compile Include="Reportes\POS\PagoDetalle\Ficha.cs" />
+    <Compile Include="Reportes\POS\PagoResumen\Detalle.cs" />
+    <Compile Include="Reportes\POS\PagoResumen\Ficha.cs" />
+    <Compile Include="Reportes\VentaAdministrativa\Consolidado\Ficha.cs" />
+    <Compile Include="Reportes\VentaAdministrativa\Consolidado\Filtro.cs" />
+    <Compile Include="Reportes\VentaAdministrativa\GeneralDocumentoDetalle\Ficha.cs" />
+    <Compile Include="Reportes\VentaAdministrativa\GeneralDocumentoDetalle\Filtro.cs" />
+    <Compile Include="Reportes\VentaAdministrativa\GeneralDocumento\Ficha.cs" />
+    <Compile Include="Reportes\VentaAdministrativa\GeneralDocumento\Filtro.cs" />
+    <Compile Include="Reportes\VentaAdministrativa\GeneralPorDepartamento\Ficha.cs" />
+    <Compile Include="Reportes\VentaAdministrativa\GeneralPorDepartamento\Filtro.cs" />
+    <Compile Include="Reportes\VentaAdministrativa\GeneralPorGrupo\Ficha.cs" />
+    <Compile Include="Reportes\VentaAdministrativa\GeneralPorGrupo\Filtro.cs" />
+    <Compile Include="Reportes\VentaAdministrativa\LibroVenta\Ficha.cs" />
+    <Compile Include="Reportes\VentaAdministrativa\LibroVenta\Filtro.cs" />
+    <Compile Include="Reportes\VentaAdministrativa\Resumen\Ficha.cs" />
+    <Compile Include="Reportes\VentaAdministrativa\Resumen\Filtro.cs" />
+    <Compile Include="Reportes\VentaAdministrativa\Utilidad\Consolidado\Ficha.cs" />
+    <Compile Include="Reportes\VentaAdministrativa\Utilidad\Filtro.cs" />
+    <Compile Include="Reportes\VentaAdministrativa\Utilidad\Producto\Ficha.cs" />
+    <Compile Include="Reportes\VentaAdministrativa\Utilidad\Venta\Ficha.cs" />
+    <Compile Include="Reportes\VentaAdministrativa\VentaPorProducto\Ficha.cs" />
+    <Compile Include="Reportes\VentaAdministrativa\VentaPorProducto\Filtro.cs" />
+    <Compile Include="Sistema\Empresa\Ficha.cs" />
+    <Compile Include="Sistema\Estado\Entidad\Ficha.cs" />
+    <Compile Include="Sistema\Serie\Entidad\Ficha.cs" />
+    <Compile Include="Sistema\TipoDocumento\Entidad\Ficha.cs" />
+    <Compile Include="Sucursal\Entidad\Ficha.cs" />
+    <Compile Include="Sucursal\Lista\Ficha.cs" />
+    <Compile Include="Sucursal\Lista\Filtro.cs" />
+    <Compile Include="Transporte\Entidad\Ficha.cs" />
+    <Compile Include="Transporte\Lista\Ficha.cs" />
+    <Compile Include="Transporte\Lista\Filtro.cs" />
+    <Compile Include="Usuario\Entidad\Ficha.cs" />
+    <Compile Include="Usuario\Identificar\Ficha.cs" />
+    <Compile Include="Vendedor\Entidad\Ficha.cs" />
+    <Compile Include="Vendedor\Lista\Ficha.cs" />
+    <Compile Include="Vendedor\Lista\Filtro.cs" />
+    <Compile Include="VentaAdm\Temporal\Anular\Ficha.cs" />
+    <Compile Include="VentaAdm\Temporal\Anular\Item.cs" />
+    <Compile Include="VentaAdm\Temporal\Anular\ItemActDeposito.cs" />
+    <Compile Include="VentaAdm\Temporal\Cambiar\Notas\Ficha.cs" />
+    <Compile Include="VentaAdm\Temporal\Cambiar\TasaDivisa\Ficha.cs" />
+    <Compile Include="VentaAdm\Temporal\Cambiar\TasaDivisa\Item.cs" />
+    <Compile Include="VentaAdm\Temporal\Encabezado\Editar\Ficha.cs" />
+    <Compile Include="VentaAdm\Temporal\Encabezado\Entidad\Ficha.cs" />
+    <Compile Include="VentaAdm\Temporal\Encabezado\Registrar\Ficha.cs" />
+    <Compile Include="VentaAdm\Temporal\Item\Actualizar\Ficha.cs" />
+    <Compile Include="VentaAdm\Temporal\Item\Eliminar\Ficha.cs" />
+    <Compile Include="VentaAdm\Temporal\Item\Eliminar\ItemActDeposito.cs" />
+    <Compile Include="VentaAdm\Temporal\Item\Eliminar\ItemDetalle.cs" />
+    <Compile Include="VentaAdm\Temporal\Item\Eliminar\ItemEncabezado.cs" />
+    <Compile Include="VentaAdm\Temporal\Item\Entidad\Ficha.cs" />
+    <Compile Include="VentaAdm\Temporal\Item\Limpiar\Ficha.cs" />
+    <Compile Include="VentaAdm\Temporal\Item\Limpiar\ItemActDeposito.cs" />
+    <Compile Include="VentaAdm\Temporal\Item\Limpiar\ItemDetalle.cs" />
+    <Compile Include="VentaAdm\Temporal\Item\Limpiar\ItemEncabezado.cs" />
+    <Compile Include="VentaAdm\Temporal\Item\Registrar\Ficha.cs" />
+    <Compile Include="VentaAdm\Temporal\Item\Registrar\ItemActDeposito.cs" />
+    <Compile Include="VentaAdm\Temporal\Item\Registrar\ItemDetalle.cs" />
+    <Compile Include="VentaAdm\Temporal\Item\Registrar\ItemEncabezado.cs" />
+    <Compile Include="VentaAdm\Temporal\Pendiente\Cantidad\Ficha.cs" />
+    <Compile Include="VentaAdm\Temporal\Pendiente\Dejar\Ficha.cs" />
+    <Compile Include="VentaAdm\Temporal\Pendiente\Entidad\Ficha.cs" />
+    <Compile Include="VentaAdm\Temporal\Pendiente\Lista\Ficha.cs" />
+    <Compile Include="VentaAdm\Temporal\Pendiente\Lista\Filtro.cs" />
+    <Compile Include="VentaAdm\Temporal\Recuperar\Ficha.cs" />
+    <Compile Include="VentaAdm\Temporal\Remision\Registrar\Ficha.cs" />
+    <Compile Include="Venta\Anular\Ficha.cs" />
+    <Compile Include="Venta\Anular\FichaDeposito.cs" />
+    <Compile Include="Venta\Anular\FichaItem.cs" />
+    <Compile Include="Venta\Item\ActualizarCantidad\Aumentar\Ficha.cs" />
+    <Compile Include="Venta\Item\ActualizarCantidad\Disminuir\Ficha.cs" />
+    <Compile Include="Venta\Item\ActualizarPrecio\Ficha.cs" />
+    <Compile Include="Venta\Item\Eliminar\Ficha.cs" />
+    <Compile Include="Venta\Item\Entidad\Ficha.cs" />
+    <Compile Include="Venta\Item\Lista\Filtro.cs" />
+    <Compile Include="Venta\Item\Registrar\Ficha.cs" />
+    <Compile Include="Venta\Item\Registrar\FichaDeposito.cs" />
+    <Compile Include="Venta\Item\Registrar\FichaItem.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
