@@ -131,7 +131,47 @@ namespace ProvPos
 
             return result;
         }
+        public DtoLib.ResultadoLista<DtoLibPos.Reportes.POS.PagoMovil.Ficha> 
+            ReportePos_PagoMovil(DtoLibPos.Reportes.POS.Filtro filtro)
+        {
+            var result = new DtoLib.ResultadoLista<DtoLibPos.Reportes.POS.PagoMovil.Ficha>();
 
+            try
+            {
+                using (var cnn = new PosEntities(_cnPos.ConnectionString))
+                {
+                    var p1 = new MySql.Data.MySqlClient.MySqlParameter();
+                    var list = new List<DtoLibPos.Reportes.POS.PagoMovil.Ficha>();
+                    var sql1 = @"SELECT 
+                                    v.documento as docNro, 
+                                    pm.nombre as pmNombre, 
+                                    pm.cirif as pmCiRif,
+                                    pm.telefono as pmTelefono, 
+                                    pm.monto as pmMonto, 
+                                    ea.nombre as agencia, 
+                                    v.fecha as docFecha, 
+                                    v.razon_social as docRazonSocial, 
+                                    v.ci_rif as docCiRif, 
+                                    v.estatus_anulado as docEstatusAnulado
+                                FROM v_pagomovil as pm
+                                join ventas as v on pm.auto_documento=v.auto
+                                join empresa_agencias as ea on pm.auto_agencia=ea.auto
+                                where v.cierre=@idCierre ";
+                    var sql = sql1;
+                    p1.ParameterName = "@idCierre";
+                    p1.Value = filtro.IdCierre;
+                    list = cnn.Database.SqlQuery<DtoLibPos.Reportes.POS.PagoMovil.Ficha>(sql, p1).ToList();
+                    result.Lista = list;
+                }
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+
+            return result;
+        }
     }
 
 }

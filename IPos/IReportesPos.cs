@@ -15,6 +15,8 @@ namespace IPos
             ReportePos_PagoDetalle(DtoLibPos.Reportes.POS.Filtro filtro);
         DtoLib.ResultadoEntidad<DtoLibPos.Reportes.POS.PagoResumen.Ficha>
             ReportePos_PagoResumen(DtoLibPos.Reportes.POS.Filtro filtro);
+        DtoLib.ResultadoLista<DtoLibPos.Reportes.POS.PagoMovil.Ficha>
+            ReportePos_PagoMovil(DtoLibPos.Reportes.POS.Filtro filtro);
         DtoLib.ResultadoLista<DtoLibPos.Reportes.PosVerificador.DocVerificados.Ficha>
             ReportePosVerificados_DocVerificados(DtoLibPos.Reportes.PosVerificador.Filtro filtro);
 
