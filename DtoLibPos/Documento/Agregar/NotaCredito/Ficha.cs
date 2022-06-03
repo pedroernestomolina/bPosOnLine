@@ -108,6 +108,7 @@ namespace DtoLibPos.Documento.Agregar.NotaCredito
         public string CierreFtp { get; set; }
 
         public FichaCxC DocCxC { get; set; }
+        public FichaCxCPago DocCxCPago { get; set; }
         public List<FichaDetalle> Detalles { get; set; }
         public List<FichaKardex> MovKardex { get; set; }
         public List<FichaDeposito> ActDeposito { get; set; }
@@ -213,6 +214,7 @@ namespace DtoLibPos.Documento.Agregar.NotaCredito
             CierreFtp="";
 
             DocCxC = new  FichaCxC();
+            DocCxCPago = new FichaCxCPago();
             Detalles = new List<FichaDetalle>();
             MovKardex = new List<FichaKardex>();
             ActDeposito = new List<FichaDeposito>();

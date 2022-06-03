@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agencia.cs" />
     <Compile Include="Auditoria.cs" />
     <Compile Include="Cliente.cs" />
     <Compile Include="ClienteGrupo.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Vendedor.cs" />
     <Compile Include="Venta.cs" />
     <Compile Include="VentaAdm.cs" />
+    <Compile Include="Verificador.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DtoLibPos\DtoLibPos.csproj">

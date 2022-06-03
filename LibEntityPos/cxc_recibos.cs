@@ -42,8 +42,8 @@ namespace LibEntityPos
         public string cierre_ftp { get; set; }
     
         public virtual clientes clientes { get; set; }
-        public virtual cxc cxc { get; set; }
         public virtual usuarios usuarios { get; set; }
         public virtual empresa_cobradores empresa_cobradores { get; set; }
+        public virtual cxc cxc { get; set; }
     }
 }

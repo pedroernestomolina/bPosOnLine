@@ -37,6 +37,8 @@ namespace DtoLibPos.Documento.Agregar.Factura
         public int Dias { get; set; }
         public decimal CastigoP { get; set; }
         public string CierreFtp { get; set; }
+        public decimal MontoDivisa { get; set; }
+        public decimal TasaDivisa { get; set; }
 
 
         public FichaCxC()
@@ -67,6 +69,8 @@ namespace DtoLibPos.Documento.Agregar.Factura
             Dias = 0;
             CastigoP = 0.0m;
             CierreFtp = "";
+            MontoDivisa = 0m;
+            TasaDivisa = 0m;
         }
 
     }

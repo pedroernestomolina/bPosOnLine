@@ -13,6 +13,7 @@ namespace DtoLibPos.Documento.Anular.NotaCredito
 
         public string autoDocumento { get; set; }
         public string autoDocCxC { get; set; }
+        public string autoReciboCxC { get; set; }
         public string CodigoDocumento { get; set; }
         public FichaAuditoria auditoria { get; set; }
         public List<FichaDeposito> deposito { get; set; }
@@ -23,6 +24,7 @@ namespace DtoLibPos.Documento.Anular.NotaCredito
         {
             autoDocumento = "";
             autoDocCxC = "";
+            autoReciboCxC = "";
             CodigoDocumento = "";
             auditoria = new FichaAuditoria();
             deposito = new List<FichaDeposito>();

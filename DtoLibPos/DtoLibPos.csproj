@@ -39,6 +39,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agencia\Agregar\Ficha.cs" />
+    <Compile Include="Agencia\BaseFicha.cs" />
+    <Compile Include="Agencia\Editar\Ficha.cs" />
+    <Compile Include="Agencia\Entidad\Ficha.cs" />
+    <Compile Include="Agencia\Lista\Filtro.cs" />
     <Compile Include="Auditoria\Buscar\Ficha.cs" />
     <Compile Include="Auditoria\Entidad\Ficha.cs" />
     <Compile Include="ClienteGrupo\Agregar\Ficha.cs" />
@@ -93,6 +98,7 @@
     <Compile Include="DocumentoAdm\Anular\Prersupuesto\FichaAuditoria.cs" />
     <Compile Include="DocumentoAdm\Entidad\Ficha.cs" />
     <Compile Include="DocumentoAdm\Entidad\Item.cs" />
+    <Compile Include="Documento\Agregar\BasePagoMovil.cs" />
     <Compile Include="Documento\Agregar\Factura\Ficha.cs" />
     <Compile Include="Documento\Agregar\Factura\FichaCxC.cs" />
     <Compile Include="Documento\Agregar\Factura\FichaCxCDocumento.cs" />
@@ -102,11 +108,21 @@
     <Compile Include="Documento\Agregar\Factura\FichaDeposito.cs" />
     <Compile Include="Documento\Agregar\Factura\FichaDetalle.cs" />
     <Compile Include="Documento\Agregar\Factura\FichaKardex.cs" />
+    <Compile Include="Documento\Agregar\Factura\FichaPagoMovil.cs" />
     <Compile Include="Documento\Agregar\Factura\FichaPosResumen.cs" />
     <Compile Include="Documento\Agregar\Factura\FichaPosVenta.cs" />
     <Compile Include="Documento\Agregar\Factura\FichaSerie.cs" />
+    <Compile Include="Documento\Agregar\BaseCxC.cs" />
+    <Compile Include="Documento\Agregar\BaseCxcRecibo.cs" />
+    <Compile Include="Documento\Agregar\BaseCxCDocumento.cs" />
+    <Compile Include="Documento\Agregar\BaseCxCMetodoPago.cs" />
+    <Compile Include="Documento\Agregar\Factura\Result.cs" />
     <Compile Include="Documento\Agregar\NotaCredito\Ficha.cs" />
     <Compile Include="Documento\Agregar\NotaCredito\FichaCxC.cs" />
+    <Compile Include="Documento\Agregar\NotaCredito\FichaCxCDocumento.cs" />
+    <Compile Include="Documento\Agregar\NotaCredito\FichaCxCMetodoPago.cs" />
+    <Compile Include="Documento\Agregar\NotaCredito\FichaCxcPago.cs" />
+    <Compile Include="Documento\Agregar\NotaCredito\FichaCxcRecibo.cs" />
     <Compile Include="Documento\Agregar\NotaCredito\FichaDeposito.cs" />
     <Compile Include="Documento\Agregar\NotaCredito\FichaDetalle.cs" />
     <Compile Include="Documento\Agregar\NotaCredito\FichaKardex.cs" />
@@ -177,6 +193,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reportes\Clientes\Maestro\Ficha.cs" />
     <Compile Include="Reportes\Clientes\Maestro\Filtro.cs" />
+    <Compile Include="Reportes\PosVerificador\DocVerificados\Ficha.cs" />
+    <Compile Include="Reportes\PosVerificador\Filtro.cs" />
     <Compile Include="Reportes\POS\Filtro.cs" />
     <Compile Include="Reportes\POS\PagoDetalle\Ficha.cs" />
     <Compile Include="Reportes\POS\PagoResumen\Detalle.cs" />
@@ -258,7 +276,10 @@
     <Compile Include="Venta\Item\Registrar\Ficha.cs" />
     <Compile Include="Venta\Item\Registrar\FichaDeposito.cs" />
     <Compile Include="Venta\Item\Registrar\FichaItem.cs" />
+    <Compile Include="Verificador\Entidad\Ficha.cs" />
+    <Compile Include="Verificador\Verificar\Ficha.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

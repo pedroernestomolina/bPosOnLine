@@ -51,6 +51,8 @@ namespace LibEntityPos
         public int dias { get; set; }
         public decimal castigop { get; set; }
         public string cierre_ftp { get; set; }
+        public decimal monto_divisa { get; set; }
+        public decimal tasa_divisa { get; set; }
     
         public virtual clientes clientes { get; set; }
         public virtual vendedores vendedores { get; set; }

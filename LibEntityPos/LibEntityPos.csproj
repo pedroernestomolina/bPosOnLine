@@ -159,6 +159,9 @@
     <Compile Include="p_ventaadm_det.cs">
       <DependentUpon>PosModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="p_verificador.cs">
+      <DependentUpon>PosModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="sistema_configuracion.cs">
       <DependentUpon>PosModel.tt</DependentUpon>
     </Compile>

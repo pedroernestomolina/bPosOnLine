@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IAgencia.cs" />
     <Compile Include="Interfaces\IAuditoria.cs" />
     <Compile Include="Interfaces\ICliente.cs" />
     <Compile Include="Interfaces\IClienteGrupo.cs" />
@@ -68,6 +69,8 @@
     <Compile Include="Interfaces\IVendedor.cs" />
     <Compile Include="Interfaces\IVenta.cs" />
     <Compile Include="Interfaces\IVentaAdm.cs" />
+    <Compile Include="Interfaces\IVerificador.cs" />
+    <Compile Include="MyService\Agencia.cs" />
     <Compile Include="MyService\Auditoria.cs" />
     <Compile Include="MyService\Cliente.cs" />
     <Compile Include="MyService\ClienteGrupo.cs" />
@@ -97,6 +100,7 @@
     <Compile Include="MyService\Vendedor.cs" />
     <Compile Include="MyService\Venta.cs" />
     <Compile Include="MyService\VentaAdm.cs" />
+    <Compile Include="MyService\Verificador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

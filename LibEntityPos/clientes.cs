@@ -17,10 +17,10 @@ namespace LibEntityPos
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public clientes()
         {
-            this.cxc = new HashSet<cxc>();
             this.cxc_recibos = new HashSet<cxc_recibos>();
             this.ventas_detalle = new HashSet<ventas_detalle>();
             this.ventas = new HashSet<ventas>();
+            this.cxc = new HashSet<cxc>();
         }
     
         public string auto { get; set; }
@@ -96,12 +96,12 @@ namespace LibEntityPos
         public virtual clientes_zonas clientes_zonas { get; set; }
         public virtual empresa_cobradores empresa_cobradores { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<cxc> cxc { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<cxc_recibos> cxc_recibos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ventas_detalle> ventas_detalle { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ventas> ventas { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<cxc> cxc { get; set; }
     }
 }

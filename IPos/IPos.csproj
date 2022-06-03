@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IAgencia.cs" />
     <Compile Include="IAuditoria.cs" />
     <Compile Include="ICliente.cs" />
     <Compile Include="IClienteGrupo.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="IVendedor.cs" />
     <Compile Include="IVenta.cs" />
     <Compile Include="IVentaAdm.cs" />
+    <Compile Include="IVerificador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

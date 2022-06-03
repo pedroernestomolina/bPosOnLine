@@ -197,6 +197,8 @@ namespace ProvPos
 
             return result;
         }
+
+
         public DtoLib.ResultadoAuto 
             Cliente_Agregar(DtoLibPos.Cliente.Agregar.Ficha ficha)
         {
@@ -390,7 +392,8 @@ namespace ProvPos
             }
             return result;
         }
-        //
+
+
         public DtoLib.Resultado 
             Cliente_Agregar_Validar(DtoLibPos.Cliente.Agregar.FichaValidar ficha)
         {

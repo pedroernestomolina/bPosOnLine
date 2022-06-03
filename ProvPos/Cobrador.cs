@@ -12,7 +12,8 @@ namespace ProvPos
     public partial class Provider: IPos.IProvider
     {
 
-        public DtoLib.ResultadoLista<DtoLibPos.Cobrador.Lista.Ficha> Cobrador_GetLista(DtoLibPos.Cobrador.Lista.Filtro filtro)
+        public DtoLib.ResultadoLista<DtoLibPos.Cobrador.Lista.Ficha> 
+            Cobrador_GetLista(DtoLibPos.Cobrador.Lista.Filtro filtro)
         {
             var result = new DtoLib.ResultadoLista<DtoLibPos.Cobrador.Lista.Ficha>();
 
@@ -38,8 +39,8 @@ namespace ProvPos
 
             return result;
         }
-
-        public DtoLib.ResultadoEntidad<DtoLibPos.Cobrador.Entidad.Ficha> Cobrador_GetFichaById(string id)
+        public DtoLib.ResultadoEntidad<DtoLibPos.Cobrador.Entidad.Ficha> 
+            Cobrador_GetFichaById(string id)
         {
             var result = new DtoLib.ResultadoEntidad<DtoLibPos.Cobrador.Entidad.Ficha>();
 

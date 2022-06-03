@@ -18,6 +18,7 @@ namespace LibEntityPos
         public ventas()
         {
             this.ventas_detalle = new HashSet<ventas_detalle>();
+            this.p_verificador = new HashSet<p_verificador>();
         }
     
         public string auto { get; set; }
@@ -130,5 +131,7 @@ namespace LibEntityPos
         public virtual vendedores vendedores { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ventas_detalle> ventas_detalle { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<p_verificador> p_verificador { get; set; }
     }
 }

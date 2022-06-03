@@ -127,6 +127,8 @@
           <Property Name="dias" Type="int" Nullable="false" />
           <Property Name="castigop" Type="decimal" Precision="14" Scale="2" Nullable="false" />
           <Property Name="cierre_ftp" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="monto_divisa" Type="decimal" Precision="14" Scale="2" Nullable="false" />
+          <Property Name="tasa_divisa" Type="decimal" Precision="14" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="cxc_recibos">
           <Key>
@@ -462,6 +464,18 @@
           <Property Name="cantidadUnd" Type="decimal" Precision="14" Scale="2" Nullable="false" />
           <Property Name="estatus_remision" Type="varchar" MaxLength="1" Nullable="false" />
           <Property Name="nombre_deposito" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="p_verificador">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="autoDocumento" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="codigoUsuarioVer" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="nombreUsuarioVer" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="estatusVer" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="estatusAnulado" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="fechaVer" Type="date" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'pita.pos_arqueo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1239,6 +1253,18 @@ warning 6002: The table/view 'pita.ventas_detalle' does not have a primary key d
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="p_verificador_ibfk_1">
+          <End Role="ventas" Type="Self.ventas" Multiplicity="1" />
+          <End Role="p_verificador" Type="Self.p_verificador" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ventas">
+              <PropertyRef Name="auto" />
+            </Principal>
+            <Dependent Role="p_verificador">
+              <PropertyRef Name="autoDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="productos_alterno_ibfk_1">
           <End Role="productos" Type="Self.productos" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1538,6 +1564,7 @@ warning 6002: The table/view 'pita.ventas_detalle' does not have a primary key d
           <EntitySet Name="p_venta" EntityType="Self.p_venta" Schema="pita" store:Type="Tables" />
           <EntitySet Name="p_ventaadm" EntityType="Self.p_ventaadm" Schema="pita" store:Type="Tables" />
           <EntitySet Name="p_ventaadm_det" EntityType="Self.p_ventaadm_det" Schema="pita" store:Type="Tables" />
+          <EntitySet Name="p_verificador" EntityType="Self.p_verificador" Schema="pita" store:Type="Tables" />
           <EntitySet Name="productos" EntityType="Self.productos" Schema="pita" store:Type="Tables" />
           <EntitySet Name="productos_alterno" EntityType="Self.productos_alterno" Schema="pita" store:Type="Tables" />
           <EntitySet Name="productos_conceptos" EntityType="Self.productos_conceptos" Schema="pita" store:Type="Tables" />
@@ -1734,6 +1761,10 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
             <End Role="p_ventaadm" EntitySet="p_ventaadm" />
             <End Role="p_ventaadm_det" EntitySet="p_ventaadm_det" />
           </AssociationSet>
+          <AssociationSet Name="p_verificador_ibfk_1" Association="Self.p_verificador_ibfk_1">
+            <End Role="ventas" EntitySet="ventas" />
+            <End Role="p_verificador" EntitySet="p_verificador" />
+          </AssociationSet>
           <AssociationSet Name="productos_alterno_ibfk_1" Association="Self.productos_alterno_ibfk_1">
             <End Role="productos" EntitySet="productos" />
             <End Role="productos_alterno" EntitySet="productos_alterno" />
@@ -1906,16 +1937,15 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
           <NavigationProperty Name="sistema_estados" Relationship="pitaModel.clientes_ibfk_2" FromRole="clientes" ToRole="sistema_estados" />
           <NavigationProperty Name="clientes_zonas" Relationship="pitaModel.clientes_ibfk_3" FromRole="clientes" ToRole="clientes_zonas" />
           <NavigationProperty Name="empresa_cobradores" Relationship="pitaModel.clientes_ibfk_5" FromRole="clientes" ToRole="empresa_cobradores" />
-          <NavigationProperty Name="cxc" Relationship="pitaModel.cxc_ibfk_1" FromRole="clientes" ToRole="cxc" />
           <NavigationProperty Name="cxc_recibos" Relationship="pitaModel.cxc_recibos_ibfk_2" FromRole="clientes" ToRole="cxc_recibos" />
           <NavigationProperty Name="ventas_detalle" Relationship="pitaModel.ventas_detalle_ibfk_6" FromRole="clientes" ToRole="ventas_detalle" />
           <NavigationProperty Name="ventas" Relationship="pitaModel.ventas_ibfk_5" FromRole="clientes" ToRole="ventas" />
+          <NavigationProperty Name="cxc" Relationship="pitaModel.cxc_ibfk_1" FromRole="clientes" ToRole="cxc" />
         </EntityType>
         <EntityContainer Name="PosEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="clientes" EntityType="Self.clientes" />
           <EntitySet Name="clientes_grupo" EntityType="pitaModel.clientes_grupo" />
           <EntitySet Name="clientes_zonas" EntityType="pitaModel.clientes_zonas" />
-          <EntitySet Name="cxc" EntityType="pitaModel.cxc" />
           <EntitySet Name="cxc_recibos" EntityType="pitaModel.cxc_recibos" />
           <EntitySet Name="empresa_cobradores" EntityType="pitaModel.empresa_cobradores" />
           <EntitySet Name="empresa_departamentos" EntityType="pitaModel.empresa_departamentos" />
@@ -1967,10 +1997,6 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
             <End Role="empresa_cobradores" EntitySet="empresa_cobradores" />
             <End Role="clientes" EntitySet="clientes" />
           </AssociationSet>
-          <AssociationSet Name="cxc_ibfk_1" Association="pitaModel.cxc_ibfk_1">
-            <End Role="clientes" EntitySet="clientes" />
-            <End Role="cxc" EntitySet="cxc" />
-          </AssociationSet>
           <AssociationSet Name="cxc_recibos_ibfk_2" Association="pitaModel.cxc_recibos_ibfk_2">
             <End Role="clientes" EntitySet="clientes" />
             <End Role="cxc_recibos" EntitySet="cxc_recibos" />
@@ -1982,14 +2008,6 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
           <AssociationSet Name="ventas_ibfk_5" Association="pitaModel.ventas_ibfk_5">
             <End Role="clientes" EntitySet="clientes" />
             <End Role="ventas" EntitySet="ventas" />
-          </AssociationSet>
-          <AssociationSet Name="cxc_ibfk_3" Association="pitaModel.cxc_ibfk_3">
-            <End Role="vendedores" EntitySet="vendedores" />
-            <End Role="cxc" EntitySet="cxc" />
-          </AssociationSet>
-          <AssociationSet Name="cxc_recibos_ibfk_4" Association="pitaModel.cxc_recibos_ibfk_4">
-            <End Role="cxc" EntitySet="cxc" />
-            <End Role="cxc_recibos" EntitySet="cxc_recibos" />
           </AssociationSet>
           <AssociationSet Name="cxc_recibos_ibfk_1" Association="pitaModel.cxc_recibos_ibfk_1">
             <End Role="usuarios" EntitySet="usuarios" />
@@ -2103,6 +2121,24 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
             <End Role="ventas" EntitySet="ventas" />
             <End Role="ventas_detalle" EntitySet="ventas_detalle" />
           </AssociationSet>
+          <EntitySet Name="cxc" EntityType="pitaModel.cxc" />
+          <AssociationSet Name="cxc_ibfk_1" Association="pitaModel.cxc_ibfk_1">
+            <End Role="clientes" EntitySet="clientes" />
+            <End Role="cxc" EntitySet="cxc" />
+          </AssociationSet>
+          <AssociationSet Name="cxc_ibfk_3" Association="pitaModel.cxc_ibfk_3">
+            <End Role="vendedores" EntitySet="vendedores" />
+            <End Role="cxc" EntitySet="cxc" />
+          </AssociationSet>
+          <AssociationSet Name="cxc_recibos_ibfk_4" Association="pitaModel.cxc_recibos_ibfk_4">
+            <End Role="cxc" EntitySet="cxc" />
+            <End Role="cxc_recibos" EntitySet="cxc_recibos" />
+          </AssociationSet>
+          <EntitySet Name="p_verificador" EntityType="pitaModel.p_verificador" />
+          <AssociationSet Name="p_verificador_ibfk_1" Association="pitaModel.p_verificador_ibfk_1">
+            <End Role="ventas" EntitySet="ventas" />
+            <End Role="p_verificador" EntitySet="p_verificador" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="clientes_grupo">
           <Key>
@@ -2121,45 +2157,6 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
           <Property Name="nombre" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
           <Property Name="codigo" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="clientes" Relationship="pitaModel.clientes_ibfk_3" FromRole="clientes_zonas" ToRole="clientes" />
-        </EntityType>
-        <EntityType Name="cxc">
-          <Key>
-            <PropertyRef Name="auto" />
-          </Key>
-          <Property Name="auto" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="c_cobranza" Type="Decimal" Nullable="false" />
-          <Property Name="c_cobranzap" Type="Decimal" Nullable="false" />
-          <Property Name="fecha" Type="DateTime" Nullable="false" />
-          <Property Name="tipo_documento" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="documento" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="fecha_vencimiento" Type="DateTime" Nullable="false" />
-          <Property Name="nota" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="importe" Type="Decimal" Nullable="false" />
-          <Property Name="acumulado" Type="Decimal" Nullable="false" />
-          <Property Name="auto_cliente" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="cliente" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="ci_rif" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="codigo_cliente" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="estatus_cancelado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="resta" Type="Decimal" Nullable="false" />
-          <Property Name="estatus_anulado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="auto_documento" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="numero" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="auto_agencia" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="agencia" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="signo" Type="Int32" Nullable="false" />
-          <Property Name="auto_vendedor" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="c_departamento" Type="Decimal" Nullable="false" />
-          <Property Name="c_ventas" Type="Decimal" Nullable="false" />
-          <Property Name="c_ventasp" Type="Decimal" Nullable="false" />
-          <Property Name="serie" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="importe_neto" Type="Decimal" Nullable="false" />
-          <Property Name="dias" Type="Int32" Nullable="false" />
-          <Property Name="castigop" Type="Decimal" Nullable="false" />
-          <Property Name="cierre_ftp" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="clientes" Relationship="pitaModel.cxc_ibfk_1" FromRole="cxc" ToRole="clientes" />
-          <NavigationProperty Name="vendedores" Relationship="pitaModel.cxc_ibfk_3" FromRole="cxc" ToRole="vendedores" />
-          <NavigationProperty Name="cxc_recibos" Relationship="pitaModel.cxc_recibos_ibfk_4" FromRole="cxc" ToRole="cxc_recibos" />
         </EntityType>
         <EntityType Name="cxc_recibos">
           <Key>
@@ -2192,9 +2189,9 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
           <Property Name="cierre" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="cierre_ftp" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="clientes" Relationship="pitaModel.cxc_recibos_ibfk_2" FromRole="cxc_recibos" ToRole="clientes" />
-          <NavigationProperty Name="cxc" Relationship="pitaModel.cxc_recibos_ibfk_4" FromRole="cxc_recibos" ToRole="cxc" />
           <NavigationProperty Name="usuarios" Relationship="pitaModel.cxc_recibos_ibfk_1" FromRole="cxc_recibos" ToRole="usuarios" />
           <NavigationProperty Name="empresa_cobradores" Relationship="pitaModel.cxc_recibos_ibfk_3" FromRole="cxc_recibos" ToRole="empresa_cobradores" />
+          <NavigationProperty Name="cxc" Relationship="pitaModel.cxc_recibos_ibfk_4" FromRole="cxc_recibos" ToRole="cxc" />
         </EntityType>
         <EntityType Name="empresa_cobradores">
           <Key>
@@ -2786,9 +2783,9 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
           <Property Name="castigop" Type="Decimal" Nullable="false" />
           <Property Name="tolerancia" Type="Int32" Nullable="false" />
           <NavigationProperty Name="clientes" Relationship="pitaModel.clientes_ibfk_11" FromRole="vendedores" ToRole="clientes" />
-          <NavigationProperty Name="cxc" Relationship="pitaModel.cxc_ibfk_3" FromRole="vendedores" ToRole="cxc" />
           <NavigationProperty Name="ventas_detalle" Relationship="pitaModel.ventas_detalle_ibfk_9" FromRole="vendedores" ToRole="ventas_detalle" />
           <NavigationProperty Name="ventas" Relationship="pitaModel.ventas_ibfk_6" FromRole="vendedores" ToRole="ventas" />
+          <NavigationProperty Name="cxc" Relationship="pitaModel.cxc_ibfk_3" FromRole="vendedores" ToRole="cxc" />
         </EntityType>
         <EntityType Name="ventas">
           <Key>
@@ -2902,6 +2899,7 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
           <NavigationProperty Name="usuarios" Relationship="pitaModel.ventas_ibfk_3" FromRole="ventas" ToRole="usuarios" />
           <NavigationProperty Name="vendedores" Relationship="pitaModel.ventas_ibfk_6" FromRole="ventas" ToRole="vendedores" />
           <NavigationProperty Name="ventas_detalle" Relationship="pitaModel.ventas_detalle_ibfk_8" FromRole="ventas" ToRole="ventas_detalle" />
+          <NavigationProperty Name="p_verificador" Relationship="pitaModel.p_verificador_ibfk_1" FromRole="ventas" ToRole="p_verificador" />
         </EntityType>
         <EntityType Name="pos_arqueo">
           <Key>
@@ -3200,18 +3198,6 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="cxc_ibfk_1">
-          <End Type="pitaModel.clientes" Role="clientes" Multiplicity="1" />
-          <End Type="pitaModel.cxc" Role="cxc" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="clientes">
-              <PropertyRef Name="auto" />
-            </Principal>
-            <Dependent Role="cxc">
-              <PropertyRef Name="auto_cliente" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="cxc_recibos_ibfk_2">
           <End Type="pitaModel.clientes" Role="clientes" Multiplicity="1" />
           <End Type="pitaModel.cxc_recibos" Role="cxc_recibos" Multiplicity="*" />
@@ -3245,30 +3231,6 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
             </Principal>
             <Dependent Role="ventas">
               <PropertyRef Name="auto_cliente" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="cxc_ibfk_3">
-          <End Type="pitaModel.vendedores" Role="vendedores" Multiplicity="1" />
-          <End Type="pitaModel.cxc" Role="cxc" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="vendedores">
-              <PropertyRef Name="auto" />
-            </Principal>
-            <Dependent Role="cxc">
-              <PropertyRef Name="auto_vendedor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="cxc_recibos_ibfk_4">
-          <End Type="pitaModel.cxc" Role="cxc" Multiplicity="1" />
-          <End Type="pitaModel.cxc_recibos" Role="cxc_recibos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="cxc">
-              <PropertyRef Name="auto" />
-            </Principal>
-            <Dependent Role="cxc_recibos">
-              <PropertyRef Name="auto_cxc" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3610,6 +3572,108 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="cxc">
+          <Key>
+            <PropertyRef Name="auto" />
+          </Key>
+          <Property Name="auto" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="c_cobranza" Type="Decimal" Nullable="false" />
+          <Property Name="c_cobranzap" Type="Decimal" Nullable="false" />
+          <Property Name="fecha" Type="DateTime" Nullable="false" />
+          <Property Name="tipo_documento" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="documento" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_vencimiento" Type="DateTime" Nullable="false" />
+          <Property Name="nota" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="importe" Type="Decimal" Nullable="false" />
+          <Property Name="acumulado" Type="Decimal" Nullable="false" />
+          <Property Name="auto_cliente" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="cliente" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ci_rif" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="codigo_cliente" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="estatus_cancelado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="resta" Type="Decimal" Nullable="false" />
+          <Property Name="estatus_anulado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="auto_documento" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="numero" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="auto_agencia" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="agencia" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="signo" Type="Int32" Nullable="false" />
+          <Property Name="auto_vendedor" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="c_departamento" Type="Decimal" Nullable="false" />
+          <Property Name="c_ventas" Type="Decimal" Nullable="false" />
+          <Property Name="c_ventasp" Type="Decimal" Nullable="false" />
+          <Property Name="serie" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="importe_neto" Type="Decimal" Nullable="false" />
+          <Property Name="dias" Type="Int32" Nullable="false" />
+          <Property Name="castigop" Type="Decimal" Nullable="false" />
+          <Property Name="cierre_ftp" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="monto_divisa" Type="Decimal" Nullable="false" />
+          <Property Name="tasa_divisa" Type="Decimal" Nullable="false" />
+          <NavigationProperty Name="clientes" Relationship="pitaModel.cxc_ibfk_1" FromRole="cxc" ToRole="clientes" />
+          <NavigationProperty Name="vendedores" Relationship="pitaModel.cxc_ibfk_3" FromRole="cxc" ToRole="vendedores" />
+          <NavigationProperty Name="cxc_recibos" Relationship="pitaModel.cxc_recibos_ibfk_4" FromRole="cxc" ToRole="cxc_recibos" />
+        </EntityType>
+        <Association Name="cxc_ibfk_1">
+          <End Type="pitaModel.clientes" Role="clientes" Multiplicity="1" />
+          <End Type="pitaModel.cxc" Role="cxc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clientes">
+              <PropertyRef Name="auto" />
+            </Principal>
+            <Dependent Role="cxc">
+              <PropertyRef Name="auto_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="cxc_ibfk_3">
+          <End Type="pitaModel.vendedores" Role="vendedores" Multiplicity="1" />
+          <End Type="pitaModel.cxc" Role="cxc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vendedores">
+              <PropertyRef Name="auto" />
+            </Principal>
+            <Dependent Role="cxc">
+              <PropertyRef Name="auto_vendedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="cxc_recibos_ibfk_4">
+          <End Type="pitaModel.cxc" Role="cxc" Multiplicity="1" />
+          <End Type="pitaModel.cxc_recibos" Role="cxc_recibos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cxc">
+              <PropertyRef Name="auto" />
+            </Principal>
+            <Dependent Role="cxc_recibos">
+              <PropertyRef Name="auto_cxc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="p_verificador">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="autoDocumento" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="codigoUsuarioVer" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="nombreUsuarioVer" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="estatusVer" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="estatusAnulado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="fechaVer" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="ventas" Relationship="pitaModel.p_verificador_ibfk_1" FromRole="p_verificador" ToRole="ventas" />
+        </EntityType>
+        <Association Name="p_verificador_ibfk_1">
+          <End Type="pitaModel.ventas" Role="ventas" Multiplicity="1" />
+          <End Type="pitaModel.p_verificador" Role="p_verificador" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ventas">
+              <PropertyRef Name="auto" />
+            </Principal>
+            <Dependent Role="p_verificador">
+              <PropertyRef Name="autoDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3702,43 +3766,6 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
               <MappingFragment StoreEntitySet="clientes_zonas">
                 <ScalarProperty Name="codigo" ColumnName="codigo" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="auto" ColumnName="auto" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="cxc">
-            <EntityTypeMapping TypeName="pitaModel.cxc">
-              <MappingFragment StoreEntitySet="cxc">
-                <ScalarProperty Name="cierre_ftp" ColumnName="cierre_ftp" />
-                <ScalarProperty Name="castigop" ColumnName="castigop" />
-                <ScalarProperty Name="dias" ColumnName="dias" />
-                <ScalarProperty Name="importe_neto" ColumnName="importe_neto" />
-                <ScalarProperty Name="serie" ColumnName="serie" />
-                <ScalarProperty Name="c_ventasp" ColumnName="c_ventasp" />
-                <ScalarProperty Name="c_ventas" ColumnName="c_ventas" />
-                <ScalarProperty Name="c_departamento" ColumnName="c_departamento" />
-                <ScalarProperty Name="auto_vendedor" ColumnName="auto_vendedor" />
-                <ScalarProperty Name="signo" ColumnName="signo" />
-                <ScalarProperty Name="agencia" ColumnName="agencia" />
-                <ScalarProperty Name="auto_agencia" ColumnName="auto_agencia" />
-                <ScalarProperty Name="numero" ColumnName="numero" />
-                <ScalarProperty Name="auto_documento" ColumnName="auto_documento" />
-                <ScalarProperty Name="estatus_anulado" ColumnName="estatus_anulado" />
-                <ScalarProperty Name="resta" ColumnName="resta" />
-                <ScalarProperty Name="estatus_cancelado" ColumnName="estatus_cancelado" />
-                <ScalarProperty Name="codigo_cliente" ColumnName="codigo_cliente" />
-                <ScalarProperty Name="ci_rif" ColumnName="ci_rif" />
-                <ScalarProperty Name="cliente" ColumnName="cliente" />
-                <ScalarProperty Name="auto_cliente" ColumnName="auto_cliente" />
-                <ScalarProperty Name="acumulado" ColumnName="acumulado" />
-                <ScalarProperty Name="importe" ColumnName="importe" />
-                <ScalarProperty Name="nota" ColumnName="nota" />
-                <ScalarProperty Name="fecha_vencimiento" ColumnName="fecha_vencimiento" />
-                <ScalarProperty Name="documento" ColumnName="documento" />
-                <ScalarProperty Name="tipo_documento" ColumnName="tipo_documento" />
-                <ScalarProperty Name="fecha" ColumnName="fecha" />
-                <ScalarProperty Name="c_cobranzap" ColumnName="c_cobranzap" />
-                <ScalarProperty Name="c_cobranza" ColumnName="c_cobranza" />
                 <ScalarProperty Name="auto" ColumnName="auto" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -4576,6 +4603,58 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
                 <ScalarProperty Name="codigo" ColumnName="codigo" />
                 <ScalarProperty Name="auto_producto" ColumnName="auto_producto" />
                 <ScalarProperty Name="auto_documento" ColumnName="auto_documento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cxc">
+            <EntityTypeMapping TypeName="pitaModel.cxc">
+              <MappingFragment StoreEntitySet="cxc">
+                <ScalarProperty Name="tasa_divisa" ColumnName="tasa_divisa" />
+                <ScalarProperty Name="monto_divisa" ColumnName="monto_divisa" />
+                <ScalarProperty Name="cierre_ftp" ColumnName="cierre_ftp" />
+                <ScalarProperty Name="castigop" ColumnName="castigop" />
+                <ScalarProperty Name="dias" ColumnName="dias" />
+                <ScalarProperty Name="importe_neto" ColumnName="importe_neto" />
+                <ScalarProperty Name="serie" ColumnName="serie" />
+                <ScalarProperty Name="c_ventasp" ColumnName="c_ventasp" />
+                <ScalarProperty Name="c_ventas" ColumnName="c_ventas" />
+                <ScalarProperty Name="c_departamento" ColumnName="c_departamento" />
+                <ScalarProperty Name="auto_vendedor" ColumnName="auto_vendedor" />
+                <ScalarProperty Name="signo" ColumnName="signo" />
+                <ScalarProperty Name="agencia" ColumnName="agencia" />
+                <ScalarProperty Name="auto_agencia" ColumnName="auto_agencia" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="auto_documento" ColumnName="auto_documento" />
+                <ScalarProperty Name="estatus_anulado" ColumnName="estatus_anulado" />
+                <ScalarProperty Name="resta" ColumnName="resta" />
+                <ScalarProperty Name="estatus_cancelado" ColumnName="estatus_cancelado" />
+                <ScalarProperty Name="codigo_cliente" ColumnName="codigo_cliente" />
+                <ScalarProperty Name="ci_rif" ColumnName="ci_rif" />
+                <ScalarProperty Name="cliente" ColumnName="cliente" />
+                <ScalarProperty Name="auto_cliente" ColumnName="auto_cliente" />
+                <ScalarProperty Name="acumulado" ColumnName="acumulado" />
+                <ScalarProperty Name="importe" ColumnName="importe" />
+                <ScalarProperty Name="nota" ColumnName="nota" />
+                <ScalarProperty Name="fecha_vencimiento" ColumnName="fecha_vencimiento" />
+                <ScalarProperty Name="documento" ColumnName="documento" />
+                <ScalarProperty Name="tipo_documento" ColumnName="tipo_documento" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="c_cobranzap" ColumnName="c_cobranzap" />
+                <ScalarProperty Name="c_cobranza" ColumnName="c_cobranza" />
+                <ScalarProperty Name="auto" ColumnName="auto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="p_verificador">
+            <EntityTypeMapping TypeName="pitaModel.p_verificador">
+              <MappingFragment StoreEntitySet="p_verificador">
+                <ScalarProperty Name="fechaVer" ColumnName="fechaVer" />
+                <ScalarProperty Name="estatusAnulado" ColumnName="estatusAnulado" />
+                <ScalarProperty Name="estatusVer" ColumnName="estatusVer" />
+                <ScalarProperty Name="nombreUsuarioVer" ColumnName="nombreUsuarioVer" />
+                <ScalarProperty Name="codigoUsuarioVer" ColumnName="codigoUsuarioVer" />
+                <ScalarProperty Name="autoDocumento" ColumnName="autoDocumento" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

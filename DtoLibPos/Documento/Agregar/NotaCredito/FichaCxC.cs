@@ -8,35 +8,8 @@ using System.Threading.Tasks;
 namespace DtoLibPos.Documento.Agregar.NotaCredito
 {
     
-    public class FichaCxC
+    public class FichaCxC: BaseCxC
     {
-
-        public decimal CCobranza { get; set; }
-        public decimal CCobranzap { get; set; }
-        public string TipoDocumento { get; set; }
-        public string Nota { get; set; }
-        public decimal Importe { get; set; }
-        public decimal Acumulado { get; set; }
-        public string AutoCliente { get; set; }
-        public string Cliente { get; set; }
-        public string CiRif { get; set; }
-        public string CodigoCliente { get; set; }
-        public string EstatusCancelado { get; set; }
-        public decimal Resta { get; set; }
-        public string EstatusAnulado { get; set; }
-        public string Numero { get; set; }
-        public string AutoAgencia { get; set; }
-        public string Agencia { get; set; }
-        public int Signo { get; set; }
-        public string AutoVendedor { get; set; }
-        public decimal CDepartamento { get; set; }
-        public decimal CVentas { get; set; }
-        public decimal CVentasp { get; set; }
-        public string Serie { get; set; }
-        public decimal ImporteNeto { get; set; }
-        public int Dias { get; set; }
-        public decimal CastigoP { get; set; }
-        public string CierreFtp { get; set; }
 
 
         public FichaCxC()
@@ -67,6 +40,8 @@ namespace DtoLibPos.Documento.Agregar.NotaCredito
             Dias = 0;
             CastigoP = 0.0m;
             CierreFtp = "";
+            MontoDivisa = 0m;
+            TasaDivisa = 0m;
         }
 
     }

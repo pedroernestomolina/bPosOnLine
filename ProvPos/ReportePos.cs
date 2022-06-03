@@ -12,7 +12,8 @@ namespace ProvPos
     public partial class Provider: IPos.IProvider
     {
 
-        public DtoLib.ResultadoLista<DtoLibPos.Reportes.POS.PagoDetalle.Ficha> ReportePos_PagoDetalle(DtoLibPos.Reportes.POS.Filtro filtro)
+        public DtoLib.ResultadoLista<DtoLibPos.Reportes.POS.PagoDetalle.Ficha>
+            ReportePos_PagoDetalle(DtoLibPos.Reportes.POS.Filtro filtro)
         {
             var result = new DtoLib.ResultadoLista<DtoLibPos.Reportes.POS.PagoDetalle.Ficha>();
 
@@ -22,7 +23,7 @@ namespace ProvPos
                 {
                     var p1 = new MySql.Data.MySqlClient.MySqlParameter();
                     var list = new List<DtoLibPos.Reportes.POS.PagoDetalle.Ficha>();
-                    var sql = @"SELECT  r.auto as autoRecibo,
+                    var sql1 = @"SELECT  r.auto as autoRecibo,
                                 mp.codigo as medioPagoCodigo, 
                                 mp.medio as medioPagoDesc,
                                 mp.lote as loteCntDivisa,
@@ -38,11 +39,35 @@ namespace ProvPos
                                 r.hora as hora,
                                 r.importe as importe,   
                                 r.cambio as cambioDar,
-                                r.estatus_anulado as estatus
+                                r.estatus_anulado as estatus,
+                                '0' as estatusCredito
                                 from cxc_medio_pago as mp
                                 join cxc_recibos as r on mp.auto_recibo=r.auto
                                 join cxc_documentos as d on mp.auto_recibo=d.auto_cxc_recibo
-                                where mp.cierre=@idCierre";
+                                where mp.cierre=@idCierre ";
+                    var sql2 = @" union (SELECT 
+                                    '' as autoRecibo, 
+                                    '' as medioPagoCodigo,
+                                    '' as medioPagoDesc,
+                                    '' as loteCntDivisa,
+                                    '' as referenciaTasa,
+                                    0 as montoRecibido,
+                                    fecha as documentoFecha, 
+                                    doc.siglas as documentoTipo,
+                                    v.documento as documentoNro,
+                                    v.razon_social as clienteNombre,
+                                    v.ci_rif as clienteCiRif,
+                                    v.dir_fiscal as clienteDir,
+                                    v.telefono as clienteTelf,
+                                    v.hora, 
+                                    v.total as importe,
+                                    0 as cambioDar,
+                                    v.estatus_anulado as estatus,
+                                    '1' as estatusCredito 
+                                    FROM ventas as v 
+                                    join sistema_documentos as doc on v.tipo=doc.codigo and v.documento_tipo=doc.tipo
+                                    where v.cierre=@idCierre and condicion_pago='CREDITO')";
+                    var sql = sql1 + sql2;
                     p1.ParameterName = "idCierre";
                     p1.Value = filtro.IdCierre;
                     list = cnn.Database.SqlQuery<DtoLibPos.Reportes.POS.PagoDetalle.Ficha>(sql, p1).ToList();
@@ -57,10 +82,53 @@ namespace ProvPos
 
             return result;
         }
-
-        public DtoLib.ResultadoEntidad<DtoLibPos.Reportes.POS.PagoResumen.Ficha> ReportePos_PagoResumen(DtoLibPos.Reportes.POS.Filtro filtro)
+        public DtoLib.ResultadoEntidad<DtoLibPos.Reportes.POS.PagoResumen.Ficha> 
+            ReportePos_PagoResumen(DtoLibPos.Reportes.POS.Filtro filtro)
         {
             var result = new DtoLib.ResultadoEntidad<DtoLibPos.Reportes.POS.PagoResumen.Ficha>();
+            return result;
+        }
+        public DtoLib.ResultadoLista<DtoLibPos.Reportes.PosVerificador.DocVerificados.Ficha> 
+            ReportePosVerificados_DocVerificados(DtoLibPos.Reportes.PosVerificador.Filtro filtro)
+        {
+            var result = new DtoLib.ResultadoLista<DtoLibPos.Reportes.PosVerificador.DocVerificados.Ficha>();
+
+            try
+            {
+                using (var cnn = new PosEntities(_cnPos.ConnectionString))
+                {
+                    var p1 = new MySql.Data.MySqlClient.MySqlParameter("@desde", filtro.desde);
+                    var p2 = new MySql.Data.MySqlClient.MySqlParameter("@hasta", filtro.hasta);
+                    var p3 = new MySql.Data.MySqlClient.MySqlParameter();
+                    var list = new List<DtoLibPos.Reportes.PosVerificador.DocVerificados.Ficha>();
+                    var sql1 = @"SELECT 
+                                pV.autoDocumento, 
+                                pV.estatusVer,  
+                                pV.fechaVer, 
+                                pV.codigoUsuarioVer as codUsuVer, 
+                                pV.nombreUsuarioVer as nombUsuVer,
+                                v.documento as docNro, 
+                                v.fecha as docFecha, 
+                                v.estatus_anulado as docEstatusAnu, 
+                                v.razon_social as docRazonSocial,
+                                v.ci_rif as docCiRif, 
+                                v.total as docMonto, 
+                                v.tipo as docTipo, 
+                                v.monto_divisa as docMontoDivisa
+                                FROM p_verificador as pV
+                                join ventas as v on v.auto=pV.autoDocumento
+                                where pV.fechaReg>=@desde and pV.fechaReg<=@hasta";
+                    var sql = sql1 ;
+                    list = cnn.Database.SqlQuery<DtoLibPos.Reportes.PosVerificador.DocVerificados.Ficha>(sql, p1, p2, p3).ToList();
+                    result.Lista = list;
+                }
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+
             return result;
         }
 

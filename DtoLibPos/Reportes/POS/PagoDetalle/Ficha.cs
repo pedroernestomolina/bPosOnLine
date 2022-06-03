@@ -28,6 +28,7 @@ namespace DtoLibPos.Reportes.POS.PagoDetalle
         public decimal importe { get; set; }
         public decimal cambioDar { get; set; }
         public string estatus { get; set; }
+        public string estatusCredito { get; set; }
 
 
         public Ficha() 
@@ -49,6 +50,7 @@ namespace DtoLibPos.Reportes.POS.PagoDetalle
             importe = 0.0m;
             cambioDar = 0.0m;
             estatus = "";
+            estatusCredito = "";
         }
 
     }

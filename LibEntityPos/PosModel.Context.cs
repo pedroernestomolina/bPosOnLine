@@ -28,7 +28,6 @@ namespace LibEntityPos
         public virtual DbSet<clientes> clientes { get; set; }
         public virtual DbSet<clientes_grupo> clientes_grupo { get; set; }
         public virtual DbSet<clientes_zonas> clientes_zonas { get; set; }
-        public virtual DbSet<cxc> cxc { get; set; }
         public virtual DbSet<cxc_recibos> cxc_recibos { get; set; }
         public virtual DbSet<empresa_cobradores> empresa_cobradores { get; set; }
         public virtual DbSet<empresa_departamentos> empresa_departamentos { get; set; }
@@ -60,5 +59,7 @@ namespace LibEntityPos
         public virtual DbSet<ventas> ventas { get; set; }
         public virtual DbSet<pos_arqueo> pos_arqueo { get; set; }
         public virtual DbSet<ventas_detalle> ventas_detalle { get; set; }
+        public virtual DbSet<cxc> cxc { get; set; }
+        public virtual DbSet<p_verificador> p_verificador { get; set; }
     }
 }
