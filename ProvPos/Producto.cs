@@ -231,8 +231,8 @@ namespace ProvPos
                        p.estatus_pesado as EstatusPesado,
                        p.costo as Costo,
                        p.costo_promedio as CostoPromedio,
-                       p.costo_promedio_und as CostoPromedioUnidad,
-                       p.costo_und as CostoUnidad,
+                       p.divisa as CostoDivisa,
+                       p.contenido_compras as ContenidoEmpaqueCompra,
 
                        p.precio_1 as pneto_1,
                        p.precio_2 as pneto_2,
@@ -466,7 +466,8 @@ namespace ProvPos
             return result;
         }
 
-        public DtoLib.ResultadoEntidad<DtoLibPos.Producto.Existencia.Entidad.Ficha> Producto_Existencia_GetByPrdDeposito(DtoLibPos.Producto.Existencia.Buscar.Ficha ficha)
+        public DtoLib.ResultadoEntidad<DtoLibPos.Producto.Existencia.Entidad.Ficha> 
+            Producto_Existencia_GetByPrdDeposito(DtoLibPos.Producto.Existencia.Buscar.Ficha ficha)
         {
             var result = new DtoLib.ResultadoEntidad<DtoLibPos.Producto.Existencia.Entidad.Ficha>();
 
@@ -503,8 +504,8 @@ namespace ProvPos
 
             return result;
         }
-
-        public DtoLib.Resultado Producto_Existencia_BloquearEnPositivo(DtoLibPos.Producto.Existencia.Bloquear.Ficha ficha)
+        public DtoLib.Resultado 
+            Producto_Existencia_BloquearEnPositivo(DtoLibPos.Producto.Existencia.Bloquear.Ficha ficha)
         {
             var result = new DtoLib.Resultado();
 
@@ -543,8 +544,8 @@ namespace ProvPos
 
             return result;
         }
-
-        public DtoLib.Resultado Producto_Existencia_BloquearEnNegativo(DtoLibPos.Producto.Existencia.Bloquear.Ficha ficha)
+        public DtoLib.Resultado 
+            Producto_Existencia_BloquearEnNegativo(DtoLibPos.Producto.Existencia.Bloquear.Ficha ficha)
         {
             var result = new DtoLib.Resultado();
 

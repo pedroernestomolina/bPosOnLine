@@ -51,10 +51,13 @@ namespace DtoLibPos.Producto.Entidad
         public decimal OfertaPrecio { get; set; }
         public int DiasEmpaqueGarantia { get; set; }
         public DateTime FechaServidor { get; set; }
+
+        //
+        public int ContenidoEmpaqueCompra { get; set; }
+        public decimal CostoDivisa { get; set; }
         public decimal Costo { get; set; }
-        public decimal CostoUnidad { get; set; }
         public decimal CostoPromedio { get; set; }
-        public decimal CostoPromedioUnidad { get; set; }
+        //
 
         public decimal pneto_1 { get; set; }
         public decimal pneto_2 { get; set; }
@@ -163,6 +166,11 @@ namespace DtoLibPos.Producto.Entidad
             Pasillo = "";
             NombreTasa = "";
             TasaImpuesto = 0.0m;
+
+            ContenidoEmpaqueCompra = 0;
+            CostoDivisa = 0m;
+            Costo = 0m;
+            CostoPromedio = 0m;
 
             Estatus = "";
             EstatusDivisa = "";
