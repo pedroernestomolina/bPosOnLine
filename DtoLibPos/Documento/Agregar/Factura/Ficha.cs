@@ -116,6 +116,7 @@ namespace DtoLibPos.Documento.Agregar.Factura
         public List<FichaPosVenta> PosVenta{ get; set; }
         public FichaSerie SerieFiscal { get; set; }
         public FichaPagoMovil PagoMovil { get; set; }
+        public FichaClienteSaldo ClienteSaldo { get; set; }
 
 
         public Ficha()
@@ -224,6 +225,7 @@ namespace DtoLibPos.Documento.Agregar.Factura
             PosVenta = new List<FichaPosVenta>();
             PagoMovil = null;
             SerieFiscal = null;
+            ClienteSaldo = null;
         }
 
     }

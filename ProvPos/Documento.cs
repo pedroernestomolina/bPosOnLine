@@ -601,6 +601,23 @@ namespace ProvPos
                         cn.SaveChanges();
 
 
+                        if (ficha.ClienteSaldo != null) 
+                        {
+                            var xcli_1 = new MySql.Data.MySqlClient.MySqlParameter("@idCliente", ficha.ClienteSaldo.autoCliente);
+                            var xcli_2 = new MySql.Data.MySqlClient.MySqlParameter("@debito", ficha.ClienteSaldo.montoActualizar);
+                            var xsql_cli = @"update clientes set 
+                                                debitos=debitos+@debito
+                                                where auto=@idCliente";
+                            var r_cli = cn.Database.ExecuteSqlCommand(xsql_cli, xcli_1,xcli_2);
+                            if (r_cli == 0) 
+                            {
+                                result.Mensaje = "PROBLEMA AL ACTUALIZAR SALDO CLIENTE";
+                                result.Result = DtoLib.Enumerados.EnumResult.isError;
+                                return result;
+                            }
+                        }
+
+
                         //
                         //NO ES CREDITO
                         //
@@ -1175,6 +1192,23 @@ namespace ProvPos
                         };
                         cn.ventas.Add(entVenta);
                         cn.SaveChanges();
+
+
+                        if (ficha.ClienteSaldo != null)
+                        {
+                            var xcli_1 = new MySql.Data.MySqlClient.MySqlParameter("@idCliente", ficha.ClienteSaldo.autoCliente);
+                            var xcli_2 = new MySql.Data.MySqlClient.MySqlParameter("@monto", ficha.ClienteSaldo.montoActualizar);
+                            var xsql_cli = @"update clientes set 
+                                                creditos=creditos+@monto
+                                                where auto=@idCliente";
+                            var r_cli = cn.Database.ExecuteSqlCommand(xsql_cli, xcli_1, xcli_2);
+                            if (r_cli == 0)
+                            {
+                                result.Mensaje = "PROBLEMA AL ACTUALIZAR SALDO CLIENTE";
+                                result.Result = DtoLib.Enumerados.EnumResult.isError;
+                                return result;
+                            }
+                        }
 
 
                         //DOCUMENTO CXC
@@ -1952,6 +1986,12 @@ namespace ProvPos
                                 rt.Result = DtoLib.Enumerados.EnumResult.isError;
                                 return rt;
                             }
+                            if (entCxC.estatus_anulado.Trim().ToUpper()=="1")
+                            {
+                                rt.Mensaje = "CXC ASOCIADO AL DOCUMENTO ANULADA";
+                                rt.Result = DtoLib.Enumerados.EnumResult.isError;
+                                return rt;
+                            }
                             if (entCxC.acumulado > 0) 
                             {
                                 rt.Mensaje = "EXISTE UN PAGO/COBRO ASOCIADO AL DOCUMENTO";
@@ -2555,6 +2595,22 @@ namespace ProvPos
                             return result;
                         }
 
+                        if (ficha.clienteSaldo != null) 
+                        {
+                            var xcli_1 = new MySql.Data.MySqlClient.MySqlParameter("@idCliente", ficha.clienteSaldo.autoCliente);
+                            var xcli_2 = new MySql.Data.MySqlClient.MySqlParameter("@debito", ficha.clienteSaldo.monto);
+                            var xsql_cli = @"update clientes set 
+                                                debitos=debitos-@debito
+                                                where auto=@idCliente";
+                            var r_cli = cn.Database.ExecuteSqlCommand(xsql_cli, xcli_1, xcli_2);
+                            if (r_cli == 0)
+                            {
+                                result.Mensaje = "PROBLEMA AL ACTUALIZAR SALDO CLIENTE";
+                                result.Result = DtoLib.Enumerados.EnumResult.isError;
+                                return result;
+                            }
+                        }
+
                         if (ficha.autoReciboCxC != "")
                         {
                             //RECIBO
@@ -2630,6 +2686,66 @@ namespace ProvPos
             }
 
             return result;
+        }
+
+
+        public DtoLib.Resultado 
+            Documento_Verificar_ProcesarFactClienteCredito(string idCliente, decimal monto)
+        {
+            var rt = new DtoLib.Resultado();
+
+            try
+            {
+                using (var cnn = new PosEntities(_cnPos.ConnectionString))
+                {
+                    var ent = cnn.clientes.Find(idCliente);
+                    if (ent == null)
+                    {
+                        rt.Mensaje = "[ ID ] CLIENTE NO ENCONTRADO";
+                        rt.Result = DtoLib.Enumerados.EnumResult.isError;
+                        return rt;
+                    }
+                    if (ent.estatus.Trim().ToUpper() != "ACTIVO")
+                    {
+                        rt.Mensaje = "CLIENTE ANULADO";
+                        rt.Result = DtoLib.Enumerados.EnumResult.isError;
+                        return rt;
+                    }
+                    if (ent.estatus_credito.Trim().ToUpper() != "1") 
+                    {
+                        rt.Mensaje = "CLIENTE NO ACTIVO PARA CREDITO";
+                        rt.Result = DtoLib.Enumerados.EnumResult.isError;
+                        return rt;
+                    }
+                    if ((ent.debitos +monto)> ent.limite_credito)
+                    {
+                        rt.Mensaje = "MONTO LIMITE ASIGNADO SUPERADO";
+                        rt.Result = DtoLib.Enumerados.EnumResult.isError;
+                        return rt;
+                    }
+                    var p1 = new MySql.Data.MySqlClient.MySqlParameter("@idCliente", idCliente);
+                    var sql = @"SELECT count(*) as cnt 
+                                FROM cxc
+                                where tipo_documento='FAC' 
+                                and auto_cliente=@idCliente
+                                and estatus_cancelado='0' 
+                                and estatus_anulado='0'";
+                    var cnt = cnn.Database.SqlQuery<int>(sql, p1).FirstOrDefault();
+                    if ((cnt + 1) > ent.doc_pendientes)
+                    { 
+                        rt.Mensaje = "MONTO LIMITE DOCUMENTOS PENDIENTES ASIGNADO SUPERADO";
+                        rt.Result = DtoLib.Enumerados.EnumResult.isError;
+                        return rt;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                rt.Mensaje = e.Message;
+                rt.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+
+            return rt;
         }
 
 

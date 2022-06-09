@@ -18,6 +18,7 @@ namespace DtoLibPos.Documento.Anular.Factura
         public FichaAuditoria auditoria { get; set; }
         public List<FichaDeposito> deposito { get; set; }
         public FichaResumen resumen { get; set; }
+        public FichaClienteSaldo clienteSaldo { get; set; }
 
 
         public Ficha()
@@ -29,6 +30,7 @@ namespace DtoLibPos.Documento.Anular.Factura
             auditoria = new FichaAuditoria();
             deposito = new List<FichaDeposito>();
             resumen = new FichaResumen();
+            clienteSaldo = null;
         }
 
     }

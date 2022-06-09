@@ -98,8 +98,10 @@
     <Compile Include="DocumentoAdm\Anular\Prersupuesto\FichaAuditoria.cs" />
     <Compile Include="DocumentoAdm\Entidad\Ficha.cs" />
     <Compile Include="DocumentoAdm\Entidad\Item.cs" />
+    <Compile Include="Documento\Agregar\BaseClienteSaldo.cs" />
     <Compile Include="Documento\Agregar\BasePagoMovil.cs" />
     <Compile Include="Documento\Agregar\Factura\Ficha.cs" />
+    <Compile Include="Documento\Agregar\Factura\FichaClienteSaldo.cs" />
     <Compile Include="Documento\Agregar\Factura\FichaCxC.cs" />
     <Compile Include="Documento\Agregar\Factura\FichaCxCDocumento.cs" />
     <Compile Include="Documento\Agregar\Factura\FichaCxCMetodoPago.cs" />
@@ -118,6 +120,7 @@
     <Compile Include="Documento\Agregar\BaseCxCMetodoPago.cs" />
     <Compile Include="Documento\Agregar\Factura\Result.cs" />
     <Compile Include="Documento\Agregar\NotaCredito\Ficha.cs" />
+    <Compile Include="Documento\Agregar\NotaCredito\FichaClienteSaldo.cs" />
     <Compile Include="Documento\Agregar\NotaCredito\FichaCxC.cs" />
     <Compile Include="Documento\Agregar\NotaCredito\FichaCxCDocumento.cs" />
     <Compile Include="Documento\Agregar\NotaCredito\FichaCxCMetodoPago.cs" />
@@ -136,9 +139,11 @@
     <Compile Include="Documento\Agregar\NotaEntrega\FichaPosVenta.cs" />
     <Compile Include="Documento\Agregar\NotaEntrega\FichaSerie.cs" />
     <Compile Include="Documento\Anular\Auditoria.cs" />
+    <Compile Include="Documento\Anular\ClienteSaldo.cs" />
     <Compile Include="Documento\Anular\Deposito.cs" />
     <Compile Include="Documento\Anular\Factura\Ficha.cs" />
     <Compile Include="Documento\Anular\Factura\FichaAuditoria.cs" />
+    <Compile Include="Documento\Anular\Factura\FichaClienteSaldo.cs" />
     <Compile Include="Documento\Anular\Factura\FichaDeposito.cs" />
     <Compile Include="Documento\Anular\Factura\FichaResumen.cs" />
     <Compile Include="Documento\Anular\NotaCredito\Ficha.cs" />

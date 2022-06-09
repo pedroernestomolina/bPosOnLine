@@ -38,6 +38,9 @@ namespace IPos
         DtoLib.Resultado 
             Documento_Anular_Factura(DtoLibPos.Documento.Anular.Factura.Ficha ficha);
 
+        DtoLib.Resultado
+            Documento_Verificar_ProcesarFactClienteCredito(string idCliente, decimal monto);
+
     }
 
 }

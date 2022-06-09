@@ -84,6 +84,7 @@ namespace ProvPos
                                 eGrupoExt.idEmpresaHndPrecio as precioManejar,
                                 eSuc.estatus_facturar_mayor as estatusVentaMayor,
                                 eSucExt.es_activo as estatus, 
+                                eSucExt.estatus_fact_credito as estatusVentaCredito, 
                                 eSuc.autoDepositoPrincipal 
                               FROM empresa_sucursal as eSuc
                               join empresa_grupo as eGrupo on eGrupo.auto=eSuc.autoEmpresaGrupo
@@ -109,7 +110,6 @@ namespace ProvPos
 
             return result;
         }
-
 
     }
 

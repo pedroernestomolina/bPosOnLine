@@ -17,6 +17,7 @@ namespace DtoLibPos.Sucursal.Entidad
         public string nombreGrupo { get; set; }
         public int precioManejar { get; set; }
         public string estatusVentaMayor { get; set; }
+        public string estatusVentaCredito { get; set; }
         public string estatus { get; set; }
         public string autoDepositoPrincipal { get; set; }
 
@@ -29,6 +30,7 @@ namespace DtoLibPos.Sucursal.Entidad
             nombreGrupo = "";
             precioManejar = -1;
             estatusVentaMayor = "";
+            estatusVentaCredito = "";
             estatus = "";
             autoDepositoPrincipal = "";
         }
