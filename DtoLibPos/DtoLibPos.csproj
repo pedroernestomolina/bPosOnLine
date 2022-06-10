@@ -148,6 +148,7 @@
     <Compile Include="Documento\Anular\Factura\FichaResumen.cs" />
     <Compile Include="Documento\Anular\NotaCredito\Ficha.cs" />
     <Compile Include="Documento\Anular\NotaCredito\FichaAuditoria.cs" />
+    <Compile Include="Documento\Anular\NotaCredito\FichaClienteSaldo.cs" />
     <Compile Include="Documento\Anular\NotaCredito\FichaDeposito.cs" />
     <Compile Include="Documento\Anular\NotaCredito\FichaResumen.cs" />
     <Compile Include="Documento\Anular\NotaEntrega\Ficha.cs" />

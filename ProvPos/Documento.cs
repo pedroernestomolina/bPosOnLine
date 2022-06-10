@@ -2106,6 +2106,25 @@ namespace ProvPos
                             return result;
                         }
 
+
+                        //SALDO CLIENTE, EN CASO DE SER DOCUMENTO CREDITO AL QUE SE LE APLICA LA NOTA DE CREDITO
+                        if (ficha.clienteSaldo != null)
+                        {
+                            var xcli_1 = new MySql.Data.MySqlClient.MySqlParameter("@idCliente", ficha.clienteSaldo.autoCliente);
+                            var xcli_2 = new MySql.Data.MySqlClient.MySqlParameter("@monto", ficha.clienteSaldo.monto);
+                            var xsql_cli = @"update clientes set 
+                                                creditos=creditos-@monto
+                                                where auto=@idCliente";
+                            var r_cli = cn.Database.ExecuteSqlCommand(xsql_cli, xcli_1, xcli_2);
+                            if (r_cli == 0)
+                            {
+                                result.Mensaje = "PROBLEMA AL ACTUALIZAR SALDO CLIENTE";
+                                result.Result = DtoLib.Enumerados.EnumResult.isError;
+                                return result;
+                            }
+                        }
+
+
                         ////RESUMEN
                         //var monto = new MySql.Data.MySqlClient.MySqlParameter();
                         //var id = new MySql.Data.MySqlClient.MySqlParameter();
