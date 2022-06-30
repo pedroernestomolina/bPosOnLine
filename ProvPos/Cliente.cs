@@ -217,10 +217,10 @@ namespace ProvPos
                             result.Result = DtoLib.Enumerados.EnumResult.isError;
                             return result;
                         }
-
+                        var _largo = ficha.codigoSucursal.Trim().Length;
                         var fechaSistema = ctx.Database.SqlQuery<DateTime>("select now()").FirstOrDefault();
                         var cntCliente = ctx.Database.SqlQuery<int>("select a_clientes from sistema_contadores").FirstOrDefault();
-                        var AutoCliente = cntCliente.ToString().Trim().PadLeft(10, '0');
+                        var AutoCliente = ficha.codigoSucursal.Trim()+cntCliente.ToString().Trim().PadLeft(10-_largo, '0');
                         var fechaNula = new DateTime(2000, 01, 01);
 
                         var ent = new clientes()

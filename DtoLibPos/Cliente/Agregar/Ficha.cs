@@ -71,6 +71,7 @@ namespace DtoLibPos.Cliente.Agregar
         public string celular { get; set; }
         public string abc { get; set; }
         public decimal montoClasificacion { get; set; }
+        public string codigoSucursal { get; set; }
 
 
         public Ficha()
@@ -135,6 +136,7 @@ namespace DtoLibPos.Cliente.Agregar
             celular = "";
             abc = "";
             montoClasificacion = 0.0m;
+            codigoSucursal = "";
         }
 
     }
