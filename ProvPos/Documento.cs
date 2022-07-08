@@ -547,7 +547,7 @@ namespace ProvPos
                             nombre_titular = ficha.NombreTitular,
                             ci_beneficiario = ficha.CiBeneficiario,
                             nombre_beneficiario = ficha.NombreBeneficiario,
-                            clave = ficha.Clave,
+                            clave = "02", //INDICA QUE ES GENERADO POR SISTEMA POS ON LINE
                             denominacion_fiscal = ficha.DenominacionFiscal,
                             cambio = ficha.Cambio,
                             estatus_validado = ficha.EstatusValidado,
@@ -1181,7 +1181,7 @@ namespace ProvPos
                             nombre_titular = ficha.NombreTitular,
                             ci_beneficiario = ficha.CiBeneficiario,
                             nombre_beneficiario = ficha.NombreBeneficiario,
-                            clave = ficha.Clave,
+                            clave = "02", //INDICA QUE ES GENERADO POR SISTEMA POS ON LINE
                             denominacion_fiscal = ficha.DenominacionFiscal,
                             cambio = ficha.Cambio,
                             estatus_validado = ficha.EstatusValidado,
@@ -1731,7 +1731,7 @@ namespace ProvPos
                             nombre_titular = ficha.NombreTitular,
                             ci_beneficiario = ficha.CiBeneficiario,
                             nombre_beneficiario = ficha.NombreBeneficiario,
-                            clave = ficha.Clave,
+                            clave = "02", //INDICA QUE ES GENERADO POR SISTEMA POS ON LINE
                             denominacion_fiscal = ficha.DenominacionFiscal,
                             cambio = ficha.Cambio,
                             estatus_validado = ficha.EstatusValidado,
@@ -2766,7 +2766,6 @@ namespace ProvPos
 
             return rt;
         }
-
 
     }
 

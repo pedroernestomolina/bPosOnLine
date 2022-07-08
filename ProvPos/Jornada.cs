@@ -1,6 +1,7 @@
 ﻿using LibEntityPos;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,8 @@ namespace ProvPos
     public partial class Provider: IPos.IProvider
     {
 
-        public DtoLib.ResultadoId Jornada_Abrir(DtoLibPos.Pos.Abrir.Ficha ficha)
+        public DtoLib.ResultadoId 
+            Jornada_Abrir(DtoLibPos.Pos.Abrir.Ficha ficha)
         {
             var result = new DtoLib.ResultadoId();
 
@@ -181,8 +183,76 @@ namespace ProvPos
 
             return result;
         }
+        public DtoLib.ResultadoEntidad<int>
+            Jornada_Cerrar(DtoLibPos.Pos.Cerrar.Ficha ficha)
+        {
+            var result = new DtoLib.ResultadoEntidad<int>();
 
-        public DtoLib.Resultado Jornada_Verificar_Abrir(string idEquipo)
+            try
+            {
+                using (var cnn = new PosEntities(_cnPos.ConnectionString))
+                {
+                    using (var ts = new TransactionScope())
+                    {
+                        var fechaSistema = cnn.Database.SqlQuery<DateTime>("select now()").FirstOrDefault();
+                        var horaSistema = fechaSistema.ToShortTimeString();
+                        
+                        var sql_1 = @"update sistema_contadores set a_cierre_numero=a_cierre_numero+1";
+                        var r1 = cnn.Database.ExecuteSqlCommand(sql_1);
+                        var aCierreNro = cnn.Database.SqlQuery<int>("select a_cierre_numero from sistema_contadores").FirstOrDefault();
+                        cnn.SaveChanges();
+
+                        var sql_2 = @"update p_operador set 
+                                        estatus={0}, 
+                                        fecha_cierre={1},
+                                        hora_cierre={2},
+                                        cierre_numero={3}
+                                    where id={4}";
+                        var r2 = cnn.Database.ExecuteSqlCommand(sql_2, ficha.estatus, fechaSistema.Date, horaSistema, aCierreNro, ficha.idOperador);
+                        cnn.SaveChanges();
+
+                        var arq = ficha.arqueoCerrar;
+                        const string UpdatePosArqueo = @"UPDATE pos_arqueo SET " +
+                            "diferencia={0}, efectivo={1}, cheque={2}, debito={3}, credito={4}, ticket={5}, firma={6}, " +
+                            "retiro={7}, otros={8}, devolucion={9}, subtotal={10}, cobranza={11}, " +
+                            "total={12}, mefectivo={13}, mcheque={14}, mbanco1={15}, mbanco2={16}, mbanco3={17}, mbanco4={18}, mtarjeta={19}, " +
+                            "mticket={20}, mtrans={21}, mfirma={22}, motros={23}, mgastos={24}, mretiro={25}, mretenciones={26}, msubtotal={27}, " +
+                            "mtotal={28}, cierre_ftp={29}, cnt_divisa={30}, cnt_divisa_usuario={31}, cntDoc={32}, cntDocFac={33}, cntDocNcr={34}, " +
+                            "montoFac={35}, montoNcr={36}, fecha={38}, hora={39} " +
+                            "where auto_cierre={37}";
+                        var r3 = cnn.Database.ExecuteSqlCommand(UpdatePosArqueo,
+                            arq.diferencia, arq.efectivo, arq.cheque, arq.debito, arq.credito, arq.ticket, arq.firma,
+                            arq.retiro, arq.otros, arq.devolucion, arq.subTotal, arq.cobranza,
+                            arq.total, arq.mefectivo, arq.mcheque, arq.mbanco1, arq.mbanco2, arq.mbanco3, arq.mbanco4, arq.mtarjeta,
+                            arq.mticket, arq.mtrans, arq.mfirma, arq.motros, arq.mgastos, arq.mretiro, arq.mretenciones, arq.msubtotal,
+                            arq.mtotal, arq.cierreFtp, arq.cntDivisia, arq.cntDivisaUsuario, arq.cntDoc, arq.cntDocFac, arq.cntDocNCr,
+                            arq.montoFac, arq.montoNCr,arq.autoArqueo, fechaSistema.Date, horaSistema);
+                        cnn.SaveChanges();
+                        ts.Complete();
+                        result.Entidad = aCierreNro;
+                    }
+                }
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                result.Mensaje = Helpers.MYSQL_VerificaError(ex);
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+            catch (DbUpdateException ex)
+            {
+                result.Mensaje = Helpers.ENTITY_VerificaError(ex);
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+
+            return result;
+        }
+        public DtoLib.Resultado 
+            Jornada_Verificar_Abrir(string idEquipo)
         {
             var result = new DtoLib.Resultado();
 
@@ -192,7 +262,7 @@ namespace ProvPos
                 {
 
                     var ent = cnn.p_operador.FirstOrDefault(f => f.id_equipo == idEquipo && f.estatus == "A");
-                    if (ent != null) 
+                    if (ent != null)
                     {
                         result.Mensaje = "EXISTE UNA JORANADA ABIERTA PARA ESTE EQUIPO";
                         result.Result = DtoLib.Enumerados.EnumResult.isError;
@@ -208,98 +278,8 @@ namespace ProvPos
 
             return result;
         }
-
-        public DtoLib.Resultado Jornada_Cerrar(DtoLibPos.Pos.Cerrar.Ficha ficha)
-        {
-            var result = new DtoLib.ResultadoId();
-
-            try
-            {
-                using (var cnn = new PosEntities(_cnPos.ConnectionString))
-                {
-                    using (var ts = new TransactionScope())
-                    {
-                        var fechaSistema = cnn.Database.SqlQuery<DateTime>("select now()").FirstOrDefault();
-                        var horaSistema = fechaSistema.ToShortTimeString();
-
-                        var pOperador = cnn.p_operador.Find(ficha.idOperador);
-                        if (pOperador == null) 
-                        {
-                            result.Mensaje ="[ ID] OPERADOR NO ENCONTRADO";
-                            result.Result = DtoLib.Enumerados.EnumResult.isError;
-                            return result;
-                        }
-                        pOperador.estatus = ficha.estatus;
-                        pOperador.fecha_cierre =fechaSistema.Date;
-                        pOperador.hora_cierre = horaSistema;
-                        cnn.SaveChanges();
-
-                        var arq = ficha.arqueoCerrar;
-                        const string UpdatePosArqueo = @"UPDATE pos_arqueo SET " +
-                            "diferencia={0}, efectivo={1}, cheque={2}, debito={3}, credito={4}, ticket={5}, firma={6}, " +
-                            "retiro={7}, otros={8}, devolucion={9}, subtotal={10}, cobranza={11}, " +
-                            "total={12}, mefectivo={13}, mcheque={14}, mbanco1={15}, mbanco2={16}, mbanco3={17}, mbanco4={18}, mtarjeta={19}, " +
-                            "mticket={20}, mtrans={21}, mfirma={22}, motros={23}, mgastos={24}, mretiro={25}, mretenciones={26}, msubtotal={27}, " +
-                            "mtotal={28}, cierre_ftp={29}, cnt_divisa={30}, cnt_divisa_usuario={31}, cntDoc={32}, cntDocFac={33}, cntDocNcr={34}, " +
-                            "montoFac={35}, montoNcr={36}, fecha={38}, hora={39} " +
-                            "where auto_cierre={37}";
-                        var arqueo = cnn.Database.ExecuteSqlCommand(UpdatePosArqueo,
-                            arq.diferencia, arq.efectivo, arq.cheque, arq.debito, arq.credito, arq.ticket, arq.firma,
-                            arq.retiro, arq.otros, arq.devolucion, arq.subTotal, arq.cobranza,
-                            arq.total, arq.mefectivo, arq.mcheque, arq.mbanco1, arq.mbanco2, arq.mbanco3, arq.mbanco4, arq.mtarjeta,
-                            arq.mticket, arq.mtrans, arq.mfirma, arq.motros, arq.mgastos, arq.mretiro, arq.mretenciones, arq.msubtotal,
-                            arq.mtotal, arq.cierreFtp, arq.cntDivisia, arq.cntDivisaUsuario, arq.cntDoc, arq.cntDocFac, arq.cntDocNCr,
-                            arq.montoFac, arq.montoNCr,arq.autoArqueo, fechaSistema.Date, horaSistema);
-                        if (arqueo == 0)
-                        {
-                            result.Mensaje = "PROBLEMA AL ACTUALIZAR MOVIMIENTO DE ARQUEO";
-                            result.Result = DtoLib.Enumerados.EnumResult.isError;
-                            return result;
-                        }
-                        cnn.SaveChanges();
-
-                        ts.Complete();
-                        result.Id = pOperador.id;
-                    }
-                }
-            }
-            catch (DbEntityValidationException e)
-            {
-                var msg = "";
-                foreach (var eve in e.EntityValidationErrors)
-                {
-                    foreach (var ve in eve.ValidationErrors)
-                    {
-                        msg += ve.ErrorMessage;
-                    }
-                }
-                result.Mensaje = msg;
-                result.Result = DtoLib.Enumerados.EnumResult.isError;
-            }
-            catch (System.Data.Entity.Infrastructure.DbUpdateException e)
-            {
-                var msg = "";
-                foreach (var eve in e.Entries)
-                {
-                    //msg += eve.m;
-                    foreach (var ve in eve.CurrentValues.PropertyNames)
-                    {
-                        msg += ve.ToString();
-                    }
-                }
-                result.Mensaje = msg;
-                result.Result = DtoLib.Enumerados.EnumResult.isError;
-            }
-            catch (Exception e)
-            {
-                result.Mensaje = e.Message;
-                result.Result = DtoLib.Enumerados.EnumResult.isError;
-            }
-
-            return result;
-        }
-
-        public DtoLib.Resultado Jornada_Verificar_Cerrer(int idOperador)
+        public DtoLib.Resultado 
+            Jornada_Verificar_Cerrer(int idOperador)
         {
             var result = new DtoLib.Resultado();
 
@@ -328,7 +308,33 @@ namespace ProvPos
                         result.Result = DtoLib.Enumerados.EnumResult.isError;
                         return result;
                     }
+                }
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
 
+            return result;
+        }
+        public DtoLib.Resultado
+            Jornada_Verificar_Abrir_EquipoSucursal(string idEquipo, string codSucursal)
+        {
+            var result = new DtoLib.Resultado();
+
+            try
+            {
+                using (var cnn = new PosEntities(_cnPos.ConnectionString))
+                {
+
+                    var ent = cnn.p_operador.FirstOrDefault(f => f.id_equipo == idEquipo && f.codigo_sucursal.Trim().ToUpper() == codSucursal.Trim().ToUpper() && f.estatus == "A");
+                    if (ent != null)
+                    {
+                        result.Mensaje = "EXISTE UNA JORANADA ABIERTA PARA ESTE EQUIPO";
+                        result.Result = DtoLib.Enumerados.EnumResult.isError;
+                        return result;
+                    }
                 }
             }
             catch (Exception e)
@@ -340,7 +346,9 @@ namespace ProvPos
             return result;
         }
 
-        public DtoLib.ResultadoEntidad<DtoLibPos.Pos.EnUso.Ficha> Jornada_EnUso_GetByIdEquipo(string idEquipo)
+
+        public DtoLib.ResultadoEntidad<DtoLibPos.Pos.EnUso.Ficha> 
+            Jornada_EnUso_GetByIdEquipo(string idEquipo)
         {
             var result = new DtoLib.ResultadoEntidad<DtoLibPos.Pos.EnUso.Ficha>();
 
@@ -392,8 +400,8 @@ namespace ProvPos
 
             return result;
         }
-
-        public DtoLib.ResultadoEntidad<DtoLibPos.Pos.EnUso.Ficha> Jornada_EnUso_GetById(int id)
+        public DtoLib.ResultadoEntidad<DtoLibPos.Pos.EnUso.Ficha> 
+            Jornada_EnUso_GetById(int id)
         {
             var result = new DtoLib.ResultadoEntidad<DtoLibPos.Pos.EnUso.Ficha>();
 
@@ -450,8 +458,63 @@ namespace ProvPos
 
             return result;
         }
+        public DtoLib.ResultadoEntidad<DtoLibPos.Pos.EnUso.Ficha> 
+            Jornada_EnUso_GetBy_EquipoSucursal(string idEquipo, string codSucursal)
+        {
+            var result = new DtoLib.ResultadoEntidad<DtoLibPos.Pos.EnUso.Ficha>();
 
-        public DtoLib.ResultadoEntidad<DtoLibPos.Pos.Resumen.Ficha> Jornada_Resumen_GetByIdResumen(int id)
+            try
+            {
+                using (var cnn = new PosEntities(_cnPos.ConnectionString))
+                {
+
+                    var nr = new DtoLibPos.Pos.EnUso.Ficha();
+                    var ent = cnn.p_operador.FirstOrDefault(f => f.id_equipo == idEquipo && f.codigo_sucursal == codSucursal && f.estatus == "A");
+                    if (ent != null)
+                    {
+                        var idArqueoCierre = "";
+                        var idResumen = -1;
+
+                        var entResumen = cnn.p_resumen.FirstOrDefault(f => f.id_p_operador == ent.id);
+                        if (entResumen != null)
+                        {
+                            idArqueoCierre = entResumen.auto_pos_arqueo;
+                            idResumen = entResumen.id;
+                        }
+
+                        var codUsu = "";
+                        var nomUsu = "";
+                        var entUsuario = cnn.usuarios.Find(ent.auto_usuario);
+                        if (entUsuario != null)
+                        {
+                            codUsu = entUsuario.codigo;
+                            nomUsu = entUsuario.nombre;
+                        }
+                        nr.id = ent.id;
+                        nr.idUsuario = ent.auto_usuario;
+                        nr.fechaApertura = ent.fecha_apertura;
+                        nr.horaApertura = ent.hora_apertura;
+                        nr.codUsuario = codUsu;
+                        nr.nomUsuario = nomUsu;
+                        nr.idArqueoCierre = idArqueoCierre;
+                        nr.idResumen = idResumen;
+                    }
+                    result.Entidad = nr;
+                    return result;
+                }
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+
+            return result;
+        }
+
+
+        public DtoLib.ResultadoEntidad<DtoLibPos.Pos.Resumen.Ficha> 
+            Jornada_Resumen_GetByIdResumen(int id)
         {
             var result = new DtoLib.ResultadoEntidad<DtoLibPos.Pos.Resumen.Ficha>();
 
@@ -518,86 +581,6 @@ namespace ProvPos
                     result.Entidad = nr;
 
                     return result;
-                }
-            }
-            catch (Exception e)
-            {
-                result.Mensaje = e.Message;
-                result.Result = DtoLib.Enumerados.EnumResult.isError;
-            }
-
-            return result;
-        }
-
-        public DtoLib.ResultadoEntidad<DtoLibPos.Pos.EnUso.Ficha> Jornada_EnUso_GetBy_EquipoSucursal(string idEquipo, string codSucursal)
-        {
-            var result = new DtoLib.ResultadoEntidad<DtoLibPos.Pos.EnUso.Ficha>();
-
-            try
-            {
-                using (var cnn = new PosEntities(_cnPos.ConnectionString))
-                {
-
-                    var nr = new DtoLibPos.Pos.EnUso.Ficha();
-                    var ent = cnn.p_operador.FirstOrDefault(f => f.id_equipo == idEquipo && f.codigo_sucursal==codSucursal && f.estatus == "A");
-                    if (ent != null)
-                    {
-                        var idArqueoCierre = "";
-                        var idResumen = -1;
-
-                        var entResumen = cnn.p_resumen.FirstOrDefault(f => f.id_p_operador == ent.id);
-                        if (entResumen != null)
-                        {
-                            idArqueoCierre = entResumen.auto_pos_arqueo;
-                            idResumen = entResumen.id;
-                        }
-
-                        var codUsu = "";
-                        var nomUsu = "";
-                        var entUsuario = cnn.usuarios.Find(ent.auto_usuario);
-                        if (entUsuario != null)
-                        {
-                            codUsu = entUsuario.codigo;
-                            nomUsu = entUsuario.nombre;
-                        }
-                        nr.id = ent.id;
-                        nr.idUsuario = ent.auto_usuario;
-                        nr.fechaApertura = ent.fecha_apertura;
-                        nr.horaApertura = ent.hora_apertura;
-                        nr.codUsuario = codUsu;
-                        nr.nomUsuario = nomUsu;
-                        nr.idArqueoCierre = idArqueoCierre;
-                        nr.idResumen = idResumen;
-                    }
-                    result.Entidad = nr;
-                    return result;
-                }
-            }
-            catch (Exception e)
-            {
-                result.Mensaje = e.Message;
-                result.Result = DtoLib.Enumerados.EnumResult.isError;
-            }
-
-            return result;
-        }
-
-        public DtoLib.Resultado Jornada_Verificar_Abrir_EquipoSucursal(string idEquipo, string codSucursal)
-        {
-            var result = new DtoLib.Resultado();
-
-            try
-            {
-                using (var cnn = new PosEntities(_cnPos.ConnectionString))
-                {
-
-                    var ent = cnn.p_operador.FirstOrDefault(f => f.id_equipo == idEquipo && f.codigo_sucursal.Trim().ToUpper()==codSucursal.Trim().ToUpper() && f.estatus == "A");
-                    if (ent != null)
-                    {
-                        result.Mensaje = "EXISTE UNA JORANADA ABIERTA PARA ESTE EQUIPO";
-                        result.Result = DtoLib.Enumerados.EnumResult.isError;
-                        return result;
-                    }
                 }
             }
             catch (Exception e)

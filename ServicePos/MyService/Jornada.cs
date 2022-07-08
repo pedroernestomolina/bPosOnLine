@@ -12,7 +12,8 @@ namespace ServicePos.MyService
     public partial class Service : IService
     {
 
-        public DtoLib.ResultadoId Jornada_Abrir(DtoLibPos.Pos.Abrir.Ficha ficha)
+        public DtoLib.ResultadoId 
+            Jornada_Abrir(DtoLibPos.Pos.Abrir.Ficha ficha)
         {
             var result = new DtoLib.ResultadoId();
 
@@ -27,10 +28,10 @@ namespace ServicePos.MyService
 
             return ServiceProv.Jornada_Abrir(ficha);
         }
-
-        public DtoLib.Resultado Jornada_Cerrar(DtoLibPos.Pos.Cerrar.Ficha ficha)
+        public DtoLib.ResultadoEntidad<int>
+            Jornada_Cerrar(DtoLibPos.Pos.Cerrar.Ficha ficha)
         {
-            var result = new DtoLib.Resultado();
+            var result = new DtoLib.ResultadoEntidad<int>();
 
             var r01 = ServiceProv.Jornada_Verificar_Cerrer(ficha.idOperador);
             if (r01.Result == DtoLib.Enumerados.EnumResult.isError)
@@ -43,24 +44,28 @@ namespace ServicePos.MyService
             return ServiceProv.Jornada_Cerrar(ficha);
         }
 
-        public DtoLib.ResultadoEntidad<DtoLibPos.Pos.EnUso.Ficha> Jornada_EnUso_GetByIdEquipo(string idEquipo)
+
+        public DtoLib.ResultadoEntidad<DtoLibPos.Pos.EnUso.Ficha> 
+            Jornada_EnUso_GetByIdEquipo(string idEquipo)
         {
             return ServiceProv.Jornada_EnUso_GetByIdEquipo(idEquipo);
         }
-
-        public DtoLib.ResultadoEntidad<DtoLibPos.Pos.EnUso.Ficha> Jornada_EnUso_GetById(int id)
+        public DtoLib.ResultadoEntidad<DtoLibPos.Pos.EnUso.Ficha> 
+            Jornada_EnUso_GetById(int id)
         {
             return ServiceProv.Jornada_EnUso_GetById(id);
         }
-
-        public DtoLib.ResultadoEntidad<DtoLibPos.Pos.Resumen.Ficha> Jornada_Resumen_GetByIdResumen(int id)
-        {
-            return ServiceProv.Jornada_Resumen_GetByIdResumen(id);
-        }
-
-        public DtoLib.ResultadoEntidad<DtoLibPos.Pos.EnUso.Ficha> Jornada_EnUso_GetBy_EquipoSucursal(string idEquipo, string codSucursal)
+        public DtoLib.ResultadoEntidad<DtoLibPos.Pos.EnUso.Ficha> 
+            Jornada_EnUso_GetBy_EquipoSucursal(string idEquipo, string codSucursal)
         {
             return ServiceProv.Jornada_EnUso_GetBy_EquipoSucursal(idEquipo, codSucursal);
+        }
+
+
+        public DtoLib.ResultadoEntidad<DtoLibPos.Pos.Resumen.Ficha> 
+            Jornada_Resumen_GetByIdResumen(int id)
+        {
+            return ServiceProv.Jornada_Resumen_GetByIdResumen(id);
         }
 
     }
