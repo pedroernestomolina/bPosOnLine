@@ -27,6 +27,16 @@ namespace DtoLibPos.Documento.Agregar.NotaCredito
             AutoCobrador = "";
             Cierre = "";
             CierreFtp = "";
+            //
+            OpBanco = "";
+            OpNroCta = "";
+            OpNroRef = "";
+            OpFecha = DateTime.Now.Date;
+            OpDetalle = "";
+            OpMonto = 0m;
+            OpTasa = 0m;
+            OpAplicaConversion = "";
+            CodigoSucursal = "";
         }
 
     }

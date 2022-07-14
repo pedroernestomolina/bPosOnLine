@@ -53,6 +53,11 @@ namespace LibEntityPos
         public string cierre_ftp { get; set; }
         public decimal monto_divisa { get; set; }
         public decimal tasa_divisa { get; set; }
+        public decimal acumulado_divisa { get; set; }
+        public string codigo_sucursal { get; set; }
+        public decimal resta_divisa { get; set; }
+        public decimal importe_neto_divisa { get; set; }
+        public string estatus_doc_cxc { get; set; }
     
         public virtual clientes clientes { get; set; }
         public virtual vendedores vendedores { get; set; }

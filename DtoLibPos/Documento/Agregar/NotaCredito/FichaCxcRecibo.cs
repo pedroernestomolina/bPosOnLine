@@ -35,6 +35,11 @@ namespace DtoLibPos.Documento.Agregar.NotaCredito
             Descuentos = 0.0m;
             Cierre = "";
             CierreFtp = "";
+            //
+            ImporteDivisa = 0m;
+            MontoRecibidoDivisa = 0m;
+            CambioDivisa = 0m;
+            CodigoSucursal = "";
         }
 
     }

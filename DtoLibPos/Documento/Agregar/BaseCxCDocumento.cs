@@ -20,6 +20,10 @@ namespace DtoLibPos.Documento.Agregar
         public decimal CastigoP { get; set; }
         public decimal ComisionP { get; set; }
         public string CierreFtp { get; set; }
+        //CAMPOS NUEVOS
+        public decimal ImporteDivisa { get; set; }
+        public string CodigoSucursal { get; set; }
+        public string Notas { get; set; }
 
     }
 

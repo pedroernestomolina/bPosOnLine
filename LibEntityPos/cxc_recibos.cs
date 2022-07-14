@@ -40,10 +40,15 @@ namespace LibEntityPos
         public string hora { get; set; }
         public string cierre { get; set; }
         public string cierre_ftp { get; set; }
+        public decimal importe_divisa { get; set; }
+        public decimal monto_recibido_divisa { get; set; }
+        public decimal cambio_divisa { get; set; }
+        public string estatus_doc_cxc { get; set; }
+        public string codigo_sucursal { get; set; }
     
         public virtual clientes clientes { get; set; }
+        public virtual cxc cxc { get; set; }
         public virtual usuarios usuarios { get; set; }
         public virtual empresa_cobradores empresa_cobradores { get; set; }
-        public virtual cxc cxc { get; set; }
     }
 }

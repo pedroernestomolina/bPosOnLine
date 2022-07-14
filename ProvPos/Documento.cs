@@ -594,8 +594,14 @@ namespace ProvPos
                             dias = _cxc.Dias,
                             castigop = _cxc.CastigoP,
                             cierre_ftp = _cxc.CierreFtp,
-                            monto_divisa=_cxc.MontoDivisa,
+                            monto_divisa = _cxc.MontoDivisa,
                             tasa_divisa = _cxc.TasaDivisa,
+                            //
+                            acumulado_divisa = _cxc.AcumuladoDivisa,
+                            codigo_sucursal = _cxc.CodigoSucursal,
+                            resta_divisa = _cxc.RestaDivisa,
+                            importe_neto_divisa = _cxc.ImporteNetoDivisa,
+                            estatus_doc_cxc = "0",
                         };
                         cn.cxc.Add(entCxC);
                         cn.SaveChanges();
@@ -606,7 +612,8 @@ namespace ProvPos
                             var xcli_1 = new MySql.Data.MySqlClient.MySqlParameter("@idCliente", ficha.ClienteSaldo.autoCliente);
                             var xcli_2 = new MySql.Data.MySqlClient.MySqlParameter("@debito", ficha.ClienteSaldo.montoActualizar);
                             var xsql_cli = @"update clientes set 
-                                                debitos=debitos+@debito
+                                                debitos=debitos+@debito,
+                                                saldo=saldo+@debito
                                                 where auto=@idCliente";
                             var r_cli = cn.Database.ExecuteSqlCommand(xsql_cli, xcli_1,xcli_2);
                             if (r_cli == 0) 
@@ -672,6 +679,12 @@ namespace ProvPos
                                 cierre_ftp = pago.CierreFtp,
                                 monto_divisa = pago.MontoDivisa,
                                 tasa_divisa = pago.TasaDivisa,
+                                //
+                                acumulado_divisa = pago.AcumuladoDivisa,
+                                codigo_sucursal = pago.CodigoSucursal,
+                                resta_divisa = pago.RestaDivisa,
+                                importe_neto_divisa = pago.ImporteNetoDivisa,
+                                estatus_doc_cxc = "0",
                             };
                             cn.cxc.Add(entCxCPago);
                             cn.SaveChanges();
@@ -706,15 +719,28 @@ namespace ProvPos
                                 hora = fechaSistema.ToShortTimeString(),
                                 cierre = recibo.Cierre,
                                 cierre_ftp = recibo.CierreFtp,
+                                //
+                                importe_divisa = recibo.ImporteDivisa,
+                                monto_recibido_divisa = recibo.MontoRecibidoDivisa,
+                                cambio_divisa = recibo.CambioDivisa,
+                                estatus_doc_cxc = "0",
+                                codigo_sucursal = recibo.CodigoSucursal,
                             };
                             cn.cxc_recibos.Add(entCxcRecibo);
                             cn.SaveChanges();
 
                             //DOCUMENTO CXC DOCUMENTO
                             var documento = ficha.DocCxCPago.Documento;
-                            var sql_InsertarCxCDocumento = @"INSERT INTO cxc_documentos (id  , fecha , tipo_documento , documento , importe , " +
-                                        "operacion , auto_cxc , auto_cxc_pago , auto_cxc_recibo , numero_recibo, fecha_recepcion, dias, castigop, comisionp, cierre_ftp) " +
-                                        "VALUES ({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}, {14})";
+                            var sql_InsertarCxCDocumento = @"INSERT INTO cxc_documentos (
+                                                id, fecha, tipo_documento, documento, importe, 
+                                                operacion, auto_cxc, auto_cxc_pago , auto_cxc_recibo, numero_recibo, 
+                                                fecha_recepcion, dias, castigop, comisionp, cierre_ftp,
+                                                importe_divisa, estatus_doc_cxc, codigo_sucursal, notas) 
+                                            VALUES (
+                                                {0}, {1}, {2}, {3}, {4}, 
+                                                {5}, {6}, {7}, {8}, {9}, 
+                                                {10}, {11}, {12}, {13}, {14},
+                                                {15}, {16}, {17}, {18})";
                             var vCxcDoc = cn.Database.ExecuteSqlCommand(sql_InsertarCxCDocumento,
                                 documento.Id,
                                 fechaSistema.Date,
@@ -730,7 +756,11 @@ namespace ProvPos
                                 documento.Dias,
                                 documento.CastigoP,
                                 documento.ComisionP,
-                                documento.CierreFtp);
+                                documento.CierreFtp,
+                                documento.ImporteDivisa,
+                                "0",
+                                documento.CodigoSucursal,
+                                documento.Notas);
                             if (vCxcDoc == 0)
                             {
                                 result.Mensaje = "PROBLEMA AL REGISTRAR DOCUMENTO CXC";
@@ -741,28 +771,27 @@ namespace ProvPos
                             //DOCUEMNTO CXC METODOS PAGO
                             foreach (var fp in ficha.DocCxCPago.MetodoPago)
                             {
-                                var sql_InsertarCxCMedioPago = @"INSERT INTO cxc_medio_pago (auto_recibo , auto_medio_pago , auto_agencia, " +
-                                            "medio , codigo , monto_recibido , fecha , estatus_anulado , numero , agencia , auto_usuario, " +
-                                            "lote, referencia, auto_cobrador, cierre, fecha_agencia, cierre_ftp) " +
-                                            "VALUES ({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}, {14}, {15}, {16})";
+                                var sql_InsertarCxCMedioPago = @"INSERT INTO cxc_medio_pago (
+                                                auto_recibo , auto_medio_pago , auto_agencia, medio, codigo,
+                                                monto_recibido, fecha, estatus_anulado, numero, agencia, 
+                                                auto_usuario, lote, referencia, auto_cobrador, cierre, 
+                                                fecha_agencia, cierre_ftp, opBanco, opNroCta, opNroRef,
+                                                opFecha, opDetalle, opMonto, opTasa, opAplicaConversion,
+                                                estatus_doc_cxc, codigo_sucursal)
+                                        VALUES (
+                                                {0}, {1}, {2}, {3}, {4}, 
+                                                {5}, {6}, {7}, {8}, {9}, 
+                                                {10}, {11}, {12}, {13}, {14}, 
+                                                {15}, {16}, {17}, {18}, {19}, 
+                                                {20}, {21}, {22}, {23}, {24},
+                                                {25}, {26})";
                                 var vCxcMedioPago = cn.Database.ExecuteSqlCommand(sql_InsertarCxCMedioPago,
-                                    autoRecibo,
-                                    fp.AutoMedioPago,
-                                    fp.AutoAgencia,
-                                    fp.Medio,
-                                    fp.Codigo,
-                                    fp.MontoRecibido,
-                                    fechaSistema,
-                                    fp.EstatusAnulado,
-                                    fp.Numero,
-                                    fp.Agencia,
-                                    ficha.AutoUsuario,
-                                    fp.Lote,
-                                    fp.Referencia,
-                                    fp.AutoCobrador,
-                                    fp.Cierre,
-                                    fechaNula,
-                                    fp.CierreFtp);
+                                    autoRecibo, fp.AutoMedioPago, fp.AutoAgencia, fp.Medio, fp.Codigo,
+                                    fp.MontoRecibido, fechaSistema, fp.EstatusAnulado, fp.Numero, fp.Agencia,
+                                    ficha.AutoUsuario, fp.Lote, fp.Referencia, fp.AutoCobrador, fp.Cierre,
+                                    fechaNula, fp.CierreFtp, fp.OpBanco, fp.OpNroCta, fp.OpNroRef,
+                                    fp.OpFecha, fp.OpDetalle, fp.OpMonto, fp.OpTasa, fp.OpAplicaConversion,
+                                    "0", fp.CodigoSucursal);
                                 if (vCxcMedioPago == 0)
                                 {
                                     result.Mensaje = "PROBLEMA AL REGISTRAR METODO PAGO CXC";
@@ -1199,7 +1228,8 @@ namespace ProvPos
                             var xcli_1 = new MySql.Data.MySqlClient.MySqlParameter("@idCliente", ficha.ClienteSaldo.autoCliente);
                             var xcli_2 = new MySql.Data.MySqlClient.MySqlParameter("@monto", ficha.ClienteSaldo.montoActualizar);
                             var xsql_cli = @"update clientes set 
-                                                creditos=creditos+@monto
+                                                creditos=creditos+@monto,
+                                                saldo=saldo-@monto
                                                 where auto=@idCliente";
                             var r_cli = cn.Database.ExecuteSqlCommand(xsql_cli, xcli_1, xcli_2);
                             if (r_cli == 0)
@@ -1248,6 +1278,12 @@ namespace ProvPos
                             cierre_ftp = _cxc.CierreFtp,
                             monto_divisa = _cxc.MontoDivisa,
                             tasa_divisa = _cxc.TasaDivisa,
+                            //
+                            acumulado_divisa = _cxc.AcumuladoDivisa,
+                            codigo_sucursal = _cxc.CodigoSucursal,
+                            resta_divisa = _cxc.RestaDivisa,
+                            importe_neto_divisa = _cxc.ImporteNetoDivisa,
+                            estatus_doc_cxc = "0",
                         };
                         cn.cxc.Add(entCxC);
                         cn.SaveChanges();
@@ -1303,6 +1339,12 @@ namespace ProvPos
                                 cierre_ftp = pago.CierreFtp,
                                 monto_divisa = pago.MontoDivisa,
                                 tasa_divisa = pago.TasaDivisa,
+                                //
+                                acumulado_divisa = pago.AcumuladoDivisa,
+                                codigo_sucursal = pago.CodigoSucursal,
+                                resta_divisa = pago.RestaDivisa,
+                                importe_neto_divisa = pago.ImporteNetoDivisa,
+                                estatus_doc_cxc = "0",
                             };
                             cn.cxc.Add(entCxCPago);
                             cn.SaveChanges();
@@ -1337,31 +1379,33 @@ namespace ProvPos
                                 hora = fechaSistema.ToShortTimeString(),
                                 cierre = recibo.Cierre,
                                 cierre_ftp = recibo.CierreFtp,
+                                //
+                                importe_divisa = recibo.ImporteDivisa,
+                                monto_recibido_divisa = recibo.MontoRecibidoDivisa,
+                                cambio_divisa = recibo.CambioDivisa,
+                                estatus_doc_cxc = "0",
+                                codigo_sucursal = recibo.CodigoSucursal,
                             };
                             cn.cxc_recibos.Add(entCxcRecibo);
                             cn.SaveChanges();
 
                             //DOCUMENTO CXC DOCUMENTO
                             var documento = ficha.DocCxCPago.Documento;
-                            var sql_InsertarCxCDocumento = @"INSERT INTO cxc_documentos (id  , fecha , tipo_documento , documento , importe , " +
-                                        "operacion , auto_cxc , auto_cxc_pago , auto_cxc_recibo , numero_recibo, fecha_recepcion, dias, castigop, comisionp, cierre_ftp) " +
-                                        "VALUES ({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}, {14})";
+                            var sql_InsertarCxCDocumento = @"INSERT INTO cxc_documentos (
+                                                id, fecha, tipo_documento, documento, importe, 
+                                                operacion, auto_cxc, auto_cxc_pago , auto_cxc_recibo, numero_recibo, 
+                                                fecha_recepcion, dias, castigop, comisionp, cierre_ftp,
+                                                importe_divisa, estatus_doc_cxc, codigo_sucursal, notas) 
+                                            VALUES (
+                                                {0}, {1}, {2}, {3}, {4}, 
+                                                {5}, {6}, {7}, {8}, {9}, 
+                                                {10}, {11}, {12}, {13}, {14},
+                                                {15}, {16}, {17}, {18})";
                             var vCxcDoc = cn.Database.ExecuteSqlCommand(sql_InsertarCxCDocumento,
-                                documento.Id,
-                                fechaSistema.Date,
-                                documento.TipoDocumento,
-                                ficha.DocumentoNro,
-                                documento.Importe,
-                                documento.Operacion,
-                                autoCxC,
-                                autoCxCPago,
-                                autoRecibo,
-                                reciboNUmero,
-                                fechaNula.Date,
-                                documento.Dias,
-                                documento.CastigoP,
-                                documento.ComisionP,
-                                documento.CierreFtp);
+                                documento.Id, fechaSistema.Date, documento.TipoDocumento, ficha.DocumentoNro, documento.Importe,
+                                documento.Operacion, autoCxC, autoCxCPago, autoRecibo, reciboNUmero,
+                                fechaNula.Date, documento.Dias, documento.CastigoP, documento.ComisionP, documento.CierreFtp,
+                                documento.ImporteDivisa, "0", documento.CodigoSucursal, documento.Notas);
                             if (vCxcDoc == 0)
                             {
                                 result.Mensaje = "PROBLEMA AL REGISTRAR DOCUMENTO CXC";
@@ -1372,28 +1416,27 @@ namespace ProvPos
                             //DOCUEMNTO CXC METODOS PAGO
                             foreach (var fp in ficha.DocCxCPago.MetodoPago)
                             {
-                                var sql_InsertarCxCMedioPago = @"INSERT INTO cxc_medio_pago (auto_recibo , auto_medio_pago , auto_agencia, " +
-                                            "medio , codigo , monto_recibido , fecha , estatus_anulado , numero , agencia , auto_usuario, " +
-                                            "lote, referencia, auto_cobrador, cierre, fecha_agencia, cierre_ftp) " +
-                                            "VALUES ({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}, {14}, {15}, {16})";
+                                var sql_InsertarCxCMedioPago = @"INSERT INTO cxc_medio_pago (
+                                                auto_recibo , auto_medio_pago , auto_agencia, medio, codigo,
+                                                monto_recibido, fecha, estatus_anulado, numero, agencia, 
+                                                auto_usuario, lote, referencia, auto_cobrador, cierre, 
+                                                fecha_agencia, cierre_ftp, opBanco, opNroCta, opNroRef,
+                                                opFecha, opDetalle, opMonto, opTasa, opAplicaConversion,
+                                                estatus_doc_cxc, codigo_sucursal)
+                                        VALUES (
+                                                {0}, {1}, {2}, {3}, {4}, 
+                                                {5}, {6}, {7}, {8}, {9}, 
+                                                {10}, {11}, {12}, {13}, {14}, 
+                                                {15}, {16}, {17}, {18}, {19}, 
+                                                {20}, {21}, {22}, {23}, {24},
+                                                {25}, {26})";
                                 var vCxcMedioPago = cn.Database.ExecuteSqlCommand(sql_InsertarCxCMedioPago,
-                                    autoRecibo,
-                                    fp.AutoMedioPago,
-                                    fp.AutoAgencia,
-                                    fp.Medio,
-                                    fp.Codigo,
-                                    fp.MontoRecibido,
-                                    fechaSistema,
-                                    fp.EstatusAnulado,
-                                    fp.Numero,
-                                    fp.Agencia,
-                                    ficha.AutoUsuario,
-                                    fp.Lote,
-                                    fp.Referencia,
-                                    fp.AutoCobrador,
-                                    fp.Cierre,
-                                    fechaNula,
-                                    fp.CierreFtp);
+                                    autoRecibo, fp.AutoMedioPago, fp.AutoAgencia, fp.Medio, fp.Codigo,
+                                    fp.MontoRecibido, fechaSistema, fp.EstatusAnulado, fp.Numero, fp.Agencia,
+                                    ficha.AutoUsuario, fp.Lote, fp.Referencia, fp.AutoCobrador, fp.Cierre,
+                                    fechaNula, fp.CierreFtp, fp.OpBanco, fp.OpNroCta, fp.OpNroRef,
+                                    fp.OpFecha, fp.OpDetalle, fp.OpMonto, fp.OpTasa, fp.OpAplicaConversion,
+                                    "0", fp.CodigoSucursal);
                                 if (vCxcMedioPago == 0)
                                 {
                                     result.Mensaje = "PROBLEMA AL REGISTRAR METODO PAGO CXC";
@@ -1944,79 +1987,6 @@ namespace ProvPos
 
 
         public DtoLib.Resultado 
-            Documento_Anular_Verificar(string autoDoc)
-        {
-            var rt = new DtoLib.Resultado();
-
-            try
-            {
-                using (var cnn = new PosEntities (_cnPos.ConnectionString))
-                {
-                    var fechaSistema = cnn.Database.SqlQuery<DateTime>("select now()").FirstOrDefault();
-
-                    var ent = cnn.ventas.Find(autoDoc);
-                    if (ent == null)
-                    {
-                        rt.Mensaje = "[ ID ] DOCUMENTO NO ENCONTRADO";
-                        rt.Result = DtoLib.Enumerados.EnumResult.isError;
-                        return rt;
-                    }
-                    if (ent.estatus_anulado == "1")
-                    {
-                        rt.Mensaje = "DOCUMENTO YA ANULADO";
-                        rt.Result = DtoLib.Enumerados.EnumResult.isError;
-                        return rt;
-                    }
-                    if (ent.tipo == "01")
-                    {
-                        var xref = cnn.ventas.FirstOrDefault(f => f.auto_remision == autoDoc && f.estatus_anulado == "0");
-                        if (xref != null)
-                        {
-                            rt.Mensaje = "DOCUMENTO A ANULAR TIENE DOCUMENTOS RELACIONADOS";
-                            rt.Result = DtoLib.Enumerados.EnumResult.isError;
-                            return rt;
-                        }
-
-                        if (ent.condicion_pago != "CONTADO")
-                        {
-                            var entCxC = cnn.cxc.Find(ent.auto_cxc);
-                            if (entCxC == null)
-                            {
-                                rt.Mensaje = "CXC ASOCIADO AL DOCUMENTO NO ENCONTRADO";
-                                rt.Result = DtoLib.Enumerados.EnumResult.isError;
-                                return rt;
-                            }
-                            if (entCxC.estatus_anulado.Trim().ToUpper()=="1")
-                            {
-                                rt.Mensaje = "CXC ASOCIADO AL DOCUMENTO ANULADA";
-                                rt.Result = DtoLib.Enumerados.EnumResult.isError;
-                                return rt;
-                            }
-                            if (entCxC.acumulado > 0) 
-                            {
-                                rt.Mensaje = "EXISTE UN PAGO/COBRO ASOCIADO AL DOCUMENTO";
-                                rt.Result = DtoLib.Enumerados.EnumResult.isError;
-                                return rt;
-                            }
-                        }
-                    }
-                    if (ent.estatus_cierre_contable == "1")
-                    {
-                        rt.Mensaje = "DOCUMENTO SE ENCUENTRA BLOQUEADO CONTABLEMENTE";
-                        rt.Result = DtoLib.Enumerados.EnumResult.isError;
-                        return rt;
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                rt.Mensaje = e.Message;
-                rt.Result = DtoLib.Enumerados.EnumResult.isError;
-            }
-
-            return rt;
-        }
-        public DtoLib.Resultado 
             Documento_Anular_NotaCredito(DtoLibPos.Documento.Anular.NotaCredito.Ficha ficha)
         {
             var result = new DtoLib.Resultado();
@@ -2113,7 +2083,8 @@ namespace ProvPos
                             var xcli_1 = new MySql.Data.MySqlClient.MySqlParameter("@idCliente", ficha.clienteSaldo.autoCliente);
                             var xcli_2 = new MySql.Data.MySqlClient.MySqlParameter("@monto", ficha.clienteSaldo.monto);
                             var xsql_cli = @"update clientes set 
-                                                creditos=creditos-@monto
+                                                creditos=creditos-@monto,
+                                                saldo=saldo+@monto
                                                 where auto=@idCliente";
                             var r_cli = cn.Database.ExecuteSqlCommand(xsql_cli, xcli_1, xcli_2);
                             if (r_cli == 0)
@@ -2619,7 +2590,8 @@ namespace ProvPos
                             var xcli_1 = new MySql.Data.MySqlClient.MySqlParameter("@idCliente", ficha.clienteSaldo.autoCliente);
                             var xcli_2 = new MySql.Data.MySqlClient.MySqlParameter("@debito", ficha.clienteSaldo.monto);
                             var xsql_cli = @"update clientes set 
-                                                debitos=debitos-@debito
+                                                debitos=debitos-@debito,
+                                                saldo=saldo-@debito
                                                 where auto=@idCliente";
                             var r_cli = cn.Database.ExecuteSqlCommand(xsql_cli, xcli_1, xcli_2);
                             if (r_cli == 0)
@@ -2753,6 +2725,79 @@ namespace ProvPos
                     if ((cnt + 1) > ent.doc_pendientes)
                     { 
                         rt.Mensaje = "MONTO LIMITE DOCUMENTOS PENDIENTES ASIGNADO SUPERADO";
+                        rt.Result = DtoLib.Enumerados.EnumResult.isError;
+                        return rt;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                rt.Mensaje = e.Message;
+                rt.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+
+            return rt;
+        }
+        public DtoLib.Resultado
+            Documento_Anular_Verificar(string autoDoc)
+        {
+            var rt = new DtoLib.Resultado();
+
+            try
+            {
+                using (var cnn = new PosEntities(_cnPos.ConnectionString))
+                {
+                    var fechaSistema = cnn.Database.SqlQuery<DateTime>("select now()").FirstOrDefault();
+
+                    var ent = cnn.ventas.Find(autoDoc);
+                    if (ent == null)
+                    {
+                        rt.Mensaje = "[ ID ] DOCUMENTO NO ENCONTRADO";
+                        rt.Result = DtoLib.Enumerados.EnumResult.isError;
+                        return rt;
+                    }
+                    if (ent.estatus_anulado == "1")
+                    {
+                        rt.Mensaje = "DOCUMENTO YA ANULADO";
+                        rt.Result = DtoLib.Enumerados.EnumResult.isError;
+                        return rt;
+                    }
+                    if (ent.tipo == "01")
+                    {
+                        var xref = cnn.ventas.FirstOrDefault(f => f.auto_remision == autoDoc && f.estatus_anulado == "0");
+                        if (xref != null)
+                        {
+                            rt.Mensaje = "DOCUMENTO A ANULAR TIENE DOCUMENTOS RELACIONADOS";
+                            rt.Result = DtoLib.Enumerados.EnumResult.isError;
+                            return rt;
+                        }
+
+                        if (ent.condicion_pago != "CONTADO")
+                        {
+                            var entCxC = cnn.cxc.Find(ent.auto_cxc);
+                            if (entCxC == null)
+                            {
+                                rt.Mensaje = "CXC ASOCIADO AL DOCUMENTO NO ENCONTRADO";
+                                rt.Result = DtoLib.Enumerados.EnumResult.isError;
+                                return rt;
+                            }
+                            if (entCxC.estatus_anulado.Trim().ToUpper() == "1")
+                            {
+                                rt.Mensaje = "CXC ASOCIADO AL DOCUMENTO ANULADA";
+                                rt.Result = DtoLib.Enumerados.EnumResult.isError;
+                                return rt;
+                            }
+                            if (entCxC.acumulado > 0)
+                            {
+                                rt.Mensaje = "EXISTE UN PAGO/COBRO ASOCIADO AL DOCUMENTO";
+                                rt.Result = DtoLib.Enumerados.EnumResult.isError;
+                                return rt;
+                            }
+                        }
+                    }
+                    if (ent.estatus_cierre_contable == "1")
+                    {
+                        rt.Mensaje = "DOCUMENTO SE ENCUENTRA BLOQUEADO CONTABLEMENTE";
                         rt.Result = DtoLib.Enumerados.EnumResult.isError;
                         return rt;
                     }

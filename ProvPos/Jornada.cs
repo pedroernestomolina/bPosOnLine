@@ -32,7 +32,7 @@ namespace ProvPos
                         var horaSistema = fechaSistema.ToShortTimeString();
                         var fechaNula = new DateTime(2000, 01, 01);
 
-                        sql = "update sistema_contadores set a_cierre=a_cierre+1 ";
+                        sql = "update sistema_contadores set a_cierre=a_cierre+1";
                         var r1 = cnn.Database.ExecuteSqlCommand(sql);
                         if (r1 == 0)
                         {
@@ -68,19 +68,19 @@ namespace ProvPos
                             "total, mefectivo, mcheque, mbanco1, mbanco2, mbanco3, mbanco4, mtarjeta, "+
                             "mticket, mtrans, mfirma, motros, mgastos, mretiro, mretenciones, msubtotal, "+
                             "mtotal, cierre_ftp, cnt_divisa, cnt_divisa_usuario, cntDoc, cntDocFac, cntDocNcr, "+
-                            "montoFac, montoNcr)" +
+                            "montoFac, montoNcr, codigo_sucursal, id_equipo)" +
                             "VALUES ({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, "+
                             "{12}, {13}, {14}, {15},{16}, {17}, {18}, {19}, {20}, {21}, {22}, {23}, {24}, {25}, "+
                             "{26}, {27}, {28}, {29},{30}, {31}, {32}, {33}, {34}, {35}, {36}, {37}, {38}, {39}, "+
-                            "{40}, {41}, {42})";
-                        var arqueo = cnn.Database.ExecuteSqlCommand(InsertarPosArqueo, 
-                            autoCierre,arq.idUsuario,arq.codUsuario, arq.nombreUsuario, fechaNula.Date, horaSistema,
-                            arq.diferencia, arq.efectivo, arq.cheque, arq.debito,arq.credito, arq.ticket, arq.firma,
+                            "{40}, {41}, {42}, {43}, {44})";
+                        var arqueo = cnn.Database.ExecuteSqlCommand(InsertarPosArqueo,
+                            autoCierre, arq.idUsuario, arq.codUsuario, arq.nombreUsuario, fechaNula.Date, horaSistema,
+                            arq.diferencia, arq.efectivo, arq.cheque, arq.debito, arq.credito, arq.ticket, arq.firma,
                             arq.retiro, arq.otros, arq.devolucion, arq.subTotal, arq.cobranza,
                             arq.total, arq.mefectivo, arq.mcheque, arq.mbanco1, arq.mbanco2, arq.mbanco3, arq.mbanco4, arq.mtarjeta,
                             arq.mticket, arq.mtrans, arq.mfirma, arq.motros, arq.mgastos, arq.mretiro, arq.mretenciones, arq.msubtotal,
                             arq.mtotal, arq.cierreFtp, arq.cntDivisia, arq.cntDivisaUsuario, arq.cntDoc, arq.cntDocFac, arq.cntDocNCr,
-                            arq.montoFac, arq.montoNCr);
+                            arq.montoFac, arq.montoNCr, op.codSucursal, op.idEquipo);
                         if (arqueo == 0)
                         {
                             result.Mensaje = "PROBLEMA AL REGISTRAR MOVIMIENTO DE ARQUEO";
@@ -148,31 +148,14 @@ namespace ProvPos
                     }
                 }
             }
-            catch (DbEntityValidationException e)
+            catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                var msg = "";
-                foreach (var eve in e.EntityValidationErrors)
-                {
-                    foreach (var ve in eve.ValidationErrors)
-                    {
-                        msg += ve.ErrorMessage;
-                    }
-                }
-                result.Mensaje = msg;
+                result.Mensaje = Helpers.MYSQL_VerificaError(ex);
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
-            catch (System.Data.Entity.Infrastructure.DbUpdateException e)
+            catch (DbUpdateException ex)
             {
-                var msg = "";
-                foreach (var eve in e.Entries)
-                {
-                    //msg += eve.m;
-                    foreach (var ve in eve.CurrentValues.PropertyNames)
-                    {
-                        msg += ve.ToString();
-                    }
-                }
-                result.Mensaje = msg;
+                result.Mensaje = Helpers.ENTITY_VerificaError(ex);
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
             catch (Exception e)
@@ -212,21 +195,23 @@ namespace ProvPos
                         cnn.SaveChanges();
 
                         var arq = ficha.arqueoCerrar;
-                        const string UpdatePosArqueo = @"UPDATE pos_arqueo SET " +
-                            "diferencia={0}, efectivo={1}, cheque={2}, debito={3}, credito={4}, ticket={5}, firma={6}, " +
-                            "retiro={7}, otros={8}, devolucion={9}, subtotal={10}, cobranza={11}, " +
-                            "total={12}, mefectivo={13}, mcheque={14}, mbanco1={15}, mbanco2={16}, mbanco3={17}, mbanco4={18}, mtarjeta={19}, " +
-                            "mticket={20}, mtrans={21}, mfirma={22}, motros={23}, mgastos={24}, mretiro={25}, mretenciones={26}, msubtotal={27}, " +
-                            "mtotal={28}, cierre_ftp={29}, cnt_divisa={30}, cnt_divisa_usuario={31}, cntDoc={32}, cntDocFac={33}, cntDocNcr={34}, " +
-                            "montoFac={35}, montoNcr={36}, fecha={38}, hora={39} " +
-                            "where auto_cierre={37}";
+                        const string UpdatePosArqueo = @"UPDATE pos_arqueo SET 
+                            diferencia={0}, efectivo={1}, cheque={2}, debito={3}, credito={4}, 
+                            ticket={5}, firma={6}, retiro={7},otros={8}, devolucion={9}, 
+                            subtotal={10}, cobranza={11}, total={12}, mefectivo={13}, mcheque={14},
+                            mbanco1={15}, mbanco2={16}, mbanco3={17}, mbanco4={18}, mtarjeta={19}, 
+                            mticket={20}, mtrans={21}, mfirma={22}, motros={23}, mgastos={24}, 
+                            mretiro={25}, mretenciones={26}, msubtotal={27}, mtotal={28}, cierre_ftp={29}, 
+                            cnt_divisa={30}, cnt_divisa_usuario={31}, cntDoc={32}, cntDocFac={33}, cntDocNcr={34}, 
+                            montoFac={35}, montoNcr={36}, fecha={38}, hora={39}, cierre_numero={40} 
+                            where auto_cierre={37}";
                         var r3 = cnn.Database.ExecuteSqlCommand(UpdatePosArqueo,
                             arq.diferencia, arq.efectivo, arq.cheque, arq.debito, arq.credito, arq.ticket, arq.firma,
                             arq.retiro, arq.otros, arq.devolucion, arq.subTotal, arq.cobranza,
                             arq.total, arq.mefectivo, arq.mcheque, arq.mbanco1, arq.mbanco2, arq.mbanco3, arq.mbanco4, arq.mtarjeta,
                             arq.mticket, arq.mtrans, arq.mfirma, arq.motros, arq.mgastos, arq.mretiro, arq.mretenciones, arq.msubtotal,
                             arq.mtotal, arq.cierreFtp, arq.cntDivisia, arq.cntDivisaUsuario, arq.cntDoc, arq.cntDocFac, arq.cntDocNCr,
-                            arq.montoFac, arq.montoNCr,arq.autoArqueo, fechaSistema.Date, horaSistema);
+                            arq.montoFac, arq.montoNCr, arq.autoArqueo, fechaSistema.Date, horaSistema, aCierreNro);
                         cnn.SaveChanges();
                         ts.Complete();
                         result.Entidad = aCierreNro;

@@ -32,6 +32,11 @@ namespace DtoLibPos.Documento.Agregar
         public decimal Descuentos { get; set; }
         public string Cierre { get; set; }
         public string CierreFtp { get; set; }
+        // CAMPOS NUEVOS
+        public decimal ImporteDivisa { get; set; }
+        public decimal MontoRecibidoDivisa { get; set; }
+        public decimal CambioDivisa { get; set; }
+        public string CodigoSucursal { get; set; }
 
     }
 

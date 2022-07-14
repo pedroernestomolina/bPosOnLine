@@ -57,5 +57,8 @@ namespace LibEntityPos
         public int cntDocNcr { get; set; }
         public decimal montoFac { get; set; }
         public decimal montoNcr { get; set; }
+        public string codigo_sucursal { get; set; }
+        public string id_equipo { get; set; }
+        public int cierre_numero { get; set; }
     }
 }

@@ -31,6 +31,7 @@ namespace LibEntityPos
         public Nullable<System.DateTime> fecha_cierre { get; set; }
         public string hora_cierre { get; set; }
         public string codigo_sucursal { get; set; }
+        public int cierre_numero { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<p_pendiente> p_pendiente { get; set; }

@@ -21,6 +21,10 @@ namespace DtoLibPos.Documento.Agregar.NotaCredito
             CastigoP = 0.0m;
             ComisionP = 0.0m;
             CierreFtp = "";
+            //
+            ImporteDivisa = 0m;
+            CodigoSucursal = "";
+            Notas = "";
         }
 
     }

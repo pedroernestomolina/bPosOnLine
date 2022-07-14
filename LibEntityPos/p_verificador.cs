@@ -21,6 +21,7 @@ namespace LibEntityPos
         public string estatusVer { get; set; }
         public string estatusAnulado { get; set; }
         public System.DateTime fechaVer { get; set; }
+        public System.DateTime fechaReg { get; set; }
     
         public virtual ventas ventas { get; set; }
     }

@@ -8,17 +8,8 @@ using System.Threading.Tasks;
 namespace DtoLibPos.Documento.Agregar.Factura
 {
     
-    public class FichaCxCDocumento
+    public class FichaCxCDocumento: BaseCxCDocumento
     {
-
-        public int Id { get; set; }
-        public string TipoDocumento { get; set; }
-        public decimal Importe { get; set; }
-        public string Operacion { get; set; }
-        public int Dias { get; set; }
-        public decimal CastigoP { get; set; }
-        public decimal ComisionP { get; set; }
-        public string CierreFtp { get; set; }
 
 
         public FichaCxCDocumento()
@@ -31,6 +22,10 @@ namespace DtoLibPos.Documento.Agregar.Factura
             CastigoP = 0.0m;
             ComisionP = 0.0m;
             CierreFtp = "";
+            //
+            ImporteDivisa = 0m;
+            CodigoSucursal = "";
+            Notas = "";
         }
 
     }

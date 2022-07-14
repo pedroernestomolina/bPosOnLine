@@ -25,6 +25,16 @@ namespace DtoLibPos.Documento.Agregar
         public string AutoCobrador { get; set; }
         public string CierreFtp { get; set; }
         public string Cierre { get; set; }
+        //CAMPOS NUEVOS
+        public string OpBanco { get; set; }
+        public string OpNroCta { get; set; }
+        public string OpNroRef { get; set; }
+        public DateTime OpFecha { get; set; }
+        public string OpDetalle { get; set; }
+        public decimal OpMonto { get; set; }
+        public decimal OpTasa { get; set; }
+        public string OpAplicaConversion { get; set; }
+        public string CodigoSucursal { get; set; }
 
     }
 
