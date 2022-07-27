@@ -24,6 +24,9 @@ namespace LibEntityPos
         public decimal monto { get; set; }
         public decimal monto_divisa { get; set; }
         public int renglones { get; set; }
+        public string auto_sucursal { get; set; }
+        public string auto_deposito { get; set; }
+        public string auto_vendedor { get; set; }
     
         public virtual p_operador p_operador { get; set; }
     }

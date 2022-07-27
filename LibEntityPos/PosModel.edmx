@@ -312,6 +312,9 @@
           <Property Name="monto" Type="decimal" Precision="14" Scale="2" Nullable="false" />
           <Property Name="monto_divisa" Type="decimal" Precision="14" Scale="2" Nullable="false" />
           <Property Name="renglones" Type="int" Nullable="false" />
+          <Property Name="auto_sucursal" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="auto_deposito" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="auto_vendedor" Type="varchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="p_resumen">
           <Key>
@@ -396,6 +399,8 @@
           <Property Name="costoPromedio" Type="decimal" Precision="14" Scale="2" Nullable="false" />
           <Property Name="auto_deposito" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="id_p_pendiente" Type="int" Nullable="false" />
+          <Property Name="fPeso" Type="decimal" Precision="14" Scale="4" Nullable="false" />
+          <Property Name="fVolumen" Type="decimal" Precision="14" Scale="4" Nullable="false" />
         </EntityType>
         <EntityType Name="p_ventaadm">
           <Key>
@@ -682,6 +687,7 @@ warning 6002: The table/view 'pita.pos_arqueo' does not have a primary key defin
           <Property Name="pdf_3" Type="decimal" Precision="16" Scale="2" Nullable="false" />
           <Property Name="pdf_4" Type="decimal" Precision="16" Scale="2" Nullable="false" />
           <Property Name="pdf_pto" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="volumen" Type="decimal" Precision="14" Scale="6" Nullable="false" />
         </EntityType>
         <EntityType Name="productos_alterno">
           <Key>
@@ -1977,9 +1983,7 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
           <EntitySet Name="empresa_transporte" EntityType="pitaModel.empresa_transporte" />
           <EntitySet Name="p_configuracion" EntityType="pitaModel.p_configuracion" />
           <EntitySet Name="p_operador" EntityType="pitaModel.p_operador" />
-          <EntitySet Name="p_pendiente" EntityType="pitaModel.p_pendiente" />
           <EntitySet Name="p_resumen" EntityType="pitaModel.p_resumen" />
-          <EntitySet Name="p_venta" EntityType="pitaModel.p_venta" />
           <EntitySet Name="p_ventaadm" EntityType="pitaModel.p_ventaadm" />
           <EntitySet Name="p_ventaadm_det" EntityType="pitaModel.p_ventaadm_det" />
           <EntitySet Name="productos" EntityType="pitaModel.productos" />
@@ -2049,17 +2053,9 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
             <End Role="empresa_tasas" EntitySet="empresa_tasas" />
             <End Role="ventas_detalle" EntitySet="ventas_detalle" />
           </AssociationSet>
-          <AssociationSet Name="p_pendiente_ibfk_1" Association="pitaModel.p_pendiente_ibfk_1">
-            <End Role="p_operador" EntitySet="p_operador" />
-            <End Role="p_pendiente" EntitySet="p_pendiente" />
-          </AssociationSet>
           <AssociationSet Name="p_resumen_ibfk_1" Association="pitaModel.p_resumen_ibfk_1">
             <End Role="p_operador" EntitySet="p_operador" />
             <End Role="p_resumen" EntitySet="p_resumen" />
-          </AssociationSet>
-          <AssociationSet Name="p_venta_ibfk_1" Association="pitaModel.p_venta_ibfk_1">
-            <End Role="p_operador" EntitySet="p_operador" />
-            <End Role="p_venta" EntitySet="p_venta" />
           </AssociationSet>
           <AssociationSet Name="p_ventaadm_det_ibfk_1" Association="pitaModel.p_ventaadm_det_ibfk_1">
             <End Role="p_ventaadm" EntitySet="p_ventaadm" />
@@ -2159,6 +2155,16 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
           <AssociationSet Name="cxc_recibos_ibfk_3" Association="pitaModel.cxc_recibos_ibfk_3">
             <End Role="empresa_cobradores" EntitySet="empresa_cobradores" />
             <End Role="cxc_recibos" EntitySet="cxc_recibos" />
+          </AssociationSet>
+          <EntitySet Name="p_venta" EntityType="pitaModel.p_venta" />
+          <AssociationSet Name="p_venta_ibfk_1" Association="pitaModel.p_venta_ibfk_1">
+            <End Role="p_operador" EntitySet="p_operador" />
+            <End Role="p_venta" EntitySet="p_venta" />
+          </AssociationSet>
+          <EntitySet Name="p_pendiente" EntityType="pitaModel.p_pendiente" />
+          <AssociationSet Name="p_pendiente_ibfk_1" Association="pitaModel.p_pendiente_ibfk_1">
+            <End Role="p_operador" EntitySet="p_operador" />
+            <End Role="p_pendiente" EntitySet="p_pendiente" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="clientes_grupo">
@@ -2313,26 +2319,10 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
           <Property Name="fecha_cierre" Type="DateTime" />
           <Property Name="hora_cierre" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="codigo_sucursal" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="p_pendiente" Relationship="pitaModel.p_pendiente_ibfk_1" FromRole="p_operador" ToRole="p_pendiente" />
           <NavigationProperty Name="p_resumen" Relationship="pitaModel.p_resumen_ibfk_1" FromRole="p_operador" ToRole="p_resumen" />
-          <NavigationProperty Name="p_venta" Relationship="pitaModel.p_venta_ibfk_1" FromRole="p_operador" ToRole="p_venta" />
           <Property Name="cierre_numero" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="p_pendiente">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="id_p_operador" Type="Int32" Nullable="false" />
-          <Property Name="auto_cliente" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="cirif_cliente" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="nombre_cliente" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="feche" Type="DateTime" Nullable="false" />
-          <Property Name="hora" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="monto" Type="Decimal" Nullable="false" />
-          <Property Name="monto_divisa" Type="Decimal" Nullable="false" />
-          <Property Name="renglones" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="p_operador" Relationship="pitaModel.p_pendiente_ibfk_1" FromRole="p_pendiente" ToRole="p_operador" />
+          <NavigationProperty Name="p_venta" Relationship="pitaModel.p_venta_ibfk_1" FromRole="p_operador" ToRole="p_venta" />
+          <NavigationProperty Name="p_pendiente" Relationship="pitaModel.p_pendiente_ibfk_1" FromRole="p_operador" ToRole="p_pendiente" />
         </EntityType>
         <EntityType Name="p_resumen">
           <Key>
@@ -2387,38 +2377,6 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
           <Property Name="m_cambio_anulado" Type="Decimal" Nullable="false" />
           <Property Name="auto_pos_arqueo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="p_operador" Relationship="pitaModel.p_resumen_ibfk_1" FromRole="p_resumen" ToRole="p_operador" />
-        </EntityType>
-        <EntityType Name="p_venta">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="id_p_operador" Type="Int32" Nullable="false" />
-          <Property Name="auto_producto" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="auto_departamento" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="auto_grupo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="auto_subGrupo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="auto_tasa" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="codigo" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
-          <Property Name="nombre" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="cantidad" Type="Decimal" Nullable="false" />
-          <Property Name="pneto" Type="Decimal" Nullable="false" />
-          <Property Name="pdivisaFull" Type="Decimal" Nullable="false" />
-          <Property Name="tarifaPrecio" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="tasaIva" Type="Decimal" Nullable="false" />
-          <Property Name="tipoIva" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="categoria" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="decimales" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="empaqueDescripcion" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="empaqueContenido" Type="Int32" Nullable="false" />
-          <Property Name="estatusPesado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="costoUnd" Type="Decimal" Nullable="false" />
-          <Property Name="costoPromedioUnd" Type="Decimal" Nullable="false" />
-          <Property Name="costoCompra" Type="Decimal" Nullable="false" />
-          <Property Name="costoPromedio" Type="Decimal" Nullable="false" />
-          <Property Name="auto_deposito" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="id_p_pendiente" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="p_operador" Relationship="pitaModel.p_venta_ibfk_1" FromRole="p_venta" ToRole="p_operador" />
         </EntityType>
         <EntityType Name="p_ventaadm">
           <Key>
@@ -2609,6 +2567,7 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
           <NavigationProperty Name="productos_medida4" Relationship="pitaModel.productos_ibfk_8" FromRole="productos" ToRole="productos_medida" />
           <NavigationProperty Name="productos_medida5" Relationship="pitaModel.productos_ibfk_9" FromRole="productos" ToRole="productos_medida" />
           <NavigationProperty Name="ventas_detalle" Relationship="pitaModel.ventas_detalle_ibfk_1" FromRole="productos" ToRole="ventas_detalle" />
+          <Property Name="volumen" Type="Decimal" Nullable="false" />
         </EntityType>
         <EntityType Name="productos_alterno">
           <Key>
@@ -3287,18 +3246,6 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="p_pendiente_ibfk_1">
-          <End Type="pitaModel.p_operador" Role="p_operador" Multiplicity="1" />
-          <End Type="pitaModel.p_pendiente" Role="p_pendiente" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="p_operador">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="p_pendiente">
-              <PropertyRef Name="id_p_operador" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="p_resumen_ibfk_1">
           <End Type="pitaModel.p_operador" Role="p_operador" Multiplicity="1" />
           <End Type="pitaModel.p_resumen" Role="p_resumen" Multiplicity="*" />
@@ -3307,18 +3254,6 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="p_resumen">
-              <PropertyRef Name="id_p_operador" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="p_venta_ibfk_1">
-          <End Type="pitaModel.p_operador" Role="p_operador" Multiplicity="1" />
-          <End Type="pitaModel.p_venta" Role="p_venta" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="p_operador">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="p_venta">
               <PropertyRef Name="id_p_operador" />
             </Dependent>
           </ReferentialConstraint>
@@ -3713,6 +3648,83 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="p_venta">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_p_operador" Type="Int32" Nullable="false" />
+          <Property Name="auto_producto" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="auto_departamento" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="auto_grupo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="auto_subGrupo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="auto_tasa" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="codigo" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="cantidad" Type="Decimal" Nullable="false" />
+          <Property Name="pneto" Type="Decimal" Nullable="false" />
+          <Property Name="pdivisaFull" Type="Decimal" Nullable="false" />
+          <Property Name="tarifaPrecio" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="tasaIva" Type="Decimal" Nullable="false" />
+          <Property Name="tipoIva" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="categoria" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="decimales" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="empaqueDescripcion" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="empaqueContenido" Type="Int32" Nullable="false" />
+          <Property Name="estatusPesado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="costoUnd" Type="Decimal" Nullable="false" />
+          <Property Name="costoPromedioUnd" Type="Decimal" Nullable="false" />
+          <Property Name="costoCompra" Type="Decimal" Nullable="false" />
+          <Property Name="costoPromedio" Type="Decimal" Nullable="false" />
+          <Property Name="auto_deposito" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="id_p_pendiente" Type="Int32" Nullable="false" />
+          <Property Name="fPeso" Type="Decimal" Nullable="false" />
+          <Property Name="fVolumen" Type="Decimal" Nullable="false" />
+          <NavigationProperty Name="p_operador" Relationship="pitaModel.p_venta_ibfk_1" FromRole="p_venta" ToRole="p_operador" />
+        </EntityType>
+        <Association Name="p_venta_ibfk_1">
+          <End Type="pitaModel.p_operador" Role="p_operador" Multiplicity="1" />
+          <End Type="pitaModel.p_venta" Role="p_venta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="p_operador">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="p_venta">
+              <PropertyRef Name="id_p_operador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="p_pendiente">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_p_operador" Type="Int32" Nullable="false" />
+          <Property Name="auto_cliente" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="cirif_cliente" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="nombre_cliente" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="feche" Type="DateTime" Nullable="false" />
+          <Property Name="hora" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="monto" Type="Decimal" Nullable="false" />
+          <Property Name="monto_divisa" Type="Decimal" Nullable="false" />
+          <Property Name="renglones" Type="Int32" Nullable="false" />
+          <Property Name="auto_sucursal" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="auto_deposito" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="auto_vendedor" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="p_operador" Relationship="pitaModel.p_pendiente_ibfk_1" FromRole="p_pendiente" ToRole="p_operador" />
+        </EntityType>
+        <Association Name="p_pendiente_ibfk_1">
+          <End Type="pitaModel.p_operador" Role="p_operador" Multiplicity="1" />
+          <End Type="pitaModel.p_pendiente" Role="p_pendiente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="p_operador">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="p_pendiente">
+              <PropertyRef Name="id_p_operador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3946,22 +3958,6 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="p_pendiente">
-            <EntityTypeMapping TypeName="pitaModel.p_pendiente">
-              <MappingFragment StoreEntitySet="p_pendiente">
-                <ScalarProperty Name="renglones" ColumnName="renglones" />
-                <ScalarProperty Name="monto_divisa" ColumnName="monto_divisa" />
-                <ScalarProperty Name="monto" ColumnName="monto" />
-                <ScalarProperty Name="hora" ColumnName="hora" />
-                <ScalarProperty Name="feche" ColumnName="feche" />
-                <ScalarProperty Name="nombre_cliente" ColumnName="nombre_cliente" />
-                <ScalarProperty Name="cirif_cliente" ColumnName="cirif_cliente" />
-                <ScalarProperty Name="auto_cliente" ColumnName="auto_cliente" />
-                <ScalarProperty Name="id_p_operador" ColumnName="id_p_operador" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="p_resumen">
             <EntityTypeMapping TypeName="pitaModel.p_resumen">
               <MappingFragment StoreEntitySet="p_resumen">
@@ -4011,38 +4007,6 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
                 <ScalarProperty Name="m_divisa" ColumnName="m_divisa" />
                 <ScalarProperty Name="cnt_efectivo" ColumnName="cnt_efectivo" />
                 <ScalarProperty Name="m_efectivo" ColumnName="m_efectivo" />
-                <ScalarProperty Name="id_p_operador" ColumnName="id_p_operador" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="p_venta">
-            <EntityTypeMapping TypeName="pitaModel.p_venta">
-              <MappingFragment StoreEntitySet="p_venta">
-                <ScalarProperty Name="id_p_pendiente" ColumnName="id_p_pendiente" />
-                <ScalarProperty Name="auto_deposito" ColumnName="auto_deposito" />
-                <ScalarProperty Name="costoPromedio" ColumnName="costoPromedio" />
-                <ScalarProperty Name="costoCompra" ColumnName="costoCompra" />
-                <ScalarProperty Name="costoPromedioUnd" ColumnName="costoPromedioUnd" />
-                <ScalarProperty Name="costoUnd" ColumnName="costoUnd" />
-                <ScalarProperty Name="estatusPesado" ColumnName="estatusPesado" />
-                <ScalarProperty Name="empaqueContenido" ColumnName="empaqueContenido" />
-                <ScalarProperty Name="empaqueDescripcion" ColumnName="empaqueDescripcion" />
-                <ScalarProperty Name="decimales" ColumnName="decimales" />
-                <ScalarProperty Name="categoria" ColumnName="categoria" />
-                <ScalarProperty Name="tipoIva" ColumnName="tipoIva" />
-                <ScalarProperty Name="tasaIva" ColumnName="tasaIva" />
-                <ScalarProperty Name="tarifaPrecio" ColumnName="tarifaPrecio" />
-                <ScalarProperty Name="pdivisaFull" ColumnName="pdivisaFull" />
-                <ScalarProperty Name="pneto" ColumnName="pneto" />
-                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="codigo" ColumnName="codigo" />
-                <ScalarProperty Name="auto_tasa" ColumnName="auto_tasa" />
-                <ScalarProperty Name="auto_subGrupo" ColumnName="auto_subGrupo" />
-                <ScalarProperty Name="auto_grupo" ColumnName="auto_grupo" />
-                <ScalarProperty Name="auto_departamento" ColumnName="auto_departamento" />
-                <ScalarProperty Name="auto_producto" ColumnName="auto_producto" />
                 <ScalarProperty Name="id_p_operador" ColumnName="id_p_operador" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
@@ -4132,6 +4096,7 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
           <EntitySetMapping Name="productos">
             <EntityTypeMapping TypeName="pitaModel.productos">
               <MappingFragment StoreEntitySet="productos">
+                <ScalarProperty Name="volumen" ColumnName="volumen" />
                 <ScalarProperty Name="pdf_pto" ColumnName="pdf_pto" />
                 <ScalarProperty Name="pdf_4" ColumnName="pdf_4" />
                 <ScalarProperty Name="pdf_3" ColumnName="pdf_3" />
@@ -4709,6 +4674,59 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
                 <ScalarProperty Name="fecha" ColumnName="fecha" />
                 <ScalarProperty Name="documento" ColumnName="documento" />
                 <ScalarProperty Name="auto" ColumnName="auto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="p_venta">
+            <EntityTypeMapping TypeName="pitaModel.p_venta">
+              <MappingFragment StoreEntitySet="p_venta">
+                <ScalarProperty Name="fVolumen" ColumnName="fVolumen" />
+                <ScalarProperty Name="fPeso" ColumnName="fPeso" />
+                <ScalarProperty Name="id_p_pendiente" ColumnName="id_p_pendiente" />
+                <ScalarProperty Name="auto_deposito" ColumnName="auto_deposito" />
+                <ScalarProperty Name="costoPromedio" ColumnName="costoPromedio" />
+                <ScalarProperty Name="costoCompra" ColumnName="costoCompra" />
+                <ScalarProperty Name="costoPromedioUnd" ColumnName="costoPromedioUnd" />
+                <ScalarProperty Name="costoUnd" ColumnName="costoUnd" />
+                <ScalarProperty Name="estatusPesado" ColumnName="estatusPesado" />
+                <ScalarProperty Name="empaqueContenido" ColumnName="empaqueContenido" />
+                <ScalarProperty Name="empaqueDescripcion" ColumnName="empaqueDescripcion" />
+                <ScalarProperty Name="decimales" ColumnName="decimales" />
+                <ScalarProperty Name="categoria" ColumnName="categoria" />
+                <ScalarProperty Name="tipoIva" ColumnName="tipoIva" />
+                <ScalarProperty Name="tasaIva" ColumnName="tasaIva" />
+                <ScalarProperty Name="tarifaPrecio" ColumnName="tarifaPrecio" />
+                <ScalarProperty Name="pdivisaFull" ColumnName="pdivisaFull" />
+                <ScalarProperty Name="pneto" ColumnName="pneto" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="codigo" ColumnName="codigo" />
+                <ScalarProperty Name="auto_tasa" ColumnName="auto_tasa" />
+                <ScalarProperty Name="auto_subGrupo" ColumnName="auto_subGrupo" />
+                <ScalarProperty Name="auto_grupo" ColumnName="auto_grupo" />
+                <ScalarProperty Name="auto_departamento" ColumnName="auto_departamento" />
+                <ScalarProperty Name="auto_producto" ColumnName="auto_producto" />
+                <ScalarProperty Name="id_p_operador" ColumnName="id_p_operador" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="p_pendiente">
+            <EntityTypeMapping TypeName="pitaModel.p_pendiente">
+              <MappingFragment StoreEntitySet="p_pendiente">
+                <ScalarProperty Name="auto_vendedor" ColumnName="auto_vendedor" />
+                <ScalarProperty Name="auto_deposito" ColumnName="auto_deposito" />
+                <ScalarProperty Name="auto_sucursal" ColumnName="auto_sucursal" />
+                <ScalarProperty Name="renglones" ColumnName="renglones" />
+                <ScalarProperty Name="monto_divisa" ColumnName="monto_divisa" />
+                <ScalarProperty Name="monto" ColumnName="monto" />
+                <ScalarProperty Name="hora" ColumnName="hora" />
+                <ScalarProperty Name="feche" ColumnName="feche" />
+                <ScalarProperty Name="nombre_cliente" ColumnName="nombre_cliente" />
+                <ScalarProperty Name="cirif_cliente" ColumnName="cirif_cliente" />
+                <ScalarProperty Name="auto_cliente" ColumnName="auto_cliente" />
+                <ScalarProperty Name="id_p_operador" ColumnName="id_p_operador" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

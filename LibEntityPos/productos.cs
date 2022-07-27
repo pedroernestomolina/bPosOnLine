@@ -113,6 +113,7 @@ namespace LibEntityPos
         public decimal pdf_3 { get; set; }
         public decimal pdf_4 { get; set; }
         public decimal pdf_pto { get; set; }
+        public decimal volumen { get; set; }
     
         public virtual empresa_departamentos empresa_departamentos { get; set; }
         public virtual empresa_tasas empresa_tasas { get; set; }

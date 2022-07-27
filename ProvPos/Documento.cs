@@ -303,6 +303,16 @@ namespace ProvPos
                         };
                         return xr;
                     }).ToList();
+                    var p1 = new MySql.Data.MySqlClient.MySqlParameter("@id", idAuto);
+                    var _sqlMed= @"select 
+                                        nombre_medida as nombre, 
+                                        cnt as cant, 
+                                        peso, 
+                                        volumen 
+                                    from ventas_medida where auto_documento=@id";
+                    var _lMed = cn.Database.SqlQuery<DtoLibPos.Documento.Entidad.FichaMedida>(_sqlMed, p1).ToList();
+                    nr.medidas = _lMed;
+
                     result.Entidad = nr;
                 };
             }
@@ -862,9 +872,9 @@ namespace ProvPos
                                     fecha,hora,documento,modulo,entidad,signo,cantidad,cantidad_bono,cantidad_und,costo_und,estatus_anulado,
                                     nota,precio_und,codigo,siglas, 
                                     codigo_sucursal, cierre_ftp, codigo_deposito, nombre_deposito,
-                                    codigo_concepto, nombre_concepto) 
+                                    codigo_concepto, nombre_concepto, factor_cambio) 
                                     VALUES ({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, 
-                                    {12}, {13}, {14}, {15},{16}, {17}, {18}, {19}, {20}, {21}, {22}, {23}, {24}, {25})";
+                                    {12}, {13}, {14}, {15},{16}, {17}, {18}, {19}, {20}, {21}, {22}, {23}, {24}, {25}, {26})";
                         //KARDEX MOV=> ITEMS
                         foreach (var dt in ficha.MovKardex)
                         {
@@ -872,7 +882,7 @@ namespace ProvPos
                                 dt.AutoConcepto, autoVenta, fechaSistema.Date, fechaSistema.ToShortTimeString(), ficha.DocumentoNro,
                                 dt.Modulo, dt.Entidad, dt.Signo, dt.Cantidad, dt.CantidadBono, dt.CantidadUnd, dt.CostoUnd,
                                 dt.EstatusAnulado, dt.Nota, dt.PrecioUnd, dt.Codigo, dt.Siglas, dt.CodigoSucursal, dt.CierreFtp,
-                                dt.CodigoDeposito, dt.NombreDeposito, dt.CodigoConcepto, dt.NombreConcepto);
+                                dt.CodigoDeposito, dt.NombreDeposito, dt.CodigoConcepto, dt.NombreConcepto, dt.FactorCambio);
                             if (vk == 0)
                             {
                                 result.Mensaje = "PROBLEMA AL REGISTRAR MOVIMIENTO KARDEX [ " + Environment.NewLine + dt.AutoProducto + " ]";
@@ -980,21 +990,29 @@ namespace ProvPos
                             "0",
                             fechaNula,
                             fechaSistema.Date);
-                        if (vVer == 0)
-                        {
-                            result.Mensaje = "PROBLEMA AL REGISTRAR TABLA P_VERIFICADOR";
-                            result.Result = DtoLib.Enumerados.EnumResult.isError;
-                            return result;
-                        }
+                        cn.SaveChanges();
+
                         var sqlVer2 = "SELECT LAST_INSERT_ID()";
                         var vVer2 = cn.Database.SqlQuery<int>(sqlVer2).FirstOrDefault();
+
 
                         if (ficha.PagoMovil != null)
                         {
                             var sqlPM = @"INSERT INTO v_pagomovil 
-                                            (id, auto_documento, nombre, ciRif, telefono, monto, auto_agencia)
+                                            (id, auto_documento, nombre, ciRif, telefono, monto, auto_agencia,
+                                            numero_doc,
+                                            fecha_doc,
+                                            tipo_doc,   
+                                            codigo_doc,
+                                            monto_doc,
+                                            cliente_rif,
+                                            cliente_nombre,
+                                            cliente_dirFiscal,
+                                            codigo_sucursal,
+                                            nombre_agencia)
                                         VALUES 
-                                            ({0}, {1}, {2}, {3}, {4}, {5}, {6})";
+                                            ({0}, {1}, {2}, {3}, {4}, {5}, {6},
+                                             {7}, {8}, {9}, {10}, {11}, {12}, {13}, {14}, {15}, {16})";
                             var vPM = cn.Database.ExecuteSqlCommand(sqlPM,
                                 null,
                                 autoVenta,
@@ -1002,13 +1020,39 @@ namespace ProvPos
                                 ficha.PagoMovil.ciRif,
                                 ficha.PagoMovil.telefono,
                                 ficha.PagoMovil.monto,
-                                ficha.PagoMovil.autoAgencia);
-                            if (vPM == 0)
+                                ficha.PagoMovil.autoAgencia,
+                                ficha.DocumentoNro,
+                                fechaSistema.Date,
+                                ficha.PagoMovil.tipoDocumento,
+                                ficha.PagoMovil.codigoDocumento,
+                                ficha.PagoMovil.montoDocumento,
+                                ficha.PagoMovil.clienteRif,
+                                ficha.PagoMovil.clienteNombre,
+                                ficha.PagoMovil.clienteDirFiscal,
+                                ficha.PagoMovil.codigoSucursal,
+                                ficha.PagoMovil.nombreAgencia);
+                            cn.SaveChanges();
+                        }
+
+                        if (ficha.Medidas != null)
+                        {
+                            foreach (var rg in ficha.Medidas) 
                             {
-                                result.Mensaje = "PROBLEMA AL REGISTRAR TABLA V_PAGOMOVIL";
-                                result.Result = DtoLib.Enumerados.EnumResult.isError;
-                                return result;
+                                var sqlMed = @"INSERT INTO ventas_medida (
+                                                    auto_documento, 
+                                                    nombre_medida, 
+                                                    cnt,    
+                                                    peso, 
+                                                    volumen) 
+                                                VALUES (
+                                                    {0}, 
+                                                    {1}, 
+                                                    {2}, 
+                                                    {3}, 
+                                                    {4})";
+                                var vMed = cn.Database.ExecuteSqlCommand(sqlMed, autoVenta, rg.descMedida, rg.cnt, rg.peso, rg.volumen);
                             }
+                            cn.SaveChanges();
                         }
                         ts.Complete();
 
@@ -1508,9 +1552,9 @@ namespace ProvPos
                                     fecha,hora,documento,modulo,entidad,signo,cantidad,cantidad_bono,cantidad_und,costo_und,estatus_anulado,
                                     nota,precio_und,codigo,siglas, 
                                     codigo_sucursal, cierre_ftp, codigo_deposito, nombre_deposito,
-                                    codigo_concepto, nombre_concepto) 
+                                    codigo_concepto, nombre_concepto, factor_cambio) 
                                     VALUES ({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, 
-                                    {12}, {13}, {14}, {15},{16}, {17}, {18}, {19}, {20}, {21}, {22}, {23}, {24}, {25})";
+                                    {12}, {13}, {14}, {15},{16}, {17}, {18}, {19}, {20}, {21}, {22}, {23}, {24}, {25}, {26})";
                         //KARDEX MOV=> ITEMS
                         foreach (var dt in ficha.MovKardex)
                         {
@@ -1518,7 +1562,7 @@ namespace ProvPos
                                 dt.AutoConcepto, autoVenta, fechaSistema.Date, fechaSistema.ToShortTimeString(), ficha.DocumentoNro,
                                 dt.Modulo, dt.Entidad, dt.Signo, dt.Cantidad, dt.CantidadBono, dt.CantidadUnd, dt.CostoUnd,
                                 dt.EstatusAnulado, dt.Nota, dt.PrecioUnd, dt.Codigo, dt.Siglas, dt.CodigoSucursal, dt.CierreFtp,
-                                dt.CodigoDeposito, dt.NombreDeposito, dt.CodigoConcepto, dt.NombreConcepto);
+                                dt.CodigoDeposito, dt.NombreDeposito, dt.CodigoConcepto, dt.NombreConcepto, dt.FactorCambio);
                             if (vk == 0)
                             {
                                 result.Mensaje = "PROBLEMA AL REGISTRAR MOVIMIENTO KARDEX [ " + Environment.NewLine + dt.AutoProducto + " ]";

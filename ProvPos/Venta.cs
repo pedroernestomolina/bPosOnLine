@@ -72,6 +72,8 @@ namespace ProvPos
                             tipoIva = ficha.item.tipoIva,
                             auto_deposito = ficha.item.autoDeposito,
                             id_p_pendiente=-1,
+                            fPeso=ficha.item.fPeso,
+                            fVolumen=ficha.item.fVolumen,
                         };
                         cnn.p_venta.Add(entVenta);
                         cnn.SaveChanges();
@@ -134,6 +136,8 @@ namespace ProvPos
                                     tasaIva = s.tasaIva,
                                     tipoIva = s.tipoIva,
                                     autoDeposito = s.auto_deposito,
+                                    fPeso = s.fPeso,
+                                    fVolumen = s.fVolumen,
                                 };
                                 return nr;
                             }).ToList();
@@ -195,6 +199,8 @@ namespace ProvPos
                         tasaIva = s.tasaIva,
                         tipoIva = s.tipoIva,
                         autoDeposito = s.auto_deposito,
+                        fPeso = s.fPeso,
+                        fVolumen = s.fVolumen,
                     };
                     result.Entidad= nr;
                 }

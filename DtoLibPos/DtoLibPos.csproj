@@ -110,6 +110,7 @@
     <Compile Include="Documento\Agregar\Factura\FichaDeposito.cs" />
     <Compile Include="Documento\Agregar\Factura\FichaDetalle.cs" />
     <Compile Include="Documento\Agregar\Factura\FichaKardex.cs" />
+    <Compile Include="Documento\Agregar\Factura\FichaMedida.cs" />
     <Compile Include="Documento\Agregar\Factura\FichaPagoMovil.cs" />
     <Compile Include="Documento\Agregar\Factura\FichaPosResumen.cs" />
     <Compile Include="Documento\Agregar\Factura\FichaPosVenta.cs" />
@@ -158,6 +159,7 @@
     <Compile Include="Documento\Anular\Resumen.cs" />
     <Compile Include="Documento\Entidad\Ficha.cs" />
     <Compile Include="Documento\Entidad\FichaItem.cs" />
+    <Compile Include="Documento\Entidad\FichaMedida.cs" />
     <Compile Include="Documento\Entidad\FichaMetodoPago.cs" />
     <Compile Include="Documento\Lista\Ficha.cs" />
     <Compile Include="Documento\Lista\Filtro.cs" />

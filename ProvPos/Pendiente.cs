@@ -14,7 +14,8 @@ namespace ProvPos
     public partial class Provider: IPos.IProvider
     {
 
-        public DtoLib.Resultado Pendiente_DejarCta(DtoLibPos.Pendiente.Dejar.Ficha ficha)
+        public DtoLib.Resultado 
+            Pendiente_DejarCta(DtoLibPos.Pendiente.Dejar.Ficha ficha)
         {
             var result = new DtoLib.Resultado ();
 
@@ -37,6 +38,10 @@ namespace ProvPos
                             monto_divisa = ficha.montoDivisa,
                             nombre_cliente = ficha.nombreCliente,
                             renglones = ficha.renglones,
+                            //
+                            auto_sucursal = ficha.idSucursal,
+                            auto_deposito = ficha.idDeposito,
+                            auto_vendedor = ficha.idVendedor,
                         };
                         cn.p_pendiente.Add(ent);
                         cn.SaveChanges();
@@ -66,8 +71,8 @@ namespace ProvPos
 
             return result;
         }
-
-        public DtoLib.ResultadoEntidad<int> Pendiente_CtasPendientes(DtoLibPos.Pendiente.Cnt.Filtro filtro)
+        public DtoLib.ResultadoEntidad<int> 
+            Pendiente_CtasPendientes(DtoLibPos.Pendiente.Cnt.Filtro filtro)
         {
             var result = new DtoLib.ResultadoEntidad<int>();
 
@@ -91,8 +96,8 @@ namespace ProvPos
 
             return result;
         }
-
-        public DtoLib.Resultado Pendiente_AbrirCta(int idCta, int idOperador)
+        public DtoLib.Resultado
+            Pendiente_AbrirCta(int idCta, int idOperador)
         {
             var result = new DtoLib.Resultado();
 
@@ -132,8 +137,8 @@ namespace ProvPos
 
             return result;
         }
-
-        public DtoLib.ResultadoLista<DtoLibPos.Pendiente.Lista.Ficha> Pendiente_Lista(DtoLibPos.Pendiente.Lista.Filtro filtro)
+        public DtoLib.ResultadoLista<DtoLibPos.Pendiente.Lista.Ficha> 
+            Pendiente_Lista(DtoLibPos.Pendiente.Lista.Filtro filtro)
         {
             var result = new DtoLib.ResultadoLista<DtoLibPos.Pendiente.Lista.Ficha>();
 
@@ -156,8 +161,12 @@ namespace ProvPos
                             montoDivisa = it.monto_divisa,
                             nombreCliente = it.nombre_cliente,
                             renglones = it.renglones,
-                            fecha=it.feche,
-                            hora=it.hora,
+                            fecha = it.feche,
+                            hora = it.hora,
+                            //
+                            idSucursal = it.auto_sucursal,
+                            idDeposito = it.auto_deposito,
+                            idVendedor = it.auto_vendedor,
                         };
                         lista.Add(nr);
                     }

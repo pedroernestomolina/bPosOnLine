@@ -18,6 +18,15 @@ namespace DtoLibPos.Documento.Agregar.Factura
             nombre = "";
             telefono = "";
             monto = 0m;
+            //
+            codigoDocumento = "";
+            tipoDocumento = "";
+            montoDocumento = 0m;
+            clienteRif = "";
+            clienteNombre = "";
+            clienteDirFiscal = "";
+            codigoSucursal = "";
+            nombreAgencia = "";
         }
 
     }

@@ -36,6 +36,9 @@ namespace DtoLibPos.Venta.Item.Entidad
         public decimal costoCompra { get; set; }
         public decimal costoPromedio { get; set; }
         public string autoDeposito { get; set; }
+        //
+        public decimal fPeso { get; set; }
+        public decimal fVolumen { get; set; }
 
 
         public Ficha()
@@ -65,6 +68,9 @@ namespace DtoLibPos.Venta.Item.Entidad
             autoProducto = "";
             idOperador = -1;
             id = -1;
+            //
+            fPeso = 0m;
+            fVolumen = 0m;
         }
 
     }

@@ -19,6 +19,10 @@ namespace DtoLibPos.Pendiente.Dejar
         public decimal montoDivisa { get; set; }
         public int renglones { get; set; }
         public List<FichaItem> items { get; set; }
+        //
+        public string idSucursal { get; set; }
+        public string idDeposito { get; set; }
+        public string idVendedor { get; set; }
 
 
         public Ficha()
@@ -31,6 +35,10 @@ namespace DtoLibPos.Pendiente.Dejar
             montoDivisa = 0.0m;
             renglones = 0;
             items = new List<FichaItem>();
+            //
+            idSucursal = "";
+            idDeposito = "";
+            idVendedor = "";
         }
 
     }

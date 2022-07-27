@@ -135,6 +135,12 @@ namespace DtoLibPos.Producto.Entidad
         public string decimalesDsp_2 { get; set; }
         public string decimalesDsp_3 { get; set; }
         public string decimalesDsp_4 { get; set; }
+        //
+        public decimal FPeso { get; set; }
+        public decimal FAlto { get; set; }
+        public decimal FLargo { get; set; }
+        public decimal FAncho { get; set; }
+        public decimal FVolumen { get; set; }
 
 
         public Ficha()
@@ -256,6 +262,14 @@ namespace DtoLibPos.Producto.Entidad
             decimalesDsp_2 = "";
             decimalesDsp_3 = "";
             decimalesDsp_4 = "";
+
+            //
+
+            FPeso = 0m;
+            FAlto = 0m;
+            FLargo = 0m;
+            FAncho = 0m;
+            FVolumen = 0m;
         }
 
     }

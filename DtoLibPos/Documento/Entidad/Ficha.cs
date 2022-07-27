@@ -114,6 +114,7 @@ namespace DtoLibPos.Documento.Entidad
         public string AutoDocCxC { get; set; }
         public string AutoReciboCxC { get; set; }
         public List<FichaItem> items;
+        public List<FichaMedida> medidas;
 
 
         public Ficha()
@@ -217,6 +218,7 @@ namespace DtoLibPos.Documento.Entidad
             AutoDocCxC = "";
             AutoReciboCxC = "";
             items = new List<FichaItem>();
+            medidas = new List<FichaMedida>();
         }
 
     }

@@ -12,7 +12,8 @@ namespace ProvPos
     public partial class Provider : IPos.IProvider
     {
 
-        public DtoLib.ResultadoLista<DtoLibPos.ProductoAdm.Lista.Ficha> ProductoAdm_GetLista(DtoLibPos.ProductoAdm.Lista.Filtro filtro)
+        public DtoLib.ResultadoLista<DtoLibPos.ProductoAdm.Lista.Ficha> 
+            ProductoAdm_GetLista(DtoLibPos.ProductoAdm.Lista.Filtro filtro)
         {
             var rt = new DtoLib.ResultadoLista<DtoLibPos.ProductoAdm.Lista.Ficha>();
 
@@ -174,7 +175,8 @@ namespace ProvPos
                        pm4.auto as AutoMedidaEmpaque_4, pm4.nombre as empaque_4, pm4.decimales as decimales_4, 
                        pm5.auto as AutoMedidaEmpaque_5, pm5.nombre as empaque_5, pm5.decimales as decimales_5, 
                        pmMay1.auto as AutoMedidaEmpaqueMay_1, pmMay1.nombre as empaqueMay_1, pmMay1.decimales as decimalesMay_1, 
-                       pmMay2.auto as AutoMedidaEmpaqueMay_2, pmMay2.nombre as empaqueMay_2, pmMay2.decimales as decimalesMay_2 
+                       pmMay2.auto as AutoMedidaEmpaqueMay_2, pmMay2.nombre as empaqueMay_2, pmMay2.decimales as decimalesMay_2,
+                       p.peso as FPeso, p.alto as FAlto, p.ancho as FAncho, p.largo as FLargo
                        from productos as p 
                        join empresa_departamentos as d on p.auto_departamento=d.auto 
                        join productos_ext as pext on p.auto=pext.auto_producto 

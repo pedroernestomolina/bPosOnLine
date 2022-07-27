@@ -33,6 +33,8 @@ namespace DtoLibPos.Documento.Agregar.Factura
         public string NombreDeposito { get; set; }
         public string CodigoConcepto { get; set; }
         public string NombreConcepto { get; set; }
+        //
+        public decimal FactorCambio { get; set; }
 
 
         public FichaKardex()
@@ -59,6 +61,8 @@ namespace DtoLibPos.Documento.Agregar.Factura
             NombreDeposito = "";
             CodigoConcepto = "";
             NombreConcepto = "";
+            //
+            FactorCambio = 0m;
         }
 
     }

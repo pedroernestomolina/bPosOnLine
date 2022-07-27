@@ -113,7 +113,18 @@ namespace DtoLibPos.ProductoAdm.Entidad
             decimales_5 = "";
             decimalesMay_1 = "";
             decimalesMay_2 = "";
+            //
+            FPeso = 0m;
+            FAlto = 0m;
+            FAncho = 0m;
+            FLargo = 0m;
         }
+
+        //
+        public decimal FPeso { get; set; }
+        public decimal FAlto { get; set; }
+        public decimal FLargo { get; set; }
+        public decimal FAncho { get; set; }
 
     }
 

@@ -40,6 +40,8 @@ namespace LibEntityPos
         public decimal costoPromedio { get; set; }
         public string auto_deposito { get; set; }
         public int id_p_pendiente { get; set; }
+        public decimal fPeso { get; set; }
+        public decimal fVolumen { get; set; }
     
         public virtual p_operador p_operador { get; set; }
     }

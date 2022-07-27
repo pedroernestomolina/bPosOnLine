@@ -35,6 +35,10 @@ namespace DtoLibPos.Venta.Item.Registrar
         public decimal costoCompra { get; set; }
         public decimal costoPromedio { get; set; }
         public string autoDeposito { get; set; }
+        //
+        public decimal fPeso { get; set; }
+        public decimal fVolumen { get; set; }
+
 
 
         public FichaItem()
@@ -63,6 +67,8 @@ namespace DtoLibPos.Venta.Item.Registrar
             autoDepartamento = "";
             autoProducto = "";
             idOperador = -1;
+            fPeso = 0m;
+            fVolumen = 0m;
         }
 
     }

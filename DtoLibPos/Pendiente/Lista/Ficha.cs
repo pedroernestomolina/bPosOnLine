@@ -20,6 +20,10 @@ namespace DtoLibPos.Pendiente.Lista
         public int renglones { get; set; }
         public DateTime fecha { get; set; }
         public string hora { get; set; }
+        //
+        public string idSucursal { get; set; }
+        public string idDeposito { get; set; }
+        public string idVendedor { get; set; }
 
 
         public Ficha()
@@ -33,6 +37,10 @@ namespace DtoLibPos.Pendiente.Lista
             renglones = 0;
             fecha = DateTime.Now.Date;
             hora = "";
+            //
+            idSucursal = "";
+            idDeposito = "";
+            idVendedor = "";
         }
 
     }
