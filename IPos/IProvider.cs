@@ -13,7 +13,7 @@ namespace IPos
         IFiscal, IUsuario, IPermiso, IConfiguracion, IJornada, IDocumento,
         IVenta, IPendiente, IReportesAdm, IClienteGrupo, IClienteZona, IConfiguracionAdm,
         IReportesCli, IReportesPos, IProductoAdm, IVentaAdm, IDocumentoAdm, 
-        IAuditoria, IModuloAdm, IVerificador, IAgencia
+        IAuditoria, IModuloAdm, IVerificador, IAgencia, ICierre
     {
 
         DtoLib.ResultadoEntidad<DateTime> FechaServidor();

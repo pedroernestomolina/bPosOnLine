@@ -28,13 +28,19 @@ namespace ProvPos
                     var p4 = new MySql.Data.MySqlClient.MySqlParameter();
                     var p5 = new MySql.Data.MySqlClient.MySqlParameter();
 
-                    var sql_1 = " select p.auto, p.codigo, p.nombre, p.estatus, p.estatus_divisa as estatusDivisa, "+
-                        "p.estatus_pesado as estatusPesado , p.tasa as tasaIva, p.plu, " +
-                        "pd.fisica as exFisica, pd.disponible as exDisponible ";
-
-                    var sql_2 = " from productos as p " +
-                        " join productos_deposito as pd on p.auto=pd.auto_producto ";
-
+                    var sql_1 = @" select 
+                                    p.auto, 
+                                    p.codigo, 
+                                    p.nombre, 
+                                    p.estatus, 
+                                    p.estatus_divisa as estatusDivisa, 
+                                    p.estatus_pesado as estatusPesado,
+                                    p.tasa as tasaIva, 
+                                    p.plu, 
+                                    pd.fisica as exFisica, 
+                                    pd.disponible as exDisponible ";
+                    var sql_2 = @" from productos as p 
+                                    join productos_deposito as pd on p.auto=pd.auto_producto ";
                     var sql_3 = " where 1=1 ";
                     var sql_4 = "";
 
@@ -70,35 +76,95 @@ namespace ProvPos
                             case "1":
                                 sql_1 += @" ,p.precio_1 as precioNeto, p.pdf_1 as precioFullDivisa, 
                                             p.contenido_1 as contenido, pm.decimales, pm.nombre as empaque,
-                                            pe.pdmf_1 as precioFullDivisaMay, pe.contenido_may_1 contenidoMay ";
-                                sql_2 += @" join productos_medida as pm on p.auto_precio_1=pm.auto
-                                            join productos_ext as pe on p.auto=pe.auto_producto ";
+                                            pe.pdmf_1 as precioFullDivisaMay, pe.contenido_may_1 contenidoMay,
+                                            p.precio_1 as pnetoEmp_1, 
+                                            pe.precio_may_1 as pnetoEmp_2,
+                                            pe.precio_dsp_1 as pnetoEmp_3,
+                                            p.pdf_1 as pfullDivEmp_1,
+                                            pe.pdmf_1 as pfullDivEmp_2,
+                                            pe.pdivisafull_dsp_1 as pfullDivEmp_3,
+                                            p.contenido_1 as contEmp_1,
+                                            pe.contenido_may_1 as contEmp_2,
+                                            pe.cont_dsp_1 as contEmp_3,
+                                            pm.nombre descEmp_1,
+                                            pm2.nombre descEmp_2,
+                                            pm3.nombre descEmp_3 ";
+                                sql_2 += @" join productos_ext as pe on p.auto=pe.auto_producto
+                                            join productos_medida as pm on pm.auto=p.auto_precio_1
+                                            join productos_medida as pm2 on pm2.auto=pe.auto_precio_may_1 
+                                            join productos_medida as pm3 on pm3.auto=pe.auto_precio_dsp_1 ";
                                 break;
                             case "2":
                                 sql_1 += @" ,p.precio_2 as precioNeto, p.pdf_2 as precioFullDivisa, 
                                             p.contenido_2 as contenido, pm.decimales, pm.nombre as empaque,
-                                            pe.pdmf_2 as precioFullDivisaMay, pe.contenido_may_2 contenidoMay ";
-                                sql_2 += @" join productos_medida as pm on p.auto_precio_2=pm.auto
-                                            join productos_ext as pe on p.auto=pe.auto_producto ";
+                                            pe.pdmf_2 as precioFullDivisaMay, pe.contenido_may_2 contenidoMay,
+                                            p.precio_2 as pnetoEmp_1, 
+                                            pe.precio_may_2 as pnetoEmp_2,
+                                            pe.precio_dsp_2 as pnetoEmp_3,
+                                            p.pdf_2 as pfullDivEmp_1,
+                                            pe.pdmf_2 as pfullDivEmp_2,
+                                            pe.pdivisafull_dsp_2 as pfullDivEmp_3,
+                                            p.contenido_2 as contEmp_1,
+                                            pe.contenido_may_2 as contEmp_2,
+                                            pe.cont_dsp_2 as contEmp_3,
+                                            pm.nombre descEmp_1,
+                                            pm2.nombre descEmp_2,
+                                            pm3.nombre descEmp_3 ";
+                                sql_2 += @" join productos_ext as pe on p.auto=pe.auto_producto
+                                            join productos_medida as pm on pm.auto=p.auto_precio_2
+                                            join productos_medida as pm2 on pm2.auto=pe.auto_precio_may_2 
+                                            join productos_medida as pm3 on pm3.auto=pe.auto_precio_dsp_2 ";
                                 break;
                             case "3":
                                 sql_1 += @" ,p.precio_3 as precioNeto, p.pdf_3 as precioFullDivisa, 
                                             p.contenido_3 as contenido, pm.decimales, pm.nombre as empaque,
-                                            pe.pdmf_3 as precioFullDivisaMay, pe.contenido_may_3 contenidoMay ";
-                                sql_2 += @" join productos_medida as pm on p.auto_precio_3=pm.auto
-                                            join productos_ext as pe on p.auto=pe.auto_producto ";
+                                            pe.pdmf_3 as precioFullDivisaMay, pe.contenido_may_3 contenidoMay,
+                                            p.precio_3 as pnetoEmp_1, 
+                                            pe.precio_may_3 as pnetoEmp_2,
+                                            pe.precio_dsp_3 as pnetoEmp_3,
+                                            p.pdf_3 as pfullDivEmp_1,
+                                            pe.pdmf_3 as pfullDivEmp_2,
+                                            pe.pdivisafull_dsp_3 as pfullDivEmp_3,
+                                            p.contenido_3 as contEmp_1,
+                                            pe.contenido_may_3 as contEmp_2,
+                                            pe.cont_dsp_3 as contEmp_3,
+                                            pm.nombre descEmp_1,
+                                            pm2.nombre descEmp_2,
+                                            pm3.nombre descEmp_3 ";
+                                sql_2 += @" join productos_ext as pe on p.auto=pe.auto_producto
+                                            join productos_medida as pm on pm.auto=p.auto_precio_3
+                                            join productos_medida as pm2 on pm2.auto=pe.auto_precio_may_3 
+                                            join productos_medida as pm3 on pm3.auto=pe.auto_precio_dsp_3 ";
                                 break;
                             case "4":
                                 sql_1 += @" ,p.precio_4 as precioNeto, p.pdf_4 as precioFullDivisa,
                                             p.contenido_4 as contenido, pm.decimales, pm.nombre as empaque, 
-                                            pe.pdmf_4 as precioFullDivisaMay, pe.cont_may_4 contenidoMay ";
-                                sql_2 += @" join productos_medida as pm on p.auto_precio_4=pm.auto 
-                                            join productos_ext as pe on p.auto=pe.auto_producto ";
+                                            pe.pdmf_4 as precioFullDivisaMay, pe.cont_may_4 contenidoMay,
+                                            p.precio_4 as pnetoEmp_1, 
+                                            pe.precio_may_4 as pnetoEmp_2,
+                                            pe.precio_dsp_4 as pnetoEmp_3,
+                                            p.pdf_4 as pfullDivEmp_1,
+                                            pe.pdmf_4 as pfullDivEmp_2,
+                                            pe.pdivisafull_dsp_4 as pfullDivEmp_3,
+                                            p.contenido_4 as contEmp_1,
+                                            pe.cont_may_4 as contEmp_2,
+                                            pe.cont_dsp_4 as contEmp_3,
+                                            pm.nombre descEmp_1,
+                                            pm2.nombre descEmp_2,
+                                            pm3.nombre descEmp_3 ";
+                                sql_2 += @" join productos_ext as pe on p.auto=pe.auto_producto
+                                            join productos_medida as pm on pm.auto=p.auto_precio_4
+                                            join productos_medida as pm2 on pm2.auto=pe.auto_precio_may_4 
+                                            join productos_medida as pm3 on pm3.auto=pe.auto_precio_dsp_4 ";
                                 break;
                             case "5":
                                 sql_1 += @" ,p.precio_pto as precioNeto, p.pdf_pto as precioFullDivisa, 
                                             p.contenido_pto as contenido, pm.decimales, pm.nombre as empaque, 
-                                            0 as precioFullDivisaMay, 1 contenidoMay ";
+                                            0 as precioFullDivisaMay, 1 contenidoMay,
+                                            p.precio_pto as pnetoEmp_1, 
+                                            p.pdf_pto as pfullDivEmp_1,
+                                            p.contenido_pto as contEmp_1,
+                                            pm.nombre descEmp_1 ";
                                 sql_2 += @" join productos_medida as pm on p.auto_precio_pto=pm.auto ";
                                 break;
                         }

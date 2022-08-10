@@ -12,12 +12,13 @@ namespace ServicePos.MyService
     public partial class Service : IService
     {
 
-        public DtoLib.ResultadoLista<DtoLibPos.Concepto.Lista.Ficha> Concepto_GetLista(DtoLibPos.Concepto.Lista.Filtro filtro)
+        public DtoLib.ResultadoLista<DtoLibPos.Concepto.Lista.Ficha> 
+            Concepto_GetLista(DtoLibPos.Concepto.Lista.Filtro filtro)
         {
             return ServiceProv.Concepto_GetLista(filtro);
         }
-
-        public DtoLib.ResultadoEntidad<DtoLibPos.Concepto.Entidad.Ficha> Concepto_GetFichaById(string id)
+        public DtoLib.ResultadoEntidad<DtoLibPos.Concepto.Entidad.Ficha> 
+            Concepto_GetFichaById(string id)
         {
             return ServiceProv.Concepto_GetFichaById(id);
         }

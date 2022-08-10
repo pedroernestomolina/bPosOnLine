@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="IAgencia.cs" />
     <Compile Include="IAuditoria.cs" />
+    <Compile Include="ICierre.cs" />
     <Compile Include="ICliente.cs" />
     <Compile Include="IClienteGrupo.cs" />
     <Compile Include="IClienteZona.cs" />

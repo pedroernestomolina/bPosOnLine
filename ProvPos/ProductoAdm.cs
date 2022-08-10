@@ -130,8 +130,8 @@ namespace ProvPos
 
             return rt;
         }
-
-        public DtoLib.ResultadoEntidad<DtoLibPos.ProductoAdm.Entidad.Ficha> ProductoAdm_GetFichaById(string id)
+        public DtoLib.ResultadoEntidad<DtoLibPos.ProductoAdm.Entidad.Ficha> 
+            ProductoAdm_GetFichaById(string id)
         {
             var result = new DtoLib.ResultadoEntidad<DtoLibPos.ProductoAdm.Entidad.Ficha>();
 
@@ -203,8 +203,8 @@ namespace ProvPos
 
             return result;
         }
-
-        public DtoLib.ResultadoEntidad<DtoLibPos.ProductoAdm.Existencia.Ficha> ProductoAdm_Existencia_GetFichaByDeposito(string idPrd, string idDeposito)
+        public DtoLib.ResultadoEntidad<DtoLibPos.ProductoAdm.Existencia.Ficha> 
+            ProductoAdm_Existencia_GetFichaByDeposito(string idPrd, string idDeposito)
         {
             var result = new DtoLib.ResultadoEntidad<DtoLibPos.ProductoAdm.Existencia.Ficha>();
 
@@ -235,8 +235,8 @@ namespace ProvPos
 
             return result;
         }
-
-        public DtoLib.ResultadoLista<DtoLibPos.ProductoAdm.ListaResumen.Ficha> ProductoAdm_GetListaResumen(DtoLibPos.ProductoAdm.ListaResumen.Filtro filtro)
+        public DtoLib.ResultadoLista<DtoLibPos.ProductoAdm.ListaResumen.Ficha> 
+            ProductoAdm_GetListaResumen(DtoLibPos.ProductoAdm.ListaResumen.Filtro filtro)
         {
             var rt = new DtoLib.ResultadoLista<DtoLibPos.ProductoAdm.ListaResumen.Ficha>();
 

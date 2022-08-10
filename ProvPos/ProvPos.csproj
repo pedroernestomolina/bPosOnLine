@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Agencia.cs" />
     <Compile Include="Auditoria.cs" />
+    <Compile Include="Cierre.cs" />
     <Compile Include="Cliente.cs" />
     <Compile Include="ClienteGrupo.cs" />
     <Compile Include="ClienteZona.cs" />

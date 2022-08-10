@@ -11,8 +11,10 @@ namespace IPos
     public interface IConcepto
     {
 
-        DtoLib.ResultadoLista<DtoLibPos.Concepto.Lista.Ficha> Concepto_GetLista(DtoLibPos.Concepto.Lista.Filtro filtro);
-        DtoLib.ResultadoEntidad<DtoLibPos.Concepto.Entidad.Ficha> Concepto_GetFichaById(string id);
+        DtoLib.ResultadoLista<DtoLibPos.Concepto.Lista.Ficha> 
+            Concepto_GetLista(DtoLibPos.Concepto.Lista.Filtro filtro);
+        DtoLib.ResultadoEntidad<DtoLibPos.Concepto.Entidad.Ficha> 
+            Concepto_GetFichaById(string id);
 
     }
 
