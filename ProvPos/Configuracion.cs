@@ -13,7 +13,8 @@ namespace ProvPos
     public partial class Provider : IPos.IProvider
     {
 
-        public DtoLib.ResultadoEntidad<string> Configuracion_FactorDivisa()
+        public DtoLib.ResultadoEntidad<string> 
+            Configuracion_FactorDivisa()
         {
             var result = new DtoLib.ResultadoEntidad<string>();
 
@@ -28,17 +29,6 @@ namespace ProvPos
                         result.Result = DtoLib.Enumerados.EnumResult.isError;
                         return result;
                     }
-
-                    //var m1 = 0.0m;
-                    //var cnf = ent.usuario;
-                    //if (cnf.Trim() != "")
-                    //{
-                    //    var style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands;
-                    //    //var culture = CultureInfo.CreateSpecificCulture("es-ES");
-                    //    var culture = CultureInfo.CreateSpecificCulture("en-EN");
-                    //    Decimal.TryParse(cnf, style, culture, out m1);
-                    //}
-
                     result.Entidad = ent.usuario;
                 }
             }
@@ -50,8 +40,8 @@ namespace ProvPos
 
             return result;
         }
-
-        public DtoLib.Resultado Configuracion_Pos_Inicializar()
+        public DtoLib.Resultado 
+            Configuracion_Pos_Inicializar()
         {
             var result = new DtoLib.Resultado();
 
@@ -108,8 +98,8 @@ namespace ProvPos
 
             return result;
         }
-
-        public DtoLib.Resultado Configuracion_Pos_Actualizar(DtoLibPos.Configuracion.Actualizar.Ficha ficha)
+        public DtoLib.Resultado 
+            Configuracion_Pos_Actualizar(DtoLibPos.Configuracion.Actualizar.Ficha ficha)
         {
             var result = new DtoLib.Resultado();
 
@@ -166,8 +156,8 @@ namespace ProvPos
 
             return result;
         }
-
-        public DtoLib.ResultadoEntidad<DtoLibPos.Configuracion.Entidad.Ficha> Configuracion_Pos_GetFicha()
+        public DtoLib.ResultadoEntidad<DtoLibPos.Configuracion.Entidad.Ficha> 
+            Configuracion_Pos_GetFicha()
         {
             var result = new DtoLib.ResultadoEntidad<DtoLibPos.Configuracion.Entidad.Ficha>();
 
@@ -225,8 +215,8 @@ namespace ProvPos
 
             return result;
         }
-
-        public DtoLib.Resultado Configuracion_Pos_CambioDepositoSucursalFrio()
+        public DtoLib.Resultado 
+            Configuracion_Pos_CambioDepositoSucursalFrio()
         {
             var result = new DtoLib.Resultado();
 
@@ -254,8 +244,8 @@ namespace ProvPos
 
             return result;
         }
-
-        public DtoLib.Resultado Configuracion_Pos_CambioDepositoSucursalViveres()
+        public DtoLib.Resultado 
+            Configuracion_Pos_CambioDepositoSucursalViveres()
         {
             var result = new DtoLib.Resultado();
 
@@ -283,8 +273,8 @@ namespace ProvPos
 
             return result;
         }
-
-        public DtoLib.Resultado Configuracion_Pos_CambioDepositoSucursal(DtoLibPos.Configuracion.CambioDepositoSucursal.Ficha ficha)
+        public DtoLib.Resultado 
+            Configuracion_Pos_CambioDepositoSucursal(DtoLibPos.Configuracion.CambioDepositoSucursal.Ficha ficha)
         {
             var result = new DtoLib.Resultado();
 
@@ -312,8 +302,8 @@ namespace ProvPos
 
             return result;
         }
-
-        public DtoLib.ResultadoEntidad<string> Configuracion_Habilitar_Precio5_VentaMayor()
+        public DtoLib.ResultadoEntidad<string> 
+            Configuracion_Habilitar_Precio5_VentaMayor()
         {
             var result = new DtoLib.ResultadoEntidad<string>();
 
@@ -330,6 +320,60 @@ namespace ProvPos
                     //}
                     //result.Entidad = ent.usuario;
                     result.Entidad = "0"; // NO HABILITADO, SE USARA VENTAS POR MAYOR
+                }
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+
+            return result;
+        }
+        public DtoLib.ResultadoEntidad<string> 
+            Configuracion_ValorMaximoPorcentajeDescuento()
+        {
+            var result = new DtoLib.ResultadoEntidad<string>();
+
+            try
+            {
+                using (var cnn = new PosEntities(_cnPos.ConnectionString))
+                {
+                    var ent = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL58");
+                    if (ent == null)
+                    {
+                        result.Mensaje = "[ ID ] CONFIGURACION GLOBAL NO ENCONTRADO";
+                        result.Result = DtoLib.Enumerados.EnumResult.isError;
+                        return result;
+                    }
+                    result.Entidad = ent.usuario;
+                }
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+
+            return result;
+        }
+        public DtoLib.ResultadoEntidad<string> 
+            Configuracion_HabilitarDescuentoUnicamenteConPagoEnDivsa()
+        {
+            var result = new DtoLib.ResultadoEntidad<string>();
+
+            try
+            {
+                using (var cnn = new PosEntities(_cnPos.ConnectionString))
+                {
+                    var ent = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL59");
+                    if (ent == null)
+                    {
+                        result.Mensaje = "[ ID ] CONFIGURACION GLOBAL NO ENCONTRADO";
+                        result.Result = DtoLib.Enumerados.EnumResult.isError;
+                        return result;
+                    }
+                    result.Entidad = ent.usuario;
                 }
             }
             catch (Exception e)
