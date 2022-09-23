@@ -10,7 +10,7 @@ namespace ConsoleTest
     {
         static void Main(string[] args)
         {
-            IPos.IProvider posProv = new ProvPos.Provider("localhost", "andresbello");
+            IPos.IProvider posProv = new ProvPos.Provider("localhost", "mscala");
             //var r01= posProv.Producto_GetFichaById("0000000866");
             //var r01= posProv.Sucursal_GetFichaById("0000000612");
             //var ficha = new DtoLibPos.Agencia.Agregar.Ficha()
@@ -30,6 +30,8 @@ namespace ConsoleTest
             //};
             //var r01 = posProv.Cierre_GetById(69);
 
+            //var filtro = new DtoLibPos.Reportes.POS.Filtro() { IdCierre = "1502000140" };
+            //var r01 = posProv.ReportePos_VueltosEntregados(filtro);
         }
     }
 }

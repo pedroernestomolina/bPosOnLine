@@ -19,8 +19,8 @@ namespace LibEntityPos
         {
             this.clientes = new HashSet<clientes>();
             this.ventas_detalle = new HashSet<ventas_detalle>();
-            this.ventas = new HashSet<ventas>();
             this.cxc = new HashSet<cxc>();
+            this.ventas = new HashSet<ventas>();
         }
     
         public string auto { get; set; }
@@ -66,8 +66,8 @@ namespace LibEntityPos
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ventas_detalle> ventas_detalle { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ventas> ventas { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<cxc> cxc { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ventas> ventas { get; set; }
     }
 }

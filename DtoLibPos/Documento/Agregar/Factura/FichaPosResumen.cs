@@ -41,6 +41,11 @@ namespace DtoLibPos.Documento.Agregar.Factura
         //
         public decimal mCambio{ get; set; }
         public int cntCambio { get; set; }
+        //
+        public decimal montoVueltoPorEfectivo { get; set; }
+        public decimal montoVueltoPorDivisa { get; set; }
+        public decimal montoVueltoPorPagoMovil { get; set; }
+        public int cntDivisaPorVueltoDivisa { get; set; }
 
 
         public FichaPosResumen()
@@ -73,6 +78,10 @@ namespace DtoLibPos.Documento.Agregar.Factura
             //
             mCambio = 0.0m;
             cntCambio = 0;
+            montoVueltoPorEfectivo = 0m;
+            montoVueltoPorDivisa = 0m;
+            montoVueltoPorPagoMovil = 0m;
+            cntDivisaPorVueltoDivisa = 0;
         }
 
     }

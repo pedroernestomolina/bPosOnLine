@@ -190,7 +190,7 @@ namespace ProvPos
                         Impuesto2 = ent.impuesto2,
                         Impuesto3 = ent.impuesto3,
                         MBase = ent.@base,
-                        MesRelacion=ent.mes_relacion,
+                        MesRelacion = ent.mes_relacion,
                         MontoDivisa = ent.monto_divisa,
                         Neto = ent.neto,
                         NombreBeneficiario = ent.nombre_beneficiario,
@@ -227,8 +227,13 @@ namespace ProvPos
                         Utilidad = ent.utilidad,
                         Utilidadp = ent.utilidadp,
                         Vendedor = ent.vendedor,
-                        AutoDocCxC=ent.auto_cxc,
-                        AutoReciboCxC=ent.auto_recibo,
+                        AutoDocCxC = ent.auto_cxc,
+                        AutoReciboCxC = ent.auto_recibo,
+                        //
+                        MontoPorVueltoEnEfectivo = ent.monto_por_vuelto_en_efectivo,
+                        MontoPorVueltoEnDivisa = ent.monto_por_vuelto_en_divisa,
+                        MontoPorVueltoEnPagoMovil = ent.monto_por_vuelto_en_pago_movil,
+                        CantDivisaPorVueltoEnDivisa = ent.cnt_divisa_por_vuelto_en_divisa,
                     };
                     var entDet = cn.ventas_detalle.Where(w => w.auto_documento == idAuto).ToList();
                     nr.items = entDet.Select(s =>
@@ -565,6 +570,17 @@ namespace ProvPos
                             fecha_retencion = fechaNula,
                             estatus_cierre_contable = ficha.EstatusCierreContable,
                             cierre_ftp = ficha.CierreFtp,
+                            //
+                            porct_bono_por_pago_divisa = ficha.PorctBonoPorPagoDivisa,
+                            cnt_divisa_aplica_bono_por_pago_divisa = ficha.CantDivisaAplicaBonoPorPagoDivisa,
+                            monto_bono_por_pago_divisa = ficha.MontoBonoPorPagoDivisa,
+                            monto_bono_en_divisa_por_pago_divisa = ficha.MontoBonoEnDivisaPorPagoDivisa,
+                            monto_por_vuelto_en_efectivo = ficha.MontoPorVueltoEnEfectivo,
+                            monto_por_vuelto_en_divisa = ficha.MontoPorVueltoEnDivisa,
+                            monto_por_vuelto_en_pago_movil = ficha.MontoPorVueltoEnPagoMovil,
+                            cnt_divisa_por_vuelto_en_divisa = ficha.CantDivisaPorVueltoEnDivisa,
+                            estatus_bono_por_pago_divisa=ficha.estatusPorBonoPorPagoDivisa,
+                            estatus_vuelto_por_pago_movil=ficha.estatusPorVueltoEnPagoMovil,
                         };
                         cn.ventas.Add(entVenta);
                         cn.SaveChanges();
@@ -968,6 +984,10 @@ namespace ProvPos
                         entResumen.cnt_cambio_anulado += 0;
                         entResumen.m_cambio_anulado += 0;
                         //
+                        entResumen.monto_vuelto_por_efectivo += res.montoVueltoPorEfectivo;
+                        entResumen.monto_vuelto_por_divisa += res.montoVueltoPorDivisa;
+                        entResumen.monto_vuelto_por_pago_movil += res.montoVueltoPorPagoMovil;
+                        entResumen.cnt_divisa_por_vuelto_divisa += res.cntDivisaPorVueltoDivisa;
                         cn.SaveChanges();
 
 
@@ -1009,10 +1029,13 @@ namespace ProvPos
                                             cliente_nombre,
                                             cliente_dirFiscal,
                                             codigo_sucursal,
-                                            nombre_agencia)
+                                            nombre_agencia, 
+                                            cierre, 
+                                            cierre_ftp)
                                         VALUES 
                                             ({0}, {1}, {2}, {3}, {4}, {5}, {6},
-                                             {7}, {8}, {9}, {10}, {11}, {12}, {13}, {14}, {15}, {16})";
+                                             {7}, {8}, {9}, {10}, {11}, {12}, 
+                                            {13}, {14}, {15}, {16}, {17}, {18})";
                             var vPM = cn.Database.ExecuteSqlCommand(sqlPM,
                                 null,
                                 autoVenta,
@@ -1030,7 +1053,9 @@ namespace ProvPos
                                 ficha.PagoMovil.clienteNombre,
                                 ficha.PagoMovil.clienteDirFiscal,
                                 ficha.PagoMovil.codigoSucursal,
-                                ficha.PagoMovil.nombreAgencia);
+                                ficha.PagoMovil.nombreAgencia,
+                                ficha.PagoMovil.cierre,
+                                ficha.PagoMovil.cierreFtp);
                             cn.SaveChanges();
                         }
 
@@ -1262,6 +1287,17 @@ namespace ProvPos
                             fecha_retencion = fechaNula,
                             estatus_cierre_contable = ficha.EstatusCierreContable,
                             cierre_ftp = ficha.CierreFtp,
+                            //
+                            porct_bono_por_pago_divisa = ficha.PorctBonoPorPagoDivisa,
+                            cnt_divisa_aplica_bono_por_pago_divisa = ficha.CantDivisaAplicaBonoPorPagoDivisa,
+                            monto_bono_por_pago_divisa = ficha.MontoBonoPorPagoDivisa,
+                            monto_bono_en_divisa_por_pago_divisa = ficha.MontoBonoEnDivisaPorPagoDivisa,
+                            monto_por_vuelto_en_efectivo = ficha.MontoPorVueltoEnEfectivo,
+                            monto_por_vuelto_en_divisa = ficha.MontoPorVueltoEnDivisa,
+                            monto_por_vuelto_en_pago_movil = ficha.MontoPorVueltoEnPagoMovil,
+                            cnt_divisa_por_vuelto_en_divisa = ficha.CantDivisaPorVueltoEnDivisa,
+                            estatus_bono_por_pago_divisa = ficha.estatusPorBonoPorPagoDivisa,
+                            estatus_vuelto_por_pago_movil = ficha.estatusPorVueltoEnPagoMovil,
                         };
                         cn.ventas.Add(entVenta);
                         cn.SaveChanges();
@@ -1826,6 +1862,17 @@ namespace ProvPos
                             fecha_retencion = fechaNula,
                             estatus_cierre_contable = ficha.EstatusCierreContable,
                             cierre_ftp = ficha.CierreFtp,
+                            //
+                            porct_bono_por_pago_divisa = 0m,
+                            cnt_divisa_aplica_bono_por_pago_divisa = 0,
+                            monto_bono_por_pago_divisa = 0m,
+                            monto_bono_en_divisa_por_pago_divisa = 0m,
+                            monto_por_vuelto_en_efectivo = 0m,
+                            monto_por_vuelto_en_divisa = 0m,
+                            monto_por_vuelto_en_pago_movil = 0m,
+                            cnt_divisa_por_vuelto_en_divisa = 0,
+                            estatus_bono_por_pago_divisa = "0",
+                            estatus_vuelto_por_pago_movil = "0",
                         };
                         cn.ventas.Add(entVenta);
                         cn.SaveChanges();
@@ -2556,6 +2603,11 @@ namespace ProvPos
                         var p12 = new MySql.Data.MySqlClient.MySqlParameter();
                         var p13 = new MySql.Data.MySqlClient.MySqlParameter();
                         var p14 = new MySql.Data.MySqlClient.MySqlParameter();
+                        //
+                        var p15 = new MySql.Data.MySqlClient.MySqlParameter();
+                        var p16 = new MySql.Data.MySqlClient.MySqlParameter();
+                        var p17 = new MySql.Data.MySqlClient.MySqlParameter();
+                        var p18 = new MySql.Data.MySqlClient.MySqlParameter();
 
 
                         p01.ParameterName = "@cnt_doc_contado_anulado";
@@ -2586,6 +2638,16 @@ namespace ProvPos
                         p13.Value = ficha.resumen.cntCambio;
                         p14.ParameterName = "@m_cambio_anulado";
                         p14.Value = ficha.resumen.mCambio; 
+                        //
+                        p15.ParameterName = "@monto_vuelto_por_efectivo";
+                        p15.Value = ficha.resumen.montoVueltoPorEfectivo;
+                        p16.ParameterName = "@monto_vuelto_por_divisa";
+                        p16.Value = ficha.resumen.montoVueltoPorDivisa;
+                        p17.ParameterName = "@monto_vuelto_por_pago_movil";
+                        p17.Value = ficha.resumen.montoVueltoPorPagoMovil;
+                        p18.ParameterName = "@cnt_divisa_por_vuelto_divisa";
+                        p18.Value = ficha.resumen.cntDivisaPorVueltoDivisa; 
+
 
                         monto.ParameterName = "@monto";
                         monto.Value = ficha.resumen.monto;
@@ -2606,9 +2668,13 @@ namespace ProvPos
                                 cnt_otros_anulado=cnt_otros_anulado+@cnt_otros_anulado, 
                                 m_otros_anulado=m_otros_anulado+@m_otros_anulado,
                                 cnt_cambio_anulado=cnt_cambio_anulado+@cnt_cambio_anulado,
-                                m_cambio_anulado=m_cambio_anulado+@m_cambio_anulado
+                                m_cambio_anulado=m_cambio_anulado+@m_cambio_anulado,
+                                monto_vuelto_por_efectivo=monto_vuelto_por_efectivo-@monto_vuelto_por_efectivo,
+                                monto_vuelto_por_divisa=monto_vuelto_por_divisa-@monto_vuelto_por_divisa,
+                                monto_vuelto_por_pago_movil=monto_vuelto_por_pago_movil-@monto_vuelto_por_pago_movil,
+                                cnt_divisa_por_vuelto_divisa=cnt_divisa_por_vuelto_divisa-@cnt_divisa_por_vuelto_divisa
                                 where id=@id";
-                        var v6 = cn.Database.ExecuteSqlCommand(sql, id, monto, p01,p02,p03,p04,p05,p06,p07,p08,p09,p10,p11,p12,p13,p14);
+                        var v6 = cn.Database.ExecuteSqlCommand(sql, id, monto, p01, p02, p03, p04, p05, p06, p07, p08, p09, p10, p11, p12, p13, p14, p15, p16, p17, p18);
                         if (v6 == 0)
                         {
                             result.Mensaje = "PROBLEMA AL ACTUALIZAR MOVIMIENTO RESUMEN";

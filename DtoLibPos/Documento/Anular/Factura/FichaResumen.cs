@@ -25,6 +25,11 @@ namespace DtoLibPos.Documento.Anular.Factura
         public decimal mElectronico { get; set; }
         public decimal mOtros { get; set; }
         public decimal mCambio { get; set; }
+        //
+        public decimal montoVueltoPorEfectivo { get; set; }
+        public decimal montoVueltoPorDivisa { get; set; }
+        public decimal montoVueltoPorPagoMovil { get; set; }
+        public int cntDivisaPorVueltoDivisa { get; set; }
 
 
         public FichaResumen()
@@ -44,6 +49,11 @@ namespace DtoLibPos.Documento.Anular.Factura
             mElectronico = 0.0m;
             mOtros = 0.0m;
             mCambio = 0.0m;
+            //
+            montoVueltoPorEfectivo = 0m;
+            montoVueltoPorDivisa = 0m;
+            montoVueltoPorPagoMovil = 0m;
+            cntDivisaPorVueltoDivisa = 0;
         }
 
     }

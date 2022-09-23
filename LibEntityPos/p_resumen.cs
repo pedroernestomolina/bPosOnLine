@@ -62,6 +62,10 @@ namespace LibEntityPos
         public int cnt_cambio_anulado { get; set; }
         public decimal m_cambio_anulado { get; set; }
         public string auto_pos_arqueo { get; set; }
+        public decimal monto_vuelto_por_efectivo { get; set; }
+        public decimal monto_vuelto_por_divisa { get; set; }
+        public decimal monto_vuelto_por_pago_movil { get; set; }
+        public int cnt_divisa_por_vuelto_divisa { get; set; }
     
         public virtual p_operador p_operador { get; set; }
     }

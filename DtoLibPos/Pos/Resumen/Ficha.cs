@@ -57,6 +57,11 @@ namespace DtoLibPos.Pos.Resumen
         public int cntElectronico_anu { get; set; }
         public int cntotros_anu { get; set; }
         public int cnt_cambio_anulado { get; set; }
+        //
+        public decimal montoPorVueltoEfectivo { get; set; }
+        public decimal montoPorVueltoDivisa { get; set; }
+        public decimal montoPorVueltoPagoMovil { get; set; }
+        public int cntDivisaPorVueltoDivisa { get; set; }
 
 
         public Ficha()
@@ -107,6 +112,11 @@ namespace DtoLibPos.Pos.Resumen
             cntDivisa_anu = 0;
             cntotros_anu = 0;
             cnt_cambio_anulado=0;
+            //
+            montoPorVueltoEfectivo = 0m;
+            montoPorVueltoDivisa = 0m;
+            montoPorVueltoPagoMovil = 0m;
+            cntDivisaPorVueltoDivisa = 0;
         }
 
     }

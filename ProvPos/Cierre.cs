@@ -97,7 +97,7 @@ namespace ProvPos
                                     a.cntDocNCr,
                                     a.montoFac,
                                     a.montoNCr,
-                                    r.m_efectivo as mEfectivo_s,
+                                    (r.m_efectivo) as mEfectivo_s,
                                     r.cnt_efectivo as cntEfectivo_s,
                                     r.cnt_electronico as cntElectronico_s,
                                     r.cnt_otros as cntOtros_s,
@@ -105,7 +105,12 @@ namespace ProvPos
                                     r.cnt_doc_contado as cntDocContado,
                                     r.cnt_doc_credito as cntDocCredito,
                                     r.m_contado as mContado,
-                                    r.m_credito as mCredito 
+                                    r.m_credito as mCredito,
+                                    r.monto_vuelto_por_efectivo as montoVueltoPorEfectivo,
+                                    r.monto_vuelto_por_divisa as montoVueltoPorDivisa,
+                                    r.monto_vuelto_por_pago_movil montoVueltoPorPagoMovil,
+                                    r.m_contado_anulado as montoContadoAnulado,
+                                    r.m_credito_anulado as montoCreditoAnulado
                                 FROM p_operador as o
                                 join p_resumen as r on r.id_p_operador=o.id 
                                 join pos_arqueo as a on a.auto_cierre=r.auto_pos_arqueo

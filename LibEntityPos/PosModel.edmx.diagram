@@ -18,7 +18,6 @@
         <EntityTypeShape EntityType="pitaModel.empresa_transporte" Width="1.5" PointX="15.625" PointY="9.75" />
         <EntityTypeShape EntityType="pitaModel.p_configuracion" Width="1.5" PointX="16.625" PointY="18.75" />
         <EntityTypeShape EntityType="pitaModel.p_operador" Width="1.5" PointX="18.625" PointY="12.875" />
-        <EntityTypeShape EntityType="pitaModel.p_resumen" Width="1.5" PointX="20.875" PointY="4" />
         <EntityTypeShape EntityType="pitaModel.p_ventaadm" Width="1.5" PointX="23.625" PointY="3.25" />
         <EntityTypeShape EntityType="pitaModel.p_ventaadm_det" Width="1.5" PointX="25.875" PointY="3.625" />
         <EntityTypeShape EntityType="pitaModel.productos" Width="1.5" PointX="10.875" PointY="4.875" />
@@ -33,8 +32,6 @@
         <EntityTypeShape EntityType="pitaModel.usuarios" Width="1.5" PointX="8.625" PointY="42.625" />
         <EntityTypeShape EntityType="pitaModel.usuarios_grupo" Width="1.5" PointX="23.625" PointY="12.75" />
         <EntityTypeShape EntityType="pitaModel.vendedores" Width="1.5" PointX="37.375" PointY="11.625" />
-        <EntityTypeShape EntityType="pitaModel.ventas" Width="1.5" PointX="10.875" PointY="33.5" />
-        <EntityTypeShape EntityType="pitaModel.pos_arqueo" Width="1.5" PointX="23.625" PointY="15.75" />
         <EntityTypeShape EntityType="pitaModel.ventas_detalle" Width="1.5" PointX="13.125" PointY="6.625" />
         <AssociationConnector Association="pitaModel.clientes_ibfk_1" />
         <AssociationConnector Association="pitaModel.clientes_ibfk_11" />
@@ -42,14 +39,12 @@
         <AssociationConnector Association="pitaModel.clientes_ibfk_3" />
         <AssociationConnector Association="pitaModel.clientes_ibfk_5" />
         <AssociationConnector Association="pitaModel.ventas_detalle_ibfk_6" />
-        <AssociationConnector Association="pitaModel.ventas_ibfk_5" />
         <AssociationConnector Association="pitaModel.productos_ibfk_1" />
         <AssociationConnector Association="pitaModel.productos_deposito_ibfk_2" />
         <AssociationConnector Association="pitaModel.ventas_detalle_ibfk_5" />
         <AssociationConnector Association="pitaModel.empresa_sucursal_ibfk_1" />
         <AssociationConnector Association="pitaModel.productos_ibfk_12" />
         <AssociationConnector Association="pitaModel.ventas_detalle_ibfk_7" />
-        <AssociationConnector Association="pitaModel.p_resumen_ibfk_1" />
         <AssociationConnector Association="pitaModel.p_ventaadm_det_ibfk_1" />
         <AssociationConnector Association="pitaModel.productos_alterno_ibfk_1" />
         <AssociationConnector Association="pitaModel.productos_deposito_ibfk_1" />
@@ -63,12 +58,8 @@
         <AssociationConnector Association="pitaModel.productos_ibfk_9" />
         <AssociationConnector Association="pitaModel.ventas_detalle_ibfk_1" />
         <AssociationConnector Association="pitaModel.ventas_detalle_ibfk_3" />
-        <AssociationConnector Association="pitaModel.ventas_ibfk_3" />
         <AssociationConnector Association="pitaModel.ventas_detalle_ibfk_9" />
-        <AssociationConnector Association="pitaModel.ventas_ibfk_6" />
-        <AssociationConnector Association="pitaModel.ventas_detalle_ibfk_8" />
         <EntityTypeShape EntityType="pitaModel.p_verificador" Width="1.5" PointX="13.125" PointY="43.25" />
-        <AssociationConnector Association="pitaModel.p_verificador_ibfk_1" />
         <EntityTypeShape EntityType="pitaModel.cxc" Width="1.5" PointX="39.625" PointY="6.25" />
         <AssociationConnector Association="pitaModel.cxc_ibfk_1" />
         <AssociationConnector Association="pitaModel.cxc_ibfk_3" />
@@ -81,6 +72,15 @@
         <AssociationConnector Association="pitaModel.p_venta_ibfk_1" />
         <EntityTypeShape EntityType="pitaModel.p_pendiente" Width="1.5" PointX="20.875" PointY="26.75" />
         <AssociationConnector Association="pitaModel.p_pendiente_ibfk_1" />
+        <EntityTypeShape EntityType="pitaModel.ventas" Width="1.5" PointX="39.625" PointY="16.5" />
+        <AssociationConnector Association="pitaModel.ventas_ibfk_5" />
+        <AssociationConnector Association="pitaModel.p_verificador_ibfk_1" />
+        <AssociationConnector Association="pitaModel.ventas_ibfk_3" />
+        <AssociationConnector Association="pitaModel.ventas_ibfk_6" />
+        <AssociationConnector Association="pitaModel.ventas_detalle_ibfk_8" />
+        <EntityTypeShape EntityType="pitaModel.p_resumen" Width="1.5" PointX="20.875" PointY="7" />
+        <AssociationConnector Association="pitaModel.p_resumen_ibfk_1" />
+        <EntityTypeShape EntityType="pitaModel.pos_arqueo" Width="1.5" PointX="29.25" PointY="21" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

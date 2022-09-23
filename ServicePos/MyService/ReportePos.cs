@@ -32,6 +32,11 @@ namespace ServicePos.MyService
         {
             return ServiceProv.ReportePos_PagoMovil(filtro);
         }
+        public DtoLib.ResultadoLista<DtoLibPos.Reportes.POS.VueltosEntregados.Ficha> 
+            ReportePos_VueltosEntregados(DtoLibPos.Reportes.POS.Filtro filtro)
+        {
+            return ServiceProv.ReportePos_VueltosEntregados(filtro);
+        }
 
     }
 

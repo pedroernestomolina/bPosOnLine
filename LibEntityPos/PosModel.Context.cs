@@ -38,7 +38,6 @@ namespace LibEntityPos
         public virtual DbSet<empresa_transporte> empresa_transporte { get; set; }
         public virtual DbSet<p_configuracion> p_configuracion { get; set; }
         public virtual DbSet<p_operador> p_operador { get; set; }
-        public virtual DbSet<p_resumen> p_resumen { get; set; }
         public virtual DbSet<p_ventaadm> p_ventaadm { get; set; }
         public virtual DbSet<p_ventaadm_det> p_ventaadm_det { get; set; }
         public virtual DbSet<productos> productos { get; set; }
@@ -53,13 +52,14 @@ namespace LibEntityPos
         public virtual DbSet<usuarios> usuarios { get; set; }
         public virtual DbSet<usuarios_grupo> usuarios_grupo { get; set; }
         public virtual DbSet<vendedores> vendedores { get; set; }
-        public virtual DbSet<ventas> ventas { get; set; }
-        public virtual DbSet<pos_arqueo> pos_arqueo { get; set; }
         public virtual DbSet<ventas_detalle> ventas_detalle { get; set; }
         public virtual DbSet<p_verificador> p_verificador { get; set; }
         public virtual DbSet<cxc> cxc { get; set; }
         public virtual DbSet<cxc_recibos> cxc_recibos { get; set; }
         public virtual DbSet<p_venta> p_venta { get; set; }
         public virtual DbSet<p_pendiente> p_pendiente { get; set; }
+        public virtual DbSet<ventas> ventas { get; set; }
+        public virtual DbSet<p_resumen> p_resumen { get; set; }
+        public virtual DbSet<pos_arqueo> pos_arqueo { get; set; }
     }
 }

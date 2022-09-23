@@ -60,5 +60,6 @@ namespace LibEntityPos
         public string codigo_sucursal { get; set; }
         public string id_equipo { get; set; }
         public int cierre_numero { get; set; }
+        public decimal vuelto_por_pago_movil { get; set; }
     }
 }

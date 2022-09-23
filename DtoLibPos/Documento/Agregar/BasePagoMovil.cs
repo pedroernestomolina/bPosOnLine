@@ -25,6 +25,9 @@ namespace DtoLibPos.Documento.Agregar
         public decimal montoDocumento { get; set; }
         public string tipoDocumento { get; set; }
         public string codigoDocumento { get; set; }
+        //
+        public string  cierre { get; set; }
+        public string cierreFtp { get; set; }
 
     }
 

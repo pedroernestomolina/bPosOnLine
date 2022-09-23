@@ -91,8 +91,11 @@ namespace DtoLibPos.Pos.Cerrar
             cntDocNCr = 0;
             montoFac = 0.0m;
             montoNCr = 0.0m;
+            //
+            vueltoPorPagoMovil = 0m;
         }
 
+        public decimal vueltoPorPagoMovil { get; set; }
     }
 
 }

@@ -27,6 +27,9 @@ namespace DtoLibPos.Documento.Agregar.Factura
             clienteDirFiscal = "";
             codigoSucursal = "";
             nombreAgencia = "";
+            //
+            cierre = "";
+            cierreFtp = "";
         }
 
     }

@@ -115,6 +115,17 @@ namespace DtoLibPos.Documento.Agregar.NotaCredito
         public FichaPosResumen Resumen { get; set; }
         public FichaSerie SerieFiscal { get; set; }
         public FichaClienteSaldo ClienteSaldo { get; set; }
+        //
+        public decimal PorctBonoPorPagoDivisa { get; set; }
+        public int CantDivisaAplicaBonoPorPagoDivisa { get; set; }
+        public decimal MontoBonoPorPagoDivisa { get; set; }
+        public decimal MontoBonoEnDivisaPorPagoDivisa { get; set; }
+        public decimal MontoPorVueltoEnEfectivo { get; set; }
+        public decimal MontoPorVueltoEnDivisa { get; set; }
+        public decimal MontoPorVueltoEnPagoMovil { get; set; }
+        public int CantDivisaPorVueltoEnDivisa { get; set; }
+        public string estatusPorBonoPorPagoDivisa { get; set; }
+        public string estatusPorVueltoEnPagoMovil { get; set; }
 
 
         public Ficha()
@@ -222,6 +233,17 @@ namespace DtoLibPos.Documento.Agregar.NotaCredito
             Resumen = new FichaPosResumen();
             SerieFiscal = null;
             ClienteSaldo = null;
+            //
+            PorctBonoPorPagoDivisa = 0m;
+            CantDivisaAplicaBonoPorPagoDivisa = 0;
+            MontoBonoPorPagoDivisa = 0m;
+            MontoBonoEnDivisaPorPagoDivisa = 0m;
+            MontoPorVueltoEnEfectivo = 0m;
+            MontoPorVueltoEnDivisa = 0m;
+            MontoPorVueltoEnPagoMovil = 0m;
+            CantDivisaPorVueltoEnDivisa = 0;
+            estatusPorBonoPorPagoDivisa = "0";
+            estatusPorVueltoEnPagoMovil = "0";
         }
 
     }

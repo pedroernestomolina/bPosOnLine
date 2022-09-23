@@ -115,6 +115,11 @@ namespace DtoLibPos.Documento.Entidad
         public string AutoReciboCxC { get; set; }
         public List<FichaItem> items;
         public List<FichaMedida> medidas;
+        //
+        public decimal MontoPorVueltoEnEfectivo { get; set; }
+        public decimal MontoPorVueltoEnDivisa { get; set; }
+        public decimal MontoPorVueltoEnPagoMovil { get; set; }
+        public int CantDivisaPorVueltoEnDivisa { get; set; }
 
 
         public Ficha()
@@ -219,6 +224,11 @@ namespace DtoLibPos.Documento.Entidad
             AutoReciboCxC = "";
             items = new List<FichaItem>();
             medidas = new List<FichaMedida>();
+            //
+            MontoPorVueltoEnEfectivo = 0m;
+            MontoPorVueltoEnDivisa = 0m;
+            MontoPorVueltoEnPagoMovil = 0m;
+            CantDivisaPorVueltoEnDivisa = 0;
         }
 
     }

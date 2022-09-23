@@ -203,7 +203,7 @@ namespace ProvPos
                             mticket={20}, mtrans={21}, mfirma={22}, motros={23}, mgastos={24}, 
                             mretiro={25}, mretenciones={26}, msubtotal={27}, mtotal={28}, cierre_ftp={29}, 
                             cnt_divisa={30}, cnt_divisa_usuario={31}, cntDoc={32}, cntDocFac={33}, cntDocNcr={34}, 
-                            montoFac={35}, montoNcr={36}, fecha={38}, hora={39}, cierre_numero={40} 
+                            montoFac={35}, montoNcr={36}, fecha={38}, hora={39}, cierre_numero={40}, vuelto_por_pago_movil ={41} 
                             where auto_cierre={37}";
                         var r3 = cnn.Database.ExecuteSqlCommand(UpdatePosArqueo,
                             arq.diferencia, arq.efectivo, arq.cheque, arq.debito, arq.credito, arq.ticket, arq.firma,
@@ -211,7 +211,7 @@ namespace ProvPos
                             arq.total, arq.mefectivo, arq.mcheque, arq.mbanco1, arq.mbanco2, arq.mbanco3, arq.mbanco4, arq.mtarjeta,
                             arq.mticket, arq.mtrans, arq.mfirma, arq.motros, arq.mgastos, arq.mretiro, arq.mretenciones, arq.msubtotal,
                             arq.mtotal, arq.cierreFtp, arq.cntDivisia, arq.cntDivisaUsuario, arq.cntDoc, arq.cntDocFac, arq.cntDocNCr,
-                            arq.montoFac, arq.montoNCr, arq.autoArqueo, fechaSistema.Date, horaSistema, aCierreNro);
+                            arq.montoFac, arq.montoNCr, arq.autoArqueo, fechaSistema.Date, horaSistema, aCierreNro, arq.vueltoPorPagoMovil);
                         cnn.SaveChanges();
                         ts.Complete();
                         result.Entidad = aCierreNro;
@@ -532,7 +532,7 @@ namespace ProvPos
                         cntNCr = ent.cnt_ncr,
                         cntNtE = ent.cnt_nte,
                         cntotros = ent.cnt_otros,
-                        cnt_cambio_anulado=ent.cnt_cambio_anulado,
+                        cnt_cambio_anulado = ent.cnt_cambio_anulado,
                         m_anu = ent.m_anu,
                         m_anu_fac = ent.m_anu_fac,
                         m_anu_ncr = ent.m_anu_ncr,
@@ -547,21 +547,26 @@ namespace ProvPos
                         mNCr = ent.m_ncr,
                         mNtE = ent.m_nte,
                         mOtros = ent.m_otros,
-                        cnt_cambio=ent.cnt_cambio,
-                        m_cambio=ent.m_cambio,
-                        cntDocContado_anu=ent.cnt_doc_contado_anulado,
-                        cntDocCredito_anu=ent.cnt_doc_credito_anulado,
-                        cntEfectivo_anu=ent.cnt_efectivo_anulado,
-                        cntDivisa_anu=ent.cnt_divisa_anulado ,
-                        cntElectronico_anu=ent.cnt_electronico_anulado,
-                        cntotros_anu=ent.cnt_otros_anulado,
-                        mContado_anu=ent.m_contado_anulado,
-                        mCredito_anu=ent.m_credito_anulado,
-                        mEfectivo_anu=ent.m_efectivo_anulado,
-                        mDivisa_anu=ent.m_divisa_aunlado,
-                        mElectronico_anu=ent.m_electronico_anulado,
-                        mOtros_anu=ent.m_otros_anulado,
-                        mcambio_anulado=ent.m_cambio_anulado,
+                        cnt_cambio = ent.cnt_cambio,
+                        m_cambio = ent.m_cambio,
+                        cntDocContado_anu = ent.cnt_doc_contado_anulado,
+                        cntDocCredito_anu = ent.cnt_doc_credito_anulado,
+                        cntEfectivo_anu = ent.cnt_efectivo_anulado,
+                        cntDivisa_anu = ent.cnt_divisa_anulado,
+                        cntElectronico_anu = ent.cnt_electronico_anulado,
+                        cntotros_anu = ent.cnt_otros_anulado,
+                        mContado_anu = ent.m_contado_anulado,
+                        mCredito_anu = ent.m_credito_anulado,
+                        mEfectivo_anu = ent.m_efectivo_anulado,
+                        mDivisa_anu = ent.m_divisa_aunlado,
+                        mElectronico_anu = ent.m_electronico_anulado,
+                        mOtros_anu = ent.m_otros_anulado,
+                        mcambio_anulado = ent.m_cambio_anulado,
+                        //
+                        montoPorVueltoEfectivo = ent.monto_vuelto_por_efectivo,
+                        montoPorVueltoDivisa = ent.monto_vuelto_por_divisa,
+                        montoPorVueltoPagoMovil = ent.monto_vuelto_por_pago_movil,
+                        cntDivisaPorVueltoDivisa = ent.cnt_divisa_por_vuelto_divisa,
                     };
                     result.Entidad = nr;
 

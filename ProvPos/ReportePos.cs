@@ -172,6 +172,47 @@ namespace ProvPos
 
             return result;
         }
+        public DtoLib.ResultadoLista<DtoLibPos.Reportes.POS.VueltosEntregados.Ficha> 
+            ReportePos_VueltosEntregados(DtoLibPos.Reportes.POS.Filtro filtro)
+        {
+            var result = new DtoLib.ResultadoLista<DtoLibPos.Reportes.POS.VueltosEntregados.Ficha>();
+
+            try
+            {
+                using (var cnn = new PosEntities(_cnPos.ConnectionString))
+                {
+                    var p1 = new MySql.Data.MySqlClient.MySqlParameter();
+                    var sql1 = @"SELECT 
+                                    documento, 
+                                    estatus_anulado as esAnulado, 
+                                    fecha, 
+                                    hora, 
+                                    razon_social as entNombre,
+                                    dir_fiscal as entDir,
+                                    telefono as entTelf, 
+                                    total as montoDoc, 
+                                    cambio as montoCambio, 
+                                    monto_por_vuelto_en_efectivo as montoVueltoEfectivo, 
+                                    monto_por_vuelto_en_divisa as montoVueltoDivisa, 
+                                    monto_por_vuelto_en_pago_movil montoVueltoPagoMovil, 
+                                    cnt_divisa_por_vuelto_en_divisa as cntVueltoDivisa
+                                FROM ventas as v
+                                where cierre=@idCierre and cambio>0";
+                    var sql = sql1;
+                    p1.ParameterName = "idCierre";
+                    p1.Value = filtro.IdCierre;
+                    result.Lista = cnn.Database.SqlQuery<DtoLibPos.Reportes.POS.VueltosEntregados.Ficha>(sql, p1).ToList();
+                }
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+
+            return result;
+        }
+
     }
 
 }

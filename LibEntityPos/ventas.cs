@@ -17,8 +17,8 @@ namespace LibEntityPos
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ventas()
         {
-            this.ventas_detalle = new HashSet<ventas_detalle>();
             this.p_verificador = new HashSet<p_verificador>();
+            this.ventas_detalle = new HashSet<ventas_detalle>();
         }
     
         public string auto { get; set; }
@@ -125,13 +125,23 @@ namespace LibEntityPos
         public System.DateTime fecha_retencion { get; set; }
         public string estatus_cierre_contable { get; set; }
         public string cierre_ftp { get; set; }
+        public decimal porct_bono_por_pago_divisa { get; set; }
+        public int cnt_divisa_aplica_bono_por_pago_divisa { get; set; }
+        public decimal monto_bono_por_pago_divisa { get; set; }
+        public decimal monto_bono_en_divisa_por_pago_divisa { get; set; }
+        public decimal monto_por_vuelto_en_efectivo { get; set; }
+        public decimal monto_por_vuelto_en_divisa { get; set; }
+        public decimal monto_por_vuelto_en_pago_movil { get; set; }
+        public int cnt_divisa_por_vuelto_en_divisa { get; set; }
+        public string estatus_bono_por_pago_divisa { get; set; }
+        public string estatus_vuelto_por_pago_movil { get; set; }
     
         public virtual clientes clientes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<p_verificador> p_verificador { get; set; }
         public virtual usuarios usuarios { get; set; }
         public virtual vendedores vendedores { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ventas_detalle> ventas_detalle { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<p_verificador> p_verificador { get; set; }
     }
 }

@@ -17,9 +17,9 @@ namespace LibEntityPos
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public p_operador()
         {
-            this.p_resumen = new HashSet<p_resumen>();
             this.p_venta = new HashSet<p_venta>();
             this.p_pendiente = new HashSet<p_pendiente>();
+            this.p_resumen = new HashSet<p_resumen>();
         }
     
         public int id { get; set; }
@@ -34,10 +34,10 @@ namespace LibEntityPos
         public int cierre_numero { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<p_resumen> p_resumen { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<p_venta> p_venta { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<p_pendiente> p_pendiente { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<p_resumen> p_resumen { get; set; }
     }
 }

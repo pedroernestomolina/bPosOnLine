@@ -63,6 +63,12 @@ namespace DtoLibPos.Pos.Cierre.Entidad
         public int cntDocCredito { get; set; }
         public decimal mContado { get; set; }
         public decimal mCredito { get; set; }
+        //
+        public decimal montoVueltoPorEfectivo { get; set; }
+        public decimal montoVueltoPorDivisa { get; set; }
+        public decimal montoVueltoPorPagoMovil { get; set; }
+        public decimal montoContadoAnulado { get; set; }
+        public decimal montoCreditoAnulado { get; set; }
 
 
         public Ficha()
@@ -115,6 +121,12 @@ namespace DtoLibPos.Pos.Cierre.Entidad
             cntDocCredito = 0;
             mContado = 0m;
             mCredito = 0m;
+            //
+            montoVueltoPorEfectivo = 0m;
+            montoVueltoPorDivisa = 0m;
+            montoVueltoPorPagoMovil = 0m;
+            montoContadoAnulado = 0m;
+            montoCreditoAnulado = 0m;
         }
 
     }
