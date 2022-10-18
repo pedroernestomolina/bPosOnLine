@@ -40,6 +40,8 @@ namespace IPos
 
         DtoLib.Resultado
             Documento_Verificar_ProcesarFactClienteCredito(string idCliente, decimal monto);
+        DtoLib.Resultado
+            Documento_Verificar_EstatusOperadorIsOk(int idOperador);
 
     }
 

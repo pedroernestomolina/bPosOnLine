@@ -30,16 +30,50 @@ namespace ServicePos.MyService
                     return rt;
                 }
             }
+            var r02 = ServiceProv.Documento_Verificar_EstatusOperadorIsOk(ficha.idOperador);
+            if (r02.Result == DtoLib.Enumerados.EnumResult.isError)
+            {
+                var rt = new DtoLib.ResultadoEntidad<DtoLibPos.Documento.Agregar.Factura.Result>()
+                {
+                    Entidad = null,
+                    Result = DtoLib.Enumerados.EnumResult.isError,
+                    Mensaje = r02.Mensaje,
+                };
+                return rt;
+            }
+
             return ServiceProv.Documento_Agregar_Factura(ficha);
         }
         public DtoLib.ResultadoAuto
             Documento_Agregar_NotaCredito(DtoLibPos.Documento.Agregar.NotaCredito.Ficha ficha)
         {
+            var r01 = ServiceProv.Documento_Verificar_EstatusOperadorIsOk(ficha.idOperador);
+            if (r01.Result == DtoLib.Enumerados.EnumResult.isError)
+            {
+                var rt = new DtoLib.ResultadoAuto()
+                {
+                    Auto = "",
+                    Result = DtoLib.Enumerados.EnumResult.isError,
+                    Mensaje = r01.Mensaje,
+                };
+                return rt;
+            }
             return ServiceProv.Documento_Agregar_NotaCredito(ficha);
         }
         public DtoLib.ResultadoAuto
             Documento_Agregar_NotaEntrega(DtoLibPos.Documento.Agregar.NotaEntrega.Ficha ficha)
         {
+            var r01 = ServiceProv.Documento_Verificar_EstatusOperadorIsOk(ficha.idOperador);
+            if (r01.Result == DtoLib.Enumerados.EnumResult.isError)
+            {
+                var rt = new DtoLib.ResultadoAuto()
+                {
+                    Auto = "",
+                    Result = DtoLib.Enumerados.EnumResult.isError,
+                    Mensaje = r01.Mensaje,
+                };
+                return rt;
+            }
             return ServiceProv.Documento_Agregar_NotaEntrega(ficha);
         }
 
@@ -71,6 +105,9 @@ namespace ServicePos.MyService
             var r01 = ServiceProv.Documento_Anular_Verificar(ficha.autoDocumento);
             if (r01.Result == DtoLib.Enumerados.EnumResult.isError)
                 return r01;
+            var r02 = ServiceProv.Documento_Verificar_EstatusOperadorIsOk(ficha.idOperador);
+            if (r02.Result == DtoLib.Enumerados.EnumResult.isError)
+                return r02;
 
             return ServiceProv.Documento_Anular_NotaEntrega(ficha);
         }
@@ -80,6 +117,9 @@ namespace ServicePos.MyService
             var r01 = ServiceProv.Documento_Anular_Verificar(ficha.autoDocumento);
             if (r01.Result == DtoLib.Enumerados.EnumResult.isError)
                 return r01;
+            var r02 = ServiceProv.Documento_Verificar_EstatusOperadorIsOk(ficha.idOperador);
+            if (r02.Result == DtoLib.Enumerados.EnumResult.isError)
+                return r02;
 
             return ServiceProv.Documento_Anular_NotaCredito(ficha);
         }
@@ -89,6 +129,9 @@ namespace ServicePos.MyService
             var r01 = ServiceProv.Documento_Anular_Verificar(ficha.autoDocumento);
             if (r01.Result == DtoLib.Enumerados.EnumResult.isError)
                 return r01;
+            var r02 = ServiceProv.Documento_Verificar_EstatusOperadorIsOk(ficha.idOperador);
+            if (r02.Result == DtoLib.Enumerados.EnumResult.isError)
+                return r02;
 
             return ServiceProv.Documento_Anular_Factura(ficha);
         }

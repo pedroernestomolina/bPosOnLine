@@ -2921,6 +2921,40 @@ namespace ProvPos
 
             return rt;
         }
+        public DtoLib.Resultado 
+            Documento_Verificar_EstatusOperadorIsOk(int idOperador)
+        {
+            var rt = new DtoLib.Resultado();
+
+            try
+            {
+                using (var cnn = new PosEntities(_cnPos.ConnectionString))
+                {
+                    var fechaSistema = cnn.Database.SqlQuery<DateTime>("select now()").FirstOrDefault();
+
+                    var ent = cnn.p_operador.Find(idOperador);
+                    if (ent == null)
+                    {
+                        rt.Mensaje = "[ ID ] OPERADOR NO ENCONTRADO";
+                        rt.Result = DtoLib.Enumerados.EnumResult.isError;
+                        return rt;
+                    }
+                    if (ent.estatus.Trim().ToUpper()!="A")
+                    {
+                        rt.Mensaje = "ERROR EN ESTATUS DEL OPERADOR";
+                        rt.Result = DtoLib.Enumerados.EnumResult.isError;
+                        return rt;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                rt.Mensaje = e.Message;
+                rt.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+
+            return rt;
+        }
 
     }
 

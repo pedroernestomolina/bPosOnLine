@@ -14,6 +14,9 @@ namespace ServicePos.MyService
 
         public DtoLib.Resultado Pendiente_DejarCta(DtoLibPos.Pendiente.Dejar.Ficha ficha)
         {
+            var r01 = ServiceProv.Documento_Verificar_EstatusOperadorIsOk(ficha.idOperador);
+            if (r01.Result == DtoLib.Enumerados.EnumResult.isError)
+                return r01;
             return ServiceProv.Pendiente_DejarCta(ficha);
         }
 

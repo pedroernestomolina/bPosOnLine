@@ -11,6 +11,7 @@ namespace DtoLibPos.Documento.Agregar.Factura
     public class Ficha
     {
 
+        public int idOperador { get; set; }
         public string DocumentoNro { get; set; }
         public string RazonSocial { get; set; }
         public string DirFiscal { get; set; }
@@ -133,6 +134,7 @@ namespace DtoLibPos.Documento.Agregar.Factura
 
         public Ficha()
         {
+            idOperador = -1;
             DocumentoNro = "";
             RazonSocial = "";
             DirFiscal = "";
