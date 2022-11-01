@@ -43,6 +43,11 @@ namespace DtoLibPos.Producto.Lista
         public decimal pfullDivEmp_1 { get; set; }
         public decimal pfullDivEmp_2 { get; set; }
         public decimal pfullDivEmp_3 { get; set; }
+        //
+        public int contEmpCompra { get; set; }
+        public int contEmpInv { get; set; }
+        public string descEmpCompra { get; set; }
+        public string descEmpInv { get; set; }
       
 
         public Ficha()
@@ -79,6 +84,11 @@ namespace DtoLibPos.Producto.Lista
             pfullDivEmp_1 = 0m;
             pfullDivEmp_2 = 0m;
             pfullDivEmp_3 = 0m;
+            //
+            contEmpCompra = 0;
+            contEmpInv = 0;
+            descEmpCompra = "";
+            descEmpInv = "";
         }
 
     }

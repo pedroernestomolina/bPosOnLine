@@ -229,8 +229,16 @@ namespace DtoLibPos.Documento.Entidad
             MontoPorVueltoEnDivisa = 0m;
             MontoPorVueltoEnPagoMovil = 0m;
             CantDivisaPorVueltoEnDivisa = 0;
+            //
+            BonoPorPagoDivisa = 0m;
+            MontoBonoPorPagoDivisa = 0m;
+            CntDivisaAplicaBonoPorPagoDivisa = 0;
         }
 
+
+        public decimal BonoPorPagoDivisa { get; set; }
+        public decimal MontoBonoPorPagoDivisa { get; set; }
+        public int CntDivisaAplicaBonoPorPagoDivisa { get; set; }
     }
 
 }

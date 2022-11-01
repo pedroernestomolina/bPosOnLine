@@ -38,9 +38,16 @@ namespace ProvPos
                                     p.tasa as tasaIva, 
                                     p.plu, 
                                     pd.fisica as exFisica, 
-                                    pd.disponible as exDisponible ";
+                                    pd.disponible as exDisponible, 
+                                    p.contenido_compras as contEmpCompra,
+                                    pmCompra.nombre as descEmpCompra,
+                                    pExtInv.cont_emp_inv_1 as contEmpInv,
+                                    pmInv.nombre as descEmpInv ";
                     var sql_2 = @" from productos as p 
-                                    join productos_deposito as pd on p.auto=pd.auto_producto ";
+                                    join productos_deposito as pd on p.auto=pd.auto_producto 
+                                    join productos_medida as pmCompra on pmCompra.auto=p.auto_empaque_compra
+                                    join productos_ext as pExtInv on pExtInv.auto_producto=p.auto
+                                    join productos_medida as pmInv on pmInv.auto=pExtInv.auto_emp_inv_1 ";
                     var sql_3 = " where 1=1 ";
                     var sql_4 = "";
 

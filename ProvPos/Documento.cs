@@ -234,6 +234,9 @@ namespace ProvPos
                         MontoPorVueltoEnDivisa = ent.monto_por_vuelto_en_divisa,
                         MontoPorVueltoEnPagoMovil = ent.monto_por_vuelto_en_pago_movil,
                         CantDivisaPorVueltoEnDivisa = ent.cnt_divisa_por_vuelto_en_divisa,
+                        BonoPorPagoDivisa = ent.porct_bono_por_pago_divisa,
+                        MontoBonoPorPagoDivisa = ent.monto_bono_por_pago_divisa,
+                        CntDivisaAplicaBonoPorPagoDivisa = ent.cnt_divisa_aplica_bono_por_pago_divisa,
                     };
                     var entDet = cn.ventas_detalle.Where(w => w.auto_documento == idAuto).ToList();
                     nr.items = entDet.Select(s =>
