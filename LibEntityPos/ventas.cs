@@ -126,13 +126,13 @@ namespace LibEntityPos
         public string estatus_cierre_contable { get; set; }
         public string cierre_ftp { get; set; }
         public decimal porct_bono_por_pago_divisa { get; set; }
-        public int cnt_divisa_aplica_bono_por_pago_divisa { get; set; }
+        public decimal cnt_divisa_aplica_bono_por_pago_divisa { get; set; }
         public decimal monto_bono_por_pago_divisa { get; set; }
         public decimal monto_bono_en_divisa_por_pago_divisa { get; set; }
         public decimal monto_por_vuelto_en_efectivo { get; set; }
         public decimal monto_por_vuelto_en_divisa { get; set; }
         public decimal monto_por_vuelto_en_pago_movil { get; set; }
-        public int cnt_divisa_por_vuelto_en_divisa { get; set; }
+        public decimal cnt_divisa_por_vuelto_en_divisa { get; set; }
         public string estatus_bono_por_pago_divisa { get; set; }
         public string estatus_vuelto_por_pago_movil { get; set; }
     

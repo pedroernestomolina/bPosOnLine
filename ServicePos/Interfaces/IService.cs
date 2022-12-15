@@ -15,13 +15,12 @@ namespace ServicePos.Interfaces
         IConfiguracionAdm, IReportesCli, IReportePos, IProductoAdm, IVentaAdm, 
         IDocumentoAdm, IAuditoria, IVerificador, IAgencia, ICierre
     {
-
-        DtoLib.ResultadoEntidad<DateTime> FechaServidor();
-        DtoLib.Resultado Test();
-
-        //DtoLib.ResultadoEntidad<DtoLibInventario.Empresa.Data.Ficha> Empresa_Datos();
-        //DtoLib.ResultadoEntidad<DtoLibPosOffLine.Sistema.InformacionBD.Ficha> InformacionBD();
-
+        DtoLib.ResultadoEntidad<DateTime> 
+            FechaServidor();
+        DtoLib.Resultado 
+            Test();
+        DtoLib.ResultadoEntidad<DateTime>
+            Servicio_GetFechaUltBoletin();
     }
 
 }

@@ -118,13 +118,13 @@ namespace DtoLibPos.Documento.Agregar.NotaCredito
         public FichaClienteSaldo ClienteSaldo { get; set; }
         //
         public decimal PorctBonoPorPagoDivisa { get; set; }
-        public int CantDivisaAplicaBonoPorPagoDivisa { get; set; }
+        public decimal CantDivisaAplicaBonoPorPagoDivisa { get; set; }
         public decimal MontoBonoPorPagoDivisa { get; set; }
         public decimal MontoBonoEnDivisaPorPagoDivisa { get; set; }
         public decimal MontoPorVueltoEnEfectivo { get; set; }
         public decimal MontoPorVueltoEnDivisa { get; set; }
         public decimal MontoPorVueltoEnPagoMovil { get; set; }
-        public int CantDivisaPorVueltoEnDivisa { get; set; }
+        public decimal CantDivisaPorVueltoEnDivisa { get; set; }
         public string estatusPorBonoPorPagoDivisa { get; set; }
         public string estatusPorVueltoEnPagoMovil { get; set; }
 
@@ -237,13 +237,13 @@ namespace DtoLibPos.Documento.Agregar.NotaCredito
             ClienteSaldo = null;
             //
             PorctBonoPorPagoDivisa = 0m;
-            CantDivisaAplicaBonoPorPagoDivisa = 0;
+            CantDivisaAplicaBonoPorPagoDivisa = 0m;
             MontoBonoPorPagoDivisa = 0m;
             MontoBonoEnDivisaPorPagoDivisa = 0m;
             MontoPorVueltoEnEfectivo = 0m;
             MontoPorVueltoEnDivisa = 0m;
             MontoPorVueltoEnPagoMovil = 0m;
-            CantDivisaPorVueltoEnDivisa = 0;
+            CantDivisaPorVueltoEnDivisa = 0m;
             estatusPorBonoPorPagoDivisa = "0";
             estatusPorVueltoEnPagoMovil = "0";
         }

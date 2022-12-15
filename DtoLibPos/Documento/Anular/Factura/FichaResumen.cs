@@ -29,7 +29,7 @@ namespace DtoLibPos.Documento.Anular.Factura
         public decimal montoVueltoPorEfectivo { get; set; }
         public decimal montoVueltoPorDivisa { get; set; }
         public decimal montoVueltoPorPagoMovil { get; set; }
-        public int cntDivisaPorVueltoDivisa { get; set; }
+        public decimal cntDivisaPorVueltoDivisa { get; set; }
 
 
         public FichaResumen()
@@ -53,7 +53,7 @@ namespace DtoLibPos.Documento.Anular.Factura
             montoVueltoPorEfectivo = 0m;
             montoVueltoPorDivisa = 0m;
             montoVueltoPorPagoMovil = 0m;
-            cntDivisaPorVueltoDivisa = 0;
+            cntDivisaPorVueltoDivisa = 0m;
         }
 
     }

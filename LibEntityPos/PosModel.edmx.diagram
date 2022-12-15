@@ -72,15 +72,15 @@
         <AssociationConnector Association="pitaModel.p_venta_ibfk_1" />
         <EntityTypeShape EntityType="pitaModel.p_pendiente" Width="1.5" PointX="20.875" PointY="26.75" />
         <AssociationConnector Association="pitaModel.p_pendiente_ibfk_1" />
+        <EntityTypeShape EntityType="pitaModel.p_resumen" Width="1.5" PointX="20.875" PointY="7" />
+        <AssociationConnector Association="pitaModel.p_resumen_ibfk_1" />
+        <EntityTypeShape EntityType="pitaModel.pos_arqueo" Width="1.5" PointX="29.25" PointY="21" />
         <EntityTypeShape EntityType="pitaModel.ventas" Width="1.5" PointX="39.625" PointY="16.5" />
         <AssociationConnector Association="pitaModel.ventas_ibfk_5" />
         <AssociationConnector Association="pitaModel.p_verificador_ibfk_1" />
         <AssociationConnector Association="pitaModel.ventas_ibfk_3" />
         <AssociationConnector Association="pitaModel.ventas_ibfk_6" />
         <AssociationConnector Association="pitaModel.ventas_detalle_ibfk_8" />
-        <EntityTypeShape EntityType="pitaModel.p_resumen" Width="1.5" PointX="20.875" PointY="7" />
-        <AssociationConnector Association="pitaModel.p_resumen_ibfk_1" />
-        <EntityTypeShape EntityType="pitaModel.pos_arqueo" Width="1.5" PointX="29.25" PointY="21" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

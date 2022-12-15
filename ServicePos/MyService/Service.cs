@@ -22,25 +22,20 @@ namespace ServicePos.MyService
         }
 
 
-        public DtoLib.ResultadoEntidad<DateTime> FechaServidor()
+        public DtoLib.ResultadoEntidad<DateTime> 
+            FechaServidor()
         {
             return ServiceProv.FechaServidor();
         }
-
-        //public DtoLib.ResultadoEntidad<DtoLibPosOffLine.Sistema.InformacionBD.Ficha> InformacionBD()
-        //{
-        //    throw new NotImplementedException();
-        //    //return ServiceProv.InformacionBD();
-        //}
-
-        //public DtoLib.ResultadoEntidad<DtoLibInventario.Empresa.Data.Ficha> Empresa_Datos()
-        //{
-        //    return ServiceProv.Empresa_Datos();
-        //}
-
-        public DtoLib.Resultado Test()
+        public DtoLib.Resultado 
+            Test()
         {
             return ServiceProv.Test();
+        }
+        public DtoLib.ResultadoEntidad<DateTime> 
+            Servicio_GetFechaUltBoletin()
+        {
+            return ServiceProv.Servicio_GetFechaUltBoletin();
         }
 
     }

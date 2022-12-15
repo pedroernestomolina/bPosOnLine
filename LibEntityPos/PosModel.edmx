@@ -949,13 +949,13 @@ warning 6002: The table/view 'pita.pos_arqueo' does not have a primary key defin
           <Property Name="estatus_cierre_contable" Type="varchar" MaxLength="1" Nullable="false" />
           <Property Name="cierre_ftp" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="porct_bono_por_pago_divisa" Type="decimal" Precision="14" Scale="2" Nullable="false" />
-          <Property Name="cnt_divisa_aplica_bono_por_pago_divisa" Type="int" Nullable="false" />
+          <Property Name="cnt_divisa_aplica_bono_por_pago_divisa" Type="decimal" Precision="14" Scale="2" Nullable="false" />
           <Property Name="monto_bono_por_pago_divisa" Type="decimal" Precision="14" Scale="2" Nullable="false" />
           <Property Name="monto_bono_en_divisa_por_pago_divisa" Type="decimal" Precision="14" Scale="2" Nullable="false" />
           <Property Name="monto_por_vuelto_en_efectivo" Type="decimal" Precision="14" Scale="2" Nullable="false" />
           <Property Name="monto_por_vuelto_en_divisa" Type="decimal" Precision="14" Scale="2" Nullable="false" />
           <Property Name="monto_por_vuelto_en_pago_movil" Type="decimal" Precision="14" Scale="2" Nullable="false" />
-          <Property Name="cnt_divisa_por_vuelto_en_divisa" Type="int" Nullable="false" />
+          <Property Name="cnt_divisa_por_vuelto_en_divisa" Type="decimal" Precision="14" Scale="2" Nullable="false" />
           <Property Name="estatus_bono_por_pago_divisa" Type="varchar" MaxLength="1" Nullable="false" />
           <Property Name="estatus_vuelto_por_pago_movil" Type="varchar" MaxLength="1" Nullable="false" />
         </EntityType>
@@ -2156,6 +2156,12 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
             <End Role="p_operador" EntitySet="p_operador" />
             <End Role="p_pendiente" EntitySet="p_pendiente" />
           </AssociationSet>
+          <EntitySet Name="p_resumen" EntityType="pitaModel.p_resumen" />
+          <AssociationSet Name="p_resumen_ibfk_1" Association="pitaModel.p_resumen_ibfk_1">
+            <End Role="p_operador" EntitySet="p_operador" />
+            <End Role="p_resumen" EntitySet="p_resumen" />
+          </AssociationSet>
+          <EntitySet Name="pos_arqueo" EntityType="pitaModel.pos_arqueo" />
           <EntitySet Name="ventas" EntityType="pitaModel.ventas" />
           <AssociationSet Name="ventas_ibfk_5" Association="pitaModel.ventas_ibfk_5">
             <End Role="clientes" EntitySet="clientes" />
@@ -2177,12 +2183,6 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
             <End Role="ventas" EntitySet="ventas" />
             <End Role="ventas_detalle" EntitySet="ventas_detalle" />
           </AssociationSet>
-          <EntitySet Name="p_resumen" EntityType="pitaModel.p_resumen" />
-          <AssociationSet Name="p_resumen_ibfk_1" Association="pitaModel.p_resumen_ibfk_1">
-            <End Role="p_operador" EntitySet="p_operador" />
-            <End Role="p_resumen" EntitySet="p_resumen" />
-          </AssociationSet>
-          <EntitySet Name="pos_arqueo" EntityType="pitaModel.pos_arqueo" />
           </EntityContainer>
         <EntityType Name="clientes_grupo">
           <Key>
@@ -3406,190 +3406,6 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="ventas">
-          <Key>
-            <PropertyRef Name="auto" />
-          </Key>
-          <Property Name="auto" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="documento" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="fecha" Type="DateTime" Nullable="false" />
-          <Property Name="fecha_vencimiento" Type="DateTime" Nullable="false" />
-          <Property Name="razon_social" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="dir_fiscal" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="ci_rif" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="tipo" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="exento" Type="Decimal" Nullable="false" />
-          <Property Name="base1" Type="Decimal" Nullable="false" />
-          <Property Name="base2" Type="Decimal" Nullable="false" />
-          <Property Name="base3" Type="Decimal" Nullable="false" />
-          <Property Name="impuesto1" Type="Decimal" Nullable="false" />
-          <Property Name="impuesto2" Type="Decimal" Nullable="false" />
-          <Property Name="impuesto3" Type="Decimal" Nullable="false" />
-          <Property Name="base" Type="Decimal" Nullable="false" />
-          <Property Name="impuesto" Type="Decimal" Nullable="false" />
-          <Property Name="total" Type="Decimal" Nullable="false" />
-          <Property Name="tasa1" Type="Decimal" Nullable="false" />
-          <Property Name="tasa2" Type="Decimal" Nullable="false" />
-          <Property Name="tasa3" Type="Decimal" Nullable="false" />
-          <Property Name="nota" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="tasa_retencion_iva" Type="Decimal" Nullable="false" />
-          <Property Name="tasa_retencion_islr" Type="Decimal" Nullable="false" />
-          <Property Name="retencion_iva" Type="Decimal" Nullable="false" />
-          <Property Name="retencion_islr" Type="Decimal" Nullable="false" />
-          <Property Name="auto_cliente" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="codigo_cliente" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="mes_relacion" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="control" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="fecha_registro" Type="DateTime" Nullable="false" />
-          <Property Name="orden_compra" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="dias" Type="Int32" Nullable="false" />
-          <Property Name="descuento1" Type="Decimal" Nullable="false" />
-          <Property Name="descuento2" Type="Decimal" Nullable="false" />
-          <Property Name="cargos" Type="Decimal" Nullable="false" />
-          <Property Name="descuento1p" Type="Decimal" Nullable="false" />
-          <Property Name="descuento2p" Type="Decimal" Nullable="false" />
-          <Property Name="cargosp" Type="Decimal" Nullable="false" />
-          <Property Name="columna" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="estatus_anulado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="aplica" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="comprobante_retencion" Type="String" Nullable="false" MaxLength="14" FixedLength="false" Unicode="false" />
-          <Property Name="subtotal_neto" Type="Decimal" Nullable="false" />
-          <Property Name="telefono" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="false" />
-          <Property Name="factor_cambio" Type="Decimal" Nullable="false" />
-          <Property Name="codigo_vendedor" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="vendedor" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="auto_vendedor" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="fecha_pedido" Type="DateTime" Nullable="false" />
-          <Property Name="pedido" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="condicion_pago" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
-          <Property Name="usuario" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="codigo_usuario" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="codigo_sucursal" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="hora" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="transporte" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="codigo_transporte" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="monto_divisa" Type="Decimal" Nullable="false" />
-          <Property Name="despachado" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="dir_despacho" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="false" />
-          <Property Name="estacion" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="auto_recibo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="recibo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="renglones" Type="Int32" Nullable="false" />
-          <Property Name="saldo_pendiente" Type="Decimal" Nullable="false" />
-          <Property Name="ano_relacion" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
-          <Property Name="comprobante_retencion_islr" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="dias_validez" Type="Int32" Nullable="false" />
-          <Property Name="auto_usuario" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="auto_transporte" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="situacion" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="signo" Type="Int32" Nullable="false" />
-          <Property Name="serie" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="tarifa" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="tipo_remision" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="documento_remision" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="auto_remision" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="documento_nombre" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
-          <Property Name="subtotal_impuesto" Type="Decimal" Nullable="false" />
-          <Property Name="subtotal" Type="Decimal" Nullable="false" />
-          <Property Name="auto_cxc" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="tipo_cliente" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="planilla" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="expediente" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="anticipo_iva" Type="Decimal" Nullable="false" />
-          <Property Name="terceros_iva" Type="Decimal" Nullable="false" />
-          <Property Name="neto" Type="Decimal" Nullable="false" />
-          <Property Name="costo" Type="Decimal" Nullable="false" />
-          <Property Name="utilidad" Type="Decimal" Nullable="false" />
-          <Property Name="utilidadp" Type="Decimal" Nullable="false" />
-          <Property Name="documento_tipo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="ci_titular" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
-          <Property Name="nombre_titular" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Name="ci_beneficiario" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
-          <Property Name="nombre_beneficiario" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Name="clave" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="denominacion_fiscal" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="cambio" Type="Decimal" Nullable="false" />
-          <Property Name="estatus_validado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="cierre" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="fecha_retencion" Type="DateTime" Nullable="false" />
-          <Property Name="estatus_cierre_contable" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="cierre_ftp" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="porct_bono_por_pago_divisa" Type="Decimal" Nullable="false" />
-          <Property Name="cnt_divisa_aplica_bono_por_pago_divisa" Type="Int32" Nullable="false" />
-          <Property Name="monto_bono_por_pago_divisa" Type="Decimal" Nullable="false" />
-          <Property Name="monto_bono_en_divisa_por_pago_divisa" Type="Decimal" Nullable="false" />
-          <Property Name="monto_por_vuelto_en_efectivo" Type="Decimal" Nullable="false" />
-          <Property Name="monto_por_vuelto_en_divisa" Type="Decimal" Nullable="false" />
-          <Property Name="monto_por_vuelto_en_pago_movil" Type="Decimal" Nullable="false" />
-          <Property Name="cnt_divisa_por_vuelto_en_divisa" Type="Int32" Nullable="false" />
-          <Property Name="estatus_bono_por_pago_divisa" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="estatus_vuelto_por_pago_movil" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="clientes" Relationship="pitaModel.ventas_ibfk_5" FromRole="ventas" ToRole="clientes" />
-          <NavigationProperty Name="p_verificador" Relationship="pitaModel.p_verificador_ibfk_1" FromRole="ventas" ToRole="p_verificador" />
-          <NavigationProperty Name="usuarios" Relationship="pitaModel.ventas_ibfk_3" FromRole="ventas" ToRole="usuarios" />
-          <NavigationProperty Name="vendedores" Relationship="pitaModel.ventas_ibfk_6" FromRole="ventas" ToRole="vendedores" />
-          <NavigationProperty Name="ventas_detalle" Relationship="pitaModel.ventas_detalle_ibfk_8" FromRole="ventas" ToRole="ventas_detalle" />
-        </EntityType>
-        <Association Name="ventas_ibfk_5">
-          <End Type="pitaModel.clientes" Role="clientes" Multiplicity="1" />
-          <End Type="pitaModel.ventas" Role="ventas" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="clientes">
-              <PropertyRef Name="auto" />
-            </Principal>
-            <Dependent Role="ventas">
-              <PropertyRef Name="auto_cliente" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="p_verificador_ibfk_1">
-          <End Type="pitaModel.ventas" Role="ventas" Multiplicity="1" />
-          <End Type="pitaModel.p_verificador" Role="p_verificador" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ventas">
-              <PropertyRef Name="auto" />
-            </Principal>
-            <Dependent Role="p_verificador">
-              <PropertyRef Name="autoDocumento" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="ventas_ibfk_3">
-          <End Type="pitaModel.usuarios" Role="usuarios" Multiplicity="1" />
-          <End Type="pitaModel.ventas" Role="ventas" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="usuarios">
-              <PropertyRef Name="auto" />
-            </Principal>
-            <Dependent Role="ventas">
-              <PropertyRef Name="auto_usuario" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="ventas_ibfk_6">
-          <End Type="pitaModel.vendedores" Role="vendedores" Multiplicity="1" />
-          <End Type="pitaModel.ventas" Role="ventas" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="vendedores">
-              <PropertyRef Name="auto" />
-            </Principal>
-            <Dependent Role="ventas">
-              <PropertyRef Name="auto_vendedor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="ventas_detalle_ibfk_8">
-          <End Type="pitaModel.ventas" Role="ventas" Multiplicity="1" />
-          <End Type="pitaModel.ventas_detalle" Role="ventas_detalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ventas">
-              <PropertyRef Name="auto" />
-            </Principal>
-            <Dependent Role="ventas_detalle">
-              <PropertyRef Name="auto_documento" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="p_resumen">
           <Key>
             <PropertyRef Name="id" />
@@ -3758,6 +3574,190 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
           <Property Name="cierre_numero" Type="Int32" Nullable="false" />
           <Property Name="vuelto_por_pago_movil" Type="Decimal" Nullable="false" />
         </EntityType>
+        <EntityType Name="ventas">
+          <Key>
+            <PropertyRef Name="auto" />
+          </Key>
+          <Property Name="auto" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="documento" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="fecha" Type="DateTime" Nullable="false" />
+          <Property Name="fecha_vencimiento" Type="DateTime" Nullable="false" />
+          <Property Name="razon_social" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="dir_fiscal" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ci_rif" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="tipo" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="exento" Type="Decimal" Nullable="false" />
+          <Property Name="base1" Type="Decimal" Nullable="false" />
+          <Property Name="base2" Type="Decimal" Nullable="false" />
+          <Property Name="base3" Type="Decimal" Nullable="false" />
+          <Property Name="impuesto1" Type="Decimal" Nullable="false" />
+          <Property Name="impuesto2" Type="Decimal" Nullable="false" />
+          <Property Name="impuesto3" Type="Decimal" Nullable="false" />
+          <Property Name="base" Type="Decimal" Nullable="false" />
+          <Property Name="impuesto" Type="Decimal" Nullable="false" />
+          <Property Name="total" Type="Decimal" Nullable="false" />
+          <Property Name="tasa1" Type="Decimal" Nullable="false" />
+          <Property Name="tasa2" Type="Decimal" Nullable="false" />
+          <Property Name="tasa3" Type="Decimal" Nullable="false" />
+          <Property Name="nota" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="tasa_retencion_iva" Type="Decimal" Nullable="false" />
+          <Property Name="tasa_retencion_islr" Type="Decimal" Nullable="false" />
+          <Property Name="retencion_iva" Type="Decimal" Nullable="false" />
+          <Property Name="retencion_islr" Type="Decimal" Nullable="false" />
+          <Property Name="auto_cliente" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="codigo_cliente" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="mes_relacion" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="control" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_registro" Type="DateTime" Nullable="false" />
+          <Property Name="orden_compra" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="dias" Type="Int32" Nullable="false" />
+          <Property Name="descuento1" Type="Decimal" Nullable="false" />
+          <Property Name="descuento2" Type="Decimal" Nullable="false" />
+          <Property Name="cargos" Type="Decimal" Nullable="false" />
+          <Property Name="descuento1p" Type="Decimal" Nullable="false" />
+          <Property Name="descuento2p" Type="Decimal" Nullable="false" />
+          <Property Name="cargosp" Type="Decimal" Nullable="false" />
+          <Property Name="columna" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="estatus_anulado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="aplica" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="comprobante_retencion" Type="String" Nullable="false" MaxLength="14" FixedLength="false" Unicode="false" />
+          <Property Name="subtotal_neto" Type="Decimal" Nullable="false" />
+          <Property Name="telefono" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="factor_cambio" Type="Decimal" Nullable="false" />
+          <Property Name="codigo_vendedor" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="vendedor" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="auto_vendedor" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_pedido" Type="DateTime" Nullable="false" />
+          <Property Name="pedido" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="condicion_pago" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="usuario" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="codigo_usuario" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="codigo_sucursal" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="hora" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="transporte" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="codigo_transporte" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="monto_divisa" Type="Decimal" Nullable="false" />
+          <Property Name="despachado" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="dir_despacho" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="estacion" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="auto_recibo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="recibo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="renglones" Type="Int32" Nullable="false" />
+          <Property Name="saldo_pendiente" Type="Decimal" Nullable="false" />
+          <Property Name="ano_relacion" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="comprobante_retencion_islr" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="dias_validez" Type="Int32" Nullable="false" />
+          <Property Name="auto_usuario" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="auto_transporte" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="situacion" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="signo" Type="Int32" Nullable="false" />
+          <Property Name="serie" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="tarifa" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="tipo_remision" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="documento_remision" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="auto_remision" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="documento_nombre" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="subtotal_impuesto" Type="Decimal" Nullable="false" />
+          <Property Name="subtotal" Type="Decimal" Nullable="false" />
+          <Property Name="auto_cxc" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="tipo_cliente" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="planilla" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="expediente" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="anticipo_iva" Type="Decimal" Nullable="false" />
+          <Property Name="terceros_iva" Type="Decimal" Nullable="false" />
+          <Property Name="neto" Type="Decimal" Nullable="false" />
+          <Property Name="costo" Type="Decimal" Nullable="false" />
+          <Property Name="utilidad" Type="Decimal" Nullable="false" />
+          <Property Name="utilidadp" Type="Decimal" Nullable="false" />
+          <Property Name="documento_tipo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ci_titular" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="nombre_titular" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="ci_beneficiario" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="nombre_beneficiario" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="clave" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="denominacion_fiscal" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="cambio" Type="Decimal" Nullable="false" />
+          <Property Name="estatus_validado" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="cierre" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_retencion" Type="DateTime" Nullable="false" />
+          <Property Name="estatus_cierre_contable" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="cierre_ftp" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="porct_bono_por_pago_divisa" Type="Decimal" Nullable="false" />
+          <Property Name="cnt_divisa_aplica_bono_por_pago_divisa" Type="Decimal" Nullable="false" />
+          <Property Name="monto_bono_por_pago_divisa" Type="Decimal" Nullable="false" />
+          <Property Name="monto_bono_en_divisa_por_pago_divisa" Type="Decimal" Nullable="false" />
+          <Property Name="monto_por_vuelto_en_efectivo" Type="Decimal" Nullable="false" />
+          <Property Name="monto_por_vuelto_en_divisa" Type="Decimal" Nullable="false" />
+          <Property Name="monto_por_vuelto_en_pago_movil" Type="Decimal" Nullable="false" />
+          <Property Name="cnt_divisa_por_vuelto_en_divisa" Type="Decimal" Nullable="false" />
+          <Property Name="estatus_bono_por_pago_divisa" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="estatus_vuelto_por_pago_movil" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="clientes" Relationship="pitaModel.ventas_ibfk_5" FromRole="ventas" ToRole="clientes" />
+          <NavigationProperty Name="p_verificador" Relationship="pitaModel.p_verificador_ibfk_1" FromRole="ventas" ToRole="p_verificador" />
+          <NavigationProperty Name="usuarios" Relationship="pitaModel.ventas_ibfk_3" FromRole="ventas" ToRole="usuarios" />
+          <NavigationProperty Name="vendedores" Relationship="pitaModel.ventas_ibfk_6" FromRole="ventas" ToRole="vendedores" />
+          <NavigationProperty Name="ventas_detalle" Relationship="pitaModel.ventas_detalle_ibfk_8" FromRole="ventas" ToRole="ventas_detalle" />
+        </EntityType>
+        <Association Name="ventas_ibfk_5">
+          <End Type="pitaModel.clientes" Role="clientes" Multiplicity="1" />
+          <End Type="pitaModel.ventas" Role="ventas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clientes">
+              <PropertyRef Name="auto" />
+            </Principal>
+            <Dependent Role="ventas">
+              <PropertyRef Name="auto_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="p_verificador_ibfk_1">
+          <End Type="pitaModel.ventas" Role="ventas" Multiplicity="1" />
+          <End Type="pitaModel.p_verificador" Role="p_verificador" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ventas">
+              <PropertyRef Name="auto" />
+            </Principal>
+            <Dependent Role="p_verificador">
+              <PropertyRef Name="autoDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ventas_ibfk_3">
+          <End Type="pitaModel.usuarios" Role="usuarios" Multiplicity="1" />
+          <End Type="pitaModel.ventas" Role="ventas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuarios">
+              <PropertyRef Name="auto" />
+            </Principal>
+            <Dependent Role="ventas">
+              <PropertyRef Name="auto_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ventas_ibfk_6">
+          <End Type="pitaModel.vendedores" Role="vendedores" Multiplicity="1" />
+          <End Type="pitaModel.ventas" Role="ventas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vendedores">
+              <PropertyRef Name="auto" />
+            </Principal>
+            <Dependent Role="ventas">
+              <PropertyRef Name="auto_vendedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ventas_detalle_ibfk_8">
+          <End Type="pitaModel.ventas" Role="ventas" Multiplicity="1" />
+          <End Type="pitaModel.ventas_detalle" Role="ventas_detalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ventas">
+              <PropertyRef Name="auto" />
+            </Principal>
+            <Dependent Role="ventas_detalle">
+              <PropertyRef Name="auto_documento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4547,6 +4547,117 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="p_resumen">
+            <EntityTypeMapping TypeName="pitaModel.p_resumen">
+              <MappingFragment StoreEntitySet="p_resumen">
+                <ScalarProperty Name="cnt_divisa_por_vuelto_divisa" ColumnName="cnt_divisa_por_vuelto_divisa" />
+                <ScalarProperty Name="monto_vuelto_por_pago_movil" ColumnName="monto_vuelto_por_pago_movil" />
+                <ScalarProperty Name="monto_vuelto_por_divisa" ColumnName="monto_vuelto_por_divisa" />
+                <ScalarProperty Name="monto_vuelto_por_efectivo" ColumnName="monto_vuelto_por_efectivo" />
+                <ScalarProperty Name="auto_pos_arqueo" ColumnName="auto_pos_arqueo" />
+                <ScalarProperty Name="m_cambio_anulado" ColumnName="m_cambio_anulado" />
+                <ScalarProperty Name="cnt_cambio_anulado" ColumnName="cnt_cambio_anulado" />
+                <ScalarProperty Name="m_otros_anulado" ColumnName="m_otros_anulado" />
+                <ScalarProperty Name="cnt_otros_anulado" ColumnName="cnt_otros_anulado" />
+                <ScalarProperty Name="m_electronico_anulado" ColumnName="m_electronico_anulado" />
+                <ScalarProperty Name="cnt_electronico_anulado" ColumnName="cnt_electronico_anulado" />
+                <ScalarProperty Name="m_divisa_aunlado" ColumnName="m_divisa_aunlado" />
+                <ScalarProperty Name="cnt_divisa_anulado" ColumnName="cnt_divisa_anulado" />
+                <ScalarProperty Name="m_efectivo_anulado" ColumnName="m_efectivo_anulado" />
+                <ScalarProperty Name="cnt_efectivo_anulado" ColumnName="cnt_efectivo_anulado" />
+                <ScalarProperty Name="m_credito_anulado" ColumnName="m_credito_anulado" />
+                <ScalarProperty Name="m_contado_anulado" ColumnName="m_contado_anulado" />
+                <ScalarProperty Name="cnt_doc_credito_anulado" ColumnName="cnt_doc_credito_anulado" />
+                <ScalarProperty Name="cnt_doc_contado_anulado" ColumnName="cnt_doc_contado_anulado" />
+                <ScalarProperty Name="m_cambio" ColumnName="m_cambio" />
+                <ScalarProperty Name="cnt_cambio" ColumnName="cnt_cambio" />
+                <ScalarProperty Name="cnt_anu_fac" ColumnName="cnt_anu_fac" />
+                <ScalarProperty Name="m_anu_fac" ColumnName="m_anu_fac" />
+                <ScalarProperty Name="cnt_anu_ncr" ColumnName="cnt_anu_ncr" />
+                <ScalarProperty Name="m_anu_ncr" ColumnName="m_anu_ncr" />
+                <ScalarProperty Name="cnt_anu_nte" ColumnName="cnt_anu_nte" />
+                <ScalarProperty Name="m_anu_nte" ColumnName="m_anu_nte" />
+                <ScalarProperty Name="cnt_anu" ColumnName="cnt_anu" />
+                <ScalarProperty Name="m_anu" ColumnName="m_anu" />
+                <ScalarProperty Name="cnt_nte" ColumnName="cnt_nte" />
+                <ScalarProperty Name="m_nte" ColumnName="m_nte" />
+                <ScalarProperty Name="cnt_doc_credito" ColumnName="cnt_doc_credito" />
+                <ScalarProperty Name="cnt_doc_contado" ColumnName="cnt_doc_contado" />
+                <ScalarProperty Name="m_ncr" ColumnName="m_ncr" />
+                <ScalarProperty Name="m_fac" ColumnName="m_fac" />
+                <ScalarProperty Name="cnt_ncr" ColumnName="cnt_ncr" />
+                <ScalarProperty Name="cnt_fac" ColumnName="cnt_fac" />
+                <ScalarProperty Name="cnt_doc" ColumnName="cnt_doc" />
+                <ScalarProperty Name="m_credito" ColumnName="m_credito" />
+                <ScalarProperty Name="m_contado" ColumnName="m_contado" />
+                <ScalarProperty Name="cnt_devolucion" ColumnName="cnt_devolucion" />
+                <ScalarProperty Name="m_devolucion" ColumnName="m_devolucion" />
+                <ScalarProperty Name="cnt_otros" ColumnName="cnt_otros" />
+                <ScalarProperty Name="m_otros" ColumnName="m_otros" />
+                <ScalarProperty Name="cnt_electronico" ColumnName="cnt_electronico" />
+                <ScalarProperty Name="m_electronico" ColumnName="m_electronico" />
+                <ScalarProperty Name="cnt_divisa" ColumnName="cnt_divisa" />
+                <ScalarProperty Name="m_divisa" ColumnName="m_divisa" />
+                <ScalarProperty Name="cnt_efectivo" ColumnName="cnt_efectivo" />
+                <ScalarProperty Name="m_efectivo" ColumnName="m_efectivo" />
+                <ScalarProperty Name="id_p_operador" ColumnName="id_p_operador" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pos_arqueo">
+            <EntityTypeMapping TypeName="pitaModel.pos_arqueo">
+              <MappingFragment StoreEntitySet="pos_arqueo">
+                <ScalarProperty Name="vuelto_por_pago_movil" ColumnName="vuelto_por_pago_movil" />
+                <ScalarProperty Name="cierre_numero" ColumnName="cierre_numero" />
+                <ScalarProperty Name="id_equipo" ColumnName="id_equipo" />
+                <ScalarProperty Name="codigo_sucursal" ColumnName="codigo_sucursal" />
+                <ScalarProperty Name="montoNcr" ColumnName="montoNcr" />
+                <ScalarProperty Name="montoFac" ColumnName="montoFac" />
+                <ScalarProperty Name="cntDocNcr" ColumnName="cntDocNcr" />
+                <ScalarProperty Name="cntDocFac" ColumnName="cntDocFac" />
+                <ScalarProperty Name="cntDoc" ColumnName="cntDoc" />
+                <ScalarProperty Name="cnt_divisa_usuario" ColumnName="cnt_divisa_usuario" />
+                <ScalarProperty Name="cnt_divisa" ColumnName="cnt_divisa" />
+                <ScalarProperty Name="cierre_ftp" ColumnName="cierre_ftp" />
+                <ScalarProperty Name="mtotal" ColumnName="mtotal" />
+                <ScalarProperty Name="msubtotal" ColumnName="msubtotal" />
+                <ScalarProperty Name="mretenciones" ColumnName="mretenciones" />
+                <ScalarProperty Name="mretiro" ColumnName="mretiro" />
+                <ScalarProperty Name="mgastos" ColumnName="mgastos" />
+                <ScalarProperty Name="motros" ColumnName="motros" />
+                <ScalarProperty Name="mfirma" ColumnName="mfirma" />
+                <ScalarProperty Name="mtrans" ColumnName="mtrans" />
+                <ScalarProperty Name="mticket" ColumnName="mticket" />
+                <ScalarProperty Name="mtarjeta" ColumnName="mtarjeta" />
+                <ScalarProperty Name="mbanco4" ColumnName="mbanco4" />
+                <ScalarProperty Name="mbanco3" ColumnName="mbanco3" />
+                <ScalarProperty Name="mbanco2" ColumnName="mbanco2" />
+                <ScalarProperty Name="mbanco1" ColumnName="mbanco1" />
+                <ScalarProperty Name="mcheque" ColumnName="mcheque" />
+                <ScalarProperty Name="mefectivo" ColumnName="mefectivo" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="cobranza" ColumnName="cobranza" />
+                <ScalarProperty Name="subtotal" ColumnName="subtotal" />
+                <ScalarProperty Name="devolucion" ColumnName="devolucion" />
+                <ScalarProperty Name="otros" ColumnName="otros" />
+                <ScalarProperty Name="retiro" ColumnName="retiro" />
+                <ScalarProperty Name="firma" ColumnName="firma" />
+                <ScalarProperty Name="ticket" ColumnName="ticket" />
+                <ScalarProperty Name="credito" ColumnName="credito" />
+                <ScalarProperty Name="debito" ColumnName="debito" />
+                <ScalarProperty Name="cheque" ColumnName="cheque" />
+                <ScalarProperty Name="efectivo" ColumnName="efectivo" />
+                <ScalarProperty Name="diferencia" ColumnName="diferencia" />
+                <ScalarProperty Name="hora" ColumnName="hora" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="codigo" ColumnName="codigo" />
+                <ScalarProperty Name="auto_usuario" ColumnName="auto_usuario" />
+                <ScalarProperty Name="auto_cierre" ColumnName="auto_cierre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="ventas">
             <EntityTypeMapping TypeName="pitaModel.ventas">
               <MappingFragment StoreEntitySet="ventas">
@@ -4664,117 +4775,6 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
                 <ScalarProperty Name="fecha" ColumnName="fecha" />
                 <ScalarProperty Name="documento" ColumnName="documento" />
                 <ScalarProperty Name="auto" ColumnName="auto" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="p_resumen">
-            <EntityTypeMapping TypeName="pitaModel.p_resumen">
-              <MappingFragment StoreEntitySet="p_resumen">
-                <ScalarProperty Name="cnt_divisa_por_vuelto_divisa" ColumnName="cnt_divisa_por_vuelto_divisa" />
-                <ScalarProperty Name="monto_vuelto_por_pago_movil" ColumnName="monto_vuelto_por_pago_movil" />
-                <ScalarProperty Name="monto_vuelto_por_divisa" ColumnName="monto_vuelto_por_divisa" />
-                <ScalarProperty Name="monto_vuelto_por_efectivo" ColumnName="monto_vuelto_por_efectivo" />
-                <ScalarProperty Name="auto_pos_arqueo" ColumnName="auto_pos_arqueo" />
-                <ScalarProperty Name="m_cambio_anulado" ColumnName="m_cambio_anulado" />
-                <ScalarProperty Name="cnt_cambio_anulado" ColumnName="cnt_cambio_anulado" />
-                <ScalarProperty Name="m_otros_anulado" ColumnName="m_otros_anulado" />
-                <ScalarProperty Name="cnt_otros_anulado" ColumnName="cnt_otros_anulado" />
-                <ScalarProperty Name="m_electronico_anulado" ColumnName="m_electronico_anulado" />
-                <ScalarProperty Name="cnt_electronico_anulado" ColumnName="cnt_electronico_anulado" />
-                <ScalarProperty Name="m_divisa_aunlado" ColumnName="m_divisa_aunlado" />
-                <ScalarProperty Name="cnt_divisa_anulado" ColumnName="cnt_divisa_anulado" />
-                <ScalarProperty Name="m_efectivo_anulado" ColumnName="m_efectivo_anulado" />
-                <ScalarProperty Name="cnt_efectivo_anulado" ColumnName="cnt_efectivo_anulado" />
-                <ScalarProperty Name="m_credito_anulado" ColumnName="m_credito_anulado" />
-                <ScalarProperty Name="m_contado_anulado" ColumnName="m_contado_anulado" />
-                <ScalarProperty Name="cnt_doc_credito_anulado" ColumnName="cnt_doc_credito_anulado" />
-                <ScalarProperty Name="cnt_doc_contado_anulado" ColumnName="cnt_doc_contado_anulado" />
-                <ScalarProperty Name="m_cambio" ColumnName="m_cambio" />
-                <ScalarProperty Name="cnt_cambio" ColumnName="cnt_cambio" />
-                <ScalarProperty Name="cnt_anu_fac" ColumnName="cnt_anu_fac" />
-                <ScalarProperty Name="m_anu_fac" ColumnName="m_anu_fac" />
-                <ScalarProperty Name="cnt_anu_ncr" ColumnName="cnt_anu_ncr" />
-                <ScalarProperty Name="m_anu_ncr" ColumnName="m_anu_ncr" />
-                <ScalarProperty Name="cnt_anu_nte" ColumnName="cnt_anu_nte" />
-                <ScalarProperty Name="m_anu_nte" ColumnName="m_anu_nte" />
-                <ScalarProperty Name="cnt_anu" ColumnName="cnt_anu" />
-                <ScalarProperty Name="m_anu" ColumnName="m_anu" />
-                <ScalarProperty Name="cnt_nte" ColumnName="cnt_nte" />
-                <ScalarProperty Name="m_nte" ColumnName="m_nte" />
-                <ScalarProperty Name="cnt_doc_credito" ColumnName="cnt_doc_credito" />
-                <ScalarProperty Name="cnt_doc_contado" ColumnName="cnt_doc_contado" />
-                <ScalarProperty Name="m_ncr" ColumnName="m_ncr" />
-                <ScalarProperty Name="m_fac" ColumnName="m_fac" />
-                <ScalarProperty Name="cnt_ncr" ColumnName="cnt_ncr" />
-                <ScalarProperty Name="cnt_fac" ColumnName="cnt_fac" />
-                <ScalarProperty Name="cnt_doc" ColumnName="cnt_doc" />
-                <ScalarProperty Name="m_credito" ColumnName="m_credito" />
-                <ScalarProperty Name="m_contado" ColumnName="m_contado" />
-                <ScalarProperty Name="cnt_devolucion" ColumnName="cnt_devolucion" />
-                <ScalarProperty Name="m_devolucion" ColumnName="m_devolucion" />
-                <ScalarProperty Name="cnt_otros" ColumnName="cnt_otros" />
-                <ScalarProperty Name="m_otros" ColumnName="m_otros" />
-                <ScalarProperty Name="cnt_electronico" ColumnName="cnt_electronico" />
-                <ScalarProperty Name="m_electronico" ColumnName="m_electronico" />
-                <ScalarProperty Name="cnt_divisa" ColumnName="cnt_divisa" />
-                <ScalarProperty Name="m_divisa" ColumnName="m_divisa" />
-                <ScalarProperty Name="cnt_efectivo" ColumnName="cnt_efectivo" />
-                <ScalarProperty Name="m_efectivo" ColumnName="m_efectivo" />
-                <ScalarProperty Name="id_p_operador" ColumnName="id_p_operador" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="pos_arqueo">
-            <EntityTypeMapping TypeName="pitaModel.pos_arqueo">
-              <MappingFragment StoreEntitySet="pos_arqueo">
-                <ScalarProperty Name="vuelto_por_pago_movil" ColumnName="vuelto_por_pago_movil" />
-                <ScalarProperty Name="cierre_numero" ColumnName="cierre_numero" />
-                <ScalarProperty Name="id_equipo" ColumnName="id_equipo" />
-                <ScalarProperty Name="codigo_sucursal" ColumnName="codigo_sucursal" />
-                <ScalarProperty Name="montoNcr" ColumnName="montoNcr" />
-                <ScalarProperty Name="montoFac" ColumnName="montoFac" />
-                <ScalarProperty Name="cntDocNcr" ColumnName="cntDocNcr" />
-                <ScalarProperty Name="cntDocFac" ColumnName="cntDocFac" />
-                <ScalarProperty Name="cntDoc" ColumnName="cntDoc" />
-                <ScalarProperty Name="cnt_divisa_usuario" ColumnName="cnt_divisa_usuario" />
-                <ScalarProperty Name="cnt_divisa" ColumnName="cnt_divisa" />
-                <ScalarProperty Name="cierre_ftp" ColumnName="cierre_ftp" />
-                <ScalarProperty Name="mtotal" ColumnName="mtotal" />
-                <ScalarProperty Name="msubtotal" ColumnName="msubtotal" />
-                <ScalarProperty Name="mretenciones" ColumnName="mretenciones" />
-                <ScalarProperty Name="mretiro" ColumnName="mretiro" />
-                <ScalarProperty Name="mgastos" ColumnName="mgastos" />
-                <ScalarProperty Name="motros" ColumnName="motros" />
-                <ScalarProperty Name="mfirma" ColumnName="mfirma" />
-                <ScalarProperty Name="mtrans" ColumnName="mtrans" />
-                <ScalarProperty Name="mticket" ColumnName="mticket" />
-                <ScalarProperty Name="mtarjeta" ColumnName="mtarjeta" />
-                <ScalarProperty Name="mbanco4" ColumnName="mbanco4" />
-                <ScalarProperty Name="mbanco3" ColumnName="mbanco3" />
-                <ScalarProperty Name="mbanco2" ColumnName="mbanco2" />
-                <ScalarProperty Name="mbanco1" ColumnName="mbanco1" />
-                <ScalarProperty Name="mcheque" ColumnName="mcheque" />
-                <ScalarProperty Name="mefectivo" ColumnName="mefectivo" />
-                <ScalarProperty Name="total" ColumnName="total" />
-                <ScalarProperty Name="cobranza" ColumnName="cobranza" />
-                <ScalarProperty Name="subtotal" ColumnName="subtotal" />
-                <ScalarProperty Name="devolucion" ColumnName="devolucion" />
-                <ScalarProperty Name="otros" ColumnName="otros" />
-                <ScalarProperty Name="retiro" ColumnName="retiro" />
-                <ScalarProperty Name="firma" ColumnName="firma" />
-                <ScalarProperty Name="ticket" ColumnName="ticket" />
-                <ScalarProperty Name="credito" ColumnName="credito" />
-                <ScalarProperty Name="debito" ColumnName="debito" />
-                <ScalarProperty Name="cheque" ColumnName="cheque" />
-                <ScalarProperty Name="efectivo" ColumnName="efectivo" />
-                <ScalarProperty Name="diferencia" ColumnName="diferencia" />
-                <ScalarProperty Name="hora" ColumnName="hora" />
-                <ScalarProperty Name="fecha" ColumnName="fecha" />
-                <ScalarProperty Name="usuario" ColumnName="usuario" />
-                <ScalarProperty Name="codigo" ColumnName="codigo" />
-                <ScalarProperty Name="auto_usuario" ColumnName="auto_usuario" />
-                <ScalarProperty Name="auto_cierre" ColumnName="auto_cierre" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

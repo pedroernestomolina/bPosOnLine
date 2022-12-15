@@ -15,10 +15,12 @@ namespace IPos
         IReportesCli, IReportesPos, IProductoAdm, IVentaAdm, IDocumentoAdm, 
         IAuditoria, IModuloAdm, IVerificador, IAgencia, ICierre
     {
-
-        DtoLib.ResultadoEntidad<DateTime> FechaServidor();
-        DtoLib.Resultado Test();
-
+        DtoLib.ResultadoEntidad<DateTime> 
+            FechaServidor();
+        DtoLib.Resultado 
+            Test();
+        DtoLib.ResultadoEntidad<DateTime> 
+            Servicio_GetFechaUltBoletin();
     }
 
 }

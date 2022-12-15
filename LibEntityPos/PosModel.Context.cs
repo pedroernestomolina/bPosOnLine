@@ -58,8 +58,8 @@ namespace LibEntityPos
         public virtual DbSet<cxc_recibos> cxc_recibos { get; set; }
         public virtual DbSet<p_venta> p_venta { get; set; }
         public virtual DbSet<p_pendiente> p_pendiente { get; set; }
-        public virtual DbSet<ventas> ventas { get; set; }
         public virtual DbSet<p_resumen> p_resumen { get; set; }
         public virtual DbSet<pos_arqueo> pos_arqueo { get; set; }
+        public virtual DbSet<ventas> ventas { get; set; }
     }
 }
