@@ -8,11 +8,8 @@ using System.Threading.Tasks;
 
 namespace ServicePos.MyService
 {
-    
     public partial class Service : IService
     {
-
-
         public DtoLib.ResultadoEntidad<DtoLibPos.Documento.Agregar.Factura.Result>
             Documento_Agregar_Factura(DtoLibPos.Documento.Agregar.Factura.Ficha ficha)
         {
@@ -135,7 +132,5 @@ namespace ServicePos.MyService
 
             return ServiceProv.Documento_Anular_Factura(ficha);
         }
-
     }
-
 }

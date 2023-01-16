@@ -75,6 +75,7 @@
     <Compile Include="Jornada.cs" />
     <Compile Include="MedioPago.cs" />
     <Compile Include="ModuloAdm.cs" />
+    <Compile Include="MovCaja.cs" />
     <Compile Include="Pendiente.cs" />
     <Compile Include="Permiso.cs" />
     <Compile Include="Producto.cs" />

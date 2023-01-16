@@ -20,6 +20,10 @@ namespace DtoLibPos.Sucursal.Entidad
         public string estatusVentaCredito { get; set; }
         public string estatus { get; set; }
         public string autoDepositoPrincipal { get; set; }
+        public string habilitaVentaSurtidoPos { get; set; }
+        public string habilitaVueltoDivisaPos { get; set; }
+        public string habilitaModGastoPos { get; set; }
+        public string modoVentaPos { get; set; }
 
 
         public Ficha()
@@ -33,8 +37,11 @@ namespace DtoLibPos.Sucursal.Entidad
             estatusVentaCredito = "";
             estatus = "";
             autoDepositoPrincipal = "";
+            habilitaModGastoPos = "";
+            habilitaVentaSurtidoPos = "";
+            habilitaVueltoDivisaPos = "";
+            modoVentaPos = "";
         }
-
     }
 
 }

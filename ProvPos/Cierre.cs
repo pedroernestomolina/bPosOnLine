@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace ProvPos
 {
-
     public partial class Provider: IPos.IProvider
     {
-
         public DtoLib.ResultadoLista<DtoLibPos.Pos.Cierre.Lista.Ficha> 
             Cierre_Lista_GetByFiltro(DtoLibPos.Pos.Cierre.Lista.Filtro filtro)
         {
@@ -127,7 +125,5 @@ namespace ProvPos
 
             return result;
         }
-
     }
-
 }

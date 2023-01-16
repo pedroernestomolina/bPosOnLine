@@ -46,6 +46,13 @@
     <Compile Include="Agencia\Lista\Filtro.cs" />
     <Compile Include="Auditoria\Buscar\Ficha.cs" />
     <Compile Include="Auditoria\Entidad\Ficha.cs" />
+    <Compile Include="MovCaja\Anular\Ficha.cs" />
+    <Compile Include="MovCaja\Entidad\Detalle.cs" />
+    <Compile Include="MovCaja\Entidad\Ficha.cs" />
+    <Compile Include="MovCaja\Lista\Ficha.cs" />
+    <Compile Include="MovCaja\Lista\Filtro.cs" />
+    <Compile Include="MovCaja\Registrar\Detalle.cs" />
+    <Compile Include="MovCaja\Registrar\Ficha.cs" />
     <Compile Include="Pos\Cierre\Entidad\Ficha.cs" />
     <Compile Include="Pos\Cierre\Lista\Ficha.cs" />
     <Compile Include="Pos\Cierre\Lista\Filtro.cs" />

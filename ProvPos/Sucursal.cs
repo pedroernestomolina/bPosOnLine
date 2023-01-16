@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace ProvPos
 {
-    
     public partial class Provider: IPos.IProvider
     {
-
         public DtoLib.ResultadoLista<DtoLibPos.Sucursal.Lista.Ficha> 
             Sucursal_GetLista(DtoLibPos.Sucursal.Lista.Filtro filtro)
         {
@@ -70,7 +68,6 @@ namespace ProvPos
             Sucursal_GetFichaById(string id)
         {
             var result = new DtoLib.ResultadoEntidad<DtoLibPos.Sucursal.Entidad.Ficha>();
-
             try
             {
                 using (var cnn = new PosEntities(_cnPos.ConnectionString))
@@ -85,7 +82,11 @@ namespace ProvPos
                                 eSuc.estatus_facturar_mayor as estatusVentaMayor,
                                 eSucExt.es_activo as estatus, 
                                 eSucExt.estatus_fact_credito as estatusVentaCredito, 
-                                eSuc.autoDepositoPrincipal 
+                                eSuc.autoDepositoPrincipal,
+                                eSucExt.habilita_surtido_pos as habilitaVentaSurtidoPos, 
+                                eSucExt.habilita_vuelto_divisa_pos as habilitaVueltoDivisaPos, 
+                                eSucExt.modo_factura_pos as modoVentaPos, 
+                                eSucExt.habilita_modulo_gastos_pos as habilitaModGastoPos 
                               FROM empresa_sucursal as eSuc
                               join empresa_grupo as eGrupo on eGrupo.auto=eSuc.autoEmpresaGrupo
                               join empresa_grupo_ext as eGrupoExt on eGrupoExt.auto_empresagrupo=eGrupo.auto
@@ -107,10 +108,7 @@ namespace ProvPos
                 result.Mensaje = e.Message;
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
-
             return result;
         }
-
     }
-
 }
