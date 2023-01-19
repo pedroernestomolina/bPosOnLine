@@ -11,6 +11,12 @@ namespace ConsoleTest
         static void Main(string[] args)
         {
             IPos.IProvider posProv = new ProvPos.Provider("localhost", "dios");
+            var filtro = new DtoLibPos.Reportes.POS.MovCaja.Filtro()
+            {
+                 idOperador=73,
+            };
+            var r01 = posProv.ReportePos_MovCaja(filtro);
+
 
             //var filtro = new DtoLibPos.MovCaja.Lista.Filtro()
             //{

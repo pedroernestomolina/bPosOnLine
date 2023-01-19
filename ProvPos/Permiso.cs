@@ -16,16 +16,18 @@ namespace ProvPos
             Permiso_IngresarPos(string idGrupoUsu)
         {
             var result = new DtoLib.ResultadoEntidad<DtoLibPos.Permiso.Entidad.Ficha>();
-
             try
             {
                 using (var cnn = new PosEntities(_cnPos.ConnectionString))
                 {
-                    var sql = "select estatus, seguridad from usuarios_grupo_permisos where codigo_grupo=@p1 and codigo_funcion='0816000000'";
+                    var sql = @"select 
+                                    estatus, 
+                                    seguridad 
+                                from usuarios_grupo_permisos 
+                                where codigo_grupo=@p1 and codigo_funcion='0816000000'";
                     var p1 = new MySql.Data.MySqlClient.MySqlParameter();
                     p1.ParameterName = "@p1";
                     p1.Value = idGrupoUsu;
-
                     var permiso = cnn.Database.SqlQuery<DtoLibPos.Permiso.Entidad.Ficha>(sql, p1).FirstOrDefault();
                     if (permiso == null)
                     {
@@ -42,7 +44,6 @@ namespace ProvPos
                 result.Mensaje = e.Message;
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
-
             return result;
         }
         public DtoLib.ResultadoEntidad<DtoLibPos.Permiso.Entidad.Ficha> 

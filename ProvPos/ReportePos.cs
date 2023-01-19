@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace ProvPos
 {
-    
     public partial class Provider: IPos.IProvider
     {
-
         public DtoLib.ResultadoLista<DtoLibPos.Reportes.POS.PagoDetalle.Ficha>
             ReportePos_PagoDetalle(DtoLibPos.Reportes.POS.Filtro filtro)
         {
@@ -212,7 +210,61 @@ namespace ProvPos
 
             return result;
         }
+        //
+        public DtoLib.ResultadoEntidad<DtoLibPos.Reportes.POS.MovCaja.Ficha> 
+            ReportePos_MovCaja(DtoLibPos.Reportes.POS.MovCaja.Filtro filtro)
+        {
+            var result = new DtoLib.ResultadoEntidad<DtoLibPos.Reportes.POS.MovCaja.Ficha>();
+            try
+            {
+                using (var cnn = new PosEntities(_cnPos.ConnectionString))
+                {
+                    var p1 = new MySql.Data.MySqlClient.MySqlParameter();
+                    var sql1 = @"SELECT
+                                    id as idMov,
+                                    numero_mov as numeroMov,
+                                    fecha_emision as fechaMov, 
+                                    monto as montoMov,
+                                    monto_divisa as montoDivisaMov,
+                                    factor_cambio as factorCambioMov,
+                                    concepto as conceptoMov, 
+                                    tipo_mov as tipoMov,
+                                    estatus_anulado as estatusAnuladoMov,
+                                    signo_mov as signoMov
+                                FROM `p_mov_caja`
+                                where id_p_operador=@idOperador";
+                    var sql = sql1;
+                    p1.ParameterName = "@idOperador";
+                    p1.Value = filtro.idOperador;
+                    var _mov = cnn.Database.SqlQuery<DtoLibPos.Reportes.POS.MovCaja.FichaMov>(sql, p1).ToList();
 
+                    sql1 = @"SELECT 
+                                det.codigo_medio as codigoMed,
+                                det.desc_medio as descMed,
+                                sum(det.monto*mov.signo_mov) as monto,
+                                sum(det.cnt_divisa*mov.signo_mov) as cntDivisa,
+                                case when cnt_divisa>0 then '1' else '0' end as esDivisa
+                            FROM `p_mov_caja_det` as det 
+                            join p_mov_caja as mov on mov.id=det.id_p_mov_caja
+                            WHERE mov.id_p_operador=@idOperador
+                                and mov.estatus_anulado='0'
+                            Group by auto_medio, codigo_medio, desc_medio, esDivisa";
+                    sql = sql1;
+                    p1= new MySql.Data.MySqlClient.MySqlParameter("@idOperador", filtro.idOperador);
+                    var _det= cnn.Database.SqlQuery<DtoLibPos.Reportes.POS.MovCaja.FichaDet>(sql, p1).ToList();
+                    result.Entidad = new DtoLibPos.Reportes.POS.MovCaja.Ficha()
+                    {
+                        mov = _mov,
+                        det = _det,
+                    };
+                }
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+            return result;
+        }
     }
-
 }

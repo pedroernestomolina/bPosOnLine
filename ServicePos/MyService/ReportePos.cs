@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace ServicePos.MyService
 {
-
     public partial class Service : IService
     {
-
         public DtoLib.ResultadoLista<DtoLibPos.Reportes.POS.PagoDetalle.Ficha> 
             ReportePos_PagoDetalle(DtoLibPos.Reportes.POS.Filtro filtro)
         {
@@ -37,7 +35,11 @@ namespace ServicePos.MyService
         {
             return ServiceProv.ReportePos_VueltosEntregados(filtro);
         }
-
+        //
+        public DtoLib.ResultadoEntidad<DtoLibPos.Reportes.POS.MovCaja.Ficha> 
+            ReportePos_MovCaja(DtoLibPos.Reportes.POS.MovCaja.Filtro filtro)
+        {
+            return ServiceProv.ReportePos_MovCaja(filtro);
+        }
     }
-
 }

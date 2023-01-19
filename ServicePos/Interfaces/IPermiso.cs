@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace ServicePos.Interfaces
 {
-    
     public interface IPermiso
     {
-
         DtoLib.ResultadoEntidad<DtoLibPos.Permiso.Entidad.Ficha> 
             Permiso_IngresarPos(string idGrupoUsu);
         DtoLib.ResultadoEntidad<DtoLibPos.Permiso.Entidad.Ficha> 
@@ -51,7 +49,5 @@ namespace ServicePos.Interfaces
         DtoLib.ResultadoEntidad<DtoLibPos.Permiso.Entidad.Ficha> Permiso_Cliente_Editar(string idGrupoUsu);
         DtoLib.ResultadoEntidad<DtoLibPos.Permiso.Entidad.Ficha> Permiso_Cliente_Reportes(string idGrupoUsu);
         DtoLib.ResultadoEntidad<DtoLibPos.Permiso.Entidad.Ficha> Permiso_Cliente_ActivarInactivar(string idGrupoUsu);
-
     }
-
 }

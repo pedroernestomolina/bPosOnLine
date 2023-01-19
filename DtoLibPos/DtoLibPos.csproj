@@ -214,6 +214,10 @@
     <Compile Include="Reportes\PosVerificador\DocVerificados\Ficha.cs" />
     <Compile Include="Reportes\PosVerificador\Filtro.cs" />
     <Compile Include="Reportes\POS\Filtro.cs" />
+    <Compile Include="Reportes\POS\MovCaja\Ficha.cs" />
+    <Compile Include="Reportes\POS\MovCaja\FichaDet.cs" />
+    <Compile Include="Reportes\POS\MovCaja\FichaMov.cs" />
+    <Compile Include="Reportes\POS\MovCaja\Filtro.cs" />
     <Compile Include="Reportes\POS\PagoDetalle\Ficha.cs" />
     <Compile Include="Reportes\POS\PagoMovil\Ficha.cs" />
     <Compile Include="Reportes\POS\PagoResumen\Detalle.cs" />
