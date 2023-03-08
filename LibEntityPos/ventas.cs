@@ -135,6 +135,8 @@ namespace LibEntityPos
         public decimal cnt_divisa_por_vuelto_en_divisa { get; set; }
         public string estatus_bono_por_pago_divisa { get; set; }
         public string estatus_vuelto_por_pago_movil { get; set; }
+        public string estatus_fiscal { get; set; }
+        public int z_fiscal { get; set; }
     
         public virtual clientes clientes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

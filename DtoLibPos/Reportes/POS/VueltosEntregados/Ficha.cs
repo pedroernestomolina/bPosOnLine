@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace DtoLibPos.Reportes.POS.VueltosEntregados
 {
-    
     public class Ficha
     {
-
         public string documento { get; set; }
         public string esAnulado { get; set; }
         public DateTime fecha { get; set; }
@@ -24,6 +22,7 @@ namespace DtoLibPos.Reportes.POS.VueltosEntregados
         public decimal montoVueltoDivisa { get; set; }
         public decimal montoVueltoPagoMovil { get; set; }
         public int cntVueltoDivisa { get; set; }
+        public string siglasDoc { get; set; }
 
 
         public Ficha()
@@ -41,8 +40,7 @@ namespace DtoLibPos.Reportes.POS.VueltosEntregados
             montoVueltoDivisa = 0m;
             montoVueltoPagoMovil = 0m;
             cntVueltoDivisa = 0;
+            siglasDoc = "";
         }
-
     }
-
 }

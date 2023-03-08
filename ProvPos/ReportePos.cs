@@ -181,21 +181,23 @@ namespace ProvPos
                 {
                     var p1 = new MySql.Data.MySqlClient.MySqlParameter();
                     var sql1 = @"SELECT 
-                                    documento, 
-                                    estatus_anulado as esAnulado, 
-                                    fecha, 
-                                    hora, 
-                                    razon_social as entNombre,
-                                    dir_fiscal as entDir,
-                                    telefono as entTelf, 
-                                    total as montoDoc, 
-                                    cambio as montoCambio, 
-                                    monto_por_vuelto_en_efectivo as montoVueltoEfectivo, 
-                                    monto_por_vuelto_en_divisa as montoVueltoDivisa, 
-                                    monto_por_vuelto_en_pago_movil montoVueltoPagoMovil, 
-                                    cnt_divisa_por_vuelto_en_divisa as cntVueltoDivisa
+                                    v.documento, 
+                                    v.estatus_anulado as esAnulado, 
+                                    v.fecha, 
+                                    v.hora, 
+                                    v.razon_social as entNombre,
+                                    v.dir_fiscal as entDir,
+                                    v.telefono as entTelf, 
+                                    v.total as montoDoc, 
+                                    v.cambio as montoCambio, 
+                                    v.monto_por_vuelto_en_efectivo as montoVueltoEfectivo, 
+                                    v.monto_por_vuelto_en_divisa as montoVueltoDivisa, 
+                                    v.monto_por_vuelto_en_pago_movil montoVueltoPagoMovil, 
+                                    v.cnt_divisa_por_vuelto_en_divisa as cntVueltoDivisa,
+                                    sistemaDoc.siglas as siglasDoc
                                 FROM ventas as v
-                                where cierre=@idCierre and cambio>0";
+                                join sistema_documentos as sistemaDoc on sistemaDoc.codigo=v.tipo and sistemaDoc.tipo='Ventas'
+                                where v.cierre=@idCierre and v.cambio>0";
                     var sql = sql1;
                     p1.ParameterName = "idCierre";
                     p1.Value = filtro.IdCierre;

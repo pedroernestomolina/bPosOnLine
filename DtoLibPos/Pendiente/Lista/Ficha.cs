@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace DtoLibPos.Pendiente.Lista
 {
-    
     public class Ficha
     {
-
         public int id { get; set; }
         public string idCliente { get; set; }
         public string nombreCliente { get; set; }
@@ -20,10 +18,11 @@ namespace DtoLibPos.Pendiente.Lista
         public int renglones { get; set; }
         public DateTime fecha { get; set; }
         public string hora { get; set; }
-        //
         public string idSucursal { get; set; }
         public string idDeposito { get; set; }
         public string idVendedor { get; set; }
+        public string usuDesc { get; set; }
+        public string usuCod { get; set; }
 
 
         public Ficha()
@@ -37,12 +36,11 @@ namespace DtoLibPos.Pendiente.Lista
             renglones = 0;
             fecha = DateTime.Now.Date;
             hora = "";
-            //
             idSucursal = "";
             idDeposito = "";
             idVendedor = "";
+            usuDesc = "";
+            usuCod = "";
         }
-
     }
-
 }

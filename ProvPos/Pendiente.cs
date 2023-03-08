@@ -10,10 +10,8 @@ using System.Transactions;
 
 namespace ProvPos
 {
-    
     public partial class Provider: IPos.IProvider
     {
-
         public DtoLib.Resultado 
             Pendiente_DejarCta(DtoLibPos.Pendiente.Dejar.Ficha ficha)
         {
@@ -141,47 +139,48 @@ namespace ProvPos
             Pendiente_Lista(DtoLibPos.Pendiente.Lista.Filtro filtro)
         {
             var result = new DtoLib.ResultadoLista<DtoLibPos.Pendiente.Lista.Ficha>();
-
-            var lista = new List<DtoLibPos.Pendiente.Lista.Ficha>();
+            var _lista = new List<DtoLibPos.Pendiente.Lista.Ficha>();
             try
             {
                 using (var cn = new PosEntities(_cnPos.ConnectionString))
                 {
-                    var entLista = cn.p_pendiente.ToList();
+                    var _p1 = new MySql.Data.MySqlClient.MySqlParameter();
+                    var _sql_1 = @"select 
+                                    Pend.cirif_cliente as cirifCliente,
+                                    Pend.id as id,
+                                    Pend.auto_cliente as idCliente,
+                                    Pend.monto as monto,
+                                    Pend.monto_divisa as montoDivisa,
+                                    Pend.nombre_cliente as nombreCliente,
+                                    Pend.renglones as renglones,
+                                    Pend.feche as fecha,
+                                    Pend.hora as hosra,
+                                    Pend.auto_sucursal as idSucursal,
+                                    Pend.auto_deposito as idDeposito,
+                                    Pend.auto_vendedor as idVendedor,
+                                    Usu.nombre as usuDesc,
+                                    Usu.codigo as usuCod
+                                from p_pendiente as Pend 
+                                join p_operador as Ope on Ope.id=Pend.id_p_operador 
+                                join usuarios as Usu on Usu.auto=Ope.auto_usuario ";
+                    var _sql_2 = " where 1=1 ";
                     if (filtro.idOperador.HasValue)
-                        entLista = entLista.Where(ss => ss.id_p_operador == filtro.idOperador.Value).ToList();
-                    foreach(var it in entLista) 
                     {
-                        var nr = new DtoLibPos.Pendiente.Lista.Ficha()
-                        {
-                            cirifCliente = it.cirif_cliente,
-                            id = it.id,
-                            idCliente = it.auto_cliente,
-                            monto = it.monto,
-                            montoDivisa = it.monto_divisa,
-                            nombreCliente = it.nombre_cliente,
-                            renglones = it.renglones,
-                            fecha = it.feche,
-                            hora = it.hora,
-                            //
-                            idSucursal = it.auto_sucursal,
-                            idDeposito = it.auto_deposito,
-                            idVendedor = it.auto_vendedor,
-                        };
-                        lista.Add(nr);
+                        _p1.ParameterName = "@idOperador";
+                        _p1.Value = filtro.idOperador.Value;
+                        _sql_2 += " and id_p_operador==@idOperador ";
                     }
+                    var _sql = _sql_1 + _sql_2;
+                    _lista = cn.Database.SqlQuery<DtoLibPos.Pendiente.Lista.Ficha>(_sql, _p1).ToList();
                 };
-                result.Lista = lista;
+                result.Lista = _lista;
             }
             catch (Exception e)
             {
                 result.Mensaje = e.Message;
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
-
             return result;
         }
-
     }
-
 }

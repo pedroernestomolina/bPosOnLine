@@ -11,15 +11,12 @@ using System.Transactions;
 
 namespace ProvPos
 {
-
     public partial class Provider: IPos.IProvider
     {
-
         public DtoLib.ResultadoLista<DtoLibPos.Documento.Lista.Ficha> 
             Documento_Get_Lista(DtoLibPos.Documento.Lista.Filtro filtro)
         {
             var rt = new DtoLib.ResultadoLista<DtoLibPos.Documento.Lista.Ficha>();
-
             try
             {
                 using (var cnn = new PosEntities(_cnPos.ConnectionString))
@@ -33,15 +30,30 @@ namespace ProvPos
                     var p7 = new MySql.Data.MySqlClient.MySqlParameter();
                     var p8 = new MySql.Data.MySqlClient.MySqlParameter();
                     var p9 = new MySql.Data.MySqlClient.MySqlParameter();
-                    var sql_1 = @"select v.auto as id, v.documento as docNumero, v.control, v.fecha as fechaEmision, 
-                                v.hora as horaEmision, v.razon_social as nombreRazonSocial, v.ci_Rif as cirif, 
-                                v.total as monto, v.estatus_Anulado as estatus, v.renglones, v.serie, v.monto_divisa as montoDivisa, 
-                                v.tipo as docCodigo, v.signo as docSigno, v.documento_nombre as docNombre, v.aplica as docAplica, 
-                                v.codigo_sucursal as sucursalCod, v.situacion as docSituacion, es.nombre as sucursalDesc
-                                FROM ventas as v ";
+                    var sql_1 = @"select 
+                                        v.auto as id, 
+                                        v.documento as docNumero, 
+                                        v.control, 
+                                        v.fecha as fechaEmision, 
+                                        v.hora as horaEmision, 
+                                        v.razon_social as nombreRazonSocial, 
+                                        v.ci_Rif as cirif, 
+                                        v.total as monto, 
+                                        v.estatus_Anulado as estatus, 
+                                        v.renglones, 
+                                        v.serie, 
+                                        v.monto_divisa as montoDivisa, 
+                                        v.tipo as docCodigo, 
+                                        v.signo as docSigno, 
+                                        v.documento_nombre as docNombre, 
+                                        v.aplica as docAplica, 
+                                        v.codigo_sucursal as sucursalCod, 
+                                        v.situacion as docSituacion, 
+                                        es.nombre as sucursalDesc,
+                                        v.estatus_fiscal as estatusFiscal
+                                    FROM ventas as v ";
                     var sql_2 = " join empresa_sucursal as es on v.codigo_sucursal=es.codigo ";
                     var sql_3 = " where 1=1 ";
-
                     if (filtro.idArqueo != "")
                     {
                         sql_3 += " and v.cierre=@p1 ";
@@ -106,7 +118,6 @@ namespace ProvPos
                 rt.Mensaje = e.Message;
                 rt.Result = DtoLib.Enumerados.EnumResult.isError;
             }
-
             return rt;
         }
         public DtoLib.ResultadoEntidad<DtoLibPos.Documento.Entidad.Ficha> 
@@ -237,6 +248,8 @@ namespace ProvPos
                         BonoPorPagoDivisa = ent.porct_bono_por_pago_divisa,
                         MontoBonoPorPagoDivisa = ent.monto_bono_por_pago_divisa,
                         CntDivisaAplicaBonoPorPagoDivisa = ent.cnt_divisa_aplica_bono_por_pago_divisa,
+                        //
+                        estatusFiscal= ent.estatus_fiscal,
                     };
                     var entDet = cn.ventas_detalle.Where(w => w.auto_documento == idAuto).ToList();
                     nr.items = entDet.Select(s =>
@@ -394,7 +407,6 @@ namespace ProvPos
             return rt;
         }
 
-
         public DtoLib.ResultadoEntidad<DtoLibPos.Documento.Agregar.Factura.Result>
             Documento_Agregar_Factura(DtoLibPos.Documento.Agregar.Factura.Ficha ficha)
         {
@@ -449,7 +461,7 @@ namespace ProvPos
                             reciboNUmero = ficha.Prefijo + aCxCReciboNumero.ToString().Trim().PadLeft(largo, '0');
                         }
 
-                        if (ficha.Serie != null)
+                        if (ficha.SerieFiscal != null)
                         {
                             var m1 = new MySql.Data.MySqlClient.MySqlParameter();
                             m1.ParameterName = "@m1";
@@ -584,6 +596,9 @@ namespace ProvPos
                             cnt_divisa_por_vuelto_en_divisa = ficha.CantDivisaPorVueltoEnDivisa,
                             estatus_bono_por_pago_divisa=ficha.estatusPorBonoPorPagoDivisa,
                             estatus_vuelto_por_pago_movil=ficha.estatusPorVueltoEnPagoMovil,
+                            //
+                            estatus_fiscal=ficha.estatusFiscal,
+                            z_fiscal=ficha.zFiscal,
                         };
                         cn.ventas.Add(entVenta);
                         cn.SaveChanges();
@@ -1152,7 +1167,7 @@ namespace ProvPos
                         var autoVenta = ficha.Prefijo + aVenta.ToString().Trim().PadLeft(largo, '0');
                         var autoCxC = ficha.Prefijo + aCxC.ToString().Trim().PadLeft(largo, '0');
 
-                        if (ficha.Serie != null)
+                        if (ficha.SerieFiscal != null)
                         {
                             var m1 = new MySql.Data.MySqlClient.MySqlParameter();
                             m1.ParameterName = "@m1";
@@ -1168,7 +1183,6 @@ namespace ProvPos
                             var adoc = cn.Database.SqlQuery<int>("select correlativo from empresa_series_fiscales where auto=@m1",m1).FirstOrDefault();
                             ficha.DocumentoNro = adoc.ToString().Trim().PadLeft(10, '0');
                         }
-
 
                         var aCxCRecibo = 0;
                         var aCxCReciboNumero = 0;
@@ -1301,6 +1315,9 @@ namespace ProvPos
                             cnt_divisa_por_vuelto_en_divisa = ficha.CantDivisaPorVueltoEnDivisa,
                             estatus_bono_por_pago_divisa = ficha.estatusPorBonoPorPagoDivisa,
                             estatus_vuelto_por_pago_movil = ficha.estatusPorVueltoEnPagoMovil,
+                            //
+                            estatus_fiscal=ficha.estatusFiscal,
+                            z_fiscal=ficha.zFiscal,
                         };
                         cn.ventas.Add(entVenta);
                         cn.SaveChanges();
@@ -2079,7 +2096,6 @@ namespace ProvPos
             return result;
         }
 
-
         public DtoLib.Resultado 
             Documento_Anular_NotaCredito(DtoLibPos.Documento.Anular.NotaCredito.Ficha ficha)
         {
@@ -2611,7 +2627,11 @@ namespace ProvPos
                         var p16 = new MySql.Data.MySqlClient.MySqlParameter();
                         var p17 = new MySql.Data.MySqlClient.MySqlParameter();
                         var p18 = new MySql.Data.MySqlClient.MySqlParameter();
-
+                        //
+                        var p20 = new MySql.Data.MySqlClient.MySqlParameter();
+                        var p21 = new MySql.Data.MySqlClient.MySqlParameter();
+                        var p22 = new MySql.Data.MySqlClient.MySqlParameter();
+                        var p23 = new MySql.Data.MySqlClient.MySqlParameter();
 
                         p01.ParameterName = "@cnt_doc_contado_anulado";
                         p01.Value=ficha.resumen.cntContado;
@@ -2650,14 +2670,23 @@ namespace ProvPos
                         p17.Value = ficha.resumen.montoVueltoPorPagoMovil;
                         p18.ParameterName = "@cnt_divisa_por_vuelto_divisa";
                         p18.Value = ficha.resumen.cntDivisaPorVueltoDivisa; 
-
+                        //
+                        p20.ParameterName = "@montoAnuFac";
+                        p20.Value = ficha.resumen.montoFac_Anu;
+                        p21.ParameterName = "@cntAnuFac";
+                        p21.Value = ficha.resumen.cntFac_Anu;
+                        p22.ParameterName = "@montoAnuNte";
+                        p22.Value = ficha.resumen.montoNte_Anu;
+                        p23.ParameterName = "@cntAnuNte";
+                        p23.Value = ficha.resumen.cntNte_Anu; 
 
                         monto.ParameterName = "@monto";
                         monto.Value = ficha.resumen.monto;
                         id.ParameterName = "@id";
                         id.Value = ficha.resumen.idResumen;
                         sql = @"update p_resumen set m_anu=m_anu+@monto, cnt_anu=cnt_anu+1,
-                                m_anu_fac=m_anu_fac+@monto, cnt_anu_fac=cnt_anu_fac+1,
+                                m_anu_fac=m_anu_fac+@montoAnuFac, cnt_anu_fac=cnt_anu_fac+@cntAnuFac,
+                                m_anu_nte=m_anu_nte+@montoAnuNte, cnt_anu_nte=cnt_anu_nte+@cntAnuNte,
                                 cnt_doc_contado_anulado=cnt_doc_contado_anulado+@cnt_doc_contado_anulado,
                                 cnt_doc_credito_anulado=cnt_doc_credito_anulado+@cnt_doc_credito_anulado, 
                                 m_contado_anulado=m_contado_anulado+@m_contado_anulado,
@@ -2677,7 +2706,7 @@ namespace ProvPos
                                 monto_vuelto_por_pago_movil=monto_vuelto_por_pago_movil-@monto_vuelto_por_pago_movil,
                                 cnt_divisa_por_vuelto_divisa=cnt_divisa_por_vuelto_divisa-@cnt_divisa_por_vuelto_divisa
                                 where id=@id";
-                        var v6 = cn.Database.ExecuteSqlCommand(sql, id, monto, p01, p02, p03, p04, p05, p06, p07, p08, p09, p10, p11, p12, p13, p14, p15, p16, p17, p18);
+                        var v6 = cn.Database.ExecuteSqlCommand(sql, id, monto, p01, p02, p03, p04, p05, p06, p07, p08, p09, p10, p11, p12, p13, p14, p15, p16, p17, p18, p20, p21, p22, p23);
                         if (v6 == 0)
                         {
                             result.Mensaje = "PROBLEMA AL ACTUALIZAR MOVIMIENTO RESUMEN";
@@ -2792,7 +2821,6 @@ namespace ProvPos
             return result;
         }
 
-
         public DtoLib.Resultado 
             Documento_Verificar_ProcesarFactClienteCredito(string idCliente, decimal monto)
         {
@@ -2875,7 +2903,7 @@ namespace ProvPos
                         rt.Result = DtoLib.Enumerados.EnumResult.isError;
                         return rt;
                     }
-                    if (ent.tipo == "01")
+                    if (ent.tipo == "01" || ent.tipo=="04")
                     {
                         var xref = cnn.ventas.FirstOrDefault(f => f.auto_remision == autoDoc && f.estatus_anulado == "0");
                         if (xref != null)
@@ -2958,7 +2986,5 @@ namespace ProvPos
 
             return rt;
         }
-
     }
-
 }

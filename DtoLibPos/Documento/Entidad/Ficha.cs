@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace DtoLibPos.Documento.Entidad
 {
-    
     public class Ficha
     {
-
         public string Auto { get; set; }
         public string DocumentoNro { get; set; }
         public DateTime Fecha { get; set; }
@@ -120,6 +118,9 @@ namespace DtoLibPos.Documento.Entidad
         public decimal MontoPorVueltoEnDivisa { get; set; }
         public decimal MontoPorVueltoEnPagoMovil { get; set; }
         public decimal CantDivisaPorVueltoEnDivisa { get; set; }
+        //
+        public string estatusFiscal { get; set; }
+        public int zFiscal { get; set; }
 
 
         public Ficha()
@@ -233,6 +234,9 @@ namespace DtoLibPos.Documento.Entidad
             BonoPorPagoDivisa = 0m;
             MontoBonoPorPagoDivisa = 0m;
             CntDivisaAplicaBonoPorPagoDivisa = 0m;
+            //
+            estatusFiscal = "";
+            zFiscal = 0;
         }
 
 
@@ -240,5 +244,4 @@ namespace DtoLibPos.Documento.Entidad
         public decimal MontoBonoPorPagoDivisa { get; set; }
         public decimal CntDivisaAplicaBonoPorPagoDivisa { get; set; }
     }
-
 }

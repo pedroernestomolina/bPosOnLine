@@ -386,7 +386,7 @@
           <Property Name="auto_tasa" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="codigo" Type="varchar" MaxLength="60" Nullable="false" />
           <Property Name="nombre" Type="varchar" MaxLength="200" Nullable="false" />
-          <Property Name="cantidad" Type="decimal" Precision="14" Scale="2" Nullable="false" />
+          <Property Name="cantidad" Type="decimal" Precision="14" Scale="3" Nullable="false" />
           <Property Name="pneto" Type="decimal" Precision="14" Scale="2" Nullable="false" />
           <Property Name="pdivisaFull" Type="decimal" Precision="14" Scale="2" Nullable="false" />
           <Property Name="tarifaPrecio" Type="varchar" MaxLength="1" Nullable="false" />
@@ -694,6 +694,7 @@ warning 6002: The table/view 'pita.pos_arqueo' does not have a primary key defin
           <Property Name="pdf_4" Type="decimal" Precision="16" Scale="2" Nullable="false" />
           <Property Name="pdf_pto" Type="decimal" Precision="16" Scale="2" Nullable="false" />
           <Property Name="volumen" Type="decimal" Precision="14" Scale="6" Nullable="false" />
+          <Property Name="estatus_talla_color_sabor" Type="varchar" MaxLength="1" Nullable="false" />
         </EntityType>
         <EntityType Name="productos_alterno">
           <Key>
@@ -958,6 +959,8 @@ warning 6002: The table/view 'pita.pos_arqueo' does not have a primary key defin
           <Property Name="cnt_divisa_por_vuelto_en_divisa" Type="decimal" Precision="14" Scale="2" Nullable="false" />
           <Property Name="estatus_bono_por_pago_divisa" Type="varchar" MaxLength="1" Nullable="false" />
           <Property Name="estatus_vuelto_por_pago_movil" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="estatus_fiscal" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="z_fiscal" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'pita.ventas_detalle' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -2531,6 +2534,7 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
           <NavigationProperty Name="productos_medida5" Relationship="pitaModel.productos_ibfk_9" FromRole="productos" ToRole="productos_medida" />
           <NavigationProperty Name="ventas_detalle" Relationship="pitaModel.ventas_detalle_ibfk_1" FromRole="productos" ToRole="ventas_detalle" />
           <Property Name="volumen" Type="Decimal" Nullable="false" />
+          <Property Name="estatus_talla_color_sabor" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="productos_alterno">
           <Key>
@@ -3697,6 +3701,8 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
           <NavigationProperty Name="usuarios" Relationship="pitaModel.ventas_ibfk_3" FromRole="ventas" ToRole="usuarios" />
           <NavigationProperty Name="vendedores" Relationship="pitaModel.ventas_ibfk_6" FromRole="ventas" ToRole="vendedores" />
           <NavigationProperty Name="ventas_detalle" Relationship="pitaModel.ventas_detalle_ibfk_8" FromRole="ventas" ToRole="ventas_detalle" />
+          <Property Name="estatus_fiscal" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="z_fiscal" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="ventas_ibfk_5">
           <End Type="pitaModel.clientes" Role="clientes" Multiplicity="1" />
@@ -4075,6 +4081,7 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
           <EntitySetMapping Name="productos">
             <EntityTypeMapping TypeName="pitaModel.productos">
               <MappingFragment StoreEntitySet="productos">
+                <ScalarProperty Name="estatus_talla_color_sabor" ColumnName="estatus_talla_color_sabor" />
                 <ScalarProperty Name="volumen" ColumnName="volumen" />
                 <ScalarProperty Name="pdf_pto" ColumnName="pdf_pto" />
                 <ScalarProperty Name="pdf_4" ColumnName="pdf_4" />
@@ -4661,6 +4668,8 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
           <EntitySetMapping Name="ventas">
             <EntityTypeMapping TypeName="pitaModel.ventas">
               <MappingFragment StoreEntitySet="ventas">
+                <ScalarProperty Name="z_fiscal" ColumnName="z_fiscal" />
+                <ScalarProperty Name="estatus_fiscal" ColumnName="estatus_fiscal" />
                 <ScalarProperty Name="estatus_vuelto_por_pago_movil" ColumnName="estatus_vuelto_por_pago_movil" />
                 <ScalarProperty Name="estatus_bono_por_pago_divisa" ColumnName="estatus_bono_por_pago_divisa" />
                 <ScalarProperty Name="cnt_divisa_por_vuelto_en_divisa" ColumnName="cnt_divisa_por_vuelto_en_divisa" />

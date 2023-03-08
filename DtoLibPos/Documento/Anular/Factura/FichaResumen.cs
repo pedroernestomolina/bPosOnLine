@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace DtoLibPos.Documento.Anular.Factura
 {
-    
     public class FichaResumen: Resumen
     {
-
         public int cntContado { get; set; }
         public int cntCredito { get; set; }
         public decimal mContado { get; set; }
@@ -30,6 +28,11 @@ namespace DtoLibPos.Documento.Anular.Factura
         public decimal montoVueltoPorDivisa { get; set; }
         public decimal montoVueltoPorPagoMovil { get; set; }
         public decimal cntDivisaPorVueltoDivisa { get; set; }
+        //
+        public int cntFac_Anu { get; set; }
+        public int cntNte_Anu { get; set; }
+        public decimal montoFac_Anu { get; set; }
+        public decimal montoNte_Anu { get; set; }
 
 
         public FichaResumen()
@@ -54,8 +57,11 @@ namespace DtoLibPos.Documento.Anular.Factura
             montoVueltoPorDivisa = 0m;
             montoVueltoPorPagoMovil = 0m;
             cntDivisaPorVueltoDivisa = 0m;
+            //
+            cntFac_Anu = 0;
+            cntNte_Anu = 0;
+            montoFac_Anu = 0m;
+            montoNte_Anu = 0m;
         }
-
     }
-
 }

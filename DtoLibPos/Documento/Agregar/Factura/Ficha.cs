@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace DtoLibPos.Documento.Agregar.Factura
 {
-    
     public class Ficha
     {
-
         public int idOperador { get; set; }
         public string DocumentoNro { get; set; }
         public string RazonSocial { get; set; }
@@ -130,6 +128,9 @@ namespace DtoLibPos.Documento.Agregar.Factura
         public int CantDivisaPorVueltoEnDivisa { get; set; }
         public string estatusPorBonoPorPagoDivisa { get; set; }
         public string estatusPorVueltoEnPagoMovil { get; set; }
+        //
+        public string estatusFiscal { get; set; }
+        public int zFiscal { get; set; }
 
 
         public Ficha()
@@ -252,8 +253,9 @@ namespace DtoLibPos.Documento.Agregar.Factura
             CantDivisaPorVueltoEnDivisa = 0;
             estatusPorBonoPorPagoDivisa = "0";
             estatusPorVueltoEnPagoMovil = "0";
+            //
+            estatusFiscal = "";
+            zFiscal = -1;
         }
-
     }
-
 }
