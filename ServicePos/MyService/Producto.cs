@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace ServicePos.MyService
 {
-
     public partial class Service : IService
     {
-
         public DtoLib.ResultadoLista<DtoLibPos.Producto.Lista.Ficha> 
             Producto_GetLista(DtoLibPos.Producto.Lista.Filtro filtro)
         {
@@ -50,7 +48,5 @@ namespace ServicePos.MyService
             else
                 return ServiceProv.Producto_Existencia_BloquearEnNegativo(ficha);
         }
-
     }
-
 }

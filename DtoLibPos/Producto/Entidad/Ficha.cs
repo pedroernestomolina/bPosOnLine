@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace DtoLibPos.Producto.Entidad
 {
-
     public class Ficha
     {
-
         public string Auto { get; set; }
         public string AutoDepartamento { get; set; }
         public string AutoGrupo { get; set; }
@@ -271,7 +269,5 @@ namespace DtoLibPos.Producto.Entidad
             FAncho = 0m;
             FVolumen = 0m;
         }
-
     }
-
 }

@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace DtoLibPos.Producto.Lista
 {
-    
     public class Filtro
     {
-
         public string Cadena { get; set; }
         public string AutoDeposito { get; set; }
         public string IdPrecioManejar { get; set; }
@@ -24,7 +22,5 @@ namespace DtoLibPos.Producto.Lista
             IdPrecioManejar = "";
             IsPorPlu = false;
         }
-
     }
-
 }

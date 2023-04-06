@@ -9,10 +9,8 @@ using System.Transactions;
 
 namespace ProvPos
 {
-    
     public partial class Provider: IPos.IProvider
     {
-
         public DtoLib.ResultadoLista<DtoLibPos.Producto.Lista.Ficha> 
             Producto_GetLista(DtoLibPos.Producto.Lista.Filtro filtro)
         {
@@ -502,7 +500,5 @@ namespace ProvPos
 
             return result;
         }
-
     }
-
 }
