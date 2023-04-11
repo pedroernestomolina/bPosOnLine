@@ -23,6 +23,8 @@ namespace DtoLibPos.Pendiente.Lista
         public string idVendedor { get; set; }
         public string usuDesc { get; set; }
         public string usuCod { get; set; }
+        public string codVend { get; set; }
+        public string nombreVend { get; set; }
 
 
         public Ficha()
@@ -41,6 +43,8 @@ namespace DtoLibPos.Pendiente.Lista
             idVendedor = "";
             usuDesc = "";
             usuCod = "";
+            codVend = "";
+            nombreVend = "";
         }
     }
 }

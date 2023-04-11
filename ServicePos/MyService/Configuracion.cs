@@ -8,9 +8,13 @@ using System.Threading.Tasks;
 
 namespace ServicePos.MyService
 {
-
     public partial class Service : IService
     {
+        public DtoLib.ResultadoEntidad<string> 
+            Configuracion_ModoPos()
+        {
+            return ServiceProv.Configuracion_ModoPos();
+        }
 
         public DtoLib.ResultadoEntidad<string> 
             Configuracion_FactorDivisa()
@@ -62,7 +66,5 @@ namespace ServicePos.MyService
         {
             return ServiceProv.Configuracion_HabilitarDescuentoUnicamenteConPagoEnDivsa();
         }
-
     }
-
 }

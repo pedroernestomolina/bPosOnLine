@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace ServicePos.Interfaces
 {
-
     public interface IConfiguracion
     {
+        DtoLib.ResultadoEntidad<string>
+            Configuracion_ModoPos();
 
         DtoLib.ResultadoEntidad<string> 
             Configuracion_FactorDivisa();

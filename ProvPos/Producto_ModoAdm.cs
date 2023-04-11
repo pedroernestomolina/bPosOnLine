@@ -250,6 +250,6 @@ namespace ProvPos
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
             return result;
-        }
+        }  
     }
 }

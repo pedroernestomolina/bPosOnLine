@@ -48,5 +48,10 @@ namespace ServicePos.MyService
             else
                 return ServiceProv.Producto_Existencia_BloquearEnNegativo(ficha);
         }
+        public DtoLib.ResultadoEntidad<DtoLibPos.Producto.Costo.Ficha> 
+            Producto_GetCosto_By(string idPrd)
+        {
+            return ServiceProv.Producto_GetCosto_By(idPrd);
+        }
     }
 }

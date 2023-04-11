@@ -159,10 +159,13 @@ namespace ProvPos
                                     Pend.auto_deposito as idDeposito,
                                     Pend.auto_vendedor as idVendedor,
                                     Usu.nombre as usuDesc,
-                                    Usu.codigo as usuCod
+                                    Usu.codigo as usuCod,
+                                    Vend.codigo as codVend,
+                                    Vend.nombre as nombreVend
                                 from p_pendiente as Pend 
                                 join p_operador as Ope on Ope.id=Pend.id_p_operador 
-                                join usuarios as Usu on Usu.auto=Ope.auto_usuario ";
+                                join usuarios as Usu on Usu.auto=Ope.auto_usuario 
+                                join vendedores as vend on vend.auto=Pend.auto_vendedor ";
                     var _sql_2 = " where 1=1 ";
                     if (filtro.idOperador.HasValue)
                     {

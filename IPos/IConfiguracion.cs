@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace IPos
 {
-    
     public interface IConfiguracion
     {
+        DtoLib.ResultadoEntidad<string>
+            Configuracion_ModoPos();
 
         DtoLib.ResultadoEntidad<string> 
             Configuracion_FactorDivisa();
@@ -31,7 +32,5 @@ namespace IPos
             Configuracion_ValorMaximoPorcentajeDescuento();
         DtoLib.ResultadoEntidad<string>
             Configuracion_HabilitarDescuentoUnicamenteConPagoEnDivsa();
-
     }
-
 }

@@ -500,5 +500,41 @@ namespace ProvPos
 
             return result;
         }
+
+        public DtoLib.ResultadoEntidad<DtoLibPos.Producto.Costo.Ficha> 
+            Producto_GetCosto_By(string idPrd)
+        {
+            var rt = new DtoLib.ResultadoEntidad<DtoLibPos.Producto.Costo.Ficha>();
+            try
+            {
+                using (var cnn = new PosEntities(_cnPos.ConnectionString))
+                {
+                    var p1 = new MySql.Data.MySqlClient.MySqlParameter("@idPrd", idPrd);
+                    var _sql = @"select 
+                                    auto as idPrd, 
+                                    nombre as descPrd, 
+                                    costo as costoEmpCompraMonLocal,  
+                                    costo_und as costoUndCompraMonLocal, 
+                                    divisa as costoEmpCompraDivisa, 
+                                    contenido_compras as contEmpCompra
+                                from productos 
+                                where auto=@idPrd";
+                    var _ent = cnn.Database.SqlQuery<DtoLibPos.Producto.Costo.Ficha>(_sql, p1).FirstOrDefault();
+                    if (_ent==null)
+                    {
+                        rt.Mensaje = "[ ID ] PRODUCTO NO ENCONTRADO";
+                        rt.Result = DtoLib.Enumerados.EnumResult.isError;
+                        return rt;
+                    }
+                    rt.Entidad = _ent;
+                }
+            }
+            catch (Exception e)
+            {
+                rt.Mensaje = e.Message;
+                rt.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+            return rt;
+        }
     }
 }

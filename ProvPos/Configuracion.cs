@@ -9,9 +9,34 @@ using System.Threading.Tasks;
 
 namespace ProvPos
 {
-
     public partial class Provider : IPos.IProvider
     {
+        public DtoLib.ResultadoEntidad<string> 
+            Configuracion_ModoPos()
+        {
+            var result = new DtoLib.ResultadoEntidad<string>();
+            try
+            {
+                using (var cnn = new PosEntities(_cnPos.ConnectionString))
+                {
+                    var sql = "select usuario from sistema_configuracion where codigo='GLOBAL63'";
+                    var _modo = cnn.Database.SqlQuery<string>(sql).FirstOrDefault();
+                    if (_modo == null || _modo=="")
+                    {
+                        result.Mensaje = "[ GLOBAL63 ] CONFIGURACION NO ENCONTRADO";
+                        result.Result = DtoLib.Enumerados.EnumResult.isError;
+                        return result;
+                    }
+                    result.Entidad = _modo.ToString();
+                }
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+            return result;
+        }
 
         public DtoLib.ResultadoEntidad<string> 
             Configuracion_FactorDivisa()
@@ -384,7 +409,5 @@ namespace ProvPos
 
             return result;
         }
-
     }
-
 }
