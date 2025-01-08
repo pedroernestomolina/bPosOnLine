@@ -52,11 +52,13 @@
     <Compile Include="IDeposito.cs" />
     <Compile Include="IDocumento.cs" />
     <Compile Include="IDocumentoAdm.cs" />
+    <Compile Include="IDocumento_Agregar.cs" />
     <Compile Include="IFiscal.cs" />
     <Compile Include="IJornada.cs" />
     <Compile Include="IMedioPago.cs" />
     <Compile Include="IModuloAdm.cs" />
     <Compile Include="IMovCaja.cs" />
+    <Compile Include="IPedido.cs" />
     <Compile Include="IPendiente.cs" />
     <Compile Include="IPermiso.cs" />
     <Compile Include="IProducto.cs" />
@@ -67,12 +69,14 @@
     <Compile Include="IReportesCli.cs" />
     <Compile Include="IReportesPos.cs" />
     <Compile Include="ISistema.cs" />
+    <Compile Include="ISistema_SeriesFiscales.cs" />
     <Compile Include="ISucursal.cs" />
     <Compile Include="ITransporte.cs" />
     <Compile Include="IUsuario.cs" />
     <Compile Include="IVendedor.cs" />
     <Compile Include="IVenta.cs" />
     <Compile Include="IVentaAdm.cs" />
+    <Compile Include="IVentaZufu.cs" />
     <Compile Include="IVerificador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

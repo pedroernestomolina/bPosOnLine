@@ -128,8 +128,9 @@ namespace DtoLibPos.Documento.Agregar.NotaCredito
         //
         public string estatusFiscal { get; set; }
         public int zFiscal{ get; set; }
-
-
+        //
+        public string estatusMostrarLibroVenta { get; set; }
+        //
         public Ficha()
         {
             idOperador = -1;
@@ -250,6 +251,8 @@ namespace DtoLibPos.Documento.Agregar.NotaCredito
             //
             estatusFiscal = "";
             zFiscal = -1;
+            //
+            estatusMostrarLibroVenta = "";
         }
     }
 }

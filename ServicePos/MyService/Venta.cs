@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace ServicePos.MyService
 {
-    
     public partial class Service : IService
     {
-
         public DtoLib.ResultadoId 
             Venta_Item_Registrar(DtoLibPos.Venta.Item.Registrar.Ficha ficha)
         {

@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="76c18d823baf4e8aa0c6abed48eacdd2" Name="Diagram1" ZoomLevel="24">
+      <Diagram DiagramId="76c18d823baf4e8aa0c6abed48eacdd2" Name="Diagram1" ZoomLevel="106">
         <EntityTypeShape EntityType="pitaModel.clientes" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="pitaModel.clientes_grupo" Width="1.5" PointX="6" PointY="20" />
         <EntityTypeShape EntityType="pitaModel.clientes_zonas" Width="1.5" PointX="6" PointY="24.875" />
@@ -75,7 +75,7 @@
         <EntityTypeShape EntityType="pitaModel.p_resumen" Width="1.5" PointX="20.875" PointY="7" />
         <AssociationConnector Association="pitaModel.p_resumen_ibfk_1" />
         <EntityTypeShape EntityType="pitaModel.pos_arqueo" Width="1.5" PointX="29.25" PointY="21" />
-        <EntityTypeShape EntityType="pitaModel.ventas" Width="1.5" PointX="39.625" PointY="16.5" />
+        <EntityTypeShape EntityType="pitaModel.ventas" Width="1.5" PointX="44.625" PointY="10.75" />
         <AssociationConnector Association="pitaModel.ventas_ibfk_5" />
         <AssociationConnector Association="pitaModel.p_verificador_ibfk_1" />
         <AssociationConnector Association="pitaModel.ventas_ibfk_3" />

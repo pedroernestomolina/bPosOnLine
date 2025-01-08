@@ -10,10 +10,8 @@ using System.Transactions;
 
 namespace ProvPos
 {
-
     public partial class Provider: IPos.IProvider
     {
-
         public DtoLib.ResultadoEntidad<DtoLibPos.Verificador.Entidad.Ficha> 
             Verificador_GetFichaById(int id)
         {
@@ -155,7 +153,30 @@ namespace ProvPos
 
             return rt;
         }
-
+        public DtoLib.Resultado 
+            Verificador_DarAltaTodosLosDocumentos()
+        {
+            var rt = new DtoLib.Resultado();
+            try
+            {
+                using (var cnn = new PosEntities(_cnPos.ConnectionString))
+                {
+                    var _sql = "update p_verificador set estatusVer=1";
+                    var r= cnn.Database.ExecuteSqlCommand(_sql);
+                    if (r==0)
+                    {
+                        rt.Mensaje = "PROBLEMA AL ACTUALIZAR ESTATUS DE VERIFICACION DEL DOCUMENTO";
+                        rt.Result = DtoLib.Enumerados.EnumResult.isError;
+                        return rt;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                rt.Mensaje = e.Message;
+                rt.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+            return rt;
+        }
     }
-
 }

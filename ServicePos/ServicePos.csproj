@@ -52,10 +52,12 @@
     <Compile Include="Interfaces\IDeposito.cs" />
     <Compile Include="Interfaces\IDocumento.cs" />
     <Compile Include="Interfaces\IDocumentoAdm.cs" />
+    <Compile Include="Interfaces\IDocumento_Agregar.cs" />
     <Compile Include="Interfaces\IFiscal.cs" />
     <Compile Include="Interfaces\IJornada.cs" />
     <Compile Include="Interfaces\IMedioPago.cs" />
     <Compile Include="Interfaces\IMovCaja.cs" />
+    <Compile Include="Interfaces\IPedido.cs" />
     <Compile Include="Interfaces\IPendiente.cs" />
     <Compile Include="Interfaces\IPermiso.cs" />
     <Compile Include="Interfaces\IProducto.cs" />
@@ -72,6 +74,7 @@
     <Compile Include="Interfaces\IVendedor.cs" />
     <Compile Include="Interfaces\IVenta.cs" />
     <Compile Include="Interfaces\IVentaAdm.cs" />
+    <Compile Include="Interfaces\IVentaZufu.cs" />
     <Compile Include="Interfaces\IVerificador.cs" />
     <Compile Include="MyService\Agencia.cs" />
     <Compile Include="MyService\Auditoria.cs" />
@@ -86,10 +89,14 @@
     <Compile Include="MyService\Deposito.cs" />
     <Compile Include="MyService\Documento.cs" />
     <Compile Include="MyService\DocumentoAdm.cs" />
+    <Compile Include="MyService\Documento_Agregar_Factura.cs" />
+    <Compile Include="MyService\Documento_Agregar_NotaCredito.cs" />
+    <Compile Include="MyService\Documento_Agregar_NotaEntrega.cs" />
     <Compile Include="MyService\Fiscal.cs" />
     <Compile Include="MyService\Jornada.cs" />
     <Compile Include="MyService\MedioPago.cs" />
     <Compile Include="MyService\MovCaja.cs" />
+    <Compile Include="MyService\Pedido.cs" />
     <Compile Include="MyService\Pendiente.cs" />
     <Compile Include="MyService\Permiso.cs" />
     <Compile Include="MyService\Producto.cs" />
@@ -100,12 +107,14 @@
     <Compile Include="MyService\ReportesCli.cs" />
     <Compile Include="MyService\Service.cs" />
     <Compile Include="MyService\Sistema.cs" />
+    <Compile Include="MyService\Sistema_SeriesFiscal.cs" />
     <Compile Include="MyService\Sucursal.cs" />
     <Compile Include="MyService\Transporte.cs" />
     <Compile Include="MyService\Usuario.cs" />
     <Compile Include="MyService\Vendedor.cs" />
     <Compile Include="MyService\Venta.cs" />
     <Compile Include="MyService\VentaAdm.cs" />
+    <Compile Include="MyService\VentaZufu.cs" />
     <Compile Include="MyService\Verificador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

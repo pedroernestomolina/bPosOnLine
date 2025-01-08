@@ -131,8 +131,15 @@ namespace DtoLibPos.Documento.Agregar.Factura
         //
         public string estatusFiscal { get; set; }
         public int zFiscal { get; set; }
-
-
+        //
+        public string aplicaIGTF {get;set;}
+        public decimal tasaIGTF {get;set;}
+        public decimal baseAplicaIGTFMonAct {get;set;}
+        public decimal baseAplicaIGTFMonDiv {get;set;}
+        public decimal montoIGTF { get; set; }
+        //
+        public string estatusMostrarLibroVenta { get; set; }
+        //
         public Ficha()
         {
             idOperador = -1;
@@ -256,6 +263,14 @@ namespace DtoLibPos.Documento.Agregar.Factura
             //
             estatusFiscal = "";
             zFiscal = -1;
+            //
+            aplicaIGTF="";
+            tasaIGTF=0.0m;
+            baseAplicaIGTFMonAct=0.0m;
+            baseAplicaIGTFMonDiv=0.0m;
+            montoIGTF=0.0m;
+            //
+            estatusMostrarLibroVenta = "";
         }
     }
 }

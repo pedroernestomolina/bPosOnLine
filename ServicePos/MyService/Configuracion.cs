@@ -66,5 +66,11 @@ namespace ServicePos.MyService
         {
             return ServiceProv.Configuracion_HabilitarDescuentoUnicamenteConPagoEnDivsa();
         }
+        //
+        public DtoLib.ResultadoEntidad<DtoLibPos.Configuracion.Configuracion_IGTF> 
+            Configuracion_IGTF()
+        {
+            return ServiceProv.Configuracion_IGTF();
+        }
     }
 }

@@ -32,7 +32,9 @@ namespace ServicePos.Interfaces
             Configuracion_ValorMaximoPorcentajeDescuento();
         DtoLib.ResultadoEntidad<string>
             Configuracion_HabilitarDescuentoUnicamenteConPagoEnDivsa();
-
+        //
+        DtoLib.ResultadoEntidad<DtoLibPos.Configuracion.Configuracion_IGTF>
+            Configuracion_IGTF();
     }
 
 }

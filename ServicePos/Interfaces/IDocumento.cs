@@ -7,19 +7,8 @@ using System.Threading.Tasks;
 
 namespace ServicePos.Interfaces
 {
-    
     public interface IDocumento
     {
-
-
-        DtoLib.ResultadoEntidad<DtoLibPos.Documento.Agregar.Factura.Result>
-            Documento_Agregar_Factura(DtoLibPos.Documento.Agregar.Factura.Ficha ficha);
-        DtoLib.ResultadoAuto 
-            Documento_Agregar_NotaCredito(DtoLibPos.Documento.Agregar.NotaCredito.Ficha ficha);
-        DtoLib.ResultadoAuto 
-            Documento_Agregar_NotaEntrega(DtoLibPos.Documento.Agregar.NotaEntrega.Ficha ficha);
-
-
         DtoLib.ResultadoLista<DtoLibPos.Documento.Lista.Ficha> 
             Documento_Get_Lista(DtoLibPos.Documento.Lista.Filtro filtro);
         DtoLib.ResultadoEntidad<DtoLibPos.Documento.Entidad.Ficha> 
@@ -36,7 +25,5 @@ namespace ServicePos.Interfaces
             Documento_Anular_NotaCredito(DtoLibPos.Documento.Anular.NotaCredito.Ficha ficha);
         DtoLib.Resultado 
             Documento_Anular_Factura(DtoLibPos.Documento.Anular.Factura.Ficha ficha);
-
     }
-
 }

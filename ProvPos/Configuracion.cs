@@ -409,5 +409,45 @@ namespace ProvPos
 
             return result;
         }
+        //
+        public DtoLib.ResultadoEntidad<DtoLibPos.Configuracion.Configuracion_IGTF> 
+            Configuracion_IGTF()
+        {
+            var result = new DtoLib.ResultadoEntidad<DtoLibPos.Configuracion.Configuracion_IGTF>();
+            //
+            try
+            {
+                using (var cnn = new PosEntities(_cnPos.ConnectionString))
+                {
+                    var ent1 = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL64");
+                    if (ent1 == null)
+                    {
+                        result.Mensaje = "[ ID GLOBAL64] CONFIGURACION GLOBAL NO ENCONTRADO";
+                        result.Result = DtoLib.Enumerados.EnumResult.isError;
+                        return result;
+                    }
+                    //
+                    var ent2 = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL65");
+                    if (ent2 == null)
+                    {
+                        result.Mensaje = "[ ID GLOBAL65] CONFIGURACION GLOBAL NO ENCONTRADO";
+                        result.Result = DtoLib.Enumerados.EnumResult.isError;
+                        return result;
+                    }
+                    result.Entidad = new DtoLibPos.Configuracion.Configuracion_IGTF
+                    {
+                        ActivarIGTF = ent1.usuario,
+                        TasaIGTF = ent2.usuario,
+                    };
+                }
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+            //
+            return result;
+        }
     }
 }

@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace ServicePos.MyService
 {
-
     public partial class Service : IService
     {
-
         public DtoLib.ResultadoEntidad<DtoLibPos.Verificador.Entidad.Ficha> 
             Verificador_GetFichaById(int id)
         {
@@ -27,6 +25,10 @@ namespace ServicePos.MyService
         {
             return ServiceProv.Verificador_VerificarFicha(ficha);
         }
+        public DtoLib.Resultado 
+            Verificador_DarAltaTodosLosDocumentos()
+        {
+            return ServiceProv.Verificador_DarAltaTodosLosDocumentos();
+        }
     }
-
 }

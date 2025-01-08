@@ -11,14 +11,6 @@ namespace IPos
     public interface IDocumento
     {
 
-        DtoLib.ResultadoEntidad<DtoLibPos.Documento.Agregar.Factura.Result>
-            Documento_Agregar_Factura(DtoLibPos.Documento.Agregar.Factura.Ficha ficha);
-        DtoLib.ResultadoAuto 
-            Documento_Agregar_NotaCredito(DtoLibPos.Documento.Agregar.NotaCredito.Ficha ficha);
-        DtoLib.ResultadoAuto 
-            Documento_Agregar_NotaEntrega(DtoLibPos.Documento.Agregar.NotaEntrega.Ficha ficha);
-
-
         DtoLib.ResultadoLista<DtoLibPos.Documento.Lista.Ficha> 
             Documento_Get_Lista(DtoLibPos.Documento.Lista.Filtro filtro);
         DtoLib.ResultadoEntidad<DtoLibPos.Documento.Entidad.Ficha> 

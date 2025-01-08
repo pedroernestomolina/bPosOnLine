@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace DtoLibPos.Producto.Lista
 {
-    
     public class Ficha
     {
-
         public string Auto { get; set; }
         public string Codigo { get; set; }
         public string Nombre { get; set; }
@@ -48,8 +46,10 @@ namespace DtoLibPos.Producto.Lista
         public int contEmpInv { get; set; }
         public string descEmpCompra { get; set; }
         public string descEmpInv { get; set; }
-      
-
+        //
+        public string histPrecio { get; set; }
+        //
+        public byte[] imagen { get; set; }
         public Ficha()
         {
             Auto = "";
@@ -89,8 +89,8 @@ namespace DtoLibPos.Producto.Lista
             contEmpInv = 0;
             descEmpCompra = "";
             descEmpInv = "";
+            //
+            imagen = new byte[0];
         }
-
     }
-
 }

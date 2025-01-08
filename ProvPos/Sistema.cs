@@ -48,78 +48,6 @@ namespace ProvPos
             return result;
         }
 
-        public DtoLib.ResultadoEntidad<DtoLibPos.Sistema.Serie.Entidad.Ficha> Sistema_Serie_GetFichaById(string id)
-        {
-            var result = new DtoLib.ResultadoEntidad<DtoLibPos.Sistema.Serie.Entidad.Ficha>();
-
-            try
-            {
-                using (var cnn = new PosEntities(_cnPos.ConnectionString))
-                {
-                    var p1 = new MySql.Data.MySqlClient.MySqlParameter();
-                    var p2 = new MySql.Data.MySqlClient.MySqlParameter();
-                    var p3 = new MySql.Data.MySqlClient.MySqlParameter();
-
-                    p1.ParameterName = "@p1";
-                    p1.Value = id;
-                    var sql = @"SELECT auto, serie, control 
-                                FROM empresa_series_fiscales 
-                                WHERE auto=@p1";
-                    var ent = cnn.Database.SqlQuery<DtoLibPos.Sistema.Serie.Entidad.Ficha>(sql, p1).FirstOrDefault();
-                    if (ent == null)
-                    {
-                        result.Mensaje = "[ ID SERIE ] NO ENCONTRADO";
-                        result.Result = DtoLib.Enumerados.EnumResult.isError;
-                        return result;
-                    }
-                    result.Entidad = ent;
-                }
-            }
-            catch (Exception e)
-            {
-                result.Mensaje = e.Message;
-                result.Result = DtoLib.Enumerados.EnumResult.isError;
-            }
-
-            return result;
-        }
-
-        public DtoLib.ResultadoEntidad<DtoLibPos.Sistema.Serie.Entidad.Ficha> Sistema_Serie_GetFichaByNombre(string nombre)
-        {
-            var result = new DtoLib.ResultadoEntidad<DtoLibPos.Sistema.Serie.Entidad.Ficha>();
-
-            try
-            {
-                using (var cnn = new PosEntities(_cnPos.ConnectionString))
-                {
-                    var p1 = new MySql.Data.MySqlClient.MySqlParameter();
-                    var p2 = new MySql.Data.MySqlClient.MySqlParameter();
-                    var p3 = new MySql.Data.MySqlClient.MySqlParameter();
-
-                    p1.ParameterName = "@p1";
-                    p1.Value = nombre;
-                    var sql = @"SELECT auto, serie, control 
-                                FROM empresa_series_fiscales 
-                                WHERE serie=@p1";
-                    var ent = cnn.Database.SqlQuery<DtoLibPos.Sistema.Serie.Entidad.Ficha>(sql, p1).FirstOrDefault();
-                    if (ent == null)
-                    {
-                        result.Mensaje = "[ ID SERIE ] NO ENCONTRADO";
-                        result.Result = DtoLib.Enumerados.EnumResult.isError;
-                        return result;
-                    }
-                    result.Entidad = ent;
-                }
-            }
-            catch (Exception e)
-            {
-                result.Mensaje = e.Message;
-                result.Result = DtoLib.Enumerados.EnumResult.isError;
-            }
-
-            return result;
-        }
-
         public DtoLib.ResultadoEntidad<string> Sistema_ClaveAcceso_GetByIdNivel(int id)
         {
             var result = new DtoLib.ResultadoEntidad<string>();
@@ -187,30 +115,6 @@ namespace ProvPos
                                 WHERE 1=1 and tipo='Ventas'";
                     var lst= cnn.Database.SqlQuery<DtoLibPos.Sistema.TipoDocumento.Entidad.Ficha>(sql).ToList();
                     result.Lista= lst;
-                }
-            }
-            catch (Exception e)
-            {
-                result.Mensaje = e.Message;
-                result.Result = DtoLib.Enumerados.EnumResult.isError;
-            }
-
-            return result;
-        }
-
-        public DtoLib.ResultadoLista<DtoLibPos.Sistema.Serie.Entidad.Ficha> Sistema_Serie_GetLista()
-        {
-            var result = new DtoLib.ResultadoLista<DtoLibPos.Sistema.Serie.Entidad.Ficha>();
-
-            try
-            {
-                using (var cnn = new PosEntities(_cnPos.ConnectionString))
-                {
-                    var sql = @"SELECT auto, serie, control 
-                                FROM empresa_series_fiscales 
-                                WHERE 1=1";
-                    var lst= cnn.Database.SqlQuery<DtoLibPos.Sistema.Serie.Entidad.Ficha>(sql).ToList();
-                    result.Lista = lst;
                 }
             }
             catch (Exception e)

@@ -160,8 +160,8 @@ namespace ProvPos
                                     Pend.auto_vendedor as idVendedor,
                                     Usu.nombre as usuDesc,
                                     Usu.codigo as usuCod,
-                                    Vend.codigo as codVend,
-                                    Vend.nombre as nombreVend
+                                    vend.codigo as codVend,
+                                    vend.nombre as nombreVend
                                 from p_pendiente as Pend 
                                 join p_operador as Ope on Ope.id=Pend.id_p_operador 
                                 join usuarios as Usu on Usu.auto=Ope.auto_usuario 
@@ -171,7 +171,7 @@ namespace ProvPos
                     {
                         _p1.ParameterName = "@idOperador";
                         _p1.Value = filtro.idOperador.Value;
-                        _sql_2 += " and id_p_operador==@idOperador ";
+                        _sql_2 += " and Pend.id_p_operador=@idOperador ";
                     }
                     var _sql = _sql_1 + _sql_2;
                     _lista = cn.Database.SqlQuery<DtoLibPos.Pendiente.Lista.Ficha>(_sql, _p1).ToList();

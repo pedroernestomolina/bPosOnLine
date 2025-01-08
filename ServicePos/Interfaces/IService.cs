@@ -15,7 +15,10 @@ namespace ServicePos.Interfaces
         IConfiguracionAdm, IReportesCli, IReportePos, IProductoAdm, IVentaAdm, 
         IDocumentoAdm, IAuditoria, IVerificador, IAgencia, ICierre,
         IMovCaja,
-        IProducto_ModoAdm
+        IProducto_ModoAdm,
+        IVentaZufu,
+        IPedido,
+        IDocumento_Agregar
     {
         DtoLib.ResultadoEntidad<DateTime> 
             FechaServidor();

@@ -40,25 +40,42 @@ namespace ProvPos
                                     p.contenido_compras as contEmpCompra,
                                     pmCompra.nombre as descEmpCompra,
                                     pExtInv.cont_emp_inv_1 as contEmpInv,
-                                    pmInv.nombre as descEmpInv ";
+                                    pmInv.nombre as descEmpInv,
+                                    extra.imagen as imagen ";
                     var sql_2 = @" from productos as p 
                                     join productos_deposito as pd on p.auto=pd.auto_producto 
                                     join productos_medida as pmCompra on pmCompra.auto=p.auto_empaque_compra
                                     join productos_ext as pExtInv on pExtInv.auto_producto=p.auto
-                                    join productos_medida as pmInv on pmInv.auto=pExtInv.auto_emp_inv_1 ";
+                                    join productos_medida as pmInv on pmInv.auto=pExtInv.auto_emp_inv_1 
+                                    join productos_extra as extra on extra.auto_productos=p.auto ";
                     var sql_3 = " where 1=1 ";
                     var sql_4 = "";
 
                     if (filtro.Cadena.Trim() != "") 
                     {
                         var cad = filtro.Cadena.Trim();
-                        if (cad.Substring(0, 1) == "*")
+                        if (cad == "#")
                         {
-                            cad = "%" + cad.Substring(1);
+                            sql_1 += ", hist.auto_producto as histPrecio ";
+                            sql_2 += @" left join 
+                                        (
+                                            SELECT auto_producto 
+                                            FROM productos_precios 
+                                            where fecha>= curdate()
+                                                and nota not like '%CAMBIO MASIVO%'
+                                            group by auto_producto
+                                        ) as hist on hist.auto_producto=p.auto";
                         }
-                        sql_3 += " and p.nombre like @p1 ";
-                        p1.ParameterName = "@p1";
-                        p1.Value = cad + "%";
+                        else
+                        {
+                            if (cad.Substring(0, 1) == "*")
+                            {
+                                cad = "%" + cad.Substring(1);
+                            }
+                            sql_3 += " and p.nombre like @p1 ";
+                            p1.ParameterName = "@p1";
+                            p1.Value = cad + "%";
+                        }
                     }
 
                     if (filtro.IsPorPlu) 

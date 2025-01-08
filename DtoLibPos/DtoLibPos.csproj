@@ -46,6 +46,7 @@
     <Compile Include="Agencia\Lista\Filtro.cs" />
     <Compile Include="Auditoria\Buscar\Ficha.cs" />
     <Compile Include="Auditoria\Entidad\Ficha.cs" />
+    <Compile Include="Configuracion\Configuracion_IGTF.cs" />
     <Compile Include="MovCaja\Anular\Ficha.cs" />
     <Compile Include="MovCaja\Entidad\Detalle.cs" />
     <Compile Include="MovCaja\Entidad\Ficha.cs" />
@@ -53,6 +54,12 @@
     <Compile Include="MovCaja\Lista\Filtro.cs" />
     <Compile Include="MovCaja\Registrar\Detalle.cs" />
     <Compile Include="MovCaja\Registrar\Ficha.cs" />
+    <Compile Include="Pedido\Entidad\Ficha.cs" />
+    <Compile Include="Pedido\Guardar\Ficha.cs" />
+    <Compile Include="Pedido\Lista\Ficha.cs" />
+    <Compile Include="Pedido\Lista\Filtro.cs" />
+    <Compile Include="Pedido\Lista\Resumen.cs" />
+    <Compile Include="Pedido\TrasladarVenta\Ficha.cs" />
     <Compile Include="Pos\Cierre\Entidad\Ficha.cs" />
     <Compile Include="Pos\Cierre\Lista\Ficha.cs" />
     <Compile Include="Pos\Cierre\Lista\Filtro.cs" />
@@ -302,10 +309,16 @@
     <Compile Include="Venta\Item\ActualizarPrecio\Ficha.cs" />
     <Compile Include="Venta\Item\Eliminar\Ficha.cs" />
     <Compile Include="Venta\Item\Entidad\Ficha.cs" />
+    <Compile Include="Pedido\Entidad\Item.cs" />
     <Compile Include="Venta\Item\Lista\Filtro.cs" />
     <Compile Include="Venta\Item\Registrar\Ficha.cs" />
     <Compile Include="Venta\Item\Registrar\FichaDeposito.cs" />
     <Compile Include="Venta\Item\Registrar\FichaItem.cs" />
+    <Compile Include="Venta\Item\Zufu\ActualizarPrecio\Actualizar\Data.cs" />
+    <Compile Include="Venta\Item\Zufu\ActualizarPrecio\Actualizar\Ficha.cs" />
+    <Compile Include="Venta\Item\Zufu\ActualizarPrecio\Actualizar\LogReg.cs" />
+    <Compile Include="Venta\Item\Zufu\ActualizarPrecio\ObtenerData\Ficha.cs" />
+    <Compile Include="Venta\Item\Zufu\ActualizarPrecio\ObtenerData\Prd.cs" />
     <Compile Include="Verificador\Entidad\Ficha.cs" />
     <Compile Include="Verificador\Verificar\Ficha.cs" />
   </ItemGroup>

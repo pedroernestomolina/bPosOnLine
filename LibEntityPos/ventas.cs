@@ -137,6 +137,12 @@ namespace LibEntityPos
         public string estatus_vuelto_por_pago_movil { get; set; }
         public string estatus_fiscal { get; set; }
         public int z_fiscal { get; set; }
+        public string aplicar_igtf { get; set; }
+        public decimal tasa_igtf { get; set; }
+        public decimal base_aplica_igtf_mon_act { get; set; }
+        public decimal base_aplica_igtf_mon_div { get; set; }
+        public decimal monto_igtf { get; set; }
+        public string estatus_mostrar_libro_venta { get; set; }
     
         public virtual clientes clientes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

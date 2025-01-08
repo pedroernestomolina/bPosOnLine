@@ -10,10 +10,8 @@ using System.Transactions;
 
 namespace ProvPos
 {
-    
     public partial class Provider: IPos.IProvider
     {
-
         public DtoLib.ResultadoId 
             Venta_Item_Registrar(DtoLibPos.Venta.Item.Registrar.Ficha ficha)
         {
@@ -483,7 +481,5 @@ namespace ProvPos
             }
             return result;
         }
-
     }
-
 }

@@ -14,7 +14,11 @@ namespace IPos
         IReportesCli, IReportesPos, IProductoAdm, IVentaAdm, IDocumentoAdm, 
         IAuditoria, IModuloAdm, IVerificador, IAgencia, ICierre,
         IMovCaja,
-        IProducto_ModoAdm
+        IProducto_ModoAdm,
+        IVentaZufu,
+        IPedido,
+        ISistema_SeriesFiscales,
+        IDocumento_Agregar
     {
         DtoLib.ResultadoEntidad<DateTime> 
             FechaServidor();

@@ -70,12 +70,21 @@
     <Compile Include="Deposito.cs" />
     <Compile Include="Documento.cs" />
     <Compile Include="DocumentoAdm.cs" />
+    <Compile Include="Documento_Agregar_Factura.cs" />
+    <Compile Include="Documento_Agregar_NotaCredito.cs" />
+    <Compile Include="Documento_Agregar_NotaEntrega.cs" />
     <Compile Include="Fiscal.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="Jornada.cs" />
     <Compile Include="MedioPago.cs" />
     <Compile Include="ModuloAdm.cs" />
     <Compile Include="MovCaja.cs" />
+    <Compile Include="Pedido_AnularBy_Id.cs" />
+    <Compile Include="Pedido_GetFichaBy_Id.cs" />
+    <Compile Include="Pedido_GetIdBy_Numero.cs" />
+    <Compile Include="Pedido_GetListaResumenBy_Filtro.cs" />
+    <Compile Include="Pedido_Guardar.cs" />
+    <Compile Include="Pedido_TrasladarVenta.cs" />
     <Compile Include="Pendiente.cs" />
     <Compile Include="Permiso.cs" />
     <Compile Include="Producto.cs" />
@@ -87,12 +96,16 @@
     <Compile Include="ReportesAdm.cs" />
     <Compile Include="ReportesCli.cs" />
     <Compile Include="Sistema.cs" />
+    <Compile Include="Sistema_SerieFiscal_GetFicha_ById.cs" />
+    <Compile Include="Sistema_SerieFiscal_GetFicha_ByNombre.cs" />
+    <Compile Include="Sistema_SerieFiscal_GetLista.cs" />
     <Compile Include="Sucursal.cs" />
     <Compile Include="Transporte.cs" />
     <Compile Include="Usuario.cs" />
     <Compile Include="Vendedor.cs" />
     <Compile Include="Venta.cs" />
     <Compile Include="VentaAdm.cs" />
+    <Compile Include="VentaZufu.cs" />
     <Compile Include="Verificador.cs" />
   </ItemGroup>
   <ItemGroup>

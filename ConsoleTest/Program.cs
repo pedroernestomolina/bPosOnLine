@@ -10,13 +10,40 @@ namespace ConsoleTest
     {
         static void Main(string[] args)
         {
-            IPos.IProvider posProv = new ProvPos.Provider("localhost", "dios");
+            IPos.IProvider posProv = new ProvPos.Provider("localhost", "smcristal");
+            /*
+            var filtro = new DtoLibPos.Pedido.Lista.Filtro ();
+            var rt1= posProv.Pedido_GetListaResumenBy_Filtro(filtro);
+            var rt2 = posProv.Pedido_GetFichaBy_Id(2);
+            var rt3 = posProv.Pedido_AnularBy_Id(4);
+            var rt4 = posProv.Pedido_GetIdBy_Numero(20);
+            //
+            var fichaTras = new DtoLibPos.Pedido.TrasladarVenta.Ficha()
+            {
+                idTarjeta = 1,
+                idOperador = 15,
+            };
+            var rt5 = posProv.Pedido_TrasladarVenta(fichaTras);
+            var fichaGuard = new DtoLibPos.Pedido.Guardar.Ficha()
+            {
+                idOperador = 15,
+                numeroTarj = 19,
+                cntItems = 3,
+                factorCambio = 47.31m,
+                montoMonAct = 730.95m,
+                montoMonDiv = 15.45m,
+            };
+            var rt6 = posProv.Pedido_Guardar(fichaGuard);
+             * 
+            
+
+            /*
             var filtro = new DtoLibPos.Reportes.POS.MovCaja.Filtro()
             {
                  idOperador=73,
             };
             var r01 = posProv.ReportePos_MovCaja(filtro);
-
+            */
 
             //var filtro = new DtoLibPos.MovCaja.Lista.Filtro()
             //{

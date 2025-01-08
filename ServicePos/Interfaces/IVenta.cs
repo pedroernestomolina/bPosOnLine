@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace ServicePos.Interfaces
 {
-    
     public interface IVenta
     {
-
         DtoLib.ResultadoId 
             Venta_Item_Registrar(DtoLibPos.Venta.Item.Registrar.Ficha ficha);
         DtoLib.ResultadoLista<DtoLibPos.Venta.Item.Entidad.Ficha> 
@@ -27,7 +25,5 @@ namespace ServicePos.Interfaces
             Venta_Item_ActualizarCantidad_Aumentar(DtoLibPos.Venta.Item.ActualizarCantidad.Aumentar.Ficha ficha);
         DtoLib.Resultado
             Venta_Item_ActualizarPrecio(DtoLibPos.Venta.Item.ActualizarPrecio.Ficha ficha);
-
     }
-
 }
