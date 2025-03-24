@@ -967,6 +967,7 @@ warning 6002: The table/view 'pita.pos_arqueo' does not have a primary key defin
           <Property Name="base_aplica_igtf_mon_div" Type="decimal" Precision="16" Scale="2" Nullable="false" />
           <Property Name="monto_igtf" Type="decimal" Precision="16" Scale="2" Nullable="false" />
           <Property Name="estatus_mostrar_libro_venta" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="estatus_credito" Type="varchar" MaxLength="1" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'pita.ventas_detalle' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -3710,6 +3711,7 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
           <Property Name="base_aplica_igtf_mon_div" Type="Decimal" Nullable="false" />
           <Property Name="monto_igtf" Type="Decimal" Nullable="false" />
           <Property Name="estatus_mostrar_libro_venta" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="estatus_credito" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="clientes" Relationship="pitaModel.ventas_ibfk_5" FromRole="ventas" ToRole="clientes" />
           <NavigationProperty Name="p_verificador" Relationship="pitaModel.p_verificador_ibfk_1" FromRole="ventas" ToRole="p_verificador" />
           <NavigationProperty Name="usuarios" Relationship="pitaModel.ventas_ibfk_3" FromRole="ventas" ToRole="usuarios" />
@@ -4680,6 +4682,7 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
           <EntitySetMapping Name="ventas">
             <EntityTypeMapping TypeName="pitaModel.ventas">
               <MappingFragment StoreEntitySet="ventas">
+                <ScalarProperty Name="estatus_credito" ColumnName="estatus_credito" />
                 <ScalarProperty Name="estatus_mostrar_libro_venta" ColumnName="estatus_mostrar_libro_venta" />
                 <ScalarProperty Name="monto_igtf" ColumnName="monto_igtf" />
                 <ScalarProperty Name="base_aplica_igtf_mon_div" ColumnName="base_aplica_igtf_mon_div" />

@@ -140,6 +140,8 @@ namespace DtoLibPos.Documento.Agregar.Factura
         //
         public string estatusMostrarLibroVenta { get; set; }
         //
+        public string estatusCredito { get; set; }
+        //
         public Ficha()
         {
             idOperador = -1;
@@ -271,6 +273,8 @@ namespace DtoLibPos.Documento.Agregar.Factura
             montoIGTF=0.0m;
             //
             estatusMostrarLibroVenta = "";
+            //
+            estatusCredito = "";
         }
     }
 }

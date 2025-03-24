@@ -209,6 +209,8 @@ namespace ProvPos
                             monto_igtf = 0m,
                             //
                             estatus_mostrar_libro_venta = ficha.estatusMostrarLibroVenta,
+                            //
+                            estatus_credito="",
                         };
                         cn.ventas.Add(entVenta);
                         cn.SaveChanges();

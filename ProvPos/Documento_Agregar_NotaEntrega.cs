@@ -180,6 +180,8 @@ namespace ProvPos
                             estatus_vuelto_por_pago_movil = "0",
                             //
                             estatus_mostrar_libro_venta = "",
+                            //
+                            estatus_credito="",
                         };
                         cn.ventas.Add(entVenta);
                         cn.SaveChanges();

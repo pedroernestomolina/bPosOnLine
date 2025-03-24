@@ -47,7 +47,7 @@ namespace ProvPos
                                     join productos_medida as pmCompra on pmCompra.auto=p.auto_empaque_compra
                                     join productos_ext as pExtInv on pExtInv.auto_producto=p.auto
                                     join productos_medida as pmInv on pmInv.auto=pExtInv.auto_emp_inv_1 
-                                    join productos_extra as extra on extra.auto_productos=p.auto ";
+                                    left join productos_extra as extra on extra.auto_productos=p.auto ";
                     var sql_3 = " where 1=1 ";
                     var sql_4 = "";
 

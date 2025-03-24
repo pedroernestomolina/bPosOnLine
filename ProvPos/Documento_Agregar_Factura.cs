@@ -211,6 +211,8 @@ namespace ProvPos
                             base_aplica_igtf_mon_div = ficha.baseAplicaIGTFMonDiv,
                             monto_igtf = ficha.montoIGTF,
                             estatus_mostrar_libro_venta = ficha.estatusMostrarLibroVenta,
+                            //
+                            estatus_credito= ficha.estatusCredito,
                         };
                         cn.ventas.Add(entVenta);
                         cn.SaveChanges();

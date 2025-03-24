@@ -143,6 +143,7 @@ namespace LibEntityPos
         public decimal base_aplica_igtf_mon_div { get; set; }
         public decimal monto_igtf { get; set; }
         public string estatus_mostrar_libro_venta { get; set; }
+        public string estatus_credito { get; set; }
     
         public virtual clientes clientes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
