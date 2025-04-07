@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace DtoLibPos.Reportes.POS.PagoMovil
 {
-    
     public class Ficha
     {
-
         public string docNro { get; set; }
         public string pmNombre { get; set; }
         public string pmCiRif { get; set; }
@@ -21,8 +19,6 @@ namespace DtoLibPos.Reportes.POS.PagoMovil
         public string docRazonSocial { get; set; }
         public string docCiRif { get; set; }
         public string docEstatusAnulado { get; set; }
-
-
         public Ficha() 
         {
             agencia = "";
@@ -36,7 +32,5 @@ namespace DtoLibPos.Reportes.POS.PagoMovil
             pmNombre = "";
             pmTelefono = "";
         }
-
     }
-
 }

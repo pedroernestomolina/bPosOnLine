@@ -14,7 +14,7 @@ namespace ProvPos
             ReportePos_PagoDetalle(DtoLibPos.Reportes.POS.Filtro filtro)
         {
             var result = new DtoLib.ResultadoLista<DtoLibPos.Reportes.POS.PagoDetalle.Ficha>();
-
+            //
             try
             {
                 using (var cnn = new PosEntities(_cnPos.ConnectionString))
@@ -77,7 +77,7 @@ namespace ProvPos
                 result.Mensaje = e.Message;
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
-
+            //
             return result;
         }
         public DtoLib.ResultadoEntidad<DtoLibPos.Reportes.POS.PagoResumen.Ficha> 
@@ -90,7 +90,7 @@ namespace ProvPos
             ReportePosVerificados_DocVerificados(DtoLibPos.Reportes.PosVerificador.Filtro filtro)
         {
             var result = new DtoLib.ResultadoLista<DtoLibPos.Reportes.PosVerificador.DocVerificados.Ficha>();
-
+            //
             try
             {
                 using (var cnn = new PosEntities(_cnPos.ConnectionString))
@@ -126,14 +126,14 @@ namespace ProvPos
                 result.Mensaje = e.Message;
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
-
+            //
             return result;
         }
         public DtoLib.ResultadoLista<DtoLibPos.Reportes.POS.PagoMovil.Ficha> 
             ReportePos_PagoMovil(DtoLibPos.Reportes.POS.Filtro filtro)
         {
             var result = new DtoLib.ResultadoLista<DtoLibPos.Reportes.POS.PagoMovil.Ficha>();
-
+            //
             try
             {
                 using (var cnn = new PosEntities(_cnPos.ConnectionString))
@@ -167,14 +167,14 @@ namespace ProvPos
                 result.Mensaje = e.Message;
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
-
+            //
             return result;
         }
         public DtoLib.ResultadoLista<DtoLibPos.Reportes.POS.VueltosEntregados.Ficha> 
             ReportePos_VueltosEntregados(DtoLibPos.Reportes.POS.Filtro filtro)
         {
             var result = new DtoLib.ResultadoLista<DtoLibPos.Reportes.POS.VueltosEntregados.Ficha>();
-
+            //
             try
             {
                 using (var cnn = new PosEntities(_cnPos.ConnectionString))
@@ -209,7 +209,7 @@ namespace ProvPos
                 result.Mensaje = e.Message;
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
-
+            //
             return result;
         }
         //
@@ -217,6 +217,7 @@ namespace ProvPos
             ReportePos_MovCaja(DtoLibPos.Reportes.POS.MovCaja.Filtro filtro)
         {
             var result = new DtoLib.ResultadoEntidad<DtoLibPos.Reportes.POS.MovCaja.Ficha>();
+            //
             try
             {
                 using (var cnn = new PosEntities(_cnPos.ConnectionString))
@@ -266,6 +267,50 @@ namespace ProvPos
                 result.Mensaje = e.Message;
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
+            //
+            return result;
+        }
+        //
+        public DtoLib.ResultadoLista<DtoLibPos.Reportes.POS.VentCredito.Ficha> 
+            ReportePos_VentCredito(DtoLibPos.Reportes.POS.VentCredito.Filtro filtro)
+        {
+            var result = new DtoLib.ResultadoLista<DtoLibPos.Reportes.POS.VentCredito.Ficha>();
+            //
+            try
+            {
+                using (var cnn = new PosEntities(_cnPos.ConnectionString))
+                {
+                    var p1 = new MySql.Data.MySqlClient.MySqlParameter("@idCierre", filtro.IdCierre);
+                    var list = new List<DtoLibPos.Reportes.POS.VentCredito.Ficha>();
+                    var sql1 = @"select 
+                                    v.documento as docNumero,
+                                    v.fecha as docEmision,
+                                    v.razon_social as clienteNombre,
+                                    v.ci_rif as clienteCiRif,
+                                    v.dir_fiscal as clienteDir,
+                                    v.telefono as clienteTelf,
+                                    v.hora, 
+                                    v.total as docImporteMonAct ,
+                                    v.monto_divisa as docImporteMonDiv,
+                                    v.saldo_pendiente as docSaldoPendMonDiv ,
+                                    v.monto_bono_en_divisa_por_pago_divisa as montoBonoDiv,
+                                    v.porct_bono_por_pago_divisa as porctBonoDiv,
+                                    v.factor_cambio as factorCambio
+                                FROM ventas as v 
+                                    where v.estatus_credito='1' 
+                                    and v.estatus_anulado='0' 
+                                    and v.cierre>=@idCierre";
+                    var sql = sql1 ;
+                    list = cnn.Database.SqlQuery<DtoLibPos.Reportes.POS.VentCredito.Ficha>(sql, p1).ToList();
+                    result.Lista = list;
+                }
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+            //
             return result;
         }
     }

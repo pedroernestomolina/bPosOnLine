@@ -23,8 +23,6 @@ namespace DtoLibPos.Reportes.POS.VueltosEntregados
         public decimal montoVueltoPagoMovil { get; set; }
         public int cntVueltoDivisa { get; set; }
         public string siglasDoc { get; set; }
-
-
         public Ficha()
         {
             documento = "";

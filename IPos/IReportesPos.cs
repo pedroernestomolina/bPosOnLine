@@ -22,5 +22,8 @@ namespace IPos
         //
         DtoLib.ResultadoEntidad<DtoLibPos.Reportes.POS.MovCaja.Ficha>
             ReportePos_MovCaja(DtoLibPos.Reportes.POS.MovCaja.Filtro filtro);
+        //
+        DtoLib.ResultadoLista<DtoLibPos.Reportes.POS.VentCredito.Ficha>
+            ReportePos_VentCredito(DtoLibPos.Reportes.POS.VentCredito.Filtro filtro);
     }
 }

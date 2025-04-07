@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace DtoLibPos.Reportes.POS.PagoResumen
 {
-    
     public class Detalle
     {
-
         public string codigo { get; set; }
         public string descripcion { get; set; }
         public decimal importe { get; set; }
@@ -20,8 +18,6 @@ namespace DtoLibPos.Reportes.POS.PagoResumen
         public string referencia { get; set; }
         public string medioCobroCodigo { get; set; }
         public string medioCobroDesc { get; set; }
-
-
         public Detalle() 
         {
             codigo = "";
@@ -34,7 +30,5 @@ namespace DtoLibPos.Reportes.POS.PagoResumen
             medioCobroCodigo = "";
             medioCobroDesc = "";
         }
-
     }
-
 }

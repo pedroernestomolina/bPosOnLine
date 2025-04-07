@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace DtoLibPos.Reportes.PosVerificador.DocVerificados
 {
-    
     public class Ficha
     {
-        
         public string autoDocumento { get; set; }
         public string estatusVer { get; set; }
         public DateTime fechaVer { get; set; }
@@ -24,8 +22,6 @@ namespace DtoLibPos.Reportes.PosVerificador.DocVerificados
         public decimal docMonto { get; set; }
         public decimal docMontoDivisa { get; set; }
         public string docTipo { get; set; }
-
-
         public Ficha() 
         {
             autoDocumento = "";
@@ -42,7 +38,5 @@ namespace DtoLibPos.Reportes.PosVerificador.DocVerificados
             docRazonSocial = "";
             docTipo = "";
         }
-
     }
-
 }

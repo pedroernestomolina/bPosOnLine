@@ -235,6 +235,8 @@
     <Compile Include="Reportes\POS\PagoMovil\Ficha.cs" />
     <Compile Include="Reportes\POS\PagoResumen\Detalle.cs" />
     <Compile Include="Reportes\POS\PagoResumen\Ficha.cs" />
+    <Compile Include="Reportes\POS\VentCredito\Ficha.cs" />
+    <Compile Include="Reportes\POS\VentCredito\Filtro.cs" />
     <Compile Include="Reportes\POS\VueltosEntregados\Ficha.cs" />
     <Compile Include="Reportes\VentaAdministrativa\Consolidado\Ficha.cs" />
     <Compile Include="Reportes\VentaAdministrativa\Consolidado\Filtro.cs" />

@@ -41,5 +41,11 @@ namespace ServicePos.MyService
         {
             return ServiceProv.ReportePos_MovCaja(filtro);
         }
+        //
+        public DtoLib.ResultadoLista<DtoLibPos.Reportes.POS.VentCredito.Ficha> 
+            ReportePos_VentCredito(DtoLibPos.Reportes.POS.VentCredito.Filtro filtro)
+        {
+            return ServiceProv.ReportePos_VentCredito(filtro);
+        }
     }
 }

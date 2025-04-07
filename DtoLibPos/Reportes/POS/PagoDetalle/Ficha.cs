@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace DtoLibPos.Reportes.POS.PagoDetalle
 {
-    
     public class Ficha
     {
-
         public string autoRecibo { get; set; }
         public string medioPagoCodigo { get; set; }
         public string medioPagoDesc { get; set; }
@@ -29,8 +27,6 @@ namespace DtoLibPos.Reportes.POS.PagoDetalle
         public decimal cambioDar { get; set; }
         public string estatus { get; set; }
         public string estatusCredito { get; set; }
-
-
         public Ficha() 
         {
             autoRecibo = "";
@@ -52,7 +48,5 @@ namespace DtoLibPos.Reportes.POS.PagoDetalle
             estatus = "";
             estatusCredito = "";
         }
-
     }
-
 }

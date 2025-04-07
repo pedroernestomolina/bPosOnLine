@@ -5,14 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace DtoLibPos.Reportes.POS
+namespace DtoLibPos.Reportes.POS.VentCredito
 {
     public class Filtro
     {
         public string IdCierre { get; set; }
-        public Filtro() 
-        {
-            IdCierre = "";
-        }
     }
 }
