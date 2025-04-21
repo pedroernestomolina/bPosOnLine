@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace ServicePos.MyService
 {
-    
     public partial class Service : IService
     {
-
         public DtoLib.ResultadoLista<DtoLibPos.Pos.Cierre.Lista.Ficha> 
             Cierre_Lista_GetByFiltro(DtoLibPos.Pos.Cierre.Lista.Filtro filtro)
         {
@@ -22,7 +20,5 @@ namespace ServicePos.MyService
         {
             return ServiceProv.Cierre_GetById(idCierre);
         }
-
     }
-
 }

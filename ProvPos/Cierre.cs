@@ -14,18 +14,20 @@ namespace ProvPos
             Cierre_Lista_GetByFiltro(DtoLibPos.Pos.Cierre.Lista.Filtro filtro)
         {
             var result = new DtoLib.ResultadoLista<DtoLibPos.Pos.Cierre.Lista.Ficha>();
-            
+            //
             try
             {
                 using (var cnn = new PosEntities(_cnPos.ConnectionString))
                 {
                     var sql_1 = @"SELECT 
-                                    id, 
-                                    id_equipo as idEquipo,
-                                    fecha_cierre as fecha,
-                                    hora_cierre as hora,
-                                    cierre_numero as cierreNro
-                                FROM p_operador 
+                                    op.id, 
+                                    op.id_equipo as idEquipo,
+                                    op.fecha_cierre as fecha,
+                                    op.hora_cierre as hora,
+                                    op.cierre_numero as cierreNro,
+                                    res.auto_pos_arqueo as idCierre
+                                FROM p_operador as op
+                                join p_resumen as res on res.id_p_operador=op.id
                                 WHERE estatus='C'";
                     var sql_2 = "";
                     var sql_3 = "";
@@ -39,7 +41,7 @@ namespace ProvPos
                 result.Mensaje = e.Message;
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
-
+            //
             return result;
         }
         public DtoLib.ResultadoEntidad<DtoLibPos.Pos.Cierre.Entidad.Ficha> 
