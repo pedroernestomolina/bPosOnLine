@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace DtoLibPos.Venta.Item.Entidad
 {
-    
     public class Ficha
     {
-        
         public int id {get;set;}
         public int idOperador { get; set; }
         public string autoProducto { get; set; }
@@ -39,8 +37,8 @@ namespace DtoLibPos.Venta.Item.Entidad
         //
         public decimal fPeso { get; set; }
         public decimal fVolumen { get; set; }
-
-
+        //
+        public string estatusDivisa { get; set; }
         public Ficha()
         {
             autoDeposito = "";
@@ -71,8 +69,8 @@ namespace DtoLibPos.Venta.Item.Entidad
             //
             fPeso = 0m;
             fVolumen = 0m;
+            //
+            estatusDivisa = "";
         }
-
     }
-
 }

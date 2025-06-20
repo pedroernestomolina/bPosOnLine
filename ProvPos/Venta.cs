@@ -16,7 +16,7 @@ namespace ProvPos
             Venta_Item_Registrar(DtoLibPos.Venta.Item.Registrar.Ficha ficha)
         {
             var result = new DtoLib.ResultadoId();
-
+            //
             try
             {
                 using (var cnn = new PosEntities(_cnPos.ConnectionString))
@@ -26,57 +26,125 @@ namespace ProvPos
                         var entDeposito = cnn.productos_deposito.FirstOrDefault(f => f.auto_producto == ficha.deposito.autoPrd && f.auto_deposito == ficha.deposito.autoDeposito);
                         if (entDeposito == null)
                         {
-                            result.Mensaje = "PRODUCTO/DEPOSITO NO ENCONTRADO";
-                            result.Result = DtoLib.Enumerados.EnumResult.isError;
-                            return result;
+                            throw new Exception("PRODUCTO/DEPOSITO NO ENCONTRADO");
                         }
                         if (ficha.validarExistencia) 
                         {
                             if (ficha.deposito.cantBloq > entDeposito.disponible)
                             {
-                                result.Mensaje = "EXISTENCIA A BLOQUEAR NO DISPONIBLE";
-                                result.Result = DtoLib.Enumerados.EnumResult.isError;
-                                return result;
+                                throw new Exception("EXISTENCIA A BLOQUEAR NO DISPONIBLE");
                             }
                         }
                         entDeposito.reservada += ficha.deposito.cantBloq;
                         entDeposito.disponible -= ficha.deposito.cantBloq;
                         cnn.SaveChanges();
-
-                        var entVenta = new p_venta()
+                        //
+                        var _sql = @"INSERT INTO p_venta (
+                                        id, 
+                                        id_p_operador, 
+                                        auto_producto, 
+                                        auto_departamento, 
+                                        auto_grupo, 
+                                        auto_subGrupo,
+                                        auto_tasa, 
+                                        codigo, 
+                                        nombre, 
+                                        cantidad, 
+                                        pneto, 
+                                        pdivisaFull, 
+                                        tarifaPrecio, 
+                                        tasaIva, 
+                                        tipoIva, 
+                                        categoria, 
+                                        decimales, 
+                                        empaqueDescripcion, 
+                                        empaqueContenido, 
+                                        estatusPesado, 
+                                        costoUnd, 
+                                        costoPromedioUnd, 
+                                        costoCompra, 
+                                        costoPromedio, 
+                                        auto_deposito, 
+                                        id_p_pendiente, 
+                                        fPeso, 
+                                        fVolumen, 
+                                        estatusDivisa
+                                    ) VALUES (
+                                        NULL, 
+                                        @id_p_operador, 
+                                        @auto_producto, 
+                                        @auto_departamento, 
+                                        @auto_grupo, 
+                                        @auto_subGrupo,
+                                        @auto_tasa, 
+                                        @codigo, 
+                                        @nombre, 
+                                        @cantidad, 
+                                        @pneto, 
+                                        @pdivisaFull, 
+                                        @tarifaPrecio, 
+                                        @tasaIva, 
+                                        @tipoIva, 
+                                        @categoria, 
+                                        @decimales, 
+                                        @empaqueDescripcion, 
+                                        @empaqueContenido, 
+                                        @estatusPesado, 
+                                        @costoUnd, 
+                                        @costoPromedioUnd, 
+                                        @costoCompra, 
+                                        @costoPromedio, 
+                                        @auto_deposito, 
+                                        @id_p_pendiente, 
+                                        @fPeso, 
+                                        @fVolumen, 
+                                        @estatusDivisa
+                                    )";
+                        var p1 = new MySql.Data.MySqlClient.MySqlParameter("@id_p_operador", ficha.item.idOperador);
+                        var p2 = new MySql.Data.MySqlClient.MySqlParameter("@auto_producto", ficha.item.autoProducto);
+                        var p3 = new MySql.Data.MySqlClient.MySqlParameter("@auto_departamento", ficha.item.autoDepartamento);
+                        var p4 = new MySql.Data.MySqlClient.MySqlParameter("@auto_grupo", ficha.item.autoGrupo);
+                        var p5 = new MySql.Data.MySqlClient.MySqlParameter("@auto_subGrupo", ficha.item.autoSubGrupo);
+                        var p6 = new MySql.Data.MySqlClient.MySqlParameter("@auto_tasa", ficha.item.autoTasa);
+                        var p7 = new MySql.Data.MySqlClient.MySqlParameter("@codigo", ficha.item.codigo);
+                        var p8 = new MySql.Data.MySqlClient.MySqlParameter("@nombre", ficha.item.nombre);
+                        var p9 = new MySql.Data.MySqlClient.MySqlParameter("@cantidad", ficha.item.cantidad);
+                        var p10 = new MySql.Data.MySqlClient.MySqlParameter("@pneto", ficha.item.pneto);
+                        var p11 = new MySql.Data.MySqlClient.MySqlParameter("@pdivisaFull", ficha.item.pfullDivisa);
+                        var p12 = new MySql.Data.MySqlClient.MySqlParameter("@tarifaPrecio", ficha.item.tarifaPrecio);
+                        var p13 = new MySql.Data.MySqlClient.MySqlParameter("@tasaIva", ficha.item.tasaIva);
+                        var p14 = new MySql.Data.MySqlClient.MySqlParameter("@tipoIva", ficha.item.tipoIva);
+                        var p15 = new MySql.Data.MySqlClient.MySqlParameter("@categoria", ficha.item.categoria);
+                        var p16 = new MySql.Data.MySqlClient.MySqlParameter("@decimales", ficha.item.decimales);
+                        var p17 = new MySql.Data.MySqlClient.MySqlParameter("@empaqueDescripcion", ficha.item.empaqueDescripcion);
+                        var p18 = new MySql.Data.MySqlClient.MySqlParameter("@empaqueContenido", ficha.item.empaqueContenido);
+                        var p19 = new MySql.Data.MySqlClient.MySqlParameter("@estatusPesado", ficha.item.estatusPesado);
+                        var p20 = new MySql.Data.MySqlClient.MySqlParameter("@costoUnd", ficha.item.costoUnd);
+                        var p21 = new MySql.Data.MySqlClient.MySqlParameter("@costoPromedioUnd", ficha.item.costoPromedioUnd);
+                        var p22 = new MySql.Data.MySqlClient.MySqlParameter("@costoCompra", ficha.item.costoCompra);
+                        var p23 = new MySql.Data.MySqlClient.MySqlParameter("@costoPromedio", ficha.item.costoPromedio);
+                        var p24 = new MySql.Data.MySqlClient.MySqlParameter("@auto_deposito", ficha.item.autoDeposito);
+                        var p25 = new MySql.Data.MySqlClient.MySqlParameter("@id_p_pendiente", -1);
+                        var p26 = new MySql.Data.MySqlClient.MySqlParameter("@fPeso", ficha.item.fPeso);
+                        var p27 = new MySql.Data.MySqlClient.MySqlParameter("@fVolumen", ficha.item.fVolumen);
+                        var p28 = new MySql.Data.MySqlClient.MySqlParameter("@estatusDivisa", ficha.item.estatusDivisa);
+                        //
+                        var rt = cnn.Database.ExecuteSqlCommand(_sql,
+                            p1, p2, p3, p4, p5, p6, p7, p8, p9, p10,
+                            p11, p12, p13, p14, p15, p16, p17, p18, p19, p20,
+                            p21, p22, p23, p24, p25, p26, p27, p28);
+                        if (rt == 0) 
                         {
-                            auto_departamento = ficha.item.autoDepartamento,
-                            auto_grupo = ficha.item.autoGrupo,
-                            auto_producto = ficha.item.autoProducto,
-                            auto_subGrupo = ficha.item.autoSubGrupo,
-                            auto_tasa = ficha.item.autoTasa,
-                            cantidad = ficha.item.cantidad,
-                            categoria = ficha.item.categoria,
-                            codigo = ficha.item.codigo,
-                            costoCompra = ficha.item.costoCompra,
-                            costoPromedio = ficha.item.costoPromedio,
-                            costoPromedioUnd = ficha.item.costoPromedioUnd,
-                            costoUnd = ficha.item.costoUnd,
-                            decimales = ficha.item.decimales,
-                            empaqueContenido = ficha.item.empaqueContenido,
-                            empaqueDescripcion = ficha.item.empaqueDescripcion,
-                            estatusPesado = ficha.item.estatusPesado,
-                            id_p_operador = ficha.item.idOperador,
-                            nombre = ficha.item.nombre,
-                            pdivisaFull = ficha.item.pfullDivisa,
-                            pneto = ficha.item.pneto,
-                            tarifaPrecio = ficha.item.tarifaPrecio,
-                            tasaIva = ficha.item.tasaIva,
-                            tipoIva = ficha.item.tipoIva,
-                            auto_deposito = ficha.item.autoDeposito,
-                            id_p_pendiente=-1,
-                            fPeso=ficha.item.fPeso,
-                            fVolumen=ficha.item.fVolumen,
-                        };
-                        cnn.p_venta.Add(entVenta);
+                            throw new Exception("PROBLEMA AL INSERTAR REGISTRO DE VENTA");
+                        }
                         cnn.SaveChanges();
-                        result.Id = entVenta.id;
-
+                        //
+                        var lastId = cnn.Database.SqlQuery<int>("SELECT LAST_INSERT_ID();").FirstOrDefault();
+                        if (lastId == null) 
+                        {
+                            throw new Exception("PROBLEMA AL LEER ID ULTIMO INSERTADO");
+                        }
+                        result.Id = lastId;
                         ts.Complete();
                     }
                 }
@@ -86,63 +154,53 @@ namespace ProvPos
                 result.Mensaje = e.Message;
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
-
+            //
             return result;
         }
         public DtoLib.ResultadoLista<DtoLibPos.Venta.Item.Entidad.Ficha> 
             Venta_Item_GetLista(DtoLibPos.Venta.Item.Lista.Filtro ficha)
         {
             var result = new DtoLib.ResultadoLista<DtoLibPos.Venta.Item.Entidad.Ficha>();
-
+            //
             try
             {
                 using (var cnn = new PosEntities(_cnPos.ConnectionString))
                 {
-                    var list = new List<DtoLibPos.Venta.Item.Entidad.Ficha>();
-
-                    var lstEnt = cnn.p_venta.Where(w => w.id_p_operador == ficha.idOperador && w.id_p_pendiente == -1).ToList();
-                    if (lstEnt != null)
-                    {
-                        if (lstEnt.Count > 0)
-                        {
-                            list = lstEnt.Select(s =>
-                            {
-                                var nr = new DtoLibPos.Venta.Item.Entidad.Ficha()
-                                {
-                                    autoDepartamento = s.auto_departamento,
-                                    autoGrupo = s.auto_grupo,
-                                    autoProducto = s.auto_producto,
-                                    autoSubGrupo = s.auto_subGrupo,
-                                    autoTasa = s.auto_tasa,
-                                    cantidad = s.cantidad,
-                                    categoria = s.categoria,
-                                    codigo = s.codigo,
-                                    costoCompra = s.costoCompra,
-                                    costoPromedio = s.costoPromedio,
-                                    costoPromedioUnd = s.costoPromedioUnd,
-                                    costoUnd = s.costoUnd,
-                                    decimales = s.decimales,
-                                    empaqueContenido = s.empaqueContenido,
-                                    empaqueDescripcion = s.empaqueDescripcion,
-                                    estatusPesado = s.estatusPesado,
-                                    id = s.id,
-                                    idOperador = s.id_p_operador,
-                                    nombre = s.nombre,
-                                    pfullDivisa = s.pdivisaFull,
-                                    pneto = s.pneto,
-                                    tarifaPrecio = s.tarifaPrecio,
-                                    tasaIva = s.tasaIva,
-                                    tipoIva = s.tipoIva,
-                                    autoDeposito = s.auto_deposito,
-                                    fPeso = s.fPeso,
-                                    fVolumen = s.fVolumen,
-                                };
-                                return nr;
-                            }).ToList();
-                        }
-                    }
-
-                    result.Lista = list;
+                    var _sql = @"select 
+                                    auto_departamento as autoDepartamento,
+                                    auto_grupo as autoGrupo,
+                                    auto_producto as autoProducto,
+                                    auto_subGrupo as autoSubGrupo,
+                                    auto_tasa as autoTasa,
+                                    cantidad as cantidad ,
+                                    categoria as categoria,
+                                    codigo as codigo,
+                                    costoCompra as costoCompra,
+                                    costoPromedio as costoPromedio,
+                                    costoPromedioUnd as costoPromedioUnd,
+                                    costoUnd as costoUnd,
+                                    decimales as decimales,
+                                    empaqueContenido as empaqueContenido,
+                                    empaqueDescripcion as empaqueDescripcion,
+                                    estatusPesado as estatusPesado,
+                                    id as id,
+                                    id_p_operador as idOperador,
+                                    nombre as nombre,
+                                    pdivisaFull as pfullDivisa,
+                                    pneto as pneto,
+                                    tarifaPrecio as tarifaPrecio,
+                                    tasaIva as tasaIva,
+                                    tipoIva as tipoIva,
+                                    auto_deposito as autoDeposito,
+                                    fPeso as fPeso,
+                                    fVolumen as fVolumen,
+                                    estatusDivisa as estatusDivisa
+                                from p_venta
+                                where id_p_operador=@idOperador 
+                                        and id_p_pendiente=-1";
+                    var p1 = new MySql.Data.MySqlClient.MySqlParameter("@idOperador", ficha.idOperador);
+                    var lst = cnn.Database.SqlQuery<DtoLibPos.Venta.Item.Entidad.Ficha>(_sql, p1).ToList();
+                    result.Lista = lst;
                 }
             }
             catch (Exception e)
@@ -150,57 +208,56 @@ namespace ProvPos
                 result.Mensaje = e.Message;
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
-
+            //
             return result;
         }
         public DtoLib.ResultadoEntidad<DtoLibPos.Venta.Item.Entidad.Ficha> 
             Venta_Item_GetById(int id)
         {
             var result = new DtoLib.ResultadoEntidad<DtoLibPos.Venta.Item.Entidad.Ficha>();
-
+            //
             try
             {
                 using (var cnn = new PosEntities(_cnPos.ConnectionString))
                 {
-                    var ent = cnn.p_venta.Find(id);
+                    var _sql = @"select 
+                                    auto_departamento as autoDepartamento,
+                                    auto_grupo as autoGrupo,
+                                    auto_producto as autoProducto,
+                                    auto_subGrupo as autoSubGrupo,
+                                    auto_tasa as autoTasa,
+                                    cantidad as cantidad ,
+                                    categoria as categoria,
+                                    codigo as codigo,
+                                    costoCompra as costoCompra,
+                                    costoPromedio as costoPromedio,
+                                    costoPromedioUnd as costoPromedioUnd,
+                                    costoUnd as costoUnd,
+                                    decimales as decimales,
+                                    empaqueContenido as empaqueContenido,
+                                    empaqueDescripcion as empaqueDescripcion,
+                                    estatusPesado as estatusPesado,
+                                    id as id,
+                                    id_p_operador as idOperador,
+                                    nombre as nombre,
+                                    pdivisaFull as pfullDivisa,
+                                    pneto as pneto,
+                                    tarifaPrecio as tarifaPrecio,
+                                    tasaIva as tasaIva,
+                                    tipoIva as tipoIva,
+                                    auto_deposito as autoDeposito,
+                                    fPeso as fPeso,
+                                    fVolumen as fVolumen,
+                                    estatusDivisa as estatusDivisa
+                                from p_venta 
+                                where id=@id";
+                    var p1 = new MySql.Data.MySqlClient.MySqlParameter("@id", id);
+                    var ent = cnn.Database.SqlQuery<DtoLibPos.Venta.Item.Entidad.Ficha>(_sql, p1).FirstOrDefault();
                     if (ent == null) 
                     {
-                        result.Mensaje = "ID NO ENCONTRADO";
-                        result.Result = DtoLib.Enumerados.EnumResult.isError;
-                        return result;
+                        throw new Exception ("ID NO ENCONTRADO");
                     }
-                    var s = ent;
-                    var nr = new DtoLibPos.Venta.Item.Entidad.Ficha()
-                    {
-                        autoDepartamento = s.auto_departamento,
-                        autoGrupo = s.auto_grupo,
-                        autoProducto = s.auto_producto,
-                        autoSubGrupo = s.auto_subGrupo,
-                        autoTasa = s.auto_tasa,
-                        cantidad = s.cantidad,
-                        categoria = s.categoria,
-                        codigo = s.codigo,
-                        costoCompra = s.costoCompra,
-                        costoPromedio = s.costoPromedio,
-                        costoPromedioUnd = s.costoPromedioUnd,
-                        costoUnd = s.costoUnd,
-                        decimales = s.decimales,
-                        empaqueContenido = s.empaqueContenido,
-                        empaqueDescripcion = s.empaqueDescripcion,
-                        estatusPesado = s.estatusPesado,
-                        id = s.id,
-                        idOperador = s.id_p_operador,
-                        nombre = s.nombre,
-                        pfullDivisa = s.pdivisaFull,
-                        pneto = s.pneto,
-                        tarifaPrecio = s.tarifaPrecio,
-                        tasaIva = s.tasaIva,
-                        tipoIva = s.tipoIva,
-                        autoDeposito = s.auto_deposito,
-                        fPeso = s.fPeso,
-                        fVolumen = s.fVolumen,
-                    };
-                    result.Entidad= nr;
+                    result.Entidad= ent;
                 }
             }
             catch (Exception e)
@@ -208,7 +265,7 @@ namespace ProvPos
                 result.Mensaje = e.Message;
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
-
+            //
             return result;
         }
         public DtoLib.Resultado 

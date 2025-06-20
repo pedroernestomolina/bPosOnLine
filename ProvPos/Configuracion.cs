@@ -449,5 +449,33 @@ namespace ProvPos
             //
             return result;
         }
+
+
+        public DtoLib.ResultadoEntidad<string>
+            Configuracion_TasaCambioSistema()
+        {
+            var result = new DtoLib.ResultadoEntidad<string>();
+            //
+            try
+            {
+                using (var cnn = new PosEntities(_cnPos.ConnectionString))
+                {
+                    var _sql = "select usuario from sistema_configuracion where codigo='GLOBAL12'";
+                    var ent = cnn.Database.SqlQuery<string>(_sql).FirstOrDefault();
+                    if (ent == null)
+                    {
+                        throw new Exception("[ ID ] CONFIGURACION GLOBAL NO ENCONTRADO");
+                    }
+                    result.Entidad = ent;
+                }
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+            //
+            return result;
+        }
     }
 }

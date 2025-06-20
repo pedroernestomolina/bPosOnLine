@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace DtoLibPos.Venta.Item.Registrar
 {
-    
     public class FichaItem
     {
-
         public int idOperador { get; set; }
         public string autoProducto { get; set; }
         public string autoDepartamento { get; set; }
@@ -38,9 +36,8 @@ namespace DtoLibPos.Venta.Item.Registrar
         //
         public decimal fPeso { get; set; }
         public decimal fVolumen { get; set; }
-
-
-
+        //
+        public string estatusDivisa { get; set; }
         public FichaItem()
         {
             autoDeposito = "";
@@ -69,8 +66,7 @@ namespace DtoLibPos.Venta.Item.Registrar
             idOperador = -1;
             fPeso = 0m;
             fVolumen = 0m;
+            estatusDivisa = "";
         }
-
     }
-
 }

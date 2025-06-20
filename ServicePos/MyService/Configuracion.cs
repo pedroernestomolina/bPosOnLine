@@ -72,5 +72,11 @@ namespace ServicePos.MyService
         {
             return ServiceProv.Configuracion_IGTF();
         }
+        //
+        public DtoLib.ResultadoEntidad<string> 
+            Configuracion_TasaCambioSistema()
+        {
+            return ServiceProv.Configuracion_TasaCambioSistema();
+        }
     }
 }

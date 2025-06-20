@@ -35,6 +35,8 @@ namespace ServicePos.Interfaces
         //
         DtoLib.ResultadoEntidad<DtoLibPos.Configuracion.Configuracion_IGTF>
             Configuracion_IGTF();
+        //
+        DtoLib.ResultadoEntidad<string>
+            Configuracion_TasaCambioSistema();
     }
-
 }
