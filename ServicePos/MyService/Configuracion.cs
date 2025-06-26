@@ -78,5 +78,10 @@ namespace ServicePos.MyService
         {
             return ServiceProv.Configuracion_TasaCambioSistema();
         }
+        public DtoLib.ResultadoEntidad<string> 
+            Configuracion_PorcentajeAumentarEnPreciosDeProductosNoAdministradoPorDivisa()
+        {
+            return ServiceProv.Configuracion_PorcentajeAumentarEnPreciosDeProductosNoAdministradoPorDivisa();
+        }
     }
 }

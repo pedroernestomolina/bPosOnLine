@@ -38,5 +38,8 @@ namespace IPos
         //
         DtoLib.ResultadoEntidad<string>
             Configuracion_TasaCambioSistema();
+        //
+        DtoLib.ResultadoEntidad<string>
+            Configuracion_PorcentajeAumentarEnPreciosDeProductosNoAdministradoPorDivisa();
     }
 }
