@@ -117,6 +117,7 @@ namespace DtoLibPos.Documento.Agregar.Factura
         public FichaPagoMovil PagoMovil { get; set; }
         public FichaClienteSaldo ClienteSaldo { get; set; }
         public List<FichaMedida> Medidas { get; set; }
+        public List<FichaPrecio> Precios { get; set; }
         //
         public decimal PorctBonoPorPagoDivisa { get; set; }
         public decimal CantDivisaAplicaBonoPorPagoDivisa { get; set; }
@@ -251,6 +252,7 @@ namespace DtoLibPos.Documento.Agregar.Factura
             SerieFiscal = null;
             ClienteSaldo = null;
             Medidas = new List<FichaMedida>();
+            Precios = new List<FichaPrecio>();
             //
             PorctBonoPorPagoDivisa = 0m;
             CantDivisaAplicaBonoPorPagoDivisa = 0m;

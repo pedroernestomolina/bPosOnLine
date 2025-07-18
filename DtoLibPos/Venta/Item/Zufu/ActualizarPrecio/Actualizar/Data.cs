@@ -12,5 +12,6 @@ namespace DtoLibPos.Venta.Item.Zufu.ActualizarPrecio.Actualizar
         public int idItem { get; set; }
         public decimal pNetoMonAct { get; set; }
         public decimal pFullMonDiv  { get; set; }
+        public string aplicarPorcAumento { get; set; }
     }
 }

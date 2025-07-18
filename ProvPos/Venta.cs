@@ -194,7 +194,8 @@ namespace ProvPos
                                     auto_deposito as autoDeposito,
                                     fPeso as fPeso,
                                     fVolumen as fVolumen,
-                                    estatusDivisa as estatusDivisa
+                                    estatusDivisa as estatusDivisa,
+                                    aplicar_porc_aumento as aplicarPorctAumento 
                                 from p_venta
                                 where id_p_operador=@idOperador 
                                         and id_p_pendiente=-1";
@@ -248,7 +249,8 @@ namespace ProvPos
                                     auto_deposito as autoDeposito,
                                     fPeso as fPeso,
                                     fVolumen as fVolumen,
-                                    estatusDivisa as estatusDivisa
+                                    estatusDivisa as estatusDivisa,
+                                    aplicar_porc_aumento as aplicarPorctAumento 
                                 from p_venta 
                                 where id=@id";
                     var p1 = new MySql.Data.MySqlClient.MySqlParameter("@id", id);

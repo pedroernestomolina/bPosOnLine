@@ -39,6 +39,7 @@ namespace DtoLibPos.Venta.Item.Entidad
         public decimal fVolumen { get; set; }
         //
         public string estatusDivisa { get; set; }
+        public string aplicarPorctAumento { get; set; }
         public Ficha()
         {
             autoDeposito = "";
@@ -71,6 +72,7 @@ namespace DtoLibPos.Venta.Item.Entidad
             fVolumen = 0m;
             //
             estatusDivisa = "";
+            aplicarPorctAumento = "";
         }
     }
 }

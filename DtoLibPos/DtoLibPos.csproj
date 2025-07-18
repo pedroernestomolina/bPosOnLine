@@ -47,6 +47,8 @@
     <Compile Include="Auditoria\Buscar\Ficha.cs" />
     <Compile Include="Auditoria\Entidad\Ficha.cs" />
     <Compile Include="Configuracion\Configuracion_IGTF.cs" />
+    <Compile Include="Documento\Agregar\Factura\FichaPrecio.cs" />
+    <Compile Include="Documento\Entidad\FichaPrecio.cs" />
     <Compile Include="MovCaja\Anular\Ficha.cs" />
     <Compile Include="MovCaja\Entidad\Detalle.cs" />
     <Compile Include="MovCaja\Entidad\Ficha.cs" />

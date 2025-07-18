@@ -69,11 +69,13 @@ namespace ProvPos
                         var p1 = new MySql.Data.MySqlClient.MySqlParameter("@idItem", ficha.data.idItem);
                         var p2 = new MySql.Data.MySqlClient.MySqlParameter("@pnetoMonAct", ficha.data.pNetoMonAct);
                         var p3 = new MySql.Data.MySqlClient.MySqlParameter("@pfullMonDiv", ficha.data.pFullMonDiv);
+                        var p4 = new MySql.Data.MySqlClient.MySqlParameter("@aplicarPorcAumento", ficha.data.aplicarPorcAumento);
                         var sql = @"update p_venta set 
                                             pneto=@pnetoMonAct,
-                                            pdivisaFull=@pfullMonDiv
+                                            pdivisaFull=@pfullMonDiv,
+                                            aplicar_porc_aumento=@aplicarPorcAumento
                                     where id=@idItem";
-                        var r0 = cnn.Database.ExecuteSqlCommand(sql, p1, p2, p3);
+                        var r0 = cnn.Database.ExecuteSqlCommand(sql, p1, p2, p3, p4);
                         if (r0 == 0) 
                         {
                             result.Mensaje = "ITEM NO ENCONTRADO";
@@ -109,7 +111,7 @@ namespace ProvPos
                         p1 = new MySql.Data.MySqlClient.MySqlParameter("@id_operador", ficha.logReg.idOperador);
                         p2 = new MySql.Data.MySqlClient.MySqlParameter("@id_usu_autoriza", ficha.logReg.idUsuarioAutoriza);
                         p3 = new MySql.Data.MySqlClient.MySqlParameter("@cod_usu_autoriza", ficha.logReg.codigoUsuarioAutoriza);
-                        var p4 = new MySql.Data.MySqlClient.MySqlParameter("@nom_usu_autoriza", ficha.logReg.nombreUsuarioAutoriza);
+                        p4 = new MySql.Data.MySqlClient.MySqlParameter("@nom_usu_autoriza", ficha.logReg.nombreUsuarioAutoriza);
                         var p5 = new MySql.Data.MySqlClient.MySqlParameter("@fecha", fechaSistema.Date);
                         var p6 = new MySql.Data.MySqlClient.MySqlParameter("@hora", fechaSistema.ToShortTimeString());
                         var p7 = new MySql.Data.MySqlClient.MySqlParameter("@accion", ficha.logReg.accion);

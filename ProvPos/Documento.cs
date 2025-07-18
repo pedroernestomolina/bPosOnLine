@@ -422,6 +422,16 @@ namespace ProvPos
                     var _lMed = cn.Database.SqlQuery<DtoLibPos.Documento.Entidad.FichaMedida>(_sqlMed, p1).ToList();
                     nr.medidas = _lMed;
                     //
+                    p1 = new MySql.Data.MySqlClient.MySqlParameter("@id", idAuto);
+                    var _sqlPrecios = @"select 
+                                            descripcion_producto as descPrd, 
+                                            precio_cliente as precio
+                                    from ventas_precio 
+                                    where auto_documento=@id and
+                                    porct_bono_aplicar>0";
+                    var _lPrecios = cn.Database.SqlQuery<DtoLibPos.Documento.Entidad.FichaPrecio>(_sqlPrecios, p1).ToList();
+                    nr.precios = _lPrecios;
+                    //
                     result.Entidad = nr;
                 };
             }

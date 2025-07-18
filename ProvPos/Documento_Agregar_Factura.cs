@@ -721,8 +721,62 @@ namespace ProvPos
                             }
                             cn.SaveChanges();
                         }
-                        ts.Complete();
 
+
+                        //
+                        //
+                        if (ficha.Precios != null) 
+                        {
+                            var sqlPrecio = @"INSERT INTO ventas_precio(
+                                                    id, 
+                                                    auto_documento,     
+                                                    auto_producto, 
+                                                    descripcion_producto, 
+                                                    precio_factura, 
+                                                    porct_bono_aplicar, 
+                                                    porct_aumento_aplicar, 
+                                                    porct_bono_calculado, 
+                                                    precio_cliente, 
+                                                    es_por_divisa, 
+                                                    aplica_porct_aumento
+                                                ) VALUES (
+                                                    NULL, 
+                                                    @auto_documento,     
+                                                    @auto_producto, 
+                                                    @descripcion_producto, 
+                                                    @precio_factura, 
+                                                    @porct_bono_aplicar, 
+                                                    @porct_aumento_aplicar, 
+                                                    @porct_bono_calculado, 
+                                                    @precio_cliente, 
+                                                    @es_por_divisa, 
+                                                    @aplica_porct_aumento
+                                                )";
+                            foreach (var rg in ficha.Precios) 
+                            {
+                                var vp01 = new MySql.Data.MySqlClient.MySqlParameter("@auto_documento", autoVenta);
+                                var vp02 = new MySql.Data.MySqlClient.MySqlParameter("@auto_producto", rg.idPrd);
+                                var vp03 = new MySql.Data.MySqlClient.MySqlParameter("@descripcion_producto", rg.descPrd);
+                                var vp04 = new MySql.Data.MySqlClient.MySqlParameter("@precio_factura", rg.precioFact);
+                                var vp05 = new MySql.Data.MySqlClient.MySqlParameter("@porct_bono_aplicar", rg.porctBonoAplicar);
+                                var vp06 = new MySql.Data.MySqlClient.MySqlParameter("@porct_aumento_aplicar", rg.porctAumentoPrecioAplicar);
+                                var vp07 = new MySql.Data.MySqlClient.MySqlParameter("@porct_bono_calculado", rg.porctBonoCalculado);
+                                var vp08 = new MySql.Data.MySqlClient.MySqlParameter("@precio_cliente", rg.precioCliente);
+                                var vp09 = new MySql.Data.MySqlClient.MySqlParameter("@es_por_divisa", rg.isPorDivisa);
+                                var vp10 = new MySql.Data.MySqlClient.MySqlParameter("@aplica_porct_aumento", rg.aplicaPorctAumento);
+                                var rtPrecio = cn.Database.ExecuteSqlCommand(sqlPrecio, vp01, vp02, vp03, vp04, vp05,
+                                                                            vp06, vp07, vp08, vp09, vp10);
+                                if (rtPrecio==0)
+                                {
+                                    throw new Exception("PROBLEMA AL INSERTAR PRECIOS DE VENTA, ITEM: " + rg.descPrd);
+                                }
+                            }
+                            cn.SaveChanges();
+                        }
+                        //
+                        //
+
+                        ts.Complete();
                         var ret = new DtoLibPos.Documento.Agregar.Factura.Result()
                         {
                             autoCierre = ficha.Cierre,
