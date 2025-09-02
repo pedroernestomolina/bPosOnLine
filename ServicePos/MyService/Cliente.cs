@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace ServicePos.MyService
 {
-    
     public partial class Service : IService
     {
-
         public DtoLib.ResultadoLista<DtoLibPos.Cliente.Lista.Ficha> 
             Cliente_GetLista(DtoLibPos.Cliente.Lista.Filtro filtro)
         {
@@ -27,6 +25,12 @@ namespace ServicePos.MyService
         {
             return ServiceProv.Cliente_GetFichaByCiRif(ciRif);
         }
+        public DtoLib.ResultadoEntidad<string>
+            Cliente_GetEstatusCredito(string id)
+        {
+            return ServiceProv.Cliente_GetEstatusCredito(id);
+        }
+        //
         public DtoLib.ResultadoAuto 
             Cliente_Agregar(DtoLibPos.Cliente.Agregar.Ficha ficha)
         {
@@ -68,7 +72,5 @@ namespace ServicePos.MyService
             }
             return ServiceProv.Cliente_Editar(ficha);
         }
-
     }
-
 }
