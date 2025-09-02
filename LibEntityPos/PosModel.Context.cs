@@ -32,7 +32,6 @@ namespace LibEntityPos
         public virtual DbSet<empresa_departamentos> empresa_departamentos { get; set; }
         public virtual DbSet<empresa_depositos> empresa_depositos { get; set; }
         public virtual DbSet<empresa_grupo> empresa_grupo { get; set; }
-        public virtual DbSet<empresa_medios> empresa_medios { get; set; }
         public virtual DbSet<empresa_sucursal> empresa_sucursal { get; set; }
         public virtual DbSet<empresa_tasas> empresa_tasas { get; set; }
         public virtual DbSet<empresa_transporte> empresa_transporte { get; set; }

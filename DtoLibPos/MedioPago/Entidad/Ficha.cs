@@ -7,22 +7,18 @@ using System.Threading.Tasks;
 
 namespace DtoLibPos.MedioPago.Entidad
 {
-
     public class Ficha
     {
-
-        public string id { get; set; }
-        public string codigo { get; set; }
-        public string nombre { get; set; }
-
-
-        public Ficha()
-        {
-            id = "";
-            codigo = "";
-            nombre = "";
-        }
-
+        public string idMp { get; set; }
+        public string codigoMp { get; set; }
+        public string nombreMp { get; set; }
+        public string aplicaParaCobro { get; set; }
+        public string aplicaParaPOS { get; set; }
+        public int? idCurrencies { get; set; }
+        public string codigoCurrencies { get; set; }
+        public string nombreCurrencies { get; set; }
+        public string simboloCurrencies { get; set; }
+        public string aplicaLoteReferencia { get; set; }
+        public string aplicaBonoPagoDivisa { get; set; }
     }
-
 }

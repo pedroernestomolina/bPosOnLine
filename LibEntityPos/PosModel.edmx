@@ -211,16 +211,6 @@
           <Property Name="nombre" Type="varchar" MaxLength="120" Nullable="false" />
           <Property Name="idPrecio" Type="varchar" MaxLength="1" Nullable="false" />
         </EntityType>
-        <EntityType Name="empresa_medios">
-          <Key>
-            <PropertyRef Name="auto" />
-          </Key>
-          <Property Name="auto" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="codigo" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="nombre" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="estatus_cobro" Type="varchar" MaxLength="1" Nullable="false" />
-          <Property Name="estatus_pago" Type="varchar" MaxLength="1" Nullable="false" />
-        </EntityType>
         <EntityType Name="empresa_sucursal">
           <Key>
             <PropertyRef Name="auto" />
@@ -1603,7 +1593,6 @@ warning 6002: The table/view 'pita.ventas_detalle' does not have a primary key d
           <EntitySet Name="empresa_departamentos" EntityType="Self.empresa_departamentos" Schema="pita" store:Type="Tables" />
           <EntitySet Name="empresa_depositos" EntityType="Self.empresa_depositos" Schema="pita" store:Type="Tables" />
           <EntitySet Name="empresa_grupo" EntityType="Self.empresa_grupo" Schema="pita" store:Type="Tables" />
-          <EntitySet Name="empresa_medios" EntityType="Self.empresa_medios" Schema="pita" store:Type="Tables" />
           <EntitySet Name="empresa_sucursal" EntityType="Self.empresa_sucursal" Schema="pita" store:Type="Tables" />
           <EntitySet Name="empresa_tasas" EntityType="Self.empresa_tasas" Schema="pita" store:Type="Tables" />
           <EntitySet Name="empresa_transporte" EntityType="Self.empresa_transporte" Schema="pita" store:Type="Tables" />
@@ -2004,7 +1993,6 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
           <EntitySet Name="empresa_departamentos" EntityType="pitaModel.empresa_departamentos" />
           <EntitySet Name="empresa_depositos" EntityType="pitaModel.empresa_depositos" />
           <EntitySet Name="empresa_grupo" EntityType="pitaModel.empresa_grupo" />
-          <EntitySet Name="empresa_medios" EntityType="pitaModel.empresa_medios" />
           <EntitySet Name="empresa_sucursal" EntityType="pitaModel.empresa_sucursal" />
           <EntitySet Name="empresa_tasas" EntityType="pitaModel.empresa_tasas" />
           <EntitySet Name="empresa_transporte" EntityType="pitaModel.empresa_transporte" />
@@ -2257,16 +2245,6 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
           <Property Name="nombre" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="false" />
           <Property Name="idPrecio" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="empresa_sucursal" Relationship="pitaModel.empresa_sucursal_ibfk_1" FromRole="empresa_grupo" ToRole="empresa_sucursal" />
-        </EntityType>
-        <EntityType Name="empresa_medios">
-          <Key>
-            <PropertyRef Name="auto" />
-          </Key>
-          <Property Name="auto" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="codigo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="nombre" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="estatus_cobro" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="estatus_pago" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="empresa_sucursal">
           <Key>
@@ -3914,17 +3892,6 @@ FROM `ventas_detalle` AS `ventas_detalle`</DefiningQuery>
               <MappingFragment StoreEntitySet="empresa_grupo">
                 <ScalarProperty Name="idPrecio" ColumnName="idPrecio" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="auto" ColumnName="auto" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="empresa_medios">
-            <EntityTypeMapping TypeName="pitaModel.empresa_medios">
-              <MappingFragment StoreEntitySet="empresa_medios">
-                <ScalarProperty Name="estatus_pago" ColumnName="estatus_pago" />
-                <ScalarProperty Name="estatus_cobro" ColumnName="estatus_cobro" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="codigo" ColumnName="codigo" />
                 <ScalarProperty Name="auto" ColumnName="auto" />
               </MappingFragment>
             </EntityTypeMapping>

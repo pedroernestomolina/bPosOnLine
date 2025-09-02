@@ -85,9 +85,6 @@
     <Compile Include="empresa_grupo.cs">
       <DependentUpon>PosModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="empresa_medios.cs">
-      <DependentUpon>PosModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="empresa_sucursal.cs">
       <DependentUpon>PosModel.tt</DependentUpon>
     </Compile>
@@ -186,6 +183,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
     <EntityDeploy Include="PosModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>

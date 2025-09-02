@@ -83,5 +83,22 @@ namespace ServicePos.MyService
         {
             return ServiceProv.Configuracion_PorcentajeAumentarEnPreciosDeProductosNoAdministradoPorDivisa();
         }
+
+        //
+        public DtoLib.ResultadoEntidad<DtoLibPos.Moneda.Entidad.Ficha> 
+            Configuracion_MonedaLocal()
+        {
+            return ServiceProv.Configuracion_MonedaLocal();
+        }
+        public DtoLib.ResultadoEntidad<DtoLibPos.Moneda.Entidad.Ficha> 
+            Configuracion_MonedaReferencia()
+        {
+            return ServiceProv.Configuracion_MonedaReferencia();
+        }
+        public DtoLib.ResultadoEntidad<string> 
+            Configuracion_MedioPagoPorPagoBonoDivisa()
+        {
+            return ServiceProv.Configuracion_MedioPagoPorPagoBonoDivisa(); 
+        }
     }
 }

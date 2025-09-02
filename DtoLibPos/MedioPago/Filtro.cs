@@ -5,11 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace DtoLibPos.MedioPago.Lista
+namespace DtoLibPos.MedioPago
 {
-    
     public class Filtro
     {
     }
-
 }

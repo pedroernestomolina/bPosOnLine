@@ -503,5 +503,132 @@ namespace ProvPos
             //
             return result;
         }
+
+
+        //
+        public DtoLib.ResultadoEntidad<DtoLibPos.Moneda.Entidad.Ficha> 
+            Configuracion_MonedaLocal()
+        {
+            var result = new DtoLib.ResultadoEntidad<DtoLibPos.Moneda.Entidad.Ficha>();
+            //
+            try
+            {
+                using (var cnn = new PosEntities(_cnPos.ConnectionString))
+                {
+                    var _sql = "select usuario from sistema_configuracion where codigo='GLOBAL68'";
+                    var ent1 = cnn.Database.SqlQuery<string>(_sql).FirstOrDefault();
+                    if (ent1 == null)
+                    {
+                        throw new Exception("[ ID ] CONFIGURACION GLOBAL NO ENCONTRADO");
+                    }
+                    if (ent1.ToString().Trim() == "") 
+                    {
+                        throw new Exception("[ ID ] NO CONFIGURADO");
+                    }
+                    var idMoneda = -1;
+                    if (!int.TryParse(ent1.ToString().Trim(), out idMoneda)) 
+                    {
+                        throw new Exception("PROBLEMA DE CONVERSION [ ID ]");
+                    }
+                    _sql = @"select 
+                                id,
+                                codigo,
+                                nombre,
+                                simbolo
+                            from vl_currencies where id=@id";
+                    var p1 = new MySql.Data.MySqlClient.MySqlParameter("@id", idMoneda);
+                    var ent2 = cnn.Database.SqlQuery<DtoLibPos.Moneda.Entidad.Ficha>(_sql, p1).FirstOrDefault();
+                    if (ent2 == null) 
+                    {
+                        throw new Exception("[ ID MONEDA ] NO ENCONTRADO");
+                    }
+                    result.Entidad = ent2;
+                }
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+            //
+            return result;
+        }
+        public DtoLib.ResultadoEntidad<DtoLibPos.Moneda.Entidad.Ficha> 
+            Configuracion_MonedaReferencia()
+        {
+            var result = new DtoLib.ResultadoEntidad<DtoLibPos.Moneda.Entidad.Ficha>();
+            //
+            try
+            {
+                using (var cnn = new PosEntities(_cnPos.ConnectionString))
+                {
+                    var _sql = "select usuario from sistema_configuracion where codigo='GLOBAL70'";
+                    var ent1 = cnn.Database.SqlQuery<string>(_sql).FirstOrDefault();
+                    if (ent1 == null)
+                    {
+                        throw new Exception("[ ID ] CONFIGURACION GLOBAL NO ENCONTRADO");
+                    }
+                    if (ent1.ToString().Trim() == "")
+                    {
+                        throw new Exception("[ ID ] NO CONFIGURADO");
+                    }
+                    var idMoneda = -1;
+                    if (!int.TryParse(ent1.ToString().Trim(), out idMoneda))
+                    {
+                        throw new Exception("PROBLEMA DE CONVERSION [ ID ]");
+                    }
+                    _sql = @"select 
+                                id,
+                                codigo,
+                                nombre,
+                                simbolo
+                            from vl_currencies where id=@id";
+                    var p1 = new MySql.Data.MySqlClient.MySqlParameter("@id", idMoneda);
+                    var ent2 = cnn.Database.SqlQuery<DtoLibPos.Moneda.Entidad.Ficha>(_sql, p1).FirstOrDefault();
+                    if (ent2 == null)
+                    {
+                        throw new Exception("[ ID MONEDA ] NO ENCONTRADO");
+                    }
+                    result.Entidad = ent2;
+                }
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+            //
+            return result;
+        }
+        public DtoLib.ResultadoEntidad<string> 
+            Configuracion_MedioPagoPorPagoBonoDivisa()
+        {
+            var result = new DtoLib.ResultadoEntidad<string>();
+            //
+            try
+            {
+                using (var cnn = new PosEntities(_cnPos.ConnectionString))
+                {
+                    var _sql = "select usuario from sistema_configuracion where codigo='GLOBAL69'";
+                    var ent1 = cnn.Database.SqlQuery<string>(_sql).FirstOrDefault();
+                    if (ent1 == null)
+                    {
+                        throw new Exception("[ ID ] CONFIGURACION GLOBAL NO ENCONTRADO");
+                    }
+                    if (ent1.ToString().Trim() == "")
+                    {
+                        throw new Exception("[ ID ] NO CONFIGURADO");
+                    }
+                    result.Entidad = ent1.ToString();
+                }
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+            //
+            return result;
+        }
     }
 }

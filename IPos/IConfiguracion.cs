@@ -41,5 +41,13 @@ namespace IPos
         //
         DtoLib.ResultadoEntidad<string>
             Configuracion_PorcentajeAumentarEnPreciosDeProductosNoAdministradoPorDivisa();
+
+        //
+        DtoLib.ResultadoEntidad<DtoLibPos.Moneda.Entidad.Ficha>
+            Configuracion_MonedaLocal();
+        DtoLib.ResultadoEntidad<DtoLibPos.Moneda.Entidad.Ficha>
+            Configuracion_MonedaReferencia();
+        DtoLib.ResultadoEntidad<string>
+            Configuracion_MedioPagoPorPagoBonoDivisa();
     }
 }
