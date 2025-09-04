@@ -20,5 +20,6 @@ namespace DtoLibPos.MedioPago.Entidad
         public string simboloCurrencies { get; set; }
         public string aplicaLoteReferencia { get; set; }
         public string aplicaBonoPagoDivisa { get; set; }
+        public string aplicaIGTF { get; set; }
     }
 }

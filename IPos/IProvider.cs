@@ -18,7 +18,8 @@ namespace IPos
         IVentaZufu,
         IPedido,
         ISistema_SeriesFiscales,
-        IDocumento_Agregar
+        IDocumento_Agregar,
+        IMoneda
     {
         DtoLib.ResultadoEntidad<DateTime> 
             FechaServidor();

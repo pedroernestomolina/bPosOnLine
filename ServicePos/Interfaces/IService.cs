@@ -18,7 +18,8 @@ namespace ServicePos.Interfaces
         IProducto_ModoAdm,
         IVentaZufu,
         IPedido,
-        IDocumento_Agregar
+        IDocumento_Agregar,
+        IMoneda
     {
         DtoLib.ResultadoEntidad<DateTime> 
             FechaServidor();

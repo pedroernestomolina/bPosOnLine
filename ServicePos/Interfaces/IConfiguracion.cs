@@ -43,9 +43,9 @@ namespace ServicePos.Interfaces
             Configuracion_PorcentajeAumentarEnPreciosDeProductosNoAdministradoPorDivisa();
 
         //
-        DtoLib.ResultadoEntidad<DtoLibPos.Moneda.Entidad.Ficha>
+        DtoLib.ResultadoEntidad<string>
             Configuracion_MonedaLocal();
-        DtoLib.ResultadoEntidad<DtoLibPos.Moneda.Entidad.Ficha>
+        DtoLib.ResultadoEntidad<string>
             Configuracion_MonedaReferencia();
         DtoLib.ResultadoEntidad<string>
             Configuracion_MedioPagoPorPagoBonoDivisa();

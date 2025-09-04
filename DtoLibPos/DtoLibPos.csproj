@@ -50,6 +50,7 @@
     <Compile Include="Documento\Agregar\Factura\FichaPrecio.cs" />
     <Compile Include="Documento\Entidad\FichaPrecio.cs" />
     <Compile Include="Moneda\Entidad\Ficha.cs" />
+    <Compile Include="Moneda\Filtro.cs" />
     <Compile Include="MovCaja\Anular\Ficha.cs" />
     <Compile Include="MovCaja\Entidad\Detalle.cs" />
     <Compile Include="MovCaja\Entidad\Ficha.cs" />

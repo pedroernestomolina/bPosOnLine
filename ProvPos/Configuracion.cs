@@ -419,25 +419,29 @@ namespace ProvPos
             {
                 using (var cnn = new PosEntities(_cnPos.ConnectionString))
                 {
-                    var ent1 = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL64");
-                    if (ent1 == null)
+                    var _sql = @"select 
+                                    usuario 
+                                from sistema_configuracion 
+                                where codigo='GLOBAL64'";
+                    var entActivar = cnn.Database.SqlQuery<string>(_sql).FirstOrDefault();
+                    if (entActivar == null)
                     {
-                        result.Mensaje = "[ ID GLOBAL64] CONFIGURACION GLOBAL NO ENCONTRADO";
-                        result.Result = DtoLib.Enumerados.EnumResult.isError;
-                        return result;
+                        throw new Exception("[ ID GLOBAL64] CONFIGURACION GLOBAL NO ENCONTRADO");
                     }
                     //
-                    var ent2 = cnn.sistema_configuracion.FirstOrDefault(f => f.codigo == "GLOBAL65");
-                    if (ent2 == null)
+                    _sql = @"select 
+                                    usuario 
+                                from sistema_configuracion 
+                                where codigo='GLOBAL65'";
+                    var entTasa = cnn.Database.SqlQuery<string>(_sql).FirstOrDefault();
+                    if (entTasa == null)
                     {
-                        result.Mensaje = "[ ID GLOBAL65] CONFIGURACION GLOBAL NO ENCONTRADO";
-                        result.Result = DtoLib.Enumerados.EnumResult.isError;
-                        return result;
+                        throw new Exception("[ ID GLOBAL65] CONFIGURACION GLOBAL NO ENCONTRADO");
                     }
                     result.Entidad = new DtoLibPos.Configuracion.Configuracion_IGTF
                     {
-                        ActivarIGTF = ent1.usuario,
-                        TasaIGTF = ent2.usuario,
+                        ActivarIGTF = entActivar,
+                        TasaIGTF = entTasa,
                     };
                 }
             }
@@ -503,13 +507,12 @@ namespace ProvPos
             //
             return result;
         }
-
-
+        
         //
-        public DtoLib.ResultadoEntidad<DtoLibPos.Moneda.Entidad.Ficha> 
+        public DtoLib.ResultadoEntidad<string> 
             Configuracion_MonedaLocal()
         {
-            var result = new DtoLib.ResultadoEntidad<DtoLibPos.Moneda.Entidad.Ficha>();
+            var result = new DtoLib.ResultadoEntidad<string>();
             //
             try
             {
@@ -525,24 +528,7 @@ namespace ProvPos
                     {
                         throw new Exception("[ ID ] NO CONFIGURADO");
                     }
-                    var idMoneda = -1;
-                    if (!int.TryParse(ent1.ToString().Trim(), out idMoneda)) 
-                    {
-                        throw new Exception("PROBLEMA DE CONVERSION [ ID ]");
-                    }
-                    _sql = @"select 
-                                id,
-                                codigo,
-                                nombre,
-                                simbolo
-                            from vl_currencies where id=@id";
-                    var p1 = new MySql.Data.MySqlClient.MySqlParameter("@id", idMoneda);
-                    var ent2 = cnn.Database.SqlQuery<DtoLibPos.Moneda.Entidad.Ficha>(_sql, p1).FirstOrDefault();
-                    if (ent2 == null) 
-                    {
-                        throw new Exception("[ ID MONEDA ] NO ENCONTRADO");
-                    }
-                    result.Entidad = ent2;
+                    result.Entidad = ent1;
                 }
             }
             catch (Exception e)
@@ -553,10 +539,10 @@ namespace ProvPos
             //
             return result;
         }
-        public DtoLib.ResultadoEntidad<DtoLibPos.Moneda.Entidad.Ficha> 
+        public DtoLib.ResultadoEntidad<string> 
             Configuracion_MonedaReferencia()
         {
-            var result = new DtoLib.ResultadoEntidad<DtoLibPos.Moneda.Entidad.Ficha>();
+            var result = new DtoLib.ResultadoEntidad<string>();
             //
             try
             {
@@ -572,24 +558,7 @@ namespace ProvPos
                     {
                         throw new Exception("[ ID ] NO CONFIGURADO");
                     }
-                    var idMoneda = -1;
-                    if (!int.TryParse(ent1.ToString().Trim(), out idMoneda))
-                    {
-                        throw new Exception("PROBLEMA DE CONVERSION [ ID ]");
-                    }
-                    _sql = @"select 
-                                id,
-                                codigo,
-                                nombre,
-                                simbolo
-                            from vl_currencies where id=@id";
-                    var p1 = new MySql.Data.MySqlClient.MySqlParameter("@id", idMoneda);
-                    var ent2 = cnn.Database.SqlQuery<DtoLibPos.Moneda.Entidad.Ficha>(_sql, p1).FirstOrDefault();
-                    if (ent2 == null)
-                    {
-                        throw new Exception("[ ID MONEDA ] NO ENCONTRADO");
-                    }
-                    result.Entidad = ent2;
+                    result.Entidad = ent1;
                 }
             }
             catch (Exception e)

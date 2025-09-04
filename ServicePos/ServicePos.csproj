@@ -56,6 +56,7 @@
     <Compile Include="Interfaces\IFiscal.cs" />
     <Compile Include="Interfaces\IJornada.cs" />
     <Compile Include="Interfaces\IMedioPago.cs" />
+    <Compile Include="Interfaces\IMoneda.cs" />
     <Compile Include="Interfaces\IMovCaja.cs" />
     <Compile Include="Interfaces\IPedido.cs" />
     <Compile Include="Interfaces\IPendiente.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="MyService\Fiscal.cs" />
     <Compile Include="MyService\Jornada.cs" />
     <Compile Include="MyService\MedioPago.cs" />
+    <Compile Include="MyService\Moneda.cs" />
     <Compile Include="MyService\MovCaja.cs" />
     <Compile Include="MyService\Pedido.cs" />
     <Compile Include="MyService\Pendiente.cs" />

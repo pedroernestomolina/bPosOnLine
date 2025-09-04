@@ -78,6 +78,7 @@
     <Compile Include="Jornada.cs" />
     <Compile Include="MedioPago.cs" />
     <Compile Include="ModuloAdm.cs" />
+    <Compile Include="Moneda.cs" />
     <Compile Include="MovCaja.cs" />
     <Compile Include="Pedido_AnularBy_Id.cs" />
     <Compile Include="Pedido_GetFichaBy_Id.cs" />

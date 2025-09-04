@@ -57,6 +57,7 @@
     <Compile Include="IJornada.cs" />
     <Compile Include="IMedioPago.cs" />
     <Compile Include="IModuloAdm.cs" />
+    <Compile Include="IMoneda.cs" />
     <Compile Include="IMovCaja.cs" />
     <Compile Include="IPedido.cs" />
     <Compile Include="IPendiente.cs" />
