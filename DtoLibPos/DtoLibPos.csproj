@@ -47,6 +47,8 @@
     <Compile Include="Auditoria\Buscar\Ficha.cs" />
     <Compile Include="Auditoria\Entidad\Ficha.cs" />
     <Compile Include="Configuracion\Configuracion_IGTF.cs" />
+    <Compile Include="Documento\Agregar\BaseResumenDetalleFormaPago.cs" />
+    <Compile Include="Documento\Agregar\Factura\FichaPosResumenDetalleFormaPago.cs" />
     <Compile Include="Documento\Agregar\Factura\FichaPrecio.cs" />
     <Compile Include="Documento\Entidad\FichaPrecio.cs" />
     <Compile Include="Moneda\Entidad\Ficha.cs" />

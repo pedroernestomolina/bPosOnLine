@@ -143,6 +143,10 @@ namespace DtoLibPos.Documento.Agregar.Factura
         //
         public string estatusCredito { get; set; }
         //
+
+        public List<FichaPosResumenDetalleFormaPago> detalleFormaPago { get; set; }
+
+
         public Ficha()
         {
             idOperador = -1;
@@ -277,6 +281,9 @@ namespace DtoLibPos.Documento.Agregar.Factura
             estatusMostrarLibroVenta = "";
             //
             estatusCredito = "";
+
+            //
+            detalleFormaPago = new List<FichaPosResumenDetalleFormaPago>();
         }
     }
 }

@@ -633,6 +633,135 @@ namespace ProvPos
                         cn.SaveChanges();
 
 
+
+                        //
+                        // DETALLES DE LA FORMA DE PAGO
+                        //
+                        if (ficha.detalleFormaPago != null) 
+                        {
+                            var sqlDetFormaPago = @"INSERT INTO vl_p_resumen_detalleventa_formapago (
+                                                        id, 
+                                                        id_resumen, 
+                                                        auto_documento, 
+                                                        auto_mediopago, 
+                                                        codigo_mediopago, 
+                                                        desc_mediopago, 
+                                                        id_currencies, 
+                                                        codigo_currencies, 
+                                                        desc_currencies, 
+                                                        simbolo_currencies, 
+                                                        tasa_currencies,
+                                                        monto_ingresado, 
+                                                        lote_nro, 
+                                                        referencia_nro, 
+                                                        signo, 
+                                                        estatus_anulado, 
+                                                        monto_monedalocal, 
+                                                        monto_monedareferencia, 
+                                                        estatus_aplica_bonopagodivisa, 
+                                                        estatus_aplica_igtf)
+                                                VALUES (
+                                                        NULL, 
+                                                        @id_resumen, 
+                                                        @auto_documento, 
+                                                        @auto_mediopago, 
+                                                        @codigo_mediopago, 
+                                                        @desc_mediopago, 
+                                                        @id_currencies, 
+                                                        @codigo_currencies, 
+                                                        @desc_currencies, 
+                                                        @simbolo_currencies, 
+                                                        @tasa_currencies,
+                                                        @monto_ingresado, 
+                                                        @lote_nro, 
+                                                        @referencia_nro, 
+                                                        @signo, 
+                                                        @estatus_anulado, 
+                                                        @monto_monedalocal, 
+                                                        @monto_monedareferencia, 
+                                                        @estatus_aplica_bonopagodivisa, 
+                                                        @estatus_aplica_igtf)";
+                            var dtfp_01 = new MySql.Data.MySqlClient.MySqlParameter();
+                            var dtfp_02 = new MySql.Data.MySqlClient.MySqlParameter();
+                            var dtfp_03 = new MySql.Data.MySqlClient.MySqlParameter();
+                            var dtfp_04 = new MySql.Data.MySqlClient.MySqlParameter();
+                            var dtfp_05 = new MySql.Data.MySqlClient.MySqlParameter();
+                            var dtfp_06 = new MySql.Data.MySqlClient.MySqlParameter();
+                            var dtfp_07 = new MySql.Data.MySqlClient.MySqlParameter();
+                            var dtfp_08 = new MySql.Data.MySqlClient.MySqlParameter();
+                            var dtfp_09 = new MySql.Data.MySqlClient.MySqlParameter();
+                            var dtfp_10 = new MySql.Data.MySqlClient.MySqlParameter();
+                            var dtfp_11 = new MySql.Data.MySqlClient.MySqlParameter();
+                            var dtfp_12 = new MySql.Data.MySqlClient.MySqlParameter();
+                            var dtfp_13 = new MySql.Data.MySqlClient.MySqlParameter();
+                            var dtfp_14 = new MySql.Data.MySqlClient.MySqlParameter();
+                            var dtfp_15 = new MySql.Data.MySqlClient.MySqlParameter();
+                            var dtfp_16 = new MySql.Data.MySqlClient.MySqlParameter();
+                            var dtfp_17 = new MySql.Data.MySqlClient.MySqlParameter();
+                            var dtfp_18 = new MySql.Data.MySqlClient.MySqlParameter();
+                            var dtfp_19 = new MySql.Data.MySqlClient.MySqlParameter();
+                            foreach (var it in ficha.detalleFormaPago) 
+                            {
+                                dtfp_01.ParameterName="@id_resumen";
+                                dtfp_01.Value = it.idResumen;
+                                dtfp_02.ParameterName = "@auto_documento";
+                                dtfp_02.Value = autoVenta;
+                                dtfp_03.ParameterName = "@auto_mediopago";
+                                dtfp_03.Value = it.idMedioPago;
+                                dtfp_04.ParameterName = "@codigo_mediopago";
+                                dtfp_04.Value = it.codigoMedioPago;
+                                dtfp_05.ParameterName = "@desc_mediopago";
+                                dtfp_05.Value = it.descripcionMedioPago;
+                                //
+                                dtfp_06.ParameterName = "@id_currencies";
+                                dtfp_06.Value = it.idCurrencies;
+                                dtfp_07.ParameterName = "@codigo_currencies";
+                                dtfp_07.Value = it.codigoCurrencies;
+                                dtfp_08.ParameterName = "@desc_currencies";
+                                dtfp_08.Value = it.descripcionCurrencies;
+                                dtfp_09.ParameterName = "@simbolo_currencies";
+                                dtfp_09.Value = it.simboloCurrencies;
+                                dtfp_10.ParameterName = "@tasa_currencies";
+                                dtfp_10.Value = it.tasaCurrencies;
+                                //
+                                dtfp_11.ParameterName="@monto_ingresado";
+                                dtfp_11.Value = it.montoIngresao;
+                                dtfp_12.ParameterName = "@lote_nro";
+                                dtfp_12.Value = it.loteNro;
+                                dtfp_13.ParameterName = "@referencia_nro";
+                                dtfp_13.Value = it.referenciaNro;
+                                dtfp_14.ParameterName = "@signo";
+                                dtfp_14.Value = it.signo;
+                                dtfp_15.ParameterName = "@estatus_anulado";
+                                dtfp_15.Value = it.estatusAnulado;
+                                //
+                                dtfp_16.ParameterName = "@monto_monedalocal";
+                                dtfp_16.Value = it.montoIngresoMonedaLocal;
+                                dtfp_17.ParameterName = "@monto_monedareferencia";
+                                dtfp_17.Value = it.montoIngresoMonedaReferencia;
+                                dtfp_18.ParameterName = "@estatus_aplica_bonopagodivisa";
+                                dtfp_18.Value = it.estatusAplicaBonoPorPagoDivisa;
+                                dtfp_19.ParameterName = "@estatus_aplica_igtf";
+                                dtfp_19.Value = it.estatusAplicaIGTF;
+                                //
+                                var rt_dtfp = cn.Database.ExecuteSqlCommand(
+                                    sqlDetFormaPago,
+                                    dtfp_01, dtfp_02, dtfp_03, dtfp_04, dtfp_05,
+                                    dtfp_06, dtfp_07, dtfp_08, dtfp_09, dtfp_10,
+                                    dtfp_11, dtfp_12, dtfp_13, dtfp_14, dtfp_15,
+                                    dtfp_16, dtfp_17, dtfp_18, dtfp_19);
+                                if (rt_dtfp  == 0)
+                                {
+                                    throw new Exception("PROBLEMA AL INSERTAR RESUMEN DETALLE FORMA DE PAGO");
+                                }
+                            }
+                        }
+                        //
+                        //
+                        //
+
+
+
                         var sqlVer1 = @"INSERT INTO p_verificador (
                             id, 
                             autoDocumento, 

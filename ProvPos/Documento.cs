@@ -1123,6 +1123,40 @@ namespace ProvPos
                             return result;
                         }
 
+
+                        //
+                        // RESUMEN DETALLE FORMA DE PAGO 
+                        //
+                        var sqlDetFormaPago = @"select 
+                                                    count(*) as cnt
+                                                from vl_p_resumen_detalleventa_formapago 
+                                                where id_resumen=@idResumen and auto_documento=@idDocumento";
+                        var dt_fp01 = new MySql.Data.MySqlClient.MySqlParameter("@idDocumento", ficha.autoDocumento);
+                        var dt_fp02 = new MySql.Data.MySqlClient.MySqlParameter("@idResumen", ficha.resumen.idResumen);
+                        var cnt_DtFP = cn.Database.SqlQuery<int>(sqlDetFormaPago, dt_fp01, dt_fp02).FirstOrDefault();
+                        if (cnt_DtFP!=null)
+                        {
+                            if (cnt_DtFP>0)
+                            {
+                                dt_fp01 = new MySql.Data.MySqlClient.MySqlParameter("@idDocumento", ficha.autoDocumento);
+                                dt_fp02 = new MySql.Data.MySqlClient.MySqlParameter("@idResumen", ficha.resumen.idResumen);
+                                sqlDetFormaPago = @"update vl_p_resumen_detalleventa_formapago set 
+                                                    estatus_anulado='1' 
+                                                where id_resumen=@idResumen and auto_documento=@idDocumento";
+                                var rt_dtfp = cn.Database.ExecuteSqlCommand(sqlDetFormaPago, dt_fp01, dt_fp02);
+                                if (rt_dtfp != cnt_DtFP)
+                                {
+                                    result.Mensaje = "PROBLEMA AL ACTUALIZAR ESTATUS DETALLE FORMA DE PAGO";
+                                    result.Result = DtoLib.Enumerados.EnumResult.isError;
+                                    return result;
+                                }
+                            }
+                        }
+                        //
+                        //
+                        //
+
+
                         //CXC
                         var autoDocCxC = new MySql.Data.MySqlClient.MySqlParameter();
                         autoDocCxC.ParameterName = "@autoDocCxC";
