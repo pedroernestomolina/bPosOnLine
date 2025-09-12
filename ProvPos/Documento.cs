@@ -1125,6 +1125,38 @@ namespace ProvPos
 
 
                         //
+                        //
+                        //
+                        var sqlResumenGeneral = @"select 
+                                                    count(*) as cnt
+                                                from vl_p_resumen
+                                                where id_resumen=@idResumen and auto_documento=@idDocumento";
+                        var rg_01 = new MySql.Data.MySqlClient.MySqlParameter("@idDocumento", ficha.autoDocumento);
+                        var rg_02 = new MySql.Data.MySqlClient.MySqlParameter("@idResumen", ficha.resumen.idResumen);
+                        var cnt_rg = cn.Database.SqlQuery<int>(sqlResumenGeneral, rg_01, rg_02).FirstOrDefault();
+                        if (cnt_rg != null)
+                        {
+                            if (cnt_rg > 0)
+                            {
+                                rg_01 = new MySql.Data.MySqlClient.MySqlParameter("@idDocumento", ficha.autoDocumento);
+                                rg_02 = new MySql.Data.MySqlClient.MySqlParameter("@idResumen", ficha.resumen.idResumen);
+                                sqlResumenGeneral = @"update vl_p_resumen set 
+                                                          estatus_anulado='1' 
+                                                    where id_resumen=@idResumen and auto_documento=@idDocumento";
+                                var rt_rg = cn.Database.ExecuteSqlCommand(sqlResumenGeneral, rg_01, rg_02);
+                                if (rt_rg != cnt_rg)
+                                {
+                                    result.Mensaje = "PROBLEMA AL ACTUALIZAR ESTATUS RESUMEN GENERAL";
+                                    result.Result = DtoLib.Enumerados.EnumResult.isError;
+                                    return result;
+                                }
+                            }
+                        }
+                        //
+                        //
+                        //
+
+                        //
                         // RESUMEN DETALLE FORMA DE PAGO 
                         //
                         var sqlDetFormaPago = @"select 

@@ -144,7 +144,11 @@ namespace DtoLibPos.Documento.Agregar.Factura
         public string estatusCredito { get; set; }
         //
 
+
+        //
         public List<FichaPosResumenDetalleFormaPago> detalleFormaPago { get; set; }
+        public  FichaPosResumenGeneral resumenGeneral { get; set; }
+        //
 
 
         public Ficha()
@@ -284,6 +288,7 @@ namespace DtoLibPos.Documento.Agregar.Factura
 
             //
             detalleFormaPago = new List<FichaPosResumenDetalleFormaPago>();
+            resumenGeneral = new FichaPosResumenGeneral();
         }
     }
 }

@@ -27,5 +27,6 @@ namespace DtoLibPos.Documento.Agregar
         public decimal montoIngresoMonedaReferencia { get; set; }
         public string estatusAplicaBonoPorPagoDivisa { get; set; }
         public string estatusAplicaIGTF { get; set; }
+        public decimal factorCambio { get; set; }
     }
 }

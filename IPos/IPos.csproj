@@ -49,6 +49,7 @@
     <Compile Include="IConcepto.cs" />
     <Compile Include="IConfiguracion.cs" />
     <Compile Include="IConfiguracionAdm.cs" />
+    <Compile Include="ICuadreCierre.cs" />
     <Compile Include="IDeposito.cs" />
     <Compile Include="IDocumento.cs" />
     <Compile Include="IDocumentoAdm.cs" />

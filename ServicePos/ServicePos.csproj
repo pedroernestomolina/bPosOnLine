@@ -49,6 +49,7 @@
     <Compile Include="Interfaces\IConcepto.cs" />
     <Compile Include="Interfaces\IConfiguracion.cs" />
     <Compile Include="Interfaces\IConfiguracionAdm.cs" />
+    <Compile Include="Interfaces\ICuadreCierre.cs" />
     <Compile Include="Interfaces\IDeposito.cs" />
     <Compile Include="Interfaces\IDocumento.cs" />
     <Compile Include="Interfaces\IDocumentoAdm.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="MyService\Concepto.cs" />
     <Compile Include="MyService\Configuracion.cs" />
     <Compile Include="MyService\ConfiguracionAdm.cs" />
+    <Compile Include="MyService\CuadreCierre.cs" />
     <Compile Include="MyService\Deposito.cs" />
     <Compile Include="MyService\Documento.cs" />
     <Compile Include="MyService\DocumentoAdm.cs" />

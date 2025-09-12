@@ -635,6 +635,103 @@ namespace ProvPos
 
 
                         //
+                        // RESUMEN GENERAL 
+                        //
+                        if (ficha.resumenGeneral != null)
+                        {
+                            var sqlResumenGeneral = @"INSERT INTO vl_p_resumen (
+                                                        id, 
+                                                        id_resumen, 
+                                                        auto_documento, 
+                                                        codigo_documento, 
+                                                        nombre_documento, 
+                                                        signo_documento, 
+                                                        variante_documento, 
+                                                        estatus_credito, 
+                                                        monto_mon_local, 
+                                                        monto_mon_referencia, 
+                                                        monto_pend_mon_local, 
+                                                        monto_pend_mon_referencia, 
+                                                        monto_recibido_mon_local, 
+                                                        monto_recibido_mon_referencia, 
+                                                        cambio_vuelto_mon_local, 
+                                                        cambio_vuelto_mon_referencia, 
+                                                        vuelto_dado_efectivo, 
+                                                        vuelto_dado_divisa, 
+                                                        vuelto_dado_pagomovil, 
+                                                        cnt_divisa_entregada, 
+                                                        estatus_anulado,
+                                                        factor_cambio, 
+                                                        bono_pagodivisa_mon_local,
+                                                        bono_pagodivisa_mon_referencia,
+                                                        igtf_mon_local) 
+                                                VALUES (NULL,
+                                                        @id_resumen, 
+                                                        @auto_documento, 
+                                                        @codigo_documento, 
+                                                        @nombre_documento, 
+                                                        @signo_documento, 
+                                                        @variante_documento, 
+                                                        @estatus_credito, 
+                                                        @monto_mon_local, 
+                                                        @monto_mon_referencia, 
+                                                        @monto_pend_mon_local, 
+                                                        @monto_pend_mon_referencia, 
+                                                        @monto_recibido_mon_local, 
+                                                        @monto_recibido_mon_referencia, 
+                                                        @cambio_vuelto_mon_local, 
+                                                        @cambio_vuelto_mon_referencia, 
+                                                        @vuelto_dado_efectivo, 
+                                                        @vuelto_dado_divisa, 
+                                                        @vuelto_dado_pagomovil, 
+                                                        @cnt_divisa_entregada, 
+                                                        @estatus_anulado,
+                                                        @factor_cambio,
+                                                        @bono_pagodivisa_mon_local,
+                                                        @bono_pagodivisa_mon_referencia,
+                                                        @igtf_mon_local)";
+                            var rg= ficha.resumenGeneral;
+                            var rg_01 = new MySql.Data.MySqlClient.MySqlParameter("@id_resumen", rg.idResumen);
+                            var rg_02 = new MySql.Data.MySqlClient.MySqlParameter("@auto_documento", autoVenta);
+                            var rg_03 = new MySql.Data.MySqlClient.MySqlParameter("@codigo_documento", rg.codigoDocumento);
+                            var rg_04 = new MySql.Data.MySqlClient.MySqlParameter("@nombre_documento", rg.nombreDocumento);
+                            var rg_05 = new MySql.Data.MySqlClient.MySqlParameter("@signo_documento", rg.signoDocumento) ;
+                            var rg_06 = new MySql.Data.MySqlClient.MySqlParameter("@variante_documento", rg.varianteDocumento);
+                            var rg_07 = new MySql.Data.MySqlClient.MySqlParameter("@estatus_credito", rg.estatusCredito);
+                            var rg_08 = new MySql.Data.MySqlClient.MySqlParameter("@monto_mon_local", rg.montoMonLocal);
+                            var rg_09 = new MySql.Data.MySqlClient.MySqlParameter("@monto_mon_referencia", rg.montoMonReferencia);
+                            var rg_10 = new MySql.Data.MySqlClient.MySqlParameter("@monto_pend_mon_local", rg.montoPendMonLocal);
+                            //
+                            var rg_11 = new MySql.Data.MySqlClient.MySqlParameter("@monto_pend_mon_referencia", rg.montoPendMonReferencia);
+                            var rg_12 = new MySql.Data.MySqlClient.MySqlParameter("@monto_recibido_mon_local", rg.montoRecibidoMonLocal);
+                            var rg_13 = new MySql.Data.MySqlClient.MySqlParameter("@monto_recibido_mon_referencia", rg.montoRecibidoMonReferencia);
+                            var rg_14 = new MySql.Data.MySqlClient.MySqlParameter("@cambio_vuelto_mon_local", rg.cambioVueltoMonLocal);
+                            var rg_15 = new MySql.Data.MySqlClient.MySqlParameter("@cambio_vuelto_mon_referencia", rg.cambioVueltoMonReferencia);
+                            var rg_16 = new MySql.Data.MySqlClient.MySqlParameter("@vuelto_dado_efectivo", rg.vueltoDadoPagoEfectivo);
+                            var rg_17 = new MySql.Data.MySqlClient.MySqlParameter("@vuelto_dado_divisa", rg.vueltoDadoPagoDivisa);
+                            var rg_18 = new MySql.Data.MySqlClient.MySqlParameter("@vuelto_dado_pagomovil", rg.vueltoDadoPagoMovil);
+                            var rg_19 = new MySql.Data.MySqlClient.MySqlParameter("@cnt_divisa_entregada", rg.cntDivisaEntregada);
+                            var rg_20 = new MySql.Data.MySqlClient.MySqlParameter("@estatus_anulado",rg.estatusAnulado);
+                            //
+                            var rg_21 = new MySql.Data.MySqlClient.MySqlParameter("@factor_cambio", rg.factorCambio);
+                            var rg_22 = new MySql.Data.MySqlClient.MySqlParameter("@bono_pagodivisa_mon_local", rg.bonoPagoDivisaMonLocal);
+                            var rg_23 = new MySql.Data.MySqlClient.MySqlParameter("@bono_pagodivisa_mon_referencia", rg.bonoPagoDivisaMonReferencia);
+                            var rg_24 = new MySql.Data.MySqlClient.MySqlParameter("@igtf_mon_local", rg.igtfMonLocal);
+                            //
+                            var rt_rg = cn.Database.ExecuteSqlCommand(
+                                sqlResumenGeneral,
+                                rg_01, rg_02, rg_03, rg_04, rg_05,
+                                rg_06, rg_07, rg_08, rg_09, rg_10,
+                                rg_11, rg_12, rg_13, rg_14, rg_15,
+                                rg_16, rg_17, rg_18, rg_19, rg_20,
+                                rg_21, rg_22, rg_23, rg_24);
+                            if (rt_rg == 0)
+                            {
+                                throw new Exception("PROBLEMA AL INSERTAR RESUMEN GENERAL ");
+                            }
+                            cn.SaveChanges();
+                        }
+                        //
                         // DETALLES DE LA FORMA DE PAGO
                         //
                         if (ficha.detalleFormaPago != null) 
@@ -659,7 +756,8 @@ namespace ProvPos
                                                         monto_monedalocal, 
                                                         monto_monedareferencia, 
                                                         estatus_aplica_bonopagodivisa, 
-                                                        estatus_aplica_igtf)
+                                                        estatus_aplica_igtf,
+                                                        factor_cambio)
                                                 VALUES (
                                                         NULL, 
                                                         @id_resumen, 
@@ -680,7 +778,8 @@ namespace ProvPos
                                                         @monto_monedalocal, 
                                                         @monto_monedareferencia, 
                                                         @estatus_aplica_bonopagodivisa, 
-                                                        @estatus_aplica_igtf)";
+                                                        @estatus_aplica_igtf,
+                                                        @factor_cambio)";
                             var dtfp_01 = new MySql.Data.MySqlClient.MySqlParameter();
                             var dtfp_02 = new MySql.Data.MySqlClient.MySqlParameter();
                             var dtfp_03 = new MySql.Data.MySqlClient.MySqlParameter();
@@ -691,6 +790,7 @@ namespace ProvPos
                             var dtfp_08 = new MySql.Data.MySqlClient.MySqlParameter();
                             var dtfp_09 = new MySql.Data.MySqlClient.MySqlParameter();
                             var dtfp_10 = new MySql.Data.MySqlClient.MySqlParameter();
+                            //
                             var dtfp_11 = new MySql.Data.MySqlClient.MySqlParameter();
                             var dtfp_12 = new MySql.Data.MySqlClient.MySqlParameter();
                             var dtfp_13 = new MySql.Data.MySqlClient.MySqlParameter();
@@ -700,6 +800,7 @@ namespace ProvPos
                             var dtfp_17 = new MySql.Data.MySqlClient.MySqlParameter();
                             var dtfp_18 = new MySql.Data.MySqlClient.MySqlParameter();
                             var dtfp_19 = new MySql.Data.MySqlClient.MySqlParameter();
+                            var dtfp_20 = new MySql.Data.MySqlClient.MySqlParameter();
                             foreach (var it in ficha.detalleFormaPago) 
                             {
                                 dtfp_01.ParameterName="@id_resumen";
@@ -743,18 +844,21 @@ namespace ProvPos
                                 dtfp_18.Value = it.estatusAplicaBonoPorPagoDivisa;
                                 dtfp_19.ParameterName = "@estatus_aplica_igtf";
                                 dtfp_19.Value = it.estatusAplicaIGTF;
+                                dtfp_20.ParameterName = "@factor_cambio";
+                                dtfp_20.Value = it.factorCambio;
                                 //
                                 var rt_dtfp = cn.Database.ExecuteSqlCommand(
                                     sqlDetFormaPago,
                                     dtfp_01, dtfp_02, dtfp_03, dtfp_04, dtfp_05,
                                     dtfp_06, dtfp_07, dtfp_08, dtfp_09, dtfp_10,
                                     dtfp_11, dtfp_12, dtfp_13, dtfp_14, dtfp_15,
-                                    dtfp_16, dtfp_17, dtfp_18, dtfp_19);
+                                    dtfp_16, dtfp_17, dtfp_18, dtfp_19, dtfp_20);
                                 if (rt_dtfp  == 0)
                                 {
                                     throw new Exception("PROBLEMA AL INSERTAR RESUMEN DETALLE FORMA DE PAGO");
                                 }
                             }
+                            cn.SaveChanges();
                         }
                         //
                         //
