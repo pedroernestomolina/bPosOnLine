@@ -20,6 +20,7 @@ namespace ProvPos
                 using (var cnn = new PosEntities(_cnPos.ConnectionString))
                 {
                     var sql_1 = @"select 
+                                        a.idMedPago,
                                         a.codMedPago, 
                                         a.descMedPago, 
                                         a.simboloMon, 
@@ -29,6 +30,7 @@ namespace ProvPos
                                         a.codigoMon
                                     from (
                                             SELECT 
+                                                auto_mediopago as idMedPago,
     	                                        codigo_mediopago as codMedPago,
                                                 desc_mediopago as descMedPago,
                                                 simbolo_currencies as simboloMon,
@@ -41,6 +43,7 @@ namespace ProvPos
                                                 id_resumen=@idResumen AND
                                                 estatus_anulado='0'
                                             group by 
+                                                auto_mediopago,
                                                 codigo_mediopago, 
                                                 desc_mediopago, 
                                                 simbolo_currencies, 
@@ -48,12 +51,14 @@ namespace ProvPos
                                                 factor_cambio
                                         ) as a
                                     group by 
+                                        idMedPago,
                                         codMedPago, 
                                         descMedPago, 
                                         simboloMon, 
                                         codigoMon";
                     var sql = sql_1 ;
-                    var lst = cnn.Database.SqlQuery<DtoLibPos.CuadreCierre.CuadreResumen.MetodoPago>(sql).ToList();
+                    var p1 = new MySql.Data.MySqlClient.MySqlParameter("@idResumen", idResumen);
+                    var lst = cnn.Database.SqlQuery<DtoLibPos.CuadreCierre.CuadreResumen.MetodoPago>(sql, p1).ToList();
                     rt.Lista = lst;
                 }
             }
@@ -96,7 +101,8 @@ namespace ProvPos
                                         estatus_credito, 
                                         estatus_anulado";
                     var sql = sql_1;
-                    var lst = cnn.Database.SqlQuery<DtoLibPos.CuadreCierre.CuadreResumen.Documento>(sql).ToList();
+                    var p1 = new MySql.Data.MySqlClient.MySqlParameter("@idResumen", idResumen);
+                    var lst = cnn.Database.SqlQuery<DtoLibPos.CuadreCierre.CuadreResumen.Documento>(sql, p1).ToList();
                     rt.Lista = lst;
                 }
             }
@@ -139,7 +145,8 @@ namespace ProvPos
                                         id_resumen=@idResumen
                                         and estatus_anulado='0'";
                     var sql = sql_1;
-                    var ent = cnn.Database.SqlQuery<DtoLibPos.CuadreCierre.CuadreResumen.Totales>(sql).FirstOrDefault();
+                    var p1 = new MySql.Data.MySqlClient.MySqlParameter("@idResumen", idResumen);
+                    var ent = cnn.Database.SqlQuery<DtoLibPos.CuadreCierre.CuadreResumen.Totales>(sql, p1).FirstOrDefault();
                     rt.Entidad = ent;
                 }
             }

@@ -9,6 +9,7 @@ namespace DtoLibPos.CuadreCierre.CuadreResumen
 {
     public class MetodoPago
     {
+        public string idMedPago { get; set; }
         public string codMedPago { get; set; }
         public string descMedPago { get; set; }
         public string simboloMon { get; set; }
