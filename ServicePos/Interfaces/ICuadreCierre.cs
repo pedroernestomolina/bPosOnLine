@@ -10,10 +10,12 @@ namespace ServicePos.Interfaces
     public interface ICuadreCierre
     {
         DtoLib.ResultadoLista<DtoLibPos.CuadreCierre.CuadreResumen.MetodoPago>
-           get_CuadreResumenMetodoPago_byId(int idResumen);
+           CuadreCierre_Get_CuadreResumenMetodoPago_byId(int idResumen);
         DtoLib.ResultadoLista<DtoLibPos.CuadreCierre.CuadreResumen.Documento>
-           get_CuadreResumenDocumento_byId(int idResumen);
+           CuadreCierre_Get_CuadreResumenDocumento_byId(int idResumen);
         DtoLib.ResultadoEntidad<DtoLibPos.CuadreCierre.CuadreResumen.Totales>
-           get_CuadreResumenTotalesd_byId(int idResumen);
+           CuadreCierre_Get_CuadreResumenTotalesd_byId(int idResumen);
+        DtoLib.ResultadoLista<DtoLibPos.CuadreCierre.Reportes.PagoDetalle.Ficha>
+           CuadreCierre_Reporte_PagoDetalle(int idResumen);
     }
 }
