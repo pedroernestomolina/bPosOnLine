@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 
 namespace ServicePos.MyService
 {
-    
-
     public partial class Service : IService
     {
         public DtoLib.ResultadoAuto 

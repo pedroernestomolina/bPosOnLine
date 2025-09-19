@@ -15,7 +15,16 @@ namespace ServicePos.Interfaces
            CuadreCierre_Get_CuadreResumenDocumento_byId(int idResumen);
         DtoLib.ResultadoEntidad<DtoLibPos.CuadreCierre.CuadreResumen.Totales>
            CuadreCierre_Get_CuadreResumenTotalesd_byId(int idResumen);
+        //
         DtoLib.ResultadoLista<DtoLibPos.CuadreCierre.Reportes.PagoDetalle.Ficha>
            CuadreCierre_Reporte_PagoDetalle(int idResumen);
+        DtoLib.ResultadoEntidad<DtoLibPos.CuadreCierre.Reportes.PagoResumen.Ficha>
+           CuadreCierre_Reporte_PagoResumen(int idResumen);
+        DtoLib.ResultadoLista<DtoLibPos.CuadreCierre.Reportes.VentaCredito.Ficha>
+           CuadreCierre_Reporte_VentaCredito(int idResumen);
+        DtoLib.ResultadoLista<DtoLibPos.CuadreCierre.Reportes.CambiosVuelto.Ficha>
+           CuadreCierre_Reporte_CambiosVueltoEntregado(int idResumen);
+        DtoLib.ResultadoLista<DtoLibPos.CuadreCierre.Reportes.PagoMovil.Ficha>
+           CuadreCierre_Reporte_PagoMovil(int idResumen);
     }
 }

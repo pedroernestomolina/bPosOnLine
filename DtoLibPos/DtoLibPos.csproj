@@ -50,7 +50,13 @@
     <Compile Include="CuadreCierre\CuadreResumen\Documento.cs" />
     <Compile Include="CuadreCierre\CuadreResumen\MetodoPago.cs" />
     <Compile Include="CuadreCierre\CuadreResumen\Totales.cs" />
+    <Compile Include="CuadreCierre\Reportes\CambiosVuelto\Ficha.cs" />
     <Compile Include="CuadreCierre\Reportes\PagoDetalle\Ficha.cs" />
+    <Compile Include="CuadreCierre\Reportes\PagoMovil\Ficha.cs" />
+    <Compile Include="CuadreCierre\Reportes\PagoResumen\Credito.cs" />
+    <Compile Include="CuadreCierre\Reportes\PagoResumen\Ficha.cs" />
+    <Compile Include="CuadreCierre\Reportes\PagoResumen\MetodoPago.cs" />
+    <Compile Include="CuadreCierre\Reportes\VentaCredito\Ficha.cs" />
     <Compile Include="Documento\Agregar\BaseResumenDetalleFormaPago.cs" />
     <Compile Include="Documento\Agregar\BaseResumenGeneral.cs" />
     <Compile Include="Documento\Agregar\Factura\FichaPosResumenDetalleFormaPago.cs" />

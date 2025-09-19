@@ -13,8 +13,8 @@ namespace DtoLibPos.CuadreCierre.Reportes.PagoDetalle
         public string estatusAnulado { get; set; }
         public decimal cambioVueltoMonLocal { get; set; }
         public decimal cambioVueltoMonReferencia{ get; set; }
-        public decimal montoRecibidoMonLocal { get; set; }
-        public decimal montoRecibidoMonReferencia { get; set; }
+        public decimal totalMontoRecibidoMonLocal { get; set; }
+        public decimal totalMontoRecibidoMonReferencia { get; set; }
         public decimal importeMonLocal { get; set; }
         public decimal importeMonReferencia { get; set; }
         public string hora { get; set; }
@@ -37,5 +37,6 @@ namespace DtoLibPos.CuadreCierre.Reportes.PagoDetalle
         public string referenciaNro { get; set; }
         public decimal montoIngresadoMonLocal { get; set; }
         public decimal montoIngresadoMonReferencia { get; set; }
+        public string siglasDoc { get; set; }
     }
 }
