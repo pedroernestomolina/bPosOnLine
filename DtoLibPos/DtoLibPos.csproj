@@ -62,6 +62,9 @@
     <Compile Include="Documento\Agregar\Factura\FichaPosResumenDetalleFormaPago.cs" />
     <Compile Include="Documento\Agregar\Factura\FichaPosResumenGeneral.cs" />
     <Compile Include="Documento\Agregar\Factura\FichaPrecio.cs" />
+    <Compile Include="Documento\Agregar\NotaCredito\FichaPosResumenDetalleFormaPago.cs" />
+    <Compile Include="Documento\Agregar\NotaCredito\FichaPosResumenGeneral.cs" />
+    <Compile Include="Documento\Entidad\FichaCuerpo.cs" />
     <Compile Include="Documento\Entidad\FichaPrecio.cs" />
     <Compile Include="Moneda\Entidad\Ficha.cs" />
     <Compile Include="Moneda\Filtro.cs" />

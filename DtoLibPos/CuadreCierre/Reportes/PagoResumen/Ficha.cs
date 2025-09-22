@@ -9,7 +9,7 @@ namespace DtoLibPos.CuadreCierre.Reportes.PagoResumen
 {
     public class Ficha
     {
-        public decimal montoVueltoMonLocal { get; set; }
+        public decimal? montoVueltoMonLocal { get; set; }
         public Credito credito { get; set; }
         public List<MetodoPago> ListaMetodosPago { get; set; }
     }

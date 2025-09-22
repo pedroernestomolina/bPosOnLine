@@ -9,6 +9,7 @@ namespace DtoLibPos.Documento.Entidad
 {
     public class Ficha
     {
+        /*
         public string Auto { get; set; }
         public string DocumentoNro { get; set; }
         public DateTime Fecha { get; set; }
@@ -257,5 +258,17 @@ namespace DtoLibPos.Documento.Entidad
         public decimal BonoPorPagoDivisa { get; set; }
         public decimal MontoBonoPorPagoDivisa { get; set; }
         public decimal CntDivisaAplicaBonoPorPagoDivisa { get; set; }
+    }*/
+        public FichaCuerpo cuerpo;
+        public List<FichaItem> items;
+        public List<FichaMedida> medidas;
+        public List<FichaPrecio> precios { get; set; }
+        public Ficha()
+        {
+            cuerpo = new FichaCuerpo();
+            items = new List<FichaItem>();
+            medidas = new List<FichaMedida>();
+            precios = new List<FichaPrecio>();
+        }
     }
 }

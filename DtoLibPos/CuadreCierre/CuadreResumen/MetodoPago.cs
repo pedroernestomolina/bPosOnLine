@@ -14,7 +14,7 @@ namespace DtoLibPos.CuadreCierre.CuadreResumen
         public string descMedPago { get; set; }
         public string simboloMon { get; set; }
         public decimal ingreso { get; set; }
-        public decimal factor { get; set; }
+        public decimal? factor { get; set; }
         public decimal montoMonLocal { get; set; }
         public string codigoMon { get; set; }
     }

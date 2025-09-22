@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace DtoLibPos.Documento.Entidad
 {
-    
     public class FichaItem
     {
-        
         public string AutoProducto { get; set; }
         public string Codigo { get; set; }
         public string Nombre  { get; set; }
@@ -76,8 +74,10 @@ namespace DtoLibPos.Documento.Entidad
         public string AutoVendedor { get; set; }
         public string CierreFtp { get; set; }
         public string EstatusPesado { get; set; }
-
-
+        //
+        public string estatusDivisaPrd { get; set; }
+        public string estatusAplicaPorcAumento { get; set; }
+        //
         public FichaItem()
         {
             AutoProducto = "";
@@ -145,8 +145,9 @@ namespace DtoLibPos.Documento.Entidad
             AutoVendedor = "";
             CierreFtp = "";
             EstatusPesado = "";
+            //
+            estatusDivisaPrd = "";
+            estatusAplicaPorcAumento = "";
         }
-
     }
-
 }

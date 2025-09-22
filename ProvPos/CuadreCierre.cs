@@ -238,8 +238,8 @@ namespace ProvPos
                                         codigo_currencies as codigoMoneda,
                                         simbolo_currencies as simboloMoneda,
                                         tasa_currencies as tasaRespectoMonReferencia,
-                                        sum(monto_ingresado) as recibido,
-                                        sum(monto_monedalocal) as montoRecibidoMonLocal,
+                                        sum(monto_ingresado*signo) as recibido,
+                                        sum(monto_monedalocal*signo) as montoRecibidoMonLocal,
                                         count(*) as cntMov,
                                         factor_cambio as tasaReferencia
                                     from 
@@ -269,7 +269,7 @@ namespace ProvPos
                                 where id_resumen=@idResumen and estatus_anulado='0'";
                     p1 = new MySql.Data.MySqlClient.MySqlParameter("@idResumen", idResumen);
                     sql = sql_1;
-                    var _montoVuelto= cnn.Database.SqlQuery<decimal>(sql, p1).FirstOrDefault();
+                    var _montoVuelto= cnn.Database.SqlQuery<decimal?>(sql, p1).FirstOrDefault();
                     //
                     rt.Entidad = new DtoLibPos.CuadreCierre.Reportes.PagoResumen.Ficha()
                     {
@@ -304,13 +304,18 @@ namespace ProvPos
                                         r.monto_mon_local as importeMonLocal,
                                         r.monto_mon_referencia as importeMonReferencia,
                                         r.monto_pend_mon_referencia as montoPendCxcMonReferencia,
-                                        v.monto_bono_en_divisa_por_pago_divisa as bonoPagoDivisaMonReferencia
+                                        v.monto_bono_en_divisa_por_pago_divisa as bonoPagoDivisaMonReferencia,
+                                        r.signo_documento as signoDoc,
+                                        doc.siglas as siglasDoc,
+                                        r.estatus_anulado as estatusAnulado
                                     FROM 
                                         vl_p_resumen as r
                                     join 
                                         ventas as v on v.auto=r.auto_documento
+                                    join 
+                                        sistema_documentos as doc on doc.codigo=v.tipo and doc.tipo=v.documento_tipo
                                     where 
-                                        r.id_resumen=@idResumen and r.estatus_anulado='0' and r.estatus_credito='1'";
+                                        r.id_resumen=@idResumen and r.estatus_credito='1'";
                     var sql = sql_1;
                     var p1 = new MySql.Data.MySqlClient.MySqlParameter("@idResumen", idResumen);
                     var lst = cnn.Database.SqlQuery<DtoLibPos.CuadreCierre.Reportes.VentaCredito.Ficha>(sql, p1).ToList();

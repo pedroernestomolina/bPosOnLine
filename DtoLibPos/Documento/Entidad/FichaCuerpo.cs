@@ -5,17 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace DtoLibPos.Documento.Agregar.NotaCredito
+namespace DtoLibPos.Documento.Entidad
 {
-    public class Ficha
+    public class FichaCuerpo
     {
-        public int idOperador { get; set; }
+        public string Auto { get; set; }
         public string DocumentoNro { get; set; }
+        public DateTime Fecha { get; set; }
+        public DateTime FechaVencimiento { get; set; }
         public string RazonSocial { get; set; }
         public string DirFiscal { get; set; }
         public string CiRif { get; set; }
         public string Tipo { get; set; }
-        public decimal Exento  { get; set; }
+        public decimal Exento { get; set; }
         public decimal Base1 { get; set; }
         public decimal Base2 { get; set; }
         public decimal Base3 { get; set; }
@@ -29,7 +31,7 @@ namespace DtoLibPos.Documento.Agregar.NotaCredito
         public decimal Tasa2 { get; set; }
         public decimal Tasa3 { get; set; }
         public string Nota { get; set; }
-        public decimal TasaRetencionIva  { get; set; }
+        public decimal TasaRetencionIva { get; set; }
         public decimal TasaRetencionIslr { get; set; }
         public decimal RetencionIva { get; set; }
         public decimal RetencionIslr { get; set; }
@@ -71,11 +73,11 @@ namespace DtoLibPos.Documento.Agregar.NotaCredito
         public int Renglones { get; set; }
         public decimal SaldoPendiente { get; set; }
         public string ComprobanteRetencionIslr { get; set; }
-        public int  DiasValidez { get; set; }
+        public int DiasValidez { get; set; }
         public string AutoUsuario { get; set; }
         public string AutoTransporte { get; set; }
         public string Situacion { get; set; }
-        public int  Signo { get; set; }
+        public int Signo { get; set; }
         public string Serie { get; set; }
         public string Tarifa { get; set; }
         public string TipoRemision { get; set; }
@@ -105,35 +107,31 @@ namespace DtoLibPos.Documento.Agregar.NotaCredito
         public string Cierre { get; set; }
         public string EstatusCierreContable { get; set; }
         public string CierreFtp { get; set; }
-
-        public FichaCxC DocCxC { get; set; }
-        public FichaCxCPago DocCxCPago { get; set; }
-        public List<FichaDetalle> Detalles { get; set; }
-        public List<FichaKardex> MovKardex { get; set; }
-        public List<FichaDeposito> ActDeposito { get; set; }
-        public FichaPosResumen Resumen { get; set; }
-        public FichaSerie SerieFiscal { get; set; }
-        public FichaClienteSaldo ClienteSaldo { get; set; }
+        public string AnoRelacion { get; set; }
+        public string MesRelacion { get; set; }
+        public string AutoDocCxC { get; set; }
+        public string AutoReciboCxC { get; set; }
         //
-        public decimal PorctBonoPorPagoDivisa { get; set; }
-        public decimal CantDivisaAplicaBonoPorPagoDivisa { get; set; }
-        public decimal MontoBonoPorPagoDivisa { get; set; }
-        public decimal MontoBonoEnDivisaPorPagoDivisa { get; set; }
         public decimal MontoPorVueltoEnEfectivo { get; set; }
         public decimal MontoPorVueltoEnDivisa { get; set; }
         public decimal MontoPorVueltoEnPagoMovil { get; set; }
         public decimal CantDivisaPorVueltoEnDivisa { get; set; }
-        public string estatusPorBonoPorPagoDivisa { get; set; }
-        public string estatusPorVueltoEnPagoMovil { get; set; }
         //
         public string estatusFiscal { get; set; }
-        public int zFiscal{ get; set; }
+        public int zFiscal { get; set; }
         //
-        public string estatusMostrarLibroVenta { get; set; }
+        public string aplicaIGTF { get; set; }
+        public decimal tasaIGTF { get; set; }
+        public decimal baseAplicaIGTFMonAct { get; set; }
+        public decimal baseAplicaIGTFMonDiv { get; set; }
+        public decimal montoIGTF { get; set; }
         //
-        public Ficha()
+        public decimal BonoPorPagoDivisa { get; set; }
+        public decimal MontoBonoPorPagoDivisa { get; set; }
+        public decimal CntDivisaAplicaBonoPorPagoDivisa { get; set; }
+        //
+        public FichaCuerpo ()
         {
-            idOperador = -1;
             DocumentoNro = "";
             RazonSocial = "";
             DirFiscal = "";
@@ -155,7 +153,7 @@ namespace DtoLibPos.Documento.Agregar.NotaCredito
             Nota = "";
             TasaRetencionIva = 0.0m;
             TasaRetencionIslr = 0.0m;
-            RetencionIva=0.0m;
+            RetencionIva = 0.0m;
             RetencionIslr = 0.0m;
             AutoCliente = "";
             CodigoCliente = "";
@@ -206,12 +204,12 @@ namespace DtoLibPos.Documento.Agregar.NotaCredito
             AutoRemision = "";
             DocumentoNombre = "";
             SubTotalImpuesto = 0.0m;
-            SubTotal=0.0m;
+            SubTotal = 0.0m;
             TipoCliente = "";
             Planilla = "";
             Expendiente = "";
             AnticipoIva = 0.0m;
-            TercerosIva=0.0m;
+            TercerosIva = 0.0m;
             Neto = 0.0m;
             Costo = 0.0m;
             Utilidad = 0.0m;
@@ -224,41 +222,34 @@ namespace DtoLibPos.Documento.Agregar.NotaCredito
             Clave = "";
             DenominacionFiscal = "";
             Cambio = 0.0m;
-            EstatusValidado="";
-            Cierre="";
-            EstatusCierreContable="";
-            CierreFtp="";
-
-            DocCxC = new  FichaCxC();
-            DocCxCPago = new FichaCxCPago();
-            Detalles = new List<FichaDetalle>();
-            MovKardex = new List<FichaKardex>();
-            ActDeposito = new List<FichaDeposito>();
-            Resumen = new FichaPosResumen();
-            SerieFiscal = null;
-            ClienteSaldo = null;
+            EstatusValidado = "";
+            Cierre = "";
+            EstatusCierreContable = "";
+            CierreFtp = "";
+            AnoRelacion = "";
+            MesRelacion = "";
+            AutoDocCxC = "";
+            AutoReciboCxC = "";
             //
-            PorctBonoPorPagoDivisa = 0m;
-            CantDivisaAplicaBonoPorPagoDivisa = 0m;
-            MontoBonoPorPagoDivisa = 0m;
-            MontoBonoEnDivisaPorPagoDivisa = 0m;
             MontoPorVueltoEnEfectivo = 0m;
             MontoPorVueltoEnDivisa = 0m;
             MontoPorVueltoEnPagoMovil = 0m;
             CantDivisaPorVueltoEnDivisa = 0m;
-            estatusPorBonoPorPagoDivisa = "0";
-            estatusPorVueltoEnPagoMovil = "0";
+            //
+            BonoPorPagoDivisa = 0m;
+            MontoBonoPorPagoDivisa = 0m;
+            CntDivisaAplicaBonoPorPagoDivisa = 0m;
             //
             estatusFiscal = "";
-            zFiscal = -1;
+            zFiscal = 0;
             //
-            estatusMostrarLibroVenta = "";
+            aplicaIGTF = "";
+            tasaIGTF=0.0m;
+            montoIGTF = 0.0m;
+            baseAplicaIGTFMonAct = 0.0m;
+            baseAplicaIGTFMonDiv = 0.0m;
             //
-            detalleFormaPago = new List<FichaPosResumenDetalleFormaPago>();
-            resumenGeneral = new FichaPosResumenGeneral();
+            Prefijo = "";
         }
-        //
-        public List<FichaPosResumenDetalleFormaPago> detalleFormaPago { get; set; }
-        public FichaPosResumenGeneral resumenGeneral { get; set; }
     }
 }
