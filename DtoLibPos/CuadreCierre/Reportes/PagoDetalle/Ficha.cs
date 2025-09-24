@@ -38,5 +38,6 @@ namespace DtoLibPos.CuadreCierre.Reportes.PagoDetalle
         public decimal montoIngresadoMonLocal { get; set; }
         public decimal montoIngresadoMonReferencia { get; set; }
         public string siglasDoc { get; set; }
+        public string nroDocAplica { get; set; }
     }
 }

@@ -20,5 +20,6 @@ namespace DtoLibPos.CuadreCierre.Reportes.VentaCredito
         public int signoDoc { get; set; }
         public string siglasDoc { get; set; }
         public string estatusAnulado { get; set; }
+        public string nroDocAplica { get; set; }
     }
 }

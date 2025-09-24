@@ -197,7 +197,8 @@ namespace ProvPos
                                         rDet.referencia_nro referenciaNro,
                                         rDet.monto_monedalocal as montoIngresadoMonLocal,
                                         rDet.monto_monedareferencia as montoIgresadoMonReferencia,
-                                        doc.siglas as siglasDoc
+                                        doc.siglas as siglasDoc,
+                                        v.aplica as nroDocAplica
                                     from 
                                         vl_p_resumen as r 
                                     join
@@ -307,7 +308,8 @@ namespace ProvPos
                                         v.monto_bono_en_divisa_por_pago_divisa as bonoPagoDivisaMonReferencia,
                                         r.signo_documento as signoDoc,
                                         doc.siglas as siglasDoc,
-                                        r.estatus_anulado as estatusAnulado
+                                        r.estatus_anulado as estatusAnulado,
+                                        v.aplica as nroDocAplica
                                     FROM 
                                         vl_p_resumen as r
                                     join 
