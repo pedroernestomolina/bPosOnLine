@@ -21,5 +21,6 @@ namespace DtoLibPos.MedioPago.Entidad
         public string aplicaLoteReferencia { get; set; }
         public string aplicaBonoPagoDivisa { get; set; }
         public string aplicaIGTF { get; set; }
+        public string aplicaRetornoCambioVuelto { get; set; }
     }
 }

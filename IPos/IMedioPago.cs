@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace IPos
 {
-    
     public interface IMedioPago
     {
         DtoLib.ResultadoLista<DtoLibPos.MedioPago.Entidad.Ficha>

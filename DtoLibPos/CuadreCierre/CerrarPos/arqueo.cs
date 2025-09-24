@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace DtoLibPos.Pos.Cerrar
+namespace DtoLibPos.CuadreCierre.CerrarPos
 {
     public class Arqueo
     {

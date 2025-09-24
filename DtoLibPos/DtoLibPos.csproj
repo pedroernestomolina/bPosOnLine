@@ -47,6 +47,11 @@
     <Compile Include="Auditoria\Buscar\Ficha.cs" />
     <Compile Include="Auditoria\Entidad\Ficha.cs" />
     <Compile Include="Configuracion\Configuracion_IGTF.cs" />
+    <Compile Include="CuadreCierre\CerrarPos\Arqueo.cs" />
+    <Compile Include="CuadreCierre\CerrarPos\Documento.cs" />
+    <Compile Include="CuadreCierre\CerrarPos\Ficha.cs" />
+    <Compile Include="CuadreCierre\CerrarPos\MetodoPago.cs" />
+    <Compile Include="CuadreCierre\CerrarPos\Total.cs" />
     <Compile Include="CuadreCierre\CuadreResumen\Documento.cs" />
     <Compile Include="CuadreCierre\CuadreResumen\MetodoPago.cs" />
     <Compile Include="CuadreCierre\CuadreResumen\Totales.cs" />

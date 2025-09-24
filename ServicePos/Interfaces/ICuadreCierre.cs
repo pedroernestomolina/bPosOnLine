@@ -26,5 +26,8 @@ namespace ServicePos.Interfaces
            CuadreCierre_Reporte_CambiosVueltoEntregado(int idResumen);
         DtoLib.ResultadoLista<DtoLibPos.CuadreCierre.Reportes.PagoMovil.Ficha>
            CuadreCierre_Reporte_PagoMovil(int idResumen);
+        //
+        DtoLib.ResultadoEntidad<int>
+            CuadrCierre_CerrarPos(DtoLibPos.CuadreCierre.CerrarPos.Ficha ficha);
     }
 }

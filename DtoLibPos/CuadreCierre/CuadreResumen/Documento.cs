@@ -20,5 +20,6 @@ namespace DtoLibPos.CuadreCierre.CuadreResumen
         public string varianteDoc { get; set; }
         public string esCredito { get; set; }
         public string anulado { get; set; }
+        public int signoDoc { get; set; }
     }
 }

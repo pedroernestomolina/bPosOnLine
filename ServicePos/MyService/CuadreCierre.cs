@@ -51,5 +51,11 @@ namespace ServicePos.MyService
         {
             return ServiceProv.CuadreCierre_Reporte_PagoMovil(idResumen);
         }
+        //
+        public DtoLib.ResultadoEntidad<int> 
+            CuadrCierre_CerrarPos(DtoLibPos.CuadreCierre.CerrarPos.Ficha ficha)
+        {
+            return ServiceProv.CuadrCierre_CerrarPos(ficha);
+        }
     }
 }

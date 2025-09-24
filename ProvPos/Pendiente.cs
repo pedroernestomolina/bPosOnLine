@@ -69,31 +69,6 @@ namespace ProvPos
 
             return result;
         }
-        public DtoLib.ResultadoEntidad<int> 
-            Pendiente_CtasPendientes(DtoLibPos.Pendiente.Cnt.Filtro filtro)
-        {
-            var result = new DtoLib.ResultadoEntidad<int>();
-
-            try
-            {
-                using (var cn = new PosEntities(_cnPos.ConnectionString))
-                {
-                    var lEnt = cn.p_pendiente.ToList();
-                    if (filtro.idOperador != null)
-                    {
-                        lEnt=lEnt.Where(s => s.id_p_operador == filtro.idOperador.Value).ToList();
-                    }
-                    result.Entidad = lEnt.Count();
-                };
-            }
-            catch (Exception e)
-            {
-                result.Mensaje = e.Message;
-                result.Result = DtoLib.Enumerados.EnumResult.isError;
-            }
-
-            return result;
-        }
         public DtoLib.Resultado
             Pendiente_AbrirCta(int idCta, int idOperador)
         {
@@ -183,6 +158,38 @@ namespace ProvPos
                 result.Mensaje = e.Message;
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
+            return result;
+        }
+        //
+        public DtoLib.ResultadoEntidad<int>
+            Pendiente_CtasPendientes(DtoLibPos.Pendiente.Cnt.Filtro filtro)
+        {
+            var result = new DtoLib.ResultadoEntidad<int>();
+            //
+            try
+            {
+                using (var cn = new PosEntities(_cnPos.ConnectionString))
+                {
+                    var p1 = new MySql.Data.MySqlClient.MySqlParameter();
+                    var _sql = @"select 
+                                    count(*) as cnt 
+                                from p_pendiente ";
+                    if (filtro.idOperador != null) 
+                    {
+                        _sql += "where id_p_operador=@idOperador";
+                        p1.ParameterName = "@idOperador";
+                        p1.Value = filtro.idOperador;
+                    }
+                    var cnt= cn.Database.SqlQuery<int>(_sql, p1).FirstOrDefault();
+                    result.Entidad = cnt;
+                };
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+            //
             return result;
         }
     }
