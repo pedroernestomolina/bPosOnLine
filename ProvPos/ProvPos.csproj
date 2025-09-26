@@ -74,6 +74,7 @@
     <Compile Include="Documento_Agregar_Factura.cs" />
     <Compile Include="Documento_Agregar_NotaCredito.cs" />
     <Compile Include="Documento_Agregar_NotaEntrega.cs" />
+    <Compile Include="Documento_Capturar.cs" />
     <Compile Include="Fiscal.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="Jornada.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Producto_ModoAdm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provider.cs" />
+    <Compile Include="Documento_RecopilarData_Anular.cs" />
     <Compile Include="ReportePos.cs" />
     <Compile Include="ReportesAdm.cs" />
     <Compile Include="ReportesCli.cs" />

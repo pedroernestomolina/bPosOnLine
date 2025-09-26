@@ -120,414 +120,6 @@ namespace ProvPos
             }
             return rt;
         }
-        public DtoLib.ResultadoEntidad<DtoLibPos.Documento.Entidad.Ficha>
-            Documento_GetById(string idAuto)
-        {
-            var result = new DtoLib.ResultadoEntidad<DtoLibPos.Documento.Entidad.Ficha>();
-
-            try
-            {
-                using (var cn = new PosEntities(_cnPos.ConnectionString))
-                {
-                    //var ent = cn.ventas.Find(idAuto);
-                    //if (ent == null)
-                    //{
-                    //    throw new Exception("[ ID ] DOCUMENTO NO ENCONTRADO");
-                    //}
-                    //
-                    var nr = new DtoLibPos.Documento.Entidad.Ficha();
-                    var d0 = new MySql.Data.MySqlClient.MySqlParameter("@idDoc", idAuto);
-                    var _sqlEnc = @"select
-                                        ano_relacion as AnoRelacion,
-                                        anticipo_iva as AnticipoIva ,
-                                        aplica as Aplica ,
-                                        auto as Auto ,
-                                        auto_cliente as AutoCliente ,
-                                        auto_remision as AutoRemision ,
-                                        auto_transporte as AutoTransporte ,
-                                        auto_usuario as AutoUsuario ,
-                                        auto_vendedor as AutoVendedor ,
-                                        base1 as Base1 ,
-                                        base2 as Base2 ,
-                                        base3 as Base3 ,
-                                        cambio as Cambio ,
-                                        cargos as Cargos ,
-                                        cargosp as Cargosp ,
-                                        ci_beneficiario as CiBeneficiario ,
-                                        cierre as Cierre ,
-                                        cierre_ftp as CierreFtp ,
-                                        ci_rif as CiRif ,
-                                        ci_titular as CiTitular ,
-                                        clave as Clave ,
-                                        codigo_cliente as CodigoCliente ,
-                                        codigo_sucursal as CodigoSucursal ,
-                                        codigo_transporte as CodigoTransporte ,
-                                        codigo_usuario as CodigoUsuario ,
-                                        codigo_vendedor as CodigoVendedor ,
-                                        columna as Columna ,
-                                        comprobante_retencion as ComprobanteRetencion ,
-                                        comprobante_retencion_islr as ComprobanteRetencionIslr ,
-                                        condicion_pago as CondicionPago ,
-                                        control as Control ,
-                                        costo as Costo ,
-                                        denominacion_fiscal as DenominacionFiscal ,
-                                        descuento1 as Descuento1 ,
-                                        descuento1p as Descuento1p ,
-                                        descuento2 as Descuento2 ,
-                                        descuento2p as Descuento2p ,
-                                        despachado as Despachado ,
-                                        dias as Dias ,
-                                        dias_validez as DiasValidez ,
-                                        dir_despacho as DirDespacho ,
-                                        dir_fiscal as DirFiscal ,
-                                        documento_nombre as DocumentoNombre ,
-                                        documento as DocumentoNro ,
-                                        documento_remision as DocumentoRemision ,
-                                        documento_tipo as DocumentoTipo ,
-                                        estacion as Estacion ,
-                                        estatus_anulado as EstatusAnulado ,
-                                        estatus_cierre_contable as EstatusCierreContable ,
-                                        estatus_validado as EstatusValidado ,
-                                        exento as Exento ,
-                                        expediente as Expendiente ,
-                                        factor_cambio as FactorCambio ,
-                                        fecha as Fecha ,
-                                        fecha_pedido as FechaPedido ,
-                                        fecha_vencimiento as FechaVencimiento ,
-                                        hora as Hora ,
-                                        impuesto as Impuesto ,
-                                        impuesto1 as Impuesto1 ,
-                                        impuesto2 as Impuesto2 ,
-                                        impuesto3 as Impuesto3 ,
-                                        base as MBase ,
-                                        mes_relacion as MesRelacion ,
-                                        monto_divisa as MontoDivisa ,
-                                        neto as Neto ,
-                                        nombre_beneficiario as NombreBeneficiario ,
-                                        nombre_titular as NombreTitular ,
-                                        nota as Nota ,
-                                        orden_compra as OrdenCompra ,
-                                        pedido as Pedido ,
-                                        planilla as Planilla ,
-                                        razon_social as RazonSocial ,
-                                        renglones as Renglones ,
-                                        retencion_islr as RetencionIslr ,
-                                        retencion_iva as RetencionIva ,
-                                        saldo_pendiente as SaldoPendiente ,
-                                        serie as Serie ,
-                                        signo as Signo ,
-                                        situacion as Situacion ,
-                                        subtotal as SubTotal ,
-                                        subtotal_impuesto as SubTotalImpuesto ,
-                                        subtotal_neto as SubTotalNeto ,
-                                        tarifa as Tarifa ,
-                                        tasa1 as Tasa1 ,
-                                        tasa2 as Tasa2 ,
-                                        tasa3 as Tasa3 ,
-                                        tasa_retencion_islr as TasaRetencionIslr ,
-                                        tasa_retencion_iva as TasaRetencionIva ,
-                                        telefono as Telefono ,
-                                        terceros_iva as TercerosIva ,
-                                        tipo as Tipo ,
-                                        tipo_cliente as TipoCliente ,
-                                        tipo_remision as TipoRemision ,
-                                        total as Total ,
-                                        transporte as Transporte ,
-                                        usuario as Usuario ,
-                                        utilidad as Utilidad ,
-                                        utilidadp as Utilidadp ,
-                                        vendedor as Vendedor ,
-                                        auto_cxc as AutoDocCxC ,
-                                        auto_recibo as AutoReciboCxC ,
-                                        monto_por_vuelto_en_efectivo as MontoPorVueltoEnEfectivo ,
-                                        monto_por_vuelto_en_divisa as MontoPorVueltoEnDivisa ,
-                                        monto_por_vuelto_en_pago_movil as MontoPorVueltoEnPagoMovil ,
-                                        cnt_divisa_por_vuelto_en_divisa as CantDivisaPorVueltoEnDivisa ,
-                                        porct_bono_por_pago_divisa as BonoPorPagoDivisa ,
-                                        monto_bono_por_pago_divisa as MontoBonoPorPagoDivisa ,
-                                        cnt_divisa_aplica_bono_por_pago_divisa as CntDivisaAplicaBonoPorPagoDivisa ,
-                                        estatus_fiscal as estatusFiscal ,
-                                        aplicar_igtf as aplicaIGTF,
-                                        tasa_igtf as tasaIGTF,
-                                        monto_igtf as montoIGTF,
-                                        base_aplica_igtf_mon_act as baseAplicaIGTFMonAct,
-                                        base_aplica_igtf_mon_div as baseAplicaIGTFMonDiv
-                                    from ventas 
-                                    where auto=@idDoc";
-                    var _ent = cn.Database.SqlQuery<DtoLibPos.Documento.Entidad.FichaCuerpo>(_sqlEnc, d0).FirstOrDefault();
-                    if (_ent == null)
-                    {
-                        throw new Exception("[ ID ] DOCUMENTO NO ENCONTRADO");
-                    }
-                    nr.cuerpo = _ent;
-                    /*
-                    var nr = new DtoLibPos.Documento.Entidad.Ficha()
-                    {
-                        AnoRelacion = ent.ano_relacion,
-                        AnticipoIva = ent.anticipo_iva,
-                        Aplica = ent.aplica,
-                        Auto = ent.auto,
-                        AutoCliente = ent.auto_cliente,
-                        AutoRemision = ent.auto_remision,
-                        AutoTransporte = ent.auto_transporte,
-                        AutoUsuario = ent.auto_usuario,
-                        AutoVendedor = ent.auto_vendedor,
-                        Base1 = ent.base1,
-                        Base2 = ent.base2,
-                        Base3 = ent.base3,
-
-                        Cambio = ent.cambio,
-                        Cargos = ent.cargos,
-                        Cargosp = ent.cargosp,
-                        CiBeneficiario = ent.ci_beneficiario,
-                        Cierre = ent.cierre,
-                        CierreFtp = ent.cierre_ftp,
-                        CiRif = ent.ci_rif,
-                        CiTitular = ent.ci_titular,
-                        Clave = ent.clave,
-                        CodigoCliente = ent.codigo_cliente,
-                        CodigoSucursal = ent.codigo_sucursal,
-                        CodigoTransporte = ent.codigo_transporte,
-                        CodigoUsuario = ent.codigo_usuario,
-                        CodigoVendedor = ent.codigo_vendedor,
-                        Columna = ent.columna,
-                        ComprobanteRetencion = ent.comprobante_retencion,
-                        ComprobanteRetencionIslr = ent.comprobante_retencion_islr,
-                        CondicionPago = ent.condicion_pago,
-                        Control = ent.control,
-                        Costo = ent.costo,
-
-                        DenominacionFiscal = ent.denominacion_fiscal,
-                        Descuento1 = ent.descuento1,
-                        Descuento1p = ent.descuento1p,
-                        Descuento2 = ent.descuento2,
-                        Descuento2p = ent.descuento2p,
-                        Despachado = ent.despachado,
-                        Dias = ent.dias,
-                        DiasValidez = ent.dias_validez,
-                        DirDespacho = ent.dir_despacho,
-                        DirFiscal = ent.dir_fiscal,
-                        DocumentoNombre = ent.documento_nombre,
-                        DocumentoNro = ent.documento,
-                        DocumentoRemision = ent.documento_remision,
-                        DocumentoTipo = ent.documento_tipo,
-                        Estacion = ent.estacion,
-                        EstatusAnulado = ent.estatus_anulado,
-                        EstatusCierreContable = ent.estatus_cierre_contable,
-                        EstatusValidado = ent.estatus_validado,
-                        Exento = ent.exento,
-                        Expendiente = ent.expediente,
-                        FactorCambio = ent.factor_cambio,
-                        Fecha = ent.fecha,
-                        FechaPedido = ent.fecha_pedido,
-                        FechaVencimiento = ent.fecha_vencimiento,
-                        Hora = ent.hora,
-
-                        Impuesto = ent.impuesto,
-                        Impuesto1 = ent.impuesto1,
-                        Impuesto2 = ent.impuesto2,
-                        Impuesto3 = ent.impuesto3,
-                        MBase = ent.@base,
-                        MesRelacion = ent.mes_relacion,
-                        MontoDivisa = ent.monto_divisa,
-                        Neto = ent.neto,
-                        NombreBeneficiario = ent.nombre_beneficiario,
-                        NombreTitular = ent.nombre_titular,
-                        Nota = ent.nota,
-                        OrdenCompra = ent.orden_compra,
-                        Pedido = ent.pedido,
-                        Planilla = ent.planilla,
-
-                        RazonSocial = ent.razon_social,
-                        Renglones = ent.renglones,
-                        RetencionIslr = ent.retencion_islr,
-                        RetencionIva = ent.retencion_iva,
-                        SaldoPendiente = ent.saldo_pendiente,
-                        Serie = ent.serie,
-                        Signo = ent.signo,
-                        Situacion = ent.situacion,
-                        SubTotal = ent.subtotal,
-                        SubTotalImpuesto = ent.subtotal_impuesto,
-                        SubTotalNeto = ent.subtotal_neto,
-                        Tarifa = ent.tarifa,
-                        Tasa1 = ent.tasa1,
-                        Tasa2 = ent.tasa2,
-                        Tasa3 = ent.tasa3,
-                        TasaRetencionIslr = ent.tasa_retencion_islr,
-                        TasaRetencionIva = ent.tasa_retencion_iva,
-                        Telefono = ent.telefono,
-                        TercerosIva = ent.terceros_iva,
-                        Tipo = ent.tipo,
-                        TipoCliente = ent.tipo_cliente,
-                        TipoRemision = ent.tipo_remision,
-                        Total = ent.total,
-                        Transporte = ent.transporte,
-
-                        Usuario = ent.usuario,
-                        Utilidad = ent.utilidad,
-                        Utilidadp = ent.utilidadp,
-                        Vendedor = ent.vendedor,
-                        AutoDocCxC = ent.auto_cxc,
-                        AutoReciboCxC = ent.auto_recibo,
-                        //
-                        MontoPorVueltoEnEfectivo = ent.monto_por_vuelto_en_efectivo,
-                        MontoPorVueltoEnDivisa = ent.monto_por_vuelto_en_divisa,
-                        MontoPorVueltoEnPagoMovil = ent.monto_por_vuelto_en_pago_movil,
-                        CantDivisaPorVueltoEnDivisa = ent.cnt_divisa_por_vuelto_en_divisa,
-                        BonoPorPagoDivisa = ent.porct_bono_por_pago_divisa,
-                        MontoBonoPorPagoDivisa = ent.monto_bono_por_pago_divisa,
-                        CntDivisaAplicaBonoPorPagoDivisa = ent.cnt_divisa_aplica_bono_por_pago_divisa,
-                        //
-                        estatusFiscal = ent.estatus_fiscal,
-                        //
-                        aplicaIGTF= ent.aplicar_igtf.Trim().ToUpper(),
-                        tasaIGTF=ent.tasa_igtf,
-                        montoIGTF=ent.monto_igtf,
-                        baseAplicaIGTFMonAct=ent.base_aplica_igtf_mon_act,
-                        baseAplicaIGTFMonDiv=ent.base_aplica_igtf_mon_div,
-                    };
-                     */
-                    var d1 = new MySql.Data.MySqlClient.MySqlParameter("@id", idAuto);
-                    var _sqlDet = @"select 
-                                        p.estatus_pesado as EstatusPesado,
-                                        s.auto_cliente as AutoCliente,
-                                        s.auto_departamento as AutoDepartamento,
-                                        s.auto_deposito as AutoDeposito,
-                                        s.auto_grupo as AutoGrupo ,
-                                        s.auto_producto as AutoProducto,
-                                        s.auto_subgrupo as AutoSubGrupo,
-                                        s.auto_tasa as AutoTasa,
-                                        s.auto_vendedor as AutoVendedor,
-
-                                        s.cantidad as Cantidad,
-                                        s.cantidad_und as CantidadUnd,
-                                        s.categoria as Categoria,
-                                        s.cierre_ftp as CierreFtp,
-                                        s.cobranza as Cobranza,
-
-                                        s.cobranzap as Cobranzap,
-                                        s.cobranzap_vendedor as CobranzapVendedor,
-                                        s.cobranza_vendedor as CobranzaVendedor,
-                                        s.codigo as Codigo,
-                                        s.codigo_deposito as CodigoDeposito,
-
-                                        s.codigo_vendedor as CodigoVendedor,
-                                        s.contenido_empaque as ContenidoEmpaque,
-                                        s.corte as Corte,
-                                        s.costo_compra as CostoCompra,
-                                        s.costo_promedio_und as CostoPromedioUnd,
-                                        s.costo_und as CostoUnd,
-                                        s.costo_venta as CostoVenta,
-                                        s.decimales as Decimales,
-
-                                        s.deposito as Deposito,
-                                        s.descuento1 as Descuento1,
-                                        s.descuento1p as Descuento1p,
-                                        s.descuento2 as Descuento2,
-                                        s.descuento2p as Descuento2p ,
-                                        s.descuento3 as Descuento3,
-                                        s.descuento3p as Descuento3p,
-                                        s.detalle as Detalle ,
-                                        s.dias_garantia as DiasGarantia,
-                                        s.empaque as Empaque,
-                                        s.estatus_anulado as EstatusAnulado,
-                                        s.estatus_checked as EstatusChecked,
-                                        s.estatus_corte as EstatusCorte,
-                                        s.estatus_garantia as EstatusGarantia,
-                                        s.estatus_serial as EstatusSerial,
-                                        s.impuesto as Impuesto,
-                                        s.nombre as Nombre,
-                                        s.precio_final as PrecioFinal,
-                                        s.precio_item as PrecioItem,
-                                        s.precio_neto as PrecioNeto,
-                                        s.precio_sugerido as PrecioSugerido,
-                                        s.precio_und as PrecioUnd,
-                                        s.signo as Signo,
-                                        s.tarifa as Tarifa,
-                                        s.tasa as Tasa,
-                                        s.tipo as Tipo,
-                                        s.total as Total,
-                                        s.total_descuento as TotalDescuento,
-                                        s.total_neto as TotalNeto ,
-                                        s.utilidad as Utilidad,
-                                        s.utilidadp as Utilidadp,
-                                        s.ventas as Ventas,
-                                        s.ventasp as Ventasp,
-                                        s.ventasp_vendedor as VentaspVendedor,
-                                        s.ventas_vendedor as VentasVendedor,
-                                        s.x as X,
-                                        s.y as y,
-                                        s.z as Z,
-        
-                                        s.estatus_divisa_prd as estatusDivisaPrd,
-                                        s.estatus_aplica_porct_aumento as estatusAplicaPorcAumento
-
-                                    from ventas_detalle as s
-                                    join productos as p on p.auto=s.auto_producto
-                                    where s.auto_documento = @id";
-                    var _items = cn.Database.SqlQuery<DtoLibPos.Documento.Entidad.FichaItem>(_sqlDet, d1).ToList();
-                    nr.items = _items;
-                    //
-                    var p1 = new MySql.Data.MySqlClient.MySqlParameter("@id", idAuto);
-                    var _sqlMed = @"select 
-                                        nombre_medida as nombre, 
-                                        cnt as cant, 
-                                        peso, 
-                                        volumen 
-                                    from ventas_medida where auto_documento=@id";
-                    var _lMed = cn.Database.SqlQuery<DtoLibPos.Documento.Entidad.FichaMedida>(_sqlMed, p1).ToList();
-                    nr.medidas = _lMed;
-                    //
-                    p1 = new MySql.Data.MySqlClient.MySqlParameter("@id", idAuto);
-                    var _sqlPrecios = @"select 
-                                            descripcion_producto as descPrd, 
-                                            precio_cliente as precio
-                                    from ventas_precio 
-                                    where auto_documento=@id and
-                                    porct_bono_aplicar>0";
-                    var _lPrecios = cn.Database.SqlQuery<DtoLibPos.Documento.Entidad.FichaPrecio>(_sqlPrecios, p1).ToList();
-                    nr.precios = _lPrecios;
-                    //
-                    result.Entidad = nr;
-                };
-            }
-            catch (Exception e)
-            {
-                result.Mensaje = e.Message;
-                result.Result = DtoLib.Enumerados.EnumResult.isError;
-            }
-            //
-            return result;
-        }
-        public DtoLib.ResultadoLista<DtoLibPos.Documento.Entidad.FichaMetodoPago>
-            Documento_Get_MetodosPago_ByIdRecibo(string autoRecibo)
-        {
-            var rt = new DtoLib.ResultadoLista<DtoLibPos.Documento.Entidad.FichaMetodoPago>();
-
-            try
-            {
-                using (var cnn = new PosEntities(_cnPos.ConnectionString))
-                {
-                    var p1 = new MySql.Data.MySqlClient.MySqlParameter();
-                    p1.ParameterName = "@p1";
-                    p1.Value = autoRecibo;
-
-                    var sql_1 = @"select auto_medio_pago as autoMedioPago, medio as descMedioPago, codigo as codigoMedioPago, 
-                                monto_recibido as montoRecibido, lote, referencia  
-                                FROM cxc_medio_pago where auto_recibo=@p1 ";
-                    var sql = sql_1;
-                    var q = cnn.Database.SqlQuery<DtoLibPos.Documento.Entidad.FichaMetodoPago>(sql, p1).ToList();
-                    rt.Lista = q;
-                }
-            }
-            catch (Exception e)
-            {
-                rt.Mensaje = e.Message;
-                rt.Result = DtoLib.Enumerados.EnumResult.isError;
-            }
-
-            return rt;
-        }
         public DtoLib.ResultadoEntidad<int>
             Documento_GetDocNCR_Relacionados_ByAutoDoc(string autoDoc)
         {
@@ -1592,3 +1184,416 @@ namespace ProvPos
         }
     }
 }
+
+
+/*
+        public DtoLib.ResultadoEntidad<DtoLibPos.Documento.Entidad.Ficha>
+            Documento_GetById(string idAuto)
+        {
+            var result = new DtoLib.ResultadoEntidad<DtoLibPos.Documento.Entidad.Ficha>();
+
+            try
+            {
+                using (var cn = new PosEntities(_cnPos.ConnectionString))
+                {
+                    //var ent = cn.ventas.Find(idAuto);
+                    //if (ent == null)
+                    //{
+                    //    throw new Exception("[ ID ] DOCUMENTO NO ENCONTRADO");
+                    //}
+                    //
+                    var nr = new DtoLibPos.Documento.Entidad.Ficha();
+                    var d0 = new MySql.Data.MySqlClient.MySqlParameter("@idDoc", idAuto);
+                    var _sqlEnc = @"select
+                                        ano_relacion as AnoRelacion,
+                                        anticipo_iva as AnticipoIva ,
+                                        aplica as Aplica ,
+                                        auto as Auto ,
+                                        auto_cliente as AutoCliente ,
+                                        auto_remision as AutoRemision ,
+                                        auto_transporte as AutoTransporte ,
+                                        auto_usuario as AutoUsuario ,
+                                        auto_vendedor as AutoVendedor ,
+                                        base1 as Base1 ,
+                                        base2 as Base2 ,
+                                        base3 as Base3 ,
+                                        cambio as Cambio ,
+                                        cargos as Cargos ,
+                                        cargosp as Cargosp ,
+                                        ci_beneficiario as CiBeneficiario ,
+                                        cierre as Cierre ,
+                                        cierre_ftp as CierreFtp ,
+                                        ci_rif as CiRif ,
+                                        ci_titular as CiTitular ,
+                                        clave as Clave ,
+                                        codigo_cliente as CodigoCliente ,
+                                        codigo_sucursal as CodigoSucursal ,
+                                        codigo_transporte as CodigoTransporte ,
+                                        codigo_usuario as CodigoUsuario ,
+                                        codigo_vendedor as CodigoVendedor ,
+                                        columna as Columna ,
+                                        comprobante_retencion as ComprobanteRetencion ,
+                                        comprobante_retencion_islr as ComprobanteRetencionIslr ,
+                                        condicion_pago as CondicionPago ,
+                                        control as Control ,
+                                        costo as Costo ,
+                                        denominacion_fiscal as DenominacionFiscal ,
+                                        descuento1 as Descuento1 ,
+                                        descuento1p as Descuento1p ,
+                                        descuento2 as Descuento2 ,
+                                        descuento2p as Descuento2p ,
+                                        despachado as Despachado ,
+                                        dias as Dias ,
+                                        dias_validez as DiasValidez ,
+                                        dir_despacho as DirDespacho ,
+                                        dir_fiscal as DirFiscal ,
+                                        documento_nombre as DocumentoNombre ,
+                                        documento as DocumentoNro ,
+                                        documento_remision as DocumentoRemision ,
+                                        documento_tipo as DocumentoTipo ,
+                                        estacion as Estacion ,
+                                        estatus_anulado as EstatusAnulado ,
+                                        estatus_cierre_contable as EstatusCierreContable ,
+                                        estatus_validado as EstatusValidado ,
+                                        exento as Exento ,
+                                        expediente as Expendiente ,
+                                        factor_cambio as FactorCambio ,
+                                        fecha as Fecha ,
+                                        fecha_pedido as FechaPedido ,
+                                        fecha_vencimiento as FechaVencimiento ,
+                                        hora as Hora ,
+                                        impuesto as Impuesto ,
+                                        impuesto1 as Impuesto1 ,
+                                        impuesto2 as Impuesto2 ,
+                                        impuesto3 as Impuesto3 ,
+                                        base as MBase ,
+                                        mes_relacion as MesRelacion ,
+                                        monto_divisa as MontoDivisa ,
+                                        neto as Neto ,
+                                        nombre_beneficiario as NombreBeneficiario ,
+                                        nombre_titular as NombreTitular ,
+                                        nota as Nota ,
+                                        orden_compra as OrdenCompra ,
+                                        pedido as Pedido ,
+                                        planilla as Planilla ,
+                                        razon_social as RazonSocial ,
+                                        renglones as Renglones ,
+                                        retencion_islr as RetencionIslr ,
+                                        retencion_iva as RetencionIva ,
+                                        saldo_pendiente as SaldoPendiente ,
+                                        serie as Serie ,
+                                        signo as Signo ,
+                                        situacion as Situacion ,
+                                        subtotal as SubTotal ,
+                                        subtotal_impuesto as SubTotalImpuesto ,
+                                        subtotal_neto as SubTotalNeto ,
+                                        tarifa as Tarifa ,
+                                        tasa1 as Tasa1 ,
+                                        tasa2 as Tasa2 ,
+                                        tasa3 as Tasa3 ,
+                                        tasa_retencion_islr as TasaRetencionIslr ,
+                                        tasa_retencion_iva as TasaRetencionIva ,
+                                        telefono as Telefono ,
+                                        terceros_iva as TercerosIva ,
+                                        tipo as Tipo ,
+                                        tipo_cliente as TipoCliente ,
+                                        tipo_remision as TipoRemision ,
+                                        total as Total ,
+                                        transporte as Transporte ,
+                                        usuario as Usuario ,
+                                        utilidad as Utilidad ,
+                                        utilidadp as Utilidadp ,
+                                        vendedor as Vendedor ,
+                                        auto_cxc as AutoDocCxC ,
+                                        auto_recibo as AutoReciboCxC ,
+                                        monto_por_vuelto_en_efectivo as MontoPorVueltoEnEfectivo ,
+                                        monto_por_vuelto_en_divisa as MontoPorVueltoEnDivisa ,
+                                        monto_por_vuelto_en_pago_movil as MontoPorVueltoEnPagoMovil ,
+                                        cnt_divisa_por_vuelto_en_divisa as CantDivisaPorVueltoEnDivisa ,
+                                        porct_bono_por_pago_divisa as BonoPorPagoDivisa ,
+                                        monto_bono_por_pago_divisa as MontoBonoPorPagoDivisa ,
+                                        cnt_divisa_aplica_bono_por_pago_divisa as CntDivisaAplicaBonoPorPagoDivisa ,
+                                        estatus_fiscal as estatusFiscal ,
+                                        aplicar_igtf as aplicaIGTF,
+                                        tasa_igtf as tasaIGTF,
+                                        monto_igtf as montoIGTF,
+                                        base_aplica_igtf_mon_act as baseAplicaIGTFMonAct,
+                                        base_aplica_igtf_mon_div as baseAplicaIGTFMonDiv
+                                    from ventas 
+                                    where auto=@idDoc";
+                    var _ent = cn.Database.SqlQuery<DtoLibPos.Documento.Entidad.FichaCuerpo>(_sqlEnc, d0).FirstOrDefault();
+                    if (_ent == null)
+                    {
+                        throw new Exception("[ ID ] DOCUMENTO NO ENCONTRADO");
+                    }
+                    nr.cuerpo = _ent;
+                    //var nr = new DtoLibPos.Documento.Entidad.Ficha()
+                    //{
+                    //    AnoRelacion = ent.ano_relacion,
+                    //    AnticipoIva = ent.anticipo_iva,
+                    //    Aplica = ent.aplica,
+                    //    Auto = ent.auto,
+                    //    AutoCliente = ent.auto_cliente,
+                    //    AutoRemision = ent.auto_remision,
+                    //    AutoTransporte = ent.auto_transporte,
+                    //    AutoUsuario = ent.auto_usuario,
+                    //    AutoVendedor = ent.auto_vendedor,
+                    //    Base1 = ent.base1,
+                    //    Base2 = ent.base2,
+                    //    Base3 = ent.base3,
+
+                    //    Cambio = ent.cambio,
+                    //    Cargos = ent.cargos,
+                    //    Cargosp = ent.cargosp,
+                    //    CiBeneficiario = ent.ci_beneficiario,
+                    //    Cierre = ent.cierre,
+                    //    CierreFtp = ent.cierre_ftp,
+                    //    CiRif = ent.ci_rif,
+                    //    CiTitular = ent.ci_titular,
+                    //    Clave = ent.clave,
+                    //    CodigoCliente = ent.codigo_cliente,
+                    //    CodigoSucursal = ent.codigo_sucursal,
+                    //    CodigoTransporte = ent.codigo_transporte,
+                    //    CodigoUsuario = ent.codigo_usuario,
+                    //    CodigoVendedor = ent.codigo_vendedor,
+                    //    Columna = ent.columna,
+                    //    ComprobanteRetencion = ent.comprobante_retencion,
+                    //    ComprobanteRetencionIslr = ent.comprobante_retencion_islr,
+                    //    CondicionPago = ent.condicion_pago,
+                    //    Control = ent.control,
+                    //    Costo = ent.costo,
+
+                    //    DenominacionFiscal = ent.denominacion_fiscal,
+                    //    Descuento1 = ent.descuento1,
+                    //    Descuento1p = ent.descuento1p,
+                    //    Descuento2 = ent.descuento2,
+                    //    Descuento2p = ent.descuento2p,
+                    //    Despachado = ent.despachado,
+                    //    Dias = ent.dias,
+                    //    DiasValidez = ent.dias_validez,
+                    //    DirDespacho = ent.dir_despacho,
+                    //    DirFiscal = ent.dir_fiscal,
+                    //    DocumentoNombre = ent.documento_nombre,
+                    //    DocumentoNro = ent.documento,
+                    //    DocumentoRemision = ent.documento_remision,
+                    //    DocumentoTipo = ent.documento_tipo,
+                    //    Estacion = ent.estacion,
+                    //    EstatusAnulado = ent.estatus_anulado,
+                    //    EstatusCierreContable = ent.estatus_cierre_contable,
+                    //    EstatusValidado = ent.estatus_validado,
+                    //    Exento = ent.exento,
+                    //    Expendiente = ent.expediente,
+                    //    FactorCambio = ent.factor_cambio,
+                    //    Fecha = ent.fecha,
+                    //    FechaPedido = ent.fecha_pedido,
+                    //    FechaVencimiento = ent.fecha_vencimiento,
+                    //    Hora = ent.hora,
+
+                    //    Impuesto = ent.impuesto,
+                    //    Impuesto1 = ent.impuesto1,
+                    //    Impuesto2 = ent.impuesto2,
+                    //    Impuesto3 = ent.impuesto3,
+                    //    MBase = ent.@base,
+                    //    MesRelacion = ent.mes_relacion,
+                    //    MontoDivisa = ent.monto_divisa,
+                    //    Neto = ent.neto,
+                    //    NombreBeneficiario = ent.nombre_beneficiario,
+                    //    NombreTitular = ent.nombre_titular,
+                    //    Nota = ent.nota,
+                    //    OrdenCompra = ent.orden_compra,
+                    //    Pedido = ent.pedido,
+                    //    Planilla = ent.planilla,
+
+                    //    RazonSocial = ent.razon_social,
+                    //    Renglones = ent.renglones,
+                    //    RetencionIslr = ent.retencion_islr,
+                    //    RetencionIva = ent.retencion_iva,
+                    //    SaldoPendiente = ent.saldo_pendiente,
+                    //    Serie = ent.serie,
+                    //    Signo = ent.signo,
+                    //    Situacion = ent.situacion,
+                    //    SubTotal = ent.subtotal,
+                    //    SubTotalImpuesto = ent.subtotal_impuesto,
+                    //    SubTotalNeto = ent.subtotal_neto,
+                    //    Tarifa = ent.tarifa,
+                    //    Tasa1 = ent.tasa1,
+                    //    Tasa2 = ent.tasa2,
+                    //    Tasa3 = ent.tasa3,
+                    //    TasaRetencionIslr = ent.tasa_retencion_islr,
+                    //    TasaRetencionIva = ent.tasa_retencion_iva,
+                    //    Telefono = ent.telefono,
+                    //    TercerosIva = ent.terceros_iva,
+                    //    Tipo = ent.tipo,
+                    //    TipoCliente = ent.tipo_cliente,
+                    //    TipoRemision = ent.tipo_remision,
+                    //    Total = ent.total,
+                    //    Transporte = ent.transporte,
+
+                    //    Usuario = ent.usuario,
+                    //    Utilidad = ent.utilidad,
+                    //    Utilidadp = ent.utilidadp,
+                    //    Vendedor = ent.vendedor,
+                    //    AutoDocCxC = ent.auto_cxc,
+                    //    AutoReciboCxC = ent.auto_recibo,
+                    //    //
+                    //    MontoPorVueltoEnEfectivo = ent.monto_por_vuelto_en_efectivo,
+                    //    MontoPorVueltoEnDivisa = ent.monto_por_vuelto_en_divisa,
+                    //    MontoPorVueltoEnPagoMovil = ent.monto_por_vuelto_en_pago_movil,
+                    //    CantDivisaPorVueltoEnDivisa = ent.cnt_divisa_por_vuelto_en_divisa,
+                    //    BonoPorPagoDivisa = ent.porct_bono_por_pago_divisa,
+                    //    MontoBonoPorPagoDivisa = ent.monto_bono_por_pago_divisa,
+                    //    CntDivisaAplicaBonoPorPagoDivisa = ent.cnt_divisa_aplica_bono_por_pago_divisa,
+                    //    //
+                    //    estatusFiscal = ent.estatus_fiscal,
+                    //    //
+                    //    aplicaIGTF= ent.aplicar_igtf.Trim().ToUpper(),
+                    //    tasaIGTF=ent.tasa_igtf,
+                    //    montoIGTF=ent.monto_igtf,
+                    //    baseAplicaIGTFMonAct=ent.base_aplica_igtf_mon_act,
+                    //    baseAplicaIGTFMonDiv=ent.base_aplica_igtf_mon_div,
+                    //};
+                    var d1 = new MySql.Data.MySqlClient.MySqlParameter("@id", idAuto);
+                    var _sqlDet = @"select 
+                                        p.estatus_pesado as EstatusPesado,
+                                        s.auto_cliente as AutoCliente,
+                                        s.auto_departamento as AutoDepartamento,
+                                        s.auto_deposito as AutoDeposito,
+                                        s.auto_grupo as AutoGrupo ,
+                                        s.auto_producto as AutoProducto,
+                                        s.auto_subgrupo as AutoSubGrupo,
+                                        s.auto_tasa as AutoTasa,
+                                        s.auto_vendedor as AutoVendedor,
+
+                                        s.cantidad as Cantidad,
+                                        s.cantidad_und as CantidadUnd,
+                                        s.categoria as Categoria,
+                                        s.cierre_ftp as CierreFtp,
+                                        s.cobranza as Cobranza,
+
+                                        s.cobranzap as Cobranzap,
+                                        s.cobranzap_vendedor as CobranzapVendedor,
+                                        s.cobranza_vendedor as CobranzaVendedor,
+                                        s.codigo as Codigo,
+                                        s.codigo_deposito as CodigoDeposito,
+
+                                        s.codigo_vendedor as CodigoVendedor,
+                                        s.contenido_empaque as ContenidoEmpaque,
+                                        s.corte as Corte,
+                                        s.costo_compra as CostoCompra,
+                                        s.costo_promedio_und as CostoPromedioUnd,
+                                        s.costo_und as CostoUnd,
+                                        s.costo_venta as CostoVenta,
+                                        s.decimales as Decimales,
+
+                                        s.deposito as Deposito,
+                                        s.descuento1 as Descuento1,
+                                        s.descuento1p as Descuento1p,
+                                        s.descuento2 as Descuento2,
+                                        s.descuento2p as Descuento2p ,
+                                        s.descuento3 as Descuento3,
+                                        s.descuento3p as Descuento3p,
+                                        s.detalle as Detalle ,
+                                        s.dias_garantia as DiasGarantia,
+                                        s.empaque as Empaque,
+                                        s.estatus_anulado as EstatusAnulado,
+                                        s.estatus_checked as EstatusChecked,
+                                        s.estatus_corte as EstatusCorte,
+                                        s.estatus_garantia as EstatusGarantia,
+                                        s.estatus_serial as EstatusSerial,
+                                        s.impuesto as Impuesto,
+                                        s.nombre as Nombre,
+                                        s.precio_final as PrecioFinal,
+                                        s.precio_item as PrecioItem,
+                                        s.precio_neto as PrecioNeto,
+                                        s.precio_sugerido as PrecioSugerido,
+                                        s.precio_und as PrecioUnd,
+                                        s.signo as Signo,
+                                        s.tarifa as Tarifa,
+                                        s.tasa as Tasa,
+                                        s.tipo as Tipo,
+                                        s.total as Total,
+                                        s.total_descuento as TotalDescuento,
+                                        s.total_neto as TotalNeto ,
+                                        s.utilidad as Utilidad,
+                                        s.utilidadp as Utilidadp,
+                                        s.ventas as Ventas,
+                                        s.ventasp as Ventasp,
+                                        s.ventasp_vendedor as VentaspVendedor,
+                                        s.ventas_vendedor as VentasVendedor,
+                                        s.x as X,
+                                        s.y as y,
+                                        s.z as Z,
+        
+                                        s.estatus_divisa_prd as estatusDivisaPrd,
+                                        s.estatus_aplica_porct_aumento as estatusAplicaPorcAumento
+
+                                    from ventas_detalle as s
+                                    join productos as p on p.auto=s.auto_producto
+                                    where s.auto_documento = @id";
+                    var _items = cn.Database.SqlQuery<DtoLibPos.Documento.Entidad.FichaItem>(_sqlDet, d1).ToList();
+                    nr.items = _items;
+                    //
+                    var p1 = new MySql.Data.MySqlClient.MySqlParameter("@id", idAuto);
+                    var _sqlMed = @"select 
+                                        nombre_medida as nombre, 
+                                        cnt as cant, 
+                                        peso, 
+                                        volumen 
+                                    from ventas_medida where auto_documento=@id";
+                    var _lMed = cn.Database.SqlQuery<DtoLibPos.Documento.Entidad.FichaMedida>(_sqlMed, p1).ToList();
+                    nr.medidas = _lMed;
+                    //
+                    p1 = new MySql.Data.MySqlClient.MySqlParameter("@id", idAuto);
+                    var _sqlPrecios = @"select 
+                                            descripcion_producto as descPrd, 
+                                            precio_cliente as precio
+                                    from ventas_precio 
+                                    where auto_documento=@id and
+                                    porct_bono_aplicar>0";
+                    var _lPrecios = cn.Database.SqlQuery<DtoLibPos.Documento.Entidad.FichaPrecio>(_sqlPrecios, p1).ToList();
+                    nr.precios = _lPrecios;
+                    //
+                    result.Entidad = nr;
+                };
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+            //
+            return result;
+        }
+  */
+
+/*
+        public DtoLib.ResultadoLista<DtoLibPos.Documento.Entidad.FichaMetodoPago>
+            Documento_Get_MetodosPago_ByIdRecibo(string autoRecibo)
+        {
+            var rt = new DtoLib.ResultadoLista<DtoLibPos.Documento.Entidad.FichaMetodoPago>();
+
+            try
+            {
+                using (var cnn = new PosEntities(_cnPos.ConnectionString))
+                {
+                    var p1 = new MySql.Data.MySqlClient.MySqlParameter();
+                    p1.ParameterName = "@p1";
+                    p1.Value = autoRecibo;
+
+                    var sql_1 = @"select auto_medio_pago as autoMedioPago, medio as descMedioPago, codigo as codigoMedioPago, 
+                                monto_recibido as montoRecibido, lote, referencia  
+                                FROM cxc_medio_pago where auto_recibo=@p1 ";
+                    var sql = sql_1;
+                    var q = cnn.Database.SqlQuery<DtoLibPos.Documento.Entidad.FichaMetodoPago>(sql, p1).ToList();
+                    rt.Lista = q;
+                }
+            }
+            catch (Exception e)
+            {
+                rt.Mensaje = e.Message;
+                rt.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+
+            return rt;
+        }
+ */

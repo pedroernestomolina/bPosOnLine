@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace IPos
 {
-    
     public interface IDocumento
     {
 
@@ -15,12 +14,9 @@ namespace IPos
             Documento_Get_Lista(DtoLibPos.Documento.Lista.Filtro filtro);
         DtoLib.ResultadoEntidad<DtoLibPos.Documento.Entidad.Ficha> 
             Documento_GetById(string idAuto);
-        DtoLib.ResultadoLista<DtoLibPos.Documento.Entidad.FichaMetodoPago> 
-            Documento_Get_MetodosPago_ByIdRecibo(string autoRecibo);
         DtoLib.ResultadoEntidad<int>
             Documento_GetDocNCR_Relacionados_ByAutoDoc(string autoDoc);
-
-
+        //
         DtoLib.Resultado 
             Documento_Anular_Verificar(string autoDoc);
         DtoLib.Resultado 
@@ -29,12 +25,13 @@ namespace IPos
             Documento_Anular_NotaCredito(DtoLibPos.Documento.Anular.NotaCredito.Ficha ficha);
         DtoLib.Resultado 
             Documento_Anular_Factura(DtoLibPos.Documento.Anular.Factura.Ficha ficha);
-
+        //
         DtoLib.Resultado
             Documento_Verificar_ProcesarFactClienteCredito(string idCliente, decimal monto);
         DtoLib.Resultado
             Documento_Verificar_EstatusOperadorIsOk(int idOperador);
-
+        //
+        DtoLib.ResultadoEntidad<DtoLibPos.Documento.RecopilarData.Anular.Ficha>
+            Documento_RecopilarData_Anular(string idDoc);
     }
-
 }
