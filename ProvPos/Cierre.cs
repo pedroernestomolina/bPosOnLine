@@ -25,7 +25,8 @@ namespace ProvPos
                                     op.fecha_cierre as fecha,
                                     op.hora_cierre as hora,
                                     op.cierre_numero as cierreNro,
-                                    res.auto_pos_arqueo as idCierre
+                                    res.auto_pos_arqueo as idCierre,
+                                    res.id as idResumen 
                                 FROM p_operador as op
                                 join p_resumen as res on res.id_p_operador=op.id
                                 WHERE estatus='C'";

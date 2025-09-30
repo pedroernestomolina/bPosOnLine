@@ -250,7 +250,7 @@ namespace ProvPos
                                     from 
                                         vl_p_resumen_detalleventa_formapago
                                     where 
-                                        id_resumen=82 and estatus_anulado='0'
+                                        id_resumen=@idResumen and estatus_anulado='0'
                                     group by 
                                         codigo_mediopago, desc_mediopago, codigo_currencies, 
                                         simbolo_currencies, tasa_currencies, factor_cambio";

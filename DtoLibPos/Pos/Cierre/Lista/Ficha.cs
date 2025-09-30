@@ -15,6 +15,7 @@ namespace DtoLibPos.Pos.Cierre.Lista
         public  DateTime fecha{ get; set; }
         public  int cierreNro { get; set; }
         public string idCierre { get; set; }
+        public int idResumen { get; set; }
         //
         public Ficha() 
         {
@@ -24,6 +25,7 @@ namespace DtoLibPos.Pos.Cierre.Lista
             fecha = DateTime.Now.Date;
             cierreNro = -1;
             idCierre = "";
+            idResumen = -1;
         }
     }
 }
