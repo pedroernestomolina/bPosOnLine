@@ -53,14 +53,19 @@ namespace ServicePos.MyService
         }
         //
         public DtoLib.ResultadoEntidad<int> 
-            CuadrCierre_CerrarPos(DtoLibPos.CuadreCierre.CerrarPos.Ficha ficha)
+            CuadreCierre_CerrarPos(DtoLibPos.CuadreCierre.CerrarPos.Ficha ficha)
         {
-            return ServiceProv.CuadrCierre_CerrarPos(ficha);
+            return ServiceProv.CuadreCierre_CerrarPos(ficha);
         }
         public DtoLib.ResultadoEntidad<DtoLibPos.CuadreCierre.ObtenerCierre.Ficha> 
-            CuadrCierre_Get_ObtenerCierre_byIdOperador(string id)
+            CuadreCierre_Get_ObtenerCierre_byIdOperador(int id)
         {
-            return ServiceProv.CuadrCierre_Get_ObtenerCierre_byIdOperador(id);
+            return ServiceProv.CuadreCierre_Get_ObtenerCierre_byIdOperador(id);
+        }
+        public DtoLib.ResultadoLista<DtoLibPos.CuadreCierre.ObtenerCierre.Ficha> 
+            CuadreCierre_Get_ListaCierre()
+        {
+            return ServiceProv.CuadreCierre_Get_ListaCierre();
         }
     }
 }

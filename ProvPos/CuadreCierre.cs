@@ -424,7 +424,7 @@ namespace ProvPos
         }
         //
         public DtoLib.ResultadoEntidad<int> 
-            CuadrCierre_CerrarPos(DtoLibPos.CuadreCierre.CerrarPos.Ficha ficha)
+            CuadreCierre_CerrarPos(DtoLibPos.CuadreCierre.CerrarPos.Ficha ficha)
         {
             var result = new DtoLib.ResultadoEntidad<int>();
             //
@@ -750,7 +750,7 @@ namespace ProvPos
             return result;
         }
         public DtoLib.ResultadoEntidad<DtoLibPos.CuadreCierre.ObtenerCierre.Ficha> 
-            CuadrCierre_Get_ObtenerCierre_byIdOperador(string id)
+            CuadreCierre_Get_ObtenerCierre_byIdOperador(int id)
         {
             var rt = new DtoLib.ResultadoEntidad<DtoLibPos.CuadreCierre.ObtenerCierre.Ficha>();
             //
@@ -781,6 +781,47 @@ namespace ProvPos
                                 where op.id=@id";
                     var _ent = cnn.Database.SqlQuery<DtoLibPos.CuadreCierre.ObtenerCierre.Ficha >(_sql, p1).FirstOrDefault();
                     rt.Entidad = _ent;
+                }
+            }
+            catch (Exception e)
+            {
+                rt.Mensaje = e.Message;
+                rt.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+            //
+            return rt;
+        }
+        public DtoLib.ResultadoLista<DtoLibPos.CuadreCierre.ObtenerCierre.Ficha> 
+            CuadreCierre_Get_ListaCierre()
+        {
+            var rt = new DtoLib.ResultadoLista<DtoLibPos.CuadreCierre.ObtenerCierre.Ficha>();
+            //
+            try
+            {
+                using (var cnn = new PosEntities(_cnPos.ConnectionString))
+                {
+                    var _sql = @"select 
+	                                op.fecha_cierre as fechaCierre,
+                                    op.hora_cierre as horaCierre,
+                                    op.cierre_numero as nroCierre,
+                                    op.id_equipo as terminal,
+                                    op.fecha_apertura as fechaApertura,
+                                    op.hora_apertura as horaApertura,
+                                    op.estatus as estatusOperador,
+                                    op.codigo_sucursal as codigoSucursal,
+                                    res.id as idResumen,
+                                    res.auto_pos_arqueo as idArqueo,
+                                    arq.codigo as codigoUsuario,
+                                    arq.usuario as nombreUsuario
+                                from 
+                                    p_operador as op
+                                join 
+                                    p_resumen as res on res.id_p_operador = op.id
+                                join 
+                                    pos_arqueo as arq on arq.auto_cierre = res.auto_pos_arqueo
+                                where op.estatus='C'";
+                    var lst = cnn.Database.SqlQuery<DtoLibPos.CuadreCierre.ObtenerCierre.Ficha>(_sql).ToList();
+                    rt.Lista= lst;
                 }
             }
             catch (Exception e)

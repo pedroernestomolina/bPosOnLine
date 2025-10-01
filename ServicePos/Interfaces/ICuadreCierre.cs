@@ -28,8 +28,10 @@ namespace ServicePos.Interfaces
            CuadreCierre_Reporte_PagoMovil(int idResumen);
         //
         DtoLib.ResultadoEntidad<int>
-            CuadrCierre_CerrarPos(DtoLibPos.CuadreCierre.CerrarPos.Ficha ficha);
+            CuadreCierre_CerrarPos(DtoLibPos.CuadreCierre.CerrarPos.Ficha ficha);
         DtoLib.ResultadoEntidad<DtoLibPos.CuadreCierre.ObtenerCierre.Ficha>
-            CuadrCierre_Get_ObtenerCierre_byIdOperador(string id);
+            CuadreCierre_Get_ObtenerCierre_byIdOperador(int id);
+        DtoLib.ResultadoLista<DtoLibPos.CuadreCierre.ObtenerCierre.Ficha>
+            CuadreCierre_Get_ListaCierre();
     }
 }
