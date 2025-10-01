@@ -57,5 +57,10 @@ namespace ServicePos.MyService
         {
             return ServiceProv.CuadrCierre_CerrarPos(ficha);
         }
+        public DtoLib.ResultadoEntidad<DtoLibPos.CuadreCierre.ObtenerCierre.Ficha> 
+            CuadrCierre_Get_ObtenerCierre_byIdOperador(string id)
+        {
+            return ServiceProv.CuadrCierre_Get_ObtenerCierre_byIdOperador(id);
+        }
     }
 }

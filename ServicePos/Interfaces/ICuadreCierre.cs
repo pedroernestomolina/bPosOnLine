@@ -29,5 +29,7 @@ namespace ServicePos.Interfaces
         //
         DtoLib.ResultadoEntidad<int>
             CuadrCierre_CerrarPos(DtoLibPos.CuadreCierre.CerrarPos.Ficha ficha);
+        DtoLib.ResultadoEntidad<DtoLibPos.CuadreCierre.ObtenerCierre.Ficha>
+            CuadrCierre_Get_ObtenerCierre_byIdOperador(string id);
     }
 }
