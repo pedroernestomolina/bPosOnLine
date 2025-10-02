@@ -768,8 +768,9 @@ namespace ProvPos
                                     op.hora_apertura as horaApertura,
                                     op.estatus as estatusOperador,
                                     op.codigo_sucursal as codigoSucursal,
+                                    op.id as idOperador,
                                     res.id as idResumen,
-                                    res.auto_pos_arqueo as idArqueo,
+                                    arq.auto_cierre as idArqueo,
                                     arq.codigo as codigoUsuario,
                                     arq.usuario as nombreUsuario
                                 from 
@@ -809,8 +810,9 @@ namespace ProvPos
                                     op.hora_apertura as horaApertura,
                                     op.estatus as estatusOperador,
                                     op.codigo_sucursal as codigoSucursal,
+                                    op.id as idOperador,
                                     res.id as idResumen,
-                                    res.auto_pos_arqueo as idArqueo,
+                                    arq.auto_cierre as idArqueo,
                                     arq.codigo as codigoUsuario,
                                     arq.usuario as nombreUsuario
                                 from 
@@ -831,6 +833,87 @@ namespace ProvPos
             }
             //
             return rt;
+        }
+        public DtoLib.ResultadoEntidad<DtoLibPos.CuadreCierre.ObtenerCierre.DataResumen.Ficha> 
+            CuadreCierre_Get_ObtenerCierreDataResumen_byIdResumen(int idResumen)
+        {
+            var result = new DtoLib.ResultadoEntidad<DtoLibPos.CuadreCierre.ObtenerCierre.DataResumen.Ficha>(); 
+            //
+            try
+            {
+                using (var cnn = new PosEntities(_cnPos.ConnectionString))
+                {
+                    var p1 = new MySql.Data.MySqlClient.MySqlParameter("@idResumen", idResumen);
+                    var _sql = @"select 
+                                    desc_doc as descDoc,
+                                    codigo_doc as codigoDoc ,
+                                    signo_doc as signoDoc ,
+                                    cnt_mov_activo as cntMovActivo ,
+                                    importe_activo_mon_local as importeMovActMonLocal ,
+                                    importe_activo_mon_referencia as importeMovActivoMonReferencia ,
+                                    cnt_mov_anulado as cntMovAnulado ,
+                                    importe_anulado_mon_local as importMovAnuladoMonLocal ,
+                                    importe_anulado_mon_referencia as importeMovAnuladoMonReferencia ,
+                                    cnt_mov_contado as cntMovContado ,
+                                    importe_contado_mon_local as importeMovContadoMonLocal ,
+                                    importe_contado_mon_referencia as importeMovContadoMonReferencia ,
+                                    cnt_mov_credito as cntMovCredito ,
+                                    importe_credito_mon_local as importeMovCreditoMonLocal ,
+                                    importe_credito_mon_referencia as importeMovCreditoMonReferencia ,
+                                    siglas_doc as siglasDoc ,
+                                    cnt_total_mov as cntTotalmov ,
+                                    variante_doc as varianteDoc 
+                                from 
+                                    vl_p_resumen_cierre_documentos
+                                where id_resumen=@idResumen";
+                    var _doc = cnn.Database.SqlQuery<DtoLibPos.CuadreCierre.ObtenerCierre.DataResumen.PorDocumento>(_sql, p1).ToList();
+                    //
+                    p1 = new MySql.Data.MySqlClient.MySqlParameter("@idResumen", idResumen);
+                    _sql = @"select 
+                                    codigo_mediopago as codigoMP ,
+                                    desc_mediopago as descMP ,
+                                    codigo_currencies as codigoMon ,
+                                    desc_currencies as descMon ,
+                                    simbolo_currencies as simboloMon ,
+                                    tasa_factor_ponderado as tasaFactorPonderadoMon ,
+                                    monto_segun_sistema as montoSegunSistema ,
+                                    monto_segun_usuario as montoSegunUsuario ,
+                                    importe_mon_local as importeMonLocal 
+                                from 
+                                    vl_p_resumen_cierre_metodos_pago
+                                where id_resumen=@idResumen";
+                    var _met= cnn.Database.SqlQuery<DtoLibPos.CuadreCierre.ObtenerCierre.DataResumen.PorMetPago>(_sql, p1).ToList();
+                    //
+                    p1 = new MySql.Data.MySqlClient.MySqlParameter("@idResumen", idResumen);
+                    _sql = @"select 
+                                    estatus_cuadre as estatusCuadre ,
+                                    total_cuadre_mon_local as totalCuadreMonLocal,
+                                    cuadre_segun_sistema_mon_local as totalCajaSegunSistemaMonLocal ,
+                                    cuadre_segun_usuario_mon_local as totalCajaSegunUsuarioMonLocal ,
+                                    vuelto_cambio_efectivo as vueltoCambioPorEfectivo ,
+                                    vuelto_cambio_divisa as vueltoCambioPorDivisa ,
+                                    vuelto_cambio_pago_movil as vueltoCambioPorPagoMovil ,
+                                    cnt_divisa_vuelto as cntDivisaPorVuelto 
+                                from 
+                                    vl_p_resumen_cierre_totales
+                                where id_resumen=@idResumen";
+                    var _tot = cnn.Database.SqlQuery<DtoLibPos.CuadreCierre.ObtenerCierre.DataResumen.Total>(_sql, p1).FirstOrDefault();
+                    //
+                    result.Entidad = new DtoLibPos.CuadreCierre.ObtenerCierre.DataResumen.Ficha()
+                    {
+                        documentos = _doc,
+                        metPago = _met,
+                        total = _tot
+                    };
+                }
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+            //
+            return result;
         }
     }
 }

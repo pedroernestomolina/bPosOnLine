@@ -21,5 +21,6 @@ namespace DtoLibPos.CuadreCierre.ObtenerCierre
         public string idArqueo { get; set; }
         public string codigoUsuario { get; set; }
         public string nombreUsuario { get; set; }
+        public int idOperador { get; set; }
     }
 }

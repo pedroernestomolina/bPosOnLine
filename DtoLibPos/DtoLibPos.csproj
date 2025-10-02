@@ -55,6 +55,10 @@
     <Compile Include="CuadreCierre\CuadreResumen\Documento.cs" />
     <Compile Include="CuadreCierre\CuadreResumen\MetodoPago.cs" />
     <Compile Include="CuadreCierre\CuadreResumen\Totales.cs" />
+    <Compile Include="CuadreCierre\ObtenerCierre\DataResumen\Ficha.cs" />
+    <Compile Include="CuadreCierre\ObtenerCierre\DataResumen\PorDocumento.cs" />
+    <Compile Include="CuadreCierre\ObtenerCierre\DataResumen\PorMetPago.cs" />
+    <Compile Include="CuadreCierre\ObtenerCierre\DataResumen\Total.cs" />
     <Compile Include="CuadreCierre\ObtenerCierre\Ficha.cs" />
     <Compile Include="CuadreCierre\Reportes\CambiosVuelto\Ficha.cs" />
     <Compile Include="CuadreCierre\Reportes\PagoDetalle\Ficha.cs" />

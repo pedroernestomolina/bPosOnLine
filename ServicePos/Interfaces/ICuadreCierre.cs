@@ -33,5 +33,7 @@ namespace ServicePos.Interfaces
             CuadreCierre_Get_ObtenerCierre_byIdOperador(int id);
         DtoLib.ResultadoLista<DtoLibPos.CuadreCierre.ObtenerCierre.Ficha>
             CuadreCierre_Get_ListaCierre();
+        DtoLib.ResultadoEntidad<DtoLibPos.CuadreCierre.ObtenerCierre.DataResumen.Ficha>
+            CuadreCierre_Get_ObtenerCierreDataResumen_byIdResumen(int idResumen);
     }
 }
