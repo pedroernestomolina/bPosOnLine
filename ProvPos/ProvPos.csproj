@@ -90,6 +90,7 @@
     <Compile Include="Pedido_TrasladarVenta.cs" />
     <Compile Include="Pendiente.cs" />
     <Compile Include="Permiso.cs" />
+    <Compile Include="PosCambioPrecio.cs" />
     <Compile Include="Producto.cs" />
     <Compile Include="ProductoAdm.cs" />
     <Compile Include="Producto_ModoAdm.cs" />

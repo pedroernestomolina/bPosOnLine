@@ -20,7 +20,9 @@ namespace ServicePos.Interfaces
         IPedido,
         IDocumento_Agregar,
         IMoneda,
-        ICuadreCierre
+        ICuadreCierre,
+        IPosCambioPrecio
+
     {
         DtoLib.ResultadoEntidad<DateTime> 
             FechaServidor();

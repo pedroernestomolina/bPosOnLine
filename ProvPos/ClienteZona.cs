@@ -12,7 +12,6 @@ using System.Transactions;
 
 namespace ProvPos
 {
-
     public partial class Provider : IPos.IProvider
     {
 

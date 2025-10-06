@@ -94,6 +94,7 @@
     <Compile Include="Pedido\Lista\Filtro.cs" />
     <Compile Include="Pedido\Lista\Resumen.cs" />
     <Compile Include="Pedido\TrasladarVenta\Ficha.cs" />
+    <Compile Include="PosCambioPrecio\ObtenerDataItem\Ficha.cs" />
     <Compile Include="Pos\Cierre\Entidad\Ficha.cs" />
     <Compile Include="Pos\Cierre\Lista\Ficha.cs" />
     <Compile Include="Pos\Cierre\Lista\Filtro.cs" />

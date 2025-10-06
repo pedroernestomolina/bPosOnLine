@@ -63,6 +63,7 @@
     <Compile Include="IPedido.cs" />
     <Compile Include="IPendiente.cs" />
     <Compile Include="IPermiso.cs" />
+    <Compile Include="IPosCambioPrecio.cs" />
     <Compile Include="IProducto.cs" />
     <Compile Include="IProductoAdm.cs" />
     <Compile Include="IProducto_ModoAdm.cs" />

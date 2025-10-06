@@ -13,6 +13,39 @@ namespace ServicePos.MyService
         public DtoLib.ResultadoEntidad<DtoLibPos.Documento.Agregar.Factura.Result> 
             Documento_Agregar_Factura(DtoLibPos.Documento.Agregar.Factura.Ficha ficha)
         {
+            foreach (var det in ficha.Detalles) 
+            {
+                if (det.CostoVenta > det.TotalNeto) 
+                {
+                    var rt = new DtoLib.ResultadoEntidad<DtoLibPos.Documento.Agregar.Factura.Result>()
+                    {
+                        Entidad = null,
+                        Result = DtoLib.Enumerados.EnumResult.isError,
+                        Mensaje = "PRODUCTO: "+det.Nombre+", CHEQUEAR COSTO / PRECIO / UTILIDAD",
+                    };
+                    return rt;
+                }
+                if (det.Utilidad <0m)
+                {
+                    var rt = new DtoLib.ResultadoEntidad<DtoLibPos.Documento.Agregar.Factura.Result>()
+                    {
+                        Entidad = null,
+                        Result = DtoLib.Enumerados.EnumResult.isError,
+                        Mensaje = "PRODUCTO: " + det.Nombre + ", CHEQUEAR COSTO / PRECIO / UTILIDAD",
+                    };
+                    return rt;
+                }
+                if (det.Utilidadp < 0m)
+                {
+                    var rt = new DtoLib.ResultadoEntidad<DtoLibPos.Documento.Agregar.Factura.Result>()
+                    {
+                        Entidad = null,
+                        Result = DtoLib.Enumerados.EnumResult.isError,
+                        Mensaje = "PRODUCTO: " + det.Nombre + ", CHEQUEAR COSTO / PRECIO / UTILIDAD",
+                    };
+                    return rt;
+                }
+            }
             if (ficha.ClienteSaldo != null)
             {
                 var r01 = ServiceProv.Documento_Verificar_ProcesarFactClienteCredito(ficha.ClienteSaldo.autoCliente, ficha.ClienteSaldo.montoActualizar);

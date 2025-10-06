@@ -231,6 +231,152 @@ namespace ProvPos
                                 return result;
                             }
                         }
+
+
+
+                        //
+                        // INSERTAR DOCUMENTO CXC
+                        //
+                        var _cxc = ficha.DocCxC;
+                        var _sqlCxc = @"INSERT INTO cxc (
+                                                auto, 
+                                                c_cobranza, 
+                                                c_cobranzap,    
+                                                fecha, 
+                                                tipo_documento, 
+                                                documento, 
+                                                fecha_vencimiento, 
+                                                nota, 
+                                                importe, 
+                                                acumulado, 
+                                                auto_cliente, 
+                                                cliente, 
+                                                ci_rif, 
+                                                codigo_cliente, 
+                                                estatus_cancelado, 
+                                                resta, 
+                                                estatus_anulado, 
+                                                auto_documento, 
+                                                numero, 
+                                                auto_agencia, 
+                                                agencia, 
+                                                signo, 
+                                                auto_vendedor, 
+                                                c_departamento, 
+                                                c_ventas, 
+                                                c_ventasp, 
+                                                serie, 
+                                                importe_neto, 
+                                                dias, 
+                                                castigop, 
+                                                cierre_ftp, 
+                                                monto_divisa, 
+                                                tasa_divisa, 
+                                                acumulado_divisa, 
+                                                codigo_sucursal, 
+                                                resta_divisa, 
+                                                importe_neto_divisa, 
+                                                estatus_doc_cxc,
+                                                cierre_pos_arqueo) 
+                                            VALUES (
+                                                @auto, 
+                                                @c_cobranza, 
+                                                @c_cobranzap,    
+                                                @fecha, 
+                                                @tipo_documento, 
+                                                @documento, 
+                                                @fecha_vencimiento, 
+                                                @nota, 
+                                                @importe, 
+                                                @acumulado, 
+
+                                                @auto_cliente, 
+                                                @cliente, 
+                                                @ci_rif, 
+                                                @codigo_cliente, 
+                                                @estatus_cancelado, 
+                                                @resta, 
+                                                @estatus_anulado, 
+                                                @auto_documento, 
+                                                @numero, 
+                                                @auto_agencia, 
+
+                                                @agencia, 
+                                                @signo, 
+                                                @auto_vendedor, 
+                                                @c_departamento, 
+                                                @c_ventas, 
+                                                @c_ventasp, 
+                                                @serie, 
+                                                @importe_neto, 
+                                                @dias, 
+                                                @castigop, 
+
+                                                @cierre_ftp, 
+                                                @monto_divisa, 
+                                                @tasa_divisa, 
+                                                @acumulado_divisa, 
+                                                @codigo_sucursal, 
+                                                @resta_divisa, 
+                                                @importe_neto_divisa, 
+                                                @estatus_doc_cxc,
+                                                @cierre_pos_arqueo)";
+                        var Pc01 = new MySql.Data.MySqlClient.MySqlParameter("@auto", autoCxC);
+                        var Pc02 = new MySql.Data.MySqlClient.MySqlParameter("@c_cobranza", _cxc.CCobranza);
+                        var Pc03 = new MySql.Data.MySqlClient.MySqlParameter("@c_cobranzap", _cxc.CCobranzap);
+                        var Pc04 = new MySql.Data.MySqlClient.MySqlParameter("@fecha", fechaSistema.Date);
+                        var Pc05 = new MySql.Data.MySqlClient.MySqlParameter("@tipo_documento", _cxc.TipoDocumento);
+                        var Pc06 = new MySql.Data.MySqlClient.MySqlParameter("@documento", ficha.DocumentoNro);
+                        var Pc07 = new MySql.Data.MySqlClient.MySqlParameter("@fecha_vencimiento", fechaSistema.Date);
+                        var Pc08 = new MySql.Data.MySqlClient.MySqlParameter("@nota", _cxc.Nota);
+                        var Pc09 = new MySql.Data.MySqlClient.MySqlParameter("@importe", _cxc.Importe);
+                        var Pc10 = new MySql.Data.MySqlClient.MySqlParameter("@acumulado", _cxc.Acumulado);
+                        //
+                        var Pc11 = new MySql.Data.MySqlClient.MySqlParameter("@auto_cliente", _cxc.AutoCliente);
+                        var Pc12 = new MySql.Data.MySqlClient.MySqlParameter("@cliente", _cxc.Cliente);
+                        var Pc13 = new MySql.Data.MySqlClient.MySqlParameter("@ci_rif", _cxc.CiRif);
+                        var Pc14 = new MySql.Data.MySqlClient.MySqlParameter("@codigo_cliente", _cxc.CodigoCliente);
+                        var Pc15 = new MySql.Data.MySqlClient.MySqlParameter("@estatus_cancelado", _cxc.EstatusCancelado);
+                        var Pc16 = new MySql.Data.MySqlClient.MySqlParameter("@resta", _cxc.Resta);
+                        var Pc17 = new MySql.Data.MySqlClient.MySqlParameter("@estatus_anulado", _cxc.EstatusAnulado);
+                        var Pc18 = new MySql.Data.MySqlClient.MySqlParameter("@auto_documento", autoVenta);
+                        var Pc19 = new MySql.Data.MySqlClient.MySqlParameter("@numero", _cxc.Numero);
+                        var Pc20 = new MySql.Data.MySqlClient.MySqlParameter("@auto_agencia", _cxc.AutoAgencia);
+                        //
+                        var Pc21 = new MySql.Data.MySqlClient.MySqlParameter("@agencia", _cxc.Agencia);
+                        var Pc22 = new MySql.Data.MySqlClient.MySqlParameter("@signo", _cxc.Signo);
+                        var Pc23 = new MySql.Data.MySqlClient.MySqlParameter("@auto_vendedor", _cxc.AutoVendedor);
+                        var Pc24 = new MySql.Data.MySqlClient.MySqlParameter("@c_departamento", _cxc.CDepartamento);
+                        var Pc25 = new MySql.Data.MySqlClient.MySqlParameter("@c_ventas", _cxc.CVentas);
+                        var Pc26 = new MySql.Data.MySqlClient.MySqlParameter("@c_ventasp", _cxc.CVentasp);
+                        var Pc27 = new MySql.Data.MySqlClient.MySqlParameter("@serie", _cxc.Serie);
+                        var Pc28 = new MySql.Data.MySqlClient.MySqlParameter("@importe_neto", _cxc.ImporteNeto);
+                        var Pc29 = new MySql.Data.MySqlClient.MySqlParameter("@dias", _cxc.Dias);
+                        var Pc30 = new MySql.Data.MySqlClient.MySqlParameter("@castigop", _cxc.CastigoP);
+                        //
+                        var Pc31 = new MySql.Data.MySqlClient.MySqlParameter("@cierre_ftp", _cxc.CierreFtp);
+                        var Pc32 = new MySql.Data.MySqlClient.MySqlParameter("@monto_divisa", _cxc.MontoDivisa);
+                        var Pc33 = new MySql.Data.MySqlClient.MySqlParameter("@tasa_divisa", _cxc.TasaDivisa);
+                        var Pc34 = new MySql.Data.MySqlClient.MySqlParameter("@acumulado_divisa", _cxc.AcumuladoDivisa);
+                        var Pc35 = new MySql.Data.MySqlClient.MySqlParameter("@codigo_sucursal", _cxc.CodigoSucursal);
+                        var Pc36 = new MySql.Data.MySqlClient.MySqlParameter("@resta_divisa", _cxc.RestaDivisa);
+                        var Pc37 = new MySql.Data.MySqlClient.MySqlParameter("@importe_neto_divisa", _cxc.ImporteNetoDivisa);
+                        var Pc38 = new MySql.Data.MySqlClient.MySqlParameter("@estatus_doc_cxc", "0");
+                        var Pc39 = new MySql.Data.MySqlClient.MySqlParameter("@cierre_pos_arqueo", _cxc.CierrePosArqueo);
+                        //
+                        var rstCxc = cn.Database.ExecuteSqlCommand(_sqlCxc,
+                            Pc01, Pc02, Pc03, Pc04, Pc05, Pc06, Pc07, Pc08, Pc09, Pc10,
+                            Pc11, Pc12, Pc13, Pc14, Pc15, Pc16, Pc17, Pc18, Pc19, Pc20,
+                            Pc21, Pc22, Pc23, Pc24, Pc25, Pc26, Pc27, Pc28, Pc29, Pc30,
+                            Pc31, Pc32, Pc33, Pc34, Pc35, Pc36, Pc37, Pc38, Pc39);
+                        if (rstCxc == 0)
+                        {
+                            throw new Exception("PROBLEMA AL REGISTAR EL DOCUMENTO DE CXC");
+                        }
+                        cn.SaveChanges();
+
+
+                        /*
                         //DOCUMENTO CXC
                         var _cxc = ficha.DocCxC;
                         var entCxC = new cxc()
@@ -278,6 +424,11 @@ namespace ProvPos
                         cn.cxc.Add(entCxC);
                         cn.SaveChanges();
                         //
+                         * 
+                         */
+
+
+
                         if (ficha.DocCxCPago != null)
                         {
                             sql = "update sistema_contadores set a_cxc=a_cxc+1";
@@ -292,6 +443,147 @@ namespace ProvPos
                             var autoCxCPago = ficha.Prefijo + aCxCPago.ToString().Trim().PadLeft(largo, '0');
                             var pago = ficha.DocCxCPago.Pago;
 
+
+
+                            var _sqlPago = @"INSERT INTO cxc (
+                                                auto, 
+                                                c_cobranza, 
+                                                c_cobranzap,    
+                                                fecha, 
+                                                tipo_documento, 
+                                                documento, 
+                                                fecha_vencimiento, 
+                                                nota, 
+                                                importe, 
+                                                acumulado, 
+                                                auto_cliente, 
+                                                cliente, 
+                                                ci_rif, 
+                                                codigo_cliente, 
+                                                estatus_cancelado, 
+                                                resta, 
+                                                estatus_anulado, 
+                                                auto_documento, 
+                                                numero, 
+                                                auto_agencia, 
+                                                agencia, 
+                                                signo, 
+                                                auto_vendedor, 
+                                                c_departamento, 
+                                                c_ventas, 
+                                                c_ventasp, 
+                                                serie, 
+                                                importe_neto, 
+                                                dias, 
+                                                castigop, 
+                                                cierre_ftp, 
+                                                monto_divisa, 
+                                                tasa_divisa, 
+                                                acumulado_divisa, 
+                                                codigo_sucursal, 
+                                                resta_divisa, 
+                                                importe_neto_divisa, 
+                                                estatus_doc_cxc,
+                                                cierre_pos_arqueo) 
+                                            VALUES (
+                                                @auto, 
+                                                @c_cobranza, 
+                                                @c_cobranzap,    
+                                                @fecha, 
+                                                @tipo_documento, 
+                                                @documento, 
+                                                @fecha_vencimiento, 
+                                                @nota, 
+                                                @importe, 
+                                                @acumulado, 
+
+                                                @auto_cliente, 
+                                                @cliente, 
+                                                @ci_rif, 
+                                                @codigo_cliente, 
+                                                @estatus_cancelado, 
+                                                @resta, 
+                                                @estatus_anulado, 
+                                                @auto_documento, 
+                                                @numero, 
+                                                @auto_agencia, 
+
+                                                @agencia, 
+                                                @signo, 
+                                                @auto_vendedor, 
+                                                @c_departamento, 
+                                                @c_ventas, 
+                                                @c_ventasp, 
+                                                @serie, 
+                                                @importe_neto, 
+                                                @dias, 
+                                                @castigop, 
+
+                                                @cierre_ftp, 
+                                                @monto_divisa, 
+                                                @tasa_divisa, 
+                                                @acumulado_divisa, 
+                                                @codigo_sucursal, 
+                                                @resta_divisa, 
+                                                @importe_neto_divisa, 
+                                                @estatus_doc_cxc,
+                                                @cierre_pos_arqueo)";
+                            var Pg01 = new MySql.Data.MySqlClient.MySqlParameter("@auto", autoCxCPago);
+                            var Pg02 = new MySql.Data.MySqlClient.MySqlParameter("@c_cobranza", pago.CCobranza);
+                            var Pg03 = new MySql.Data.MySqlClient.MySqlParameter("@c_cobranzap", pago.CCobranzap);
+                            var Pg04 = new MySql.Data.MySqlClient.MySqlParameter("@fecha", fechaSistema.Date);
+                            var Pg05 = new MySql.Data.MySqlClient.MySqlParameter("@tipo_documento", pago.TipoDocumento);
+                            var Pg06 = new MySql.Data.MySqlClient.MySqlParameter("@documento", reciboNUmero);
+                            var Pg07 = new MySql.Data.MySqlClient.MySqlParameter("@fecha_vencimiento", fechaSistema.Date);
+                            var Pg08 = new MySql.Data.MySqlClient.MySqlParameter("@nota", pago.Nota);
+                            var Pg09 = new MySql.Data.MySqlClient.MySqlParameter("@importe", pago.Importe);
+                            var Pg10 = new MySql.Data.MySqlClient.MySqlParameter("@acumulado", pago.Acumulado);
+                            //
+                            var Pg11 = new MySql.Data.MySqlClient.MySqlParameter("@auto_cliente", pago.AutoCliente);
+                            var Pg12 = new MySql.Data.MySqlClient.MySqlParameter("@cliente", pago.Cliente);
+                            var Pg13 = new MySql.Data.MySqlClient.MySqlParameter("@ci_rif", pago.CiRif);
+                            var Pg14 = new MySql.Data.MySqlClient.MySqlParameter("@codigo_cliente", pago.CodigoCliente);
+                            var Pg15 = new MySql.Data.MySqlClient.MySqlParameter("@estatus_cancelado", pago.EstatusCancelado);
+                            var Pg16 = new MySql.Data.MySqlClient.MySqlParameter("@resta", pago.Resta);
+                            var Pg17 = new MySql.Data.MySqlClient.MySqlParameter("@estatus_anulado", pago.EstatusAnulado);
+                            var Pg18 = new MySql.Data.MySqlClient.MySqlParameter("@auto_documento", autoRecibo);
+                            var Pg19 = new MySql.Data.MySqlClient.MySqlParameter("@numero", pago.Numero);
+                            var Pg20 = new MySql.Data.MySqlClient.MySqlParameter("@auto_agencia", pago.AutoAgencia);
+                            //
+                            var Pg21 = new MySql.Data.MySqlClient.MySqlParameter("@agencia", pago.Agencia);
+                            var Pg22 = new MySql.Data.MySqlClient.MySqlParameter("@signo", pago.Signo);
+                            var Pg23 = new MySql.Data.MySqlClient.MySqlParameter("@auto_vendedor", pago.AutoVendedor);
+                            var Pg24 = new MySql.Data.MySqlClient.MySqlParameter("@c_departamento", pago.CDepartamento);
+                            var Pg25 = new MySql.Data.MySqlClient.MySqlParameter("@c_ventas", pago.CVentas);
+                            var Pg26 = new MySql.Data.MySqlClient.MySqlParameter("@c_ventasp", pago.CVentasp);
+                            var Pg27 = new MySql.Data.MySqlClient.MySqlParameter("@serie", pago.Serie);
+                            var Pg28 = new MySql.Data.MySqlClient.MySqlParameter("@importe_neto", pago.ImporteNeto);
+                            var Pg29 = new MySql.Data.MySqlClient.MySqlParameter("@dias", pago.Dias);
+                            var Pg30 = new MySql.Data.MySqlClient.MySqlParameter("@castigop", pago.CastigoP);
+                            //
+                            var Pg31 = new MySql.Data.MySqlClient.MySqlParameter("@cierre_ftp", pago.CierreFtp);
+                            var Pg32 = new MySql.Data.MySqlClient.MySqlParameter("@monto_divisa", pago.MontoDivisa);
+                            var Pg33 = new MySql.Data.MySqlClient.MySqlParameter("@tasa_divisa", pago.TasaDivisa);
+                            var Pg34 = new MySql.Data.MySqlClient.MySqlParameter("@acumulado_divisa", pago.AcumuladoDivisa);
+                            var Pg35 = new MySql.Data.MySqlClient.MySqlParameter("@codigo_sucursal", pago.CodigoSucursal);
+                            var Pg36 = new MySql.Data.MySqlClient.MySqlParameter("@resta_divisa", pago.RestaDivisa);
+                            var Pg37 = new MySql.Data.MySqlClient.MySqlParameter("@importe_neto_divisa", pago.ImporteNetoDivisa);
+                            var Pg38 = new MySql.Data.MySqlClient.MySqlParameter("@estatus_doc_cxc", "0");
+                            var Pg39 = new MySql.Data.MySqlClient.MySqlParameter("@cierre_pos_arqueo", pago.CierrePosArqueo);
+                            //
+                            var rstPago = cn.Database.ExecuteSqlCommand(_sqlPago,
+                                Pg01, Pg02, Pg03, Pg04, Pg05, Pg06, Pg07, Pg08, Pg09, Pg10,
+                                Pg11, Pg12, Pg13, Pg14, Pg15, Pg16, Pg17, Pg18, Pg19, Pg20,
+                                Pg21, Pg22, Pg23, Pg24, Pg25, Pg26, Pg27, Pg28, Pg29, Pg30,
+                                Pg31, Pg32, Pg33, Pg34, Pg35, Pg36, Pg37, Pg38, Pg39);
+                            if (rstPago == 0)
+                            {
+                                throw new Exception("PROBLEMA AL REGISTAR EL DOCUMENTO DE PAGO");
+                            }
+                            cn.SaveChanges();
+
+
+                            /*
                             //DOCUEMNTO CXC PAGO
                             var entCxCPago = new cxc()
                             {
@@ -337,6 +629,9 @@ namespace ProvPos
                             };
                             cn.cxc.Add(entCxCPago);
                             cn.SaveChanges();
+                             */
+
+
 
                             //DOCUEMNTO CXC RECIBO
                             var recibo = ficha.DocCxCPago.Recibo;
@@ -378,6 +673,8 @@ namespace ProvPos
                             cn.cxc_recibos.Add(entCxcRecibo);
                             cn.SaveChanges();
 
+
+
                             //DOCUMENTO CXC DOCUMENTO
                             var documento = ficha.DocCxCPago.Documento;
                             var sql_InsertarCxCDocumento = @"INSERT INTO cxc_documentos (
@@ -397,9 +694,7 @@ namespace ProvPos
                                 documento.ImporteDivisa, "0", documento.CodigoSucursal, documento.Notas);
                             if (vCxcDoc == 0)
                             {
-                                result.Mensaje = "PROBLEMA AL REGISTRAR DOCUMENTO CXC";
-                                result.Result = DtoLib.Enumerados.EnumResult.isError;
-                                return result;
+                                throw new Exception("PROBLEMA AL REGISTRAR DOCUMENTOS AFECTADOS POR CXC");
                             }
 
                             //DOCUEMNTO CXC METODOS PAGO
@@ -411,26 +706,41 @@ namespace ProvPos
                                                 auto_usuario, lote, referencia, auto_cobrador, cierre, 
                                                 fecha_agencia, cierre_ftp, opBanco, opNroCta, opNroRef,
                                                 opFecha, opDetalle, opMonto, opTasa, opAplicaConversion,
-                                                estatus_doc_cxc, codigo_sucursal)
+                                                estatus_doc_cxc, codigo_sucursal,
+                                                monto_mon_recibe,
+                                                codigo_mon_recibe,
+                                                simbolo_mon_recibe,
+                                                tasa_mon_recibe,
+                                                loteNro_mon_recibe,
+                                                refNro_mon_recibe,
+                                                monto_mon_local,
+                                                monto_mon_referencia)
                                         VALUES (
                                                 {0}, {1}, {2}, {3}, {4}, 
                                                 {5}, {6}, {7}, {8}, {9}, 
                                                 {10}, {11}, {12}, {13}, {14}, 
                                                 {15}, {16}, {17}, {18}, {19}, 
                                                 {20}, {21}, {22}, {23}, {24},
-                                                {25}, {26})";
+                                                {25}, {26},
+                                                {27}, {28}, {29}, {30}, {31}, {32}, {33}, {34})";
                                 var vCxcMedioPago = cn.Database.ExecuteSqlCommand(sql_InsertarCxCMedioPago,
                                     autoRecibo, fp.AutoMedioPago, fp.AutoAgencia, fp.Medio, fp.Codigo,
                                     fp.MontoRecibido, fechaSistema, fp.EstatusAnulado, fp.Numero, fp.Agencia,
                                     ficha.AutoUsuario, fp.Lote, fp.Referencia, fp.AutoCobrador, fp.Cierre,
                                     fechaNula, fp.CierreFtp, fp.OpBanco, fp.OpNroCta, fp.OpNroRef,
                                     fp.OpFecha, fp.OpDetalle, fp.OpMonto, fp.OpTasa, fp.OpAplicaConversion,
-                                    "0", fp.CodigoSucursal);
+                                    "0", fp.CodigoSucursal,
+                                    fp.MontoMonedaRecibe, 
+                                    fp.CodigoMonedaRecibe,
+                                    fp.SimboloMonedaRecibe,
+                                    fp.TasaMonedaRecibe,
+                                    fp.LoteNroMonedaRecibe,
+                                    fp.ReferenciaNroMonedaRecibe,
+                                    fp.MontoMonedaLocal,
+                                    fp.MontoMonedaReferencia);
                                 if (vCxcMedioPago == 0)
                                 {
-                                    result.Mensaje = "PROBLEMA AL REGISTRAR METODO PAGO CXC";
-                                    result.Result = DtoLib.Enumerados.EnumResult.isError;
-                                    return result;
+                                    throw new Exception("PROBLEMA AL REGISTAR METODOS DE PAGO EN CXC");
                                 }
                             }
                         }

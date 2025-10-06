@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 
 namespace DtoLibPos.Documento.Agregar.NotaCredito
 {
-    
     public class FichaCxC: BaseCxC
     {
-
-
+        public string CierrePosArqueo { get; set; }
         public FichaCxC()
         {
             CCobranza = 0.0m;
@@ -42,8 +40,8 @@ namespace DtoLibPos.Documento.Agregar.NotaCredito
             CierreFtp = "";
             MontoDivisa = 0m;
             TasaDivisa = 0m;
+            //
+            CierrePosArqueo = "";
         }
-
     }
-
 }

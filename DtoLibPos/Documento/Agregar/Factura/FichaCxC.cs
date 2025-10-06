@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 
 namespace DtoLibPos.Documento.Agregar.Factura
 {
-    
     public class FichaCxC: BaseCxC
     {
-
-
+        public string CierrePosArqueo  { get; set; }
         public FichaCxC()
         {
             CCobranza = 0.0m;
@@ -47,8 +45,8 @@ namespace DtoLibPos.Documento.Agregar.Factura
             CodigoSucursal = "";
             RestaDivisa = 0m;
             ImporteNetoDivisa = 0m;
+            //
+            CierrePosArqueo = "";
         }
-
     }
-
 }
