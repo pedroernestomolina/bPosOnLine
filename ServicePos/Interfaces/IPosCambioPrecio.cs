@@ -11,5 +11,7 @@ namespace ServicePos.Interfaces
     {
         DtoLib.ResultadoEntidad<DtoLibPos.PosCambioPrecio.ObtenerDataItem.Ficha>
             PosCambioPrecio_ObtenerDataItem(int idItem);
+        DtoLib.Resultado
+            PosCambioPrecio_ProcesarCambio(DtoLibPos.PosCambioPrecio.ProcesarCambio.Ficha ficha);
     }
 }

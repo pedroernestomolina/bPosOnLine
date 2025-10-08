@@ -18,8 +18,10 @@ namespace DtoLibPos.PosCambioPrecio.ObtenerDataItem
         public decimal tasaIva { get; set; }
         public decimal costoUnd { get; set; }
         public int contEmpqVta { get; set; }
+        public string descEmpqVta { get; set; }
         public string estatusAdmPorDivisa { get; set; }
         public decimal costoDivisaEmpqCompra { get; set; }
         public int contEmpqCompra { get; set; }
+        public string estatusAplicaPorcAumento { get; set; }
     }
 }

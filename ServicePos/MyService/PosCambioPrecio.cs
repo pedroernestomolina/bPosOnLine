@@ -15,5 +15,10 @@ namespace ServicePos.MyService
         {
             return ServiceProv.PosCambioPrecio_ObtenerDataItem(idItem);
         }
+        public DtoLib.Resultado 
+            PosCambioPrecio_ProcesarCambio(DtoLibPos.PosCambioPrecio.ProcesarCambio.Ficha ficha)
+        {
+            return ServiceProv.PosCambioPrecio_ProcesarCambio(ficha);
+        }
     }
 }
