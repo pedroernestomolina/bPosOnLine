@@ -28,7 +28,7 @@ namespace ProvPos
                             var p1 = new MySql.Data.MySqlClient.MySqlParameter("@idItem", rg.idItem);
                             var p2 = new MySql.Data.MySqlClient.MySqlParameter("@pneto", rg.precioNeto);
                             var sql = @"update p_venta set 
-                                            pneto=@pneto,
+                                            pneto=@pneto
                                     where id=@idItem";
                             var r0 = cnn.Database.ExecuteSqlCommand(sql, p1, p2);
                             if (r0 == 0)
