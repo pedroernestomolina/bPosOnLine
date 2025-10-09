@@ -63,6 +63,7 @@
     <Compile Include="Interfaces\IPendiente.cs" />
     <Compile Include="Interfaces\IPermiso.cs" />
     <Compile Include="Interfaces\IPosCambioPrecio.cs" />
+    <Compile Include="Interfaces\IPosItem.cs" />
     <Compile Include="Interfaces\IProducto.cs" />
     <Compile Include="Interfaces\IProductoAdm.cs" />
     <Compile Include="Interfaces\IProducto_ModoAdm.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="MyService\Pendiente.cs" />
     <Compile Include="MyService\Permiso.cs" />
     <Compile Include="MyService\PosCambioPrecio.cs" />
+    <Compile Include="MyService\PosItem.cs" />
     <Compile Include="MyService\Producto.cs" />
     <Compile Include="MyService\ProductoAdm.cs" />
     <Compile Include="MyService\Producto_ModoAdm.cs" />
