@@ -21,7 +21,8 @@ namespace IPos
         IDocumento_Agregar,
         IMoneda,
         ICuadreCierre,
-        IPosCambioPrecio
+        IPosCambioPrecio,
+        IPosItem
     {
         DtoLib.ResultadoEntidad<DateTime> 
             FechaServidor();

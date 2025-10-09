@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace ProvPos
 {
-
     public partial class Provider: IPos.IProvider
     {
-
         public DtoLib.ResultadoLista<DtoLibPos.Concepto.Lista.Ficha> 
             Concepto_GetLista(DtoLibPos.Concepto.Lista.Filtro filtro)
         {
@@ -73,7 +71,5 @@ namespace ProvPos
 
             return result;
         }
-
     }
-
 }
