@@ -12,6 +12,7 @@ namespace DtoLibPos.CuadreCierre.CerrarPos
         public int idOperador { get; set; }
         public int idResumen { get; set; }
         public string estatus { get; set; }
+        public string codigoSucursal { get; set; }
         public Total totales { get; set; }
         public List<Documento> documentos { get; set; }
         public List<MetodoPago> metPago { get; set; }

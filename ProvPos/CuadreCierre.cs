@@ -634,6 +634,84 @@ namespace ProvPos
                                 }
                             }
                             cnn.SaveChanges();
+                            //
+                            _sql = @"INSERT INTO pos_arqueo_documentos (
+                                    desc_doc, 
+                                    codigo_doc,     
+                                    signo_doc,
+                                    cnt_mov_activo, 
+                                    importe_activo_mon_local, 
+                                    importe_activo_mon_referencia, 
+                                    cnt_mov_anulado, 
+                                    importe_anulado_mon_local, 
+                                    importe_anulado_mon_referencia, 
+                                    cnt_mov_contado, 
+                                    importe_contado_mon_local, 
+                                    importe_contado_mon_referencia, 
+                                    cnt_mov_credito, 
+                                    importe_credito_mon_local, 
+                                    importe_credito_mon_referencia, 
+                                    siglas_doc, 
+                                    cnt_total_mov, 
+                                    variante_doc,
+                                    auto_cierre,
+                                    codigo_sucursal,
+                                    cierre_numero) 
+                                VALUES (
+                                    @desc_doc, 
+                                    @codigo_doc,     
+                                    @signo_doc,
+                                    @cnt_mov_activo, 
+                                    @importe_activo_mon_local, 
+                                    @importe_activo_mon_referencia, 
+                                    @cnt_mov_anulado, 
+                                    @importe_anulado_mon_local, 
+                                    @importe_anulado_mon_referencia, 
+                                    @cnt_mov_contado, 
+                                    @importe_contado_mon_local, 
+                                    @importe_contado_mon_referencia, 
+                                    @cnt_mov_credito, 
+                                    @importe_credito_mon_local, 
+                                    @importe_credito_mon_referencia, 
+                                    @siglas_doc, 
+                                    @cnt_total_mov, 
+                                    @variante_doc,
+                                    @auto_cierre,
+                                    @codigo_sucursal,
+                                    @cierre_numero)";
+                            foreach (var rg in ficha.documentos)
+                            {
+                                var tp02 = new MySql.Data.MySqlClient.MySqlParameter("@desc_doc", rg.descDoc);
+                                var tp03 = new MySql.Data.MySqlClient.MySqlParameter("@codigo_doc", rg.codigoDoc);
+                                var tp04 = new MySql.Data.MySqlClient.MySqlParameter("@signo_doc", rg.signoDoc);
+                                var tp05 = new MySql.Data.MySqlClient.MySqlParameter("@cnt_mov_activo", rg.cntMovActivo);
+                                var tp06 = new MySql.Data.MySqlClient.MySqlParameter("@importe_activo_mon_local", rg.importeMovActMonLocal);
+                                var tp07 = new MySql.Data.MySqlClient.MySqlParameter("@importe_activo_mon_referencia", rg.importeMovActivoMonReferencia);
+                                var tp08 = new MySql.Data.MySqlClient.MySqlParameter("@cnt_mov_anulado", rg.cntMovAnulado);
+                                var tp09 = new MySql.Data.MySqlClient.MySqlParameter("@importe_anulado_mon_local", rg.importMovAnuladoMonLocal);
+                                var tp10 = new MySql.Data.MySqlClient.MySqlParameter("@importe_anulado_mon_referencia", rg.importeMovAnuladoMonReferencia);
+                                var tp11 = new MySql.Data.MySqlClient.MySqlParameter("@cnt_mov_contado", rg.cntMovContado);
+                                var tp12 = new MySql.Data.MySqlClient.MySqlParameter("@importe_contado_mon_local", rg.importteMovContadoMonLocal);
+                                var tp13 = new MySql.Data.MySqlClient.MySqlParameter("@importe_contado_mon_referencia", rg.importeMovContadoMonReferencia);
+                                var tp14 = new MySql.Data.MySqlClient.MySqlParameter("@cnt_mov_credito", rg.cntMovCredito);
+                                var tp15 = new MySql.Data.MySqlClient.MySqlParameter("@importe_credito_mon_local", rg.importeMovCreditoMonLocal);
+                                var tp16 = new MySql.Data.MySqlClient.MySqlParameter("@importe_credito_mon_referencia", rg.importeMovCreditoMonReferencia);
+                                var tp17 = new MySql.Data.MySqlClient.MySqlParameter("@siglas_doc", rg.siglasDoc);
+                                var tp18 = new MySql.Data.MySqlClient.MySqlParameter("@cnt_total_mov", rg.cntTotalmov);
+                                var tp19 = new MySql.Data.MySqlClient.MySqlParameter("@variante_doc", rg.varianteDoc);
+                                var tp20 = new MySql.Data.MySqlClient.MySqlParameter("@auto_cierre", arq.autoArqueo);
+                                var tp21 = new MySql.Data.MySqlClient.MySqlParameter("@codigo_sucursal", ficha.codigoSucursal);
+                                var tp22 = new MySql.Data.MySqlClient.MySqlParameter("@cierre_numero", aCierreNro);
+                                var rst = cnn.Database.ExecuteSqlCommand(_sql,
+                                    tp02, tp03, tp04, tp05, tp06, tp07, tp08, tp09, tp10,
+                                    tp11, tp12, tp13, tp14, tp15, tp16, tp17, tp18, tp19, tp20,
+                                    tp21, tp22);
+                                if (rst == 0)
+                                {
+                                    throw new Exception("PROBLEMA AL INSERTAR POS_ARQUEO_DOCUMENTOS");
+                                }
+                            }
+                            cnn.SaveChanges();
                         }
                         if (ficha.metPago != null) 
                         {
@@ -682,6 +760,57 @@ namespace ProvPos
                                 }
                                 cnn.SaveChanges();
                             }
+                            //
+                            _sql = @"INSERT INTO pos_arqueo_metodos_pago (
+                                        codigo_mediopago, 
+                                        desc_mediopago, 
+                                        codigo_currencies, 
+                                        desc_currencies, 
+                                        simbolo_currencies, 
+                                        tasa_factor_ponderado, 
+                                        monto_segun_sistema, 
+                                        monto_segun_usuario, 
+                                        importe_mon_local,
+                                        auto_cierre,
+                                        codigo_sucursal,
+                                        cierre_numero)
+                                    VALUES (
+                                        @codigo_mediopago, 
+                                        @desc_mediopago, 
+                                        @codigo_currencies, 
+                                        @desc_currencies, 
+                                        @simbolo_currencies, 
+                                        @tasa_factor_ponderado, 
+                                        @monto_segun_sistema, 
+                                        @monto_segun_usuario, 
+                                        @importe_mon_local,
+                                        @auto_cierre,
+                                        @codigo_sucursal,
+                                        @cierre_numero)";
+                            foreach (var rg in ficha.metPago)
+                            {
+                                var tp02 = new MySql.Data.MySqlClient.MySqlParameter("@codigo_mediopago", rg.codigoMP);
+                                var tp03 = new MySql.Data.MySqlClient.MySqlParameter("@desc_mediopago", rg.descMP);
+                                var tp04 = new MySql.Data.MySqlClient.MySqlParameter("@codigo_currencies", rg.codigoMon);
+                                var tp05 = new MySql.Data.MySqlClient.MySqlParameter("@desc_currencies", rg.descMon);
+                                var tp06 = new MySql.Data.MySqlClient.MySqlParameter("@simbolo_currencies", rg.simboloMon);
+                                var tp07 = new MySql.Data.MySqlClient.MySqlParameter("@tasa_factor_ponderado", rg.tasaFactorPonderadoMon);
+                                var tp08 = new MySql.Data.MySqlClient.MySqlParameter("@monto_segun_sistema", rg.montoSegunSistema);
+                                var tp09 = new MySql.Data.MySqlClient.MySqlParameter("@monto_segun_usuario", rg.montoSegunUsuario);
+                                var tp10 = new MySql.Data.MySqlClient.MySqlParameter("@importe_mon_local", rg.importeMonLocal);
+                                var tp11 = new MySql.Data.MySqlClient.MySqlParameter("@auto_cierre", arq.autoArqueo);
+                                var tp12 = new MySql.Data.MySqlClient.MySqlParameter("@codigo_sucursal", ficha.codigoSucursal);
+                                var tp13 = new MySql.Data.MySqlClient.MySqlParameter("@cierre_numero", aCierreNro);
+                                var rst = cnn.Database.ExecuteSqlCommand(_sql,
+                                    tp02, tp03, tp04, tp05,
+                                    tp06, tp07, tp08, tp09, tp10,
+                                    tp11, tp12, tp13);
+                                if (rst == 0)
+                                {
+                                    throw new Exception("PROBLEMA AL INSERTAR POS_ARQUEO_METODOS_PAGO");
+                                }
+                                cnn.SaveChanges();
+                            }
                         }
                         if (ficha.totales != null) 
                         {
@@ -723,6 +852,51 @@ namespace ProvPos
                             if (rst == 0)
                             {
                                 throw new Exception("PROBLEMA AL INSERTAR P_RESUMEN_CIERRE_TOTALES");
+                            }
+                            cnn.SaveChanges();
+                            //
+                            _sql = @"INSERT INTO pos_arqueo_totales (
+                                        estatus_cuadre, 
+                                        total_cuadre_mon_local, 
+                                        cuadre_segun_sistema_mon_local, 
+                                        cuadre_segun_usuario_mon_local, 
+                                        vuelto_cambio_efectivo, 
+                                        vuelto_cambio_divisa, 
+                                        vuelto_cambio_pago_movil, 
+                                        cnt_divisa_vuelto,
+                                        auto_cierre,
+                                        codigo_sucursal,
+                                        cierre_numero) 
+                                    VALUES (
+                                        @estatus_cuadre, 
+                                        @total_cuadre_mon_local, 
+                                        @cuadre_segun_sistema_mon_local, 
+                                        @cuadre_segun_usuario_mon_local, 
+                                        @vuelto_cambio_efectivo, 
+                                        @vuelto_cambio_divisa, 
+                                        @vuelto_cambio_pago_movil, 
+                                        @cnt_divisa_vuelto,
+                                        @auto_cierre,
+                                        @codigo_sucursal,
+                                        @cierre_numero)";
+                            tp02 = new MySql.Data.MySqlClient.MySqlParameter("@estatus_cuadre", _f.estatusCuadre);
+                            tp03 = new MySql.Data.MySqlClient.MySqlParameter("@total_cuadre_mon_local", _f.totalCuadreMonLocal);
+                            tp04 = new MySql.Data.MySqlClient.MySqlParameter("@cuadre_segun_sistema_mon_local", _f.totalCajaSegunSistemaMonLocal);
+                            tp05 = new MySql.Data.MySqlClient.MySqlParameter("@cuadre_segun_usuario_mon_local", _f.totalCajaSegunUsuarioMonLocal);
+                            tp06 = new MySql.Data.MySqlClient.MySqlParameter("@vuelto_cambio_efectivo", _f.vueltoCambioPorEfectivo);
+                            tp07 = new MySql.Data.MySqlClient.MySqlParameter("@vuelto_cambio_divisa", _f.vueltoCambioPorDivisa);
+                            tp08 = new MySql.Data.MySqlClient.MySqlParameter("@vuelto_cambio_pago_movil", _f.vueltoCambioPorPagoMovil);
+                            tp09 = new MySql.Data.MySqlClient.MySqlParameter("@cnt_divisa_vuelto", _f.cntDivisaPorVuelto);
+                            var tp10 = new MySql.Data.MySqlClient.MySqlParameter("@auto_cierre", arq.autoArqueo);
+                            var tp11 = new MySql.Data.MySqlClient.MySqlParameter("@codigo_sucursal", ficha.codigoSucursal);
+                            var tp12 = new MySql.Data.MySqlClient.MySqlParameter("@cierre_numero", aCierreNro);
+                            rst = cnn.Database.ExecuteSqlCommand(_sql,
+                                tp02, tp03, tp04, tp05,
+                                tp06, tp07, tp08, tp09, tp10,
+                                tp11, tp12);
+                            if (rst == 0)
+                            {
+                                throw new Exception("PROBLEMA AL INSERTAR POS_ARQUEO_TOTALES");
                             }
                             cnn.SaveChanges();
                         }
