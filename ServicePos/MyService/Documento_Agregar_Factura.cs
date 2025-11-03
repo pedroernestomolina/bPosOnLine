@@ -15,33 +15,37 @@ namespace ServicePos.MyService
         {
             foreach (var det in ficha.Detalles) 
             {
-                if (det.CostoVenta > det.TotalNeto) 
+                var _costo = Math.Round(det.CostoVenta, 2, MidpointRounding.AwayFromZero);
+                var _importe = Math.Round(det.TotalNeto, 2, MidpointRounding.AwayFromZero);
+                var _utilidadM = Math.Round(det.Utilidad, 2, MidpointRounding.AwayFromZero);
+                var _utilidadP = Math.Round(det.Utilidadp, 2, MidpointRounding.AwayFromZero);
+                if (_costo > _importe) 
                 {
                     var rt = new DtoLib.ResultadoEntidad<DtoLibPos.Documento.Agregar.Factura.Result>()
                     {
                         Entidad = null,
                         Result = DtoLib.Enumerados.EnumResult.isError,
-                        Mensaje = "PRODUCTO: "+det.Nombre+", CHEQUEAR COSTO / PRECIO / UTILIDAD",
+                        Mensaje = "PRODUCTO: "+det.Nombre+", CHEQUEAR COSTO",
                     };
                     return rt;
                 }
-                if (det.Utilidad <0m)
+                if (_utilidadM <0m)
                 {
                     var rt = new DtoLib.ResultadoEntidad<DtoLibPos.Documento.Agregar.Factura.Result>()
                     {
                         Entidad = null,
                         Result = DtoLib.Enumerados.EnumResult.isError,
-                        Mensaje = "PRODUCTO: " + det.Nombre + ", CHEQUEAR COSTO / PRECIO / UTILIDAD",
+                        Mensaje = "PRODUCTO: " + det.Nombre + ", CHEQUEAR UTILIDAD MARGEN",
                     };
                     return rt;
                 }
-                if (det.Utilidadp < 0m)
+                if (_utilidadP < 0m)
                 {
                     var rt = new DtoLib.ResultadoEntidad<DtoLibPos.Documento.Agregar.Factura.Result>()
                     {
                         Entidad = null,
                         Result = DtoLib.Enumerados.EnumResult.isError,
-                        Mensaje = "PRODUCTO: " + det.Nombre + ", CHEQUEAR COSTO / PRECIO / UTILIDAD",
+                        Mensaje = "PRODUCTO: " + det.Nombre + ", CHEQUEAR UTILIDAD PORCENTAJE",
                     };
                     return rt;
                 }
