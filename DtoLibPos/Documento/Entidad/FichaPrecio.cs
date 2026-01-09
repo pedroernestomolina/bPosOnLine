@@ -11,5 +11,8 @@ namespace DtoLibPos.Documento.Entidad
     {
         public string descPrd { get; set; }
         public decimal precio { get; set; }
+        public decimal precioFactura { get; set; }
+        public decimal descuento { get; set; }
+        public decimal bonoAplicar { get; set; }
     }
 }

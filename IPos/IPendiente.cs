@@ -7,15 +7,19 @@ using System.Threading.Tasks;
 
 namespace IPos
 {
-
     public interface IPendiente
     {
-
-        DtoLib.Resultado Pendiente_DejarCta(DtoLibPos.Pendiente.Dejar.Ficha ficha);
-        DtoLib.ResultadoEntidad<int> Pendiente_CtasPendientes(DtoLibPos.Pendiente.Cnt.Filtro filtro);
-        DtoLib.ResultadoLista<DtoLibPos.Pendiente.Lista.Ficha> Pendiente_Lista(DtoLibPos.Pendiente.Lista.Filtro filtro);
-        DtoLib.Resultado Pendiente_AbrirCta(int idCta, int idOperador);
-
+        DtoLib.Resultado 
+            Pendiente_DejarCta(DtoLibPos.Pendiente.Dejar.Ficha ficha);
+        DtoLib.ResultadoEntidad<int> 
+            Pendiente_CtasPendientes(DtoLibPos.Pendiente.Cnt.Filtro filtro);
+        DtoLib.ResultadoLista<DtoLibPos.Pendiente.Lista.Ficha> 
+            Pendiente_Lista(DtoLibPos.Pendiente.Lista.Filtro filtro);
+        DtoLib.Resultado 
+            Pendiente_AbrirCta(int idCta, int idOperador);
+        DtoLib.ResultadoEntidad<string> 
+            Pendiente_VerificarEstatusCtaProtegida(int idCta);
+        DtoLib.Resultado
+            Pendiente_AsignarEstatusCtaProtegida(int idCta);
     }
-
 }

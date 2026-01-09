@@ -129,6 +129,7 @@ namespace ProvPos
                                         cnt_divisa_por_vuelto_en_divisa as CantDivisaPorVueltoEnDivisa ,
                                         porct_bono_por_pago_divisa as BonoPorPagoDivisa ,
                                         monto_bono_por_pago_divisa as MontoBonoPorPagoDivisa ,
+                                        monto_bono_en_divisa_por_pago_divisa as MontoBonoEnDivisaPorPagoDivisa,
                                         cnt_divisa_aplica_bono_por_pago_divisa as CntDivisaAplicaBonoPorPagoDivisa ,
                                         estatus_fiscal as estatusFiscal ,
                                         aplicar_igtf as aplicaIGTF,
@@ -238,9 +239,13 @@ namespace ProvPos
                     //
                     p1 = new MySql.Data.MySqlClient.MySqlParameter("@id", idAuto);
                     var _sqlPrecios = @"select 
-                                            descripcion_producto as descPrd, 
-                                            precio_cliente as precio
-                                    from ventas_precio 
+                                            vp.descripcion_producto as descPrd, 
+                                            vp.precio_factura as precioFactura,
+                                            vp.porct_bono_aplicar as bonoAplicar,
+                                            vp.precio_cliente as precio,
+                                            v.descuento1p as descuento
+                                    from ventas_precio as vp 
+                                    join ventas as v on v.auto=vp.auto_documento
                                     where auto_documento=@id and
                                     porct_bono_aplicar>0";
                     var _lPrecios = cn.Database.SqlQuery<DtoLibPos.Documento.Entidad.FichaPrecio>(_sqlPrecios, p1).ToList();

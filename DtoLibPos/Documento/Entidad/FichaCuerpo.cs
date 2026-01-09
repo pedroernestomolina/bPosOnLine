@@ -116,6 +116,7 @@ namespace DtoLibPos.Documento.Entidad
         public decimal MontoPorVueltoEnDivisa { get; set; }
         public decimal MontoPorVueltoEnPagoMovil { get; set; }
         public decimal CantDivisaPorVueltoEnDivisa { get; set; }
+        public decimal MontoBonoEnDivisaPorPagoDivisa { get; set; }
         //
         public string estatusFiscal { get; set; }
         public int zFiscal { get; set; }
@@ -238,6 +239,7 @@ namespace DtoLibPos.Documento.Entidad
             //
             BonoPorPagoDivisa = 0m;
             MontoBonoPorPagoDivisa = 0m;
+            MontoBonoEnDivisaPorPagoDivisa = 0m;
             CntDivisaAplicaBonoPorPagoDivisa = 0m;
             //
             estatusFiscal = "";

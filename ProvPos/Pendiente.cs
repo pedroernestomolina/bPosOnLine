@@ -73,31 +73,34 @@ namespace ProvPos
             Pendiente_AbrirCta(int idCta, int idOperador)
         {
             var result = new DtoLib.Resultado();
-
+            //
             try
             {
                 using (var cn = new PosEntities(_cnPos.ConnectionString))
                 {
                     using (var ts = new TransactionScope())
                     {
-                        var ent= cn.p_pendiente.Find(idCta);
-                        if (ent == null) 
+                        var _p1 = new MySql.Data.MySqlClient.MySqlParameter();
+                        var _p2 = new MySql.Data.MySqlClient.MySqlParameter();
+                        var _sql = "";
+                        //
+                        _p1 = new MySql.Data.MySqlClient.MySqlParameter("@idCta", idCta);
+                        _sql = "delete from p_pendiente where id=@idCta";
+                        var rst = cn.Database.ExecuteSqlCommand(_sql, _p1);
+                        if (rst == 0) 
                         {
-                            result.Mensaje = "[ ID] CUENTA PENDIENTE NO ENCONTRADO";
-                            result.Result = DtoLib.Enumerados.EnumResult.isError;
-                            return result;
+                            throw new Exception("[ ID ] CUENTA PENDIENTE NO ENCONTRADO");
                         }
-                        cn.p_pendiente.Remove(ent);
                         cn.SaveChanges();
-
-                        var entVenta = cn.p_venta.Where(f => f.id_p_pendiente == idCta).ToList();
-                        foreach (var it in entVenta)
-                        {
-                            it.id_p_pendiente = -1;
-                            it.id_p_operador = idOperador;
-                            cn.SaveChanges();
-                        }
-
+                        //
+                        _p1 = new MySql.Data.MySqlClient.MySqlParameter("@idCta", idCta);
+                        _p2 = new MySql.Data.MySqlClient.MySqlParameter("@idOperador", idOperador);
+                        _sql = @"update p_venta set 
+                                    id_p_pendiente = -1,
+                                    id_p_operador = @idOperador
+                                where id_p_pendiente=@idCta";
+                        rst = cn.Database.ExecuteSqlCommand(_sql, _p1, _p2);
+                        cn.SaveChanges();
                         ts.Complete();
                     }
                 };
@@ -107,13 +110,14 @@ namespace ProvPos
                 result.Mensaje = e.Message;
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
-
+            //
             return result;
         }
         public DtoLib.ResultadoLista<DtoLibPos.Pendiente.Lista.Ficha> 
             Pendiente_Lista(DtoLibPos.Pendiente.Lista.Filtro filtro)
         {
             var result = new DtoLib.ResultadoLista<DtoLibPos.Pendiente.Lista.Ficha>();
+            //
             var _lista = new List<DtoLibPos.Pendiente.Lista.Ficha>();
             try
             {
@@ -158,9 +162,9 @@ namespace ProvPos
                 result.Mensaje = e.Message;
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
+            //
             return result;
         }
-        //
         public DtoLib.ResultadoEntidad<int>
             Pendiente_CtasPendientes(DtoLibPos.Pendiente.Cnt.Filtro filtro)
         {
@@ -182,6 +186,64 @@ namespace ProvPos
                     }
                     var cnt= cn.Database.SqlQuery<int>(_sql, p1).FirstOrDefault();
                     result.Entidad = cnt;
+                };
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+            //
+            return result;
+        }
+        public DtoLib.ResultadoEntidad<string> 
+            Pendiente_VerificarEstatusCtaProtegida(int idCta)
+        {
+            var result = new DtoLib.ResultadoEntidad<string>();
+            //
+            try
+            {
+                using (var cn = new PosEntities(_cnPos.ConnectionString))
+                {
+                    var _p1 = new MySql.Data.MySqlClient.MySqlParameter("@id", idCta);
+                    var _sql = @"select 
+                                    estatus_protegido 
+                                from p_pendiente
+                                where id=@id";
+                    var rst = cn.Database.SqlQuery<string>(_sql, _p1).FirstOrDefault();
+                    if (rst == null)
+                    {
+                        throw new Exception("[ ID ] CUENTA PENDIENTE NO ENCONTRADO");
+                    }
+                    result.Entidad = rst;
+                };
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+            //
+            return result;
+        }
+        public DtoLib.Resultado 
+            Pendiente_AsignarEstatusCtaProtegida(int idCta)
+        {
+            var result = new DtoLib.Resultado();
+            //
+            try
+            {
+                using (var cn = new PosEntities(_cnPos.ConnectionString))
+                {
+                    var _p1 = new MySql.Data.MySqlClient.MySqlParameter("@id", idCta);
+                    var _sql = @"update p_pendiente set
+                                    estatus_protegido='1' 
+                                where id=@id";
+                    var rst = cn.Database.ExecuteSqlCommand(_sql, _p1);
+                    if (rst == 0)
+                    {
+                        throw new Exception("PROBLEMA AL PROTEGER CUENTA PENDIENTE");
+                    }
                 };
             }
             catch (Exception e)
