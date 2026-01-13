@@ -1,4 +1,5 @@
 ﻿using LibEntityPos;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
@@ -60,6 +61,8 @@ namespace ProvPos
                             ficha.DocumentoNro = adoc.ToString().Trim().PadLeft(10, '0');
                         }
 
+
+/*
                         //DOCUMENTO VENTA
                         var entVenta = new ventas()
                         {
@@ -181,10 +184,225 @@ namespace ProvPos
                             //
                             estatus_mostrar_libro_venta = "",
                             //
-                            estatus_credito="",
+                            estatus_credito = "",
                         };
                         cn.ventas.Add(entVenta);
                         cn.SaveChanges();
+ * */
+
+
+                        //
+                        // INSERTAR DOCUMENTO NOTA DE ENTREGA
+                        //
+                        string _sqlInsert = @"INSERT INTO ventas (
+                                                    auto, documento, fecha, fecha_vencimiento, razon_social, dir_fiscal, ci_rif, tipo, 
+                                                    exento, base1, base2, base3, impuesto1, impuesto2, impuesto3, `base`, impuesto, 
+                                                    total, tasa1, tasa2, tasa3, nota, tasa_retencion_iva, tasa_retencion_islr, 
+                                                    retencion_iva, retencion_islr, auto_cliente, codigo_cliente, mes_relacion, 
+                                                    control, fecha_registro, orden_compra, dias, descuento1, descuento2, cargos, 
+                                                    descuento1p, descuento2p, cargosp, columna, estatus_anulado, aplica, 
+                                                    comprobante_retencion, subtotal_neto, telefono, factor_cambio, codigo_vendedor, 
+                                                    vendedor, auto_vendedor, fecha_pedido, pedido, condicion_pago, usuario, 
+                                                    codigo_usuario, codigo_sucursal, hora, transporte, codigo_transporte, 
+                                                    monto_divisa, despachado, dir_despacho, estacion, auto_recibo, recibo, 
+                                                    renglones, saldo_pendiente, ano_relacion, comprobante_retencion_islr, 
+                                                    dias_validez, auto_usuario, auto_transporte, situacion, signo, serie, tarifa, 
+                                                    tipo_remision, documento_remision, auto_remision, documento_nombre, 
+                                                    subtotal_impuesto, subtotal, auto_cxc, tipo_cliente, planilla, expediente, 
+                                                    anticipo_iva, terceros_iva, neto, costo, utilidad, utilidadp, documento_tipo, 
+                                                    ci_titular, nombre_titular, ci_beneficiario, nombre_beneficiario, clave, 
+                                                    denominacion_fiscal, cambio, estatus_validado, cierre, fecha_retencion, 
+                                                    estatus_cierre_contable, cierre_ftp, porct_bono_por_pago_divisa, 
+                                                    cnt_divisa_aplica_bono_por_pago_divisa, monto_bono_por_pago_divisa, 
+                                                    monto_bono_en_divisa_por_pago_divisa, monto_por_vuelto_en_efectivo, 
+                                                    monto_por_vuelto_en_divisa, monto_por_vuelto_en_pago_movil, 
+                                                    cnt_divisa_por_vuelto_en_divisa, estatus_bono_por_pago_divisa, 
+                                                    estatus_vuelto_por_pago_movil, estatus_mostrar_libro_venta, estatus_credito
+                                            ) 
+                                            VALUES 
+                                            (
+                                                    @auto, @documento, @fecha, @fecha_vencimiento, @razon_social, @dir_fiscal, @ci_rif, @tipo, 
+                                                    @exento, @base1, @base2, @base3, @impuesto1, @impuesto2, @impuesto3, @base, @impuesto, 
+                                                    @total, @tasa1, @tasa2, @tasa3, @nota, @tasa_retencion_iva, @tasa_retencion_islr, 
+                                                    @retencion_iva, @retencion_islr, @auto_cliente, @codigo_cliente, @mes_relacion, 
+                                                    @control, @fecha_registro, @orden_compra, @dias, @descuento1, @descuento2, @cargos, 
+                                                    @descuento1p, @descuento2p, @cargosp, @columna, @estatus_anulado, @aplica, 
+                                                    @comprobante_retencion, @subtotal_neto, @telefono, @factor_cambio, @codigo_vendedor, 
+                                                    @vendedor, @auto_vendedor, @fecha_pedido, @pedido, @condicion_pago, @usuario, 
+                                                    @codigo_usuario, @codigo_sucursal, @hora, @transporte, @codigo_transporte, 
+                                                    @monto_divisa, @despachado, @dir_despacho, @estacion, @auto_recibo, @recibo, 
+                                                    @renglones, @saldo_pendiente, @ano_relacion, @comprobante_retencion_islr, 
+                                                    @dias_validez, @auto_usuario, @auto_transporte, @situacion, @signo, @serie, @tarifa, 
+                                                    @tipo_remision, @documento_remision, @auto_remision, @documento_nombre, 
+                                                    @subtotal_impuesto, @subtotal, @auto_cxc, @tipo_cliente, @planilla, @expediente, 
+                                                    @anticipo_iva, @terceros_iva, @neto, @costo, @utilidad, @utilidadp, @documento_tipo, 
+                                                    @ci_titular, @nombre_titular, @ci_beneficiario, @nombre_beneficiario, @clave, 
+                                                    @denominacion_fiscal, @cambio, @estatus_validado, @cierre, @fecha_retencion, 
+                                                    @estatus_cierre_contable, @cierre_ftp, @porct_bono_por_pago_divisa, 
+                                                    @cnt_divisa_aplica_bono_por_pago_divisa, @monto_bono_por_pago_divisa, 
+                                                    @monto_bono_en_divisa_por_pago_divisa, @monto_por_vuelto_en_efectivo, 
+                                                    @monto_por_vuelto_en_divisa, @monto_por_vuelto_en_pago_movil, 
+                                                    @cnt_divisa_por_vuelto_en_divisa, @estatus_bono_por_pago_divisa, 
+                                                    @estatus_vuelto_por_pago_movil, @estatus_mostrar_libro_venta, @estatus_credito
+                                            );";
+
+
+                        // Bono por pago en divisa
+                        MySqlParameter _porct_bono_por_pago_divisa = new MySqlParameter("@porct_bono_por_pago_divisa", MySqlDbType.Decimal);
+                        _porct_bono_por_pago_divisa.Value = 0m;
+
+                        MySqlParameter _cnt_divisa_aplica_bono_por_pago_divisa = new MySqlParameter("@cnt_divisa_aplica_bono_por_pago_divisa", MySqlDbType.Int32);
+                        _cnt_divisa_aplica_bono_por_pago_divisa.Value = 0;
+
+                        MySqlParameter _monto_bono_por_pago_divisa = new MySqlParameter("@monto_bono_por_pago_divisa", MySqlDbType.Decimal);
+                        _monto_bono_por_pago_divisa.Value = 0m;
+
+                        MySqlParameter _monto_bono_en_divisa_por_pago_divisa = new MySqlParameter("@monto_bono_en_divisa_por_pago_divisa", MySqlDbType.Decimal);
+                        _monto_bono_en_divisa_por_pago_divisa.Value = 0m;
+
+                        // Vueltos
+                        MySqlParameter _monto_por_vuelto_en_efectivo = new MySqlParameter("@monto_por_vuelto_en_efectivo", MySqlDbType.Decimal);
+                        _monto_por_vuelto_en_efectivo.Value = 0m;
+
+                        MySqlParameter _monto_por_vuelto_en_divisa = new MySqlParameter("@monto_por_vuelto_en_divisa", MySqlDbType.Decimal);
+                        _monto_por_vuelto_en_divisa.Value = 0m;
+
+                        MySqlParameter _monto_por_vuelto_en_pago_movil = new MySqlParameter("@monto_por_vuelto_en_pago_movil", MySqlDbType.Decimal);
+                        _monto_por_vuelto_en_pago_movil.Value = 0m;
+
+                        MySqlParameter _cnt_divisa_por_vuelto_en_divisa = new MySqlParameter("@cnt_divisa_por_vuelto_en_divisa", MySqlDbType.Int32);
+                        _cnt_divisa_por_vuelto_en_divisa.Value = 0;
+
+
+                        var parametros = new List<MySqlParameter>()
+                        {
+                            new MySqlParameter("@auto", autoVenta),
+                            new MySqlParameter("@documento", ficha.DocumentoNro),
+                            new MySqlParameter("@fecha", fechaSistema.Date),
+                            new MySqlParameter("@fecha_vencimiento", fechaVenc.Date),
+                            new MySqlParameter("@razon_social", ficha.RazonSocial),
+                            new MySqlParameter("@dir_fiscal", ficha.DirFiscal),
+                            new MySqlParameter("@ci_rif", ficha.CiRif),
+                            new MySqlParameter("@tipo", ficha.Tipo),
+                            new MySqlParameter("@exento", ficha.Exento),
+                            new MySqlParameter("@base1", ficha.Base1),
+                            new MySqlParameter("@base2", ficha.Base2),
+                            new MySqlParameter("@base3", ficha.Base3),
+                            new MySqlParameter("@impuesto1", ficha.Impuesto1),
+                            new MySqlParameter("@impuesto2", ficha.Impuesto2),
+                            new MySqlParameter("@impuesto3", ficha.Impuesto3),
+                            new MySqlParameter("@base", ficha.MBase),
+                            new MySqlParameter("@impuesto", ficha.Impuesto),
+                            new MySqlParameter("@total", ficha.Total),
+                            new MySqlParameter("@tasa1", ficha.Tasa1),
+                            new MySqlParameter("@tasa2", ficha.Tasa2),
+                            new MySqlParameter("@tasa3", ficha.Tasa3),
+                            new MySqlParameter("@nota", ficha.Nota),
+                            new MySqlParameter("@tasa_retencion_iva", ficha.TasaRetencionIva),
+                            new MySqlParameter("@tasa_retencion_islr", ficha.TasaRetencionIslr),
+                            new MySqlParameter("@retencion_iva", ficha.RetencionIva),
+                            new MySqlParameter("@retencion_islr", ficha.TasaRetencionIslr),
+                            new MySqlParameter("@auto_cliente", ficha.AutoCliente),
+                            new MySqlParameter("@codigo_cliente", ficha.CodigoCliente),
+                            new MySqlParameter("@mes_relacion", mesRelacion),
+                            new MySqlParameter("@control", ficha.Control),
+                            new MySqlParameter("@fecha_registro", fechaSistema.Date),
+                            new MySqlParameter("@orden_compra", ficha.OrdenCompra),
+                            new MySqlParameter("@dias", ficha.Dias),
+                            new MySqlParameter("@descuento1", ficha.Descuento1),
+                            new MySqlParameter("@descuento2", ficha.Descuento2),
+                            new MySqlParameter("@cargos", ficha.Cargos),
+                            new MySqlParameter("@descuento1p", ficha.Descuento1p),
+                            new MySqlParameter("@descuento2p", ficha.Descuento2p),
+                            new MySqlParameter("@cargosp", ficha.Cargosp),
+                            new MySqlParameter("@columna", ficha.Columna),
+                            new MySqlParameter("@estatus_anulado", ficha.EstatusAnulado),
+                            new MySqlParameter("@aplica", ficha.Aplica),
+                            new MySqlParameter("@comprobante_retencion", ficha.ComprobanteRetencion),
+                            new MySqlParameter("@subtotal_neto", ficha.SubTotalNeto),
+                            new MySqlParameter("@telefono", ficha.Telefono),
+                            new MySqlParameter("@factor_cambio", ficha.FactorCambio),
+                            new MySqlParameter("@codigo_vendedor", ficha.CodigoVendedor),
+                            new MySqlParameter("@vendedor", ficha.Vendedor),
+                            new MySqlParameter("@auto_vendedor", ficha.AutoVendedor),
+                            new MySqlParameter("@fecha_pedido", ficha.FechaPedido),
+                            new MySqlParameter("@pedido", ficha.Pedido),
+                            new MySqlParameter("@condicion_pago", ficha.CondicionPago),
+                            new MySqlParameter("@usuario", ficha.Usuario),
+                            new MySqlParameter("@codigo_usuario", ficha.CodigoUsuario),
+                            new MySqlParameter("@codigo_sucursal", ficha.CodigoSucursal),
+                            new MySqlParameter("@hora", fechaSistema.ToShortTimeString()),
+                            new MySqlParameter("@transporte", ficha.Transporte),
+                            new MySqlParameter("@codigo_transporte", ficha.CodigoTransporte),
+                            new MySqlParameter("@monto_divisa", ficha.MontoDivisa),
+                            new MySqlParameter("@despachado", ficha.Despachado),
+                            new MySqlParameter("@dir_despacho", ficha.DirDespacho),
+                            new MySqlParameter("@estacion", ficha.Estacion),
+                            new MySqlParameter("@auto_recibo", ""),
+                            new MySqlParameter("@recibo", ""),
+                            new MySqlParameter("@renglones", ficha.Renglones),
+                            new MySqlParameter("@saldo_pendiente", ficha.SaldoPendiente),
+                            new MySqlParameter("@ano_relacion", anoRelacion),
+                            new MySqlParameter("@comprobante_retencion_islr", ficha.ComprobanteRetencionIslr),
+                            new MySqlParameter("@dias_validez", ficha.DiasValidez),
+                            new MySqlParameter("@auto_usuario", ficha.AutoUsuario),
+                            new MySqlParameter("@auto_transporte", ficha.AutoTransporte),
+                            new MySqlParameter("@situacion", ficha.Situacion),
+                            new MySqlParameter("@signo", ficha.Signo),
+                            new MySqlParameter("@serie", ficha.Serie),
+                            new MySqlParameter("@tarifa", ficha.Tarifa),
+                            new MySqlParameter("@tipo_remision", ficha.TipoRemision),
+                            new MySqlParameter("@documento_remision", ficha.DocumentoRemision),
+                            new MySqlParameter("@auto_remision", ficha.AutoRemision),
+                            new MySqlParameter("@documento_nombre", ficha.DocumentoNombre),
+                            new MySqlParameter("@subtotal_impuesto", ficha.SubTotalImpuesto),
+                            new MySqlParameter("@subtotal", ficha.SubTotal),
+                            new MySqlParameter("@auto_cxc", ""),
+                            new MySqlParameter("@tipo_cliente", ficha.TipoCliente),
+                            new MySqlParameter("@planilla", ficha.Planilla),
+                            new MySqlParameter("@expediente", ficha.Expendiente),
+                            new MySqlParameter("@anticipo_iva", ficha.AnticipoIva),
+                            new MySqlParameter("@terceros_iva", ficha.TercerosIva),
+                            new MySqlParameter("@neto", ficha.Neto),
+                            new MySqlParameter("@costo", ficha.Costo),
+                            new MySqlParameter("@utilidad", ficha.Utilidad),
+                            new MySqlParameter("@utilidadp", ficha.Utilidadp),
+                            new MySqlParameter("@documento_tipo", ficha.DocumentoTipo),
+                            new MySqlParameter("@ci_titular", ficha.CiTitular),
+                            new MySqlParameter("@nombre_titular", ficha.NombreTitular),
+                            new MySqlParameter("@ci_beneficiario", ficha.CiBeneficiario),
+                            new MySqlParameter("@nombre_beneficiario", ficha.NombreBeneficiario),
+                            new MySqlParameter("@clave", "02"),
+                            new MySqlParameter("@denominacion_fiscal", ficha.DenominacionFiscal),
+                            new MySqlParameter("@cambio", ficha.Cambio),
+                            new MySqlParameter("@estatus_validado", ficha.EstatusValidado),
+                            new MySqlParameter("@cierre", ficha.Cierre),
+                            new MySqlParameter("@fecha_retencion", fechaNula),
+                            new MySqlParameter("@estatus_cierre_contable", ficha.EstatusCierreContable),
+                            new MySqlParameter("@cierre_ftp", ficha.CierreFtp),
+                            _porct_bono_por_pago_divisa,
+                            _cnt_divisa_aplica_bono_por_pago_divisa,
+                            _monto_bono_por_pago_divisa,
+                            _monto_bono_en_divisa_por_pago_divisa,
+                            _monto_por_vuelto_en_efectivo,
+                            _monto_por_vuelto_en_divisa,
+                            _monto_por_vuelto_en_pago_movil,
+                            _cnt_divisa_por_vuelto_en_divisa,
+                            new MySqlParameter("@estatus_bono_por_pago_divisa", "0"),
+                            new MySqlParameter("@estatus_vuelto_por_pago_movil", "0"),
+                            new MySqlParameter("@estatus_mostrar_libro_venta", ""),
+                            new MySqlParameter("@estatus_credito", "")
+                        };
+                        //
+                        var rstVta = cn.Database.ExecuteSqlCommand(_sqlInsert, parametros.ToArray());
+                        if (rstVta == 0)
+                        {
+                            throw new Exception("PROBLEMA AL REGISTAR EL DOCUMENTO NOTA ENTREGA");
+                        }
+                        cn.SaveChanges();
+
+
+
 
                         var sql1 = @"INSERT INTO ventas_detalle (auto_documento, auto_producto, codigo, nombre, auto_departamento,
                                     auto_grupo, auto_subgrupo, auto_deposito, cantidad, empaque, precio_neto, descuento1p, descuento2p,

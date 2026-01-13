@@ -1,4 +1,5 @@
 ﻿using LibEntityPos;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
@@ -80,140 +81,432 @@ namespace ProvPos
                         }
 
 
-                        //DOCUMENTO VENTA
-                        var entVenta = new ventas()
+                        //
+                        // INSERT DOCUMENTO NOTA CREDITO
+                        //
+                        var _sql = @"INSERT INTO ventas (
+                                        auto, 
+                                        documento, 
+                                        fecha, 
+                                        fecha_vencimiento, 
+                                        razon_social, 
+                                        dir_fiscal, 
+                                        ci_rif, 
+                                        tipo, 
+                                        exento, 
+                                        base1, 
+                                        base2, 
+                                        base3, 
+                                        impuesto1, 
+                                        impuesto2, 
+                                        impuesto3, 
+                                        base, 
+                                        impuesto, 
+                                        total, 
+                                        tasa1, 
+                                        tasa2, 
+                                        tasa3, 
+                                        nota, 
+                                        tasa_retencion_iva, 
+                                        tasa_retencion_islr, 
+                                        retencion_iva, 
+                                        retencion_islr, 
+                                        auto_cliente, 
+                                        codigo_cliente, 
+                                        mes_relacion, 
+                                        control, 
+                                        fecha_registro, 
+                                        orden_compra, 
+                                        dias, 
+                                        descuento1,     
+                                        descuento2, 
+                                        cargos, 
+                                        descuento1p, 
+                                        descuento2p, 
+                                        cargosp, 
+                                        columna, 
+                                        estatus_anulado, 
+                                        aplica, 
+                                        comprobante_retencion, 
+                                        subtotal_neto, 
+                                        telefono, 
+                                        factor_cambio, 
+                                        codigo_vendedor, 
+                                        vendedor, 
+                                        auto_vendedor, 
+                                        fecha_pedido, 
+                                        pedido, 
+                                        condicion_pago, 
+                                        usuario, 
+                                        codigo_usuario, 
+                                        codigo_sucursal, 
+                                        hora, 
+                                        transporte, 
+                                        codigo_transporte, 
+                                        monto_divisa, 
+                                        despachado, 
+                                        dir_despacho, 
+                                        estacion, 
+                                        auto_recibo, 
+                                        recibo, 
+                                        renglones, saldo_pendiente, 
+                                        ano_relacion, 
+                                        comprobante_retencion_islr, 
+                                        dias_validez, 
+                                        auto_usuario, 
+                                        auto_transporte, 
+                                        situacion, 
+                                        signo, 
+                                        serie, 
+                                        tarifa, 
+                                        tipo_remision, 
+                                        documento_remision, 
+                                        auto_remision, 
+                                        documento_nombre, 
+                                        subtotal_impuesto, 
+                                        subtotal, 
+                                        auto_cxc, 
+                                        tipo_cliente, 
+                                        planilla, 
+                                        expediente, 
+                                        anticipo_iva, 
+                                        terceros_iva, 
+                                        neto, 
+                                        costo, 
+                                        utilidad, 
+                                        utilidadp, 
+                                        documento_tipo, 
+                                        ci_titular, 
+                                        nombre_titular, 
+                                        ci_beneficiario, 
+                                        nombre_beneficiario, 
+                                        clave, 
+                                        denominacion_fiscal, 
+                                        cambio, 
+                                        estatus_validado, 
+                                        cierre, 
+                                        fecha_retencion, 
+                                        estatus_cierre_contable, 
+                                        cierre_ftp, 
+                                        porct_bono_por_pago_divisa, 
+                                        cnt_divisa_aplica_bono_por_pago_divisa, 
+                                        monto_bono_por_pago_divisa, 
+                                        monto_bono_en_divisa_por_pago_divisa, 
+                                        monto_por_vuelto_en_efectivo, 
+                                        monto_por_vuelto_en_divisa, 
+                                        monto_por_vuelto_en_pago_movil, 
+                                        cnt_divisa_por_vuelto_en_divisa, 
+                                        estatus_bono_por_pago_divisa, 
+                                        estatus_vuelto_por_pago_movil, 
+                                        estatus_fiscal, 
+                                        z_fiscal, 
+                                        aplicar_igtf, 
+                                        tasa_igtf, 
+                                        base_aplica_igtf_mon_act, 
+                                        base_aplica_igtf_mon_div, 
+                                        monto_igtf, 
+                                        estatus_mostrar_libro_venta, 
+                                        estatus_credito,
+                                        tasa_actual_sistema) 
+                                    VALUES (
+                                        @auto, 
+                                        @documento, 
+                                        @fecha, 
+                                        @fecha_vencimiento, 
+                                        @razon_social, 
+                                        @dir_fiscal, 
+                                        @ci_rif, 
+                                        @tipo, 
+                                        @exento, 
+                                        @base1, 
+                                        @base2, 
+                                        @base3, 
+                                        @impuesto1, 
+                                        @impuesto2, 
+                                        @impuesto3, 
+                                        @base, 
+                                        @impuesto, 
+                                        @total,
+                                        @tasa1, 
+                                        @tasa2, 
+                                        @tasa3,     
+                                        @nota, 
+                                        @tasa_retencion_iva, 
+                                        @tasa_retencion_islr, 
+                                        @retencion_iva, 
+                                        @retencion_islr, 
+                                        @auto_cliente, 
+                                        @codigo_cliente, 
+                                        @mes_relacion, 
+                                        @control, 
+                                        @fecha_registro, 
+                                        @orden_compra, 
+                                        @dias, 
+                                        @descuento1, 
+                                        @descuento2, 
+                                        @cargos, 
+                                        @descuento1p, 
+                                        @descuento2p, 
+                                        @cargosp, 
+                                        @columna, 
+                                        @estatus_anulado, 
+                                        @aplica, 
+                                        @comprobante_retencion, 
+                                        @subtotal_neto, 
+                                        @telefono, 
+                                        @factor_cambio, 
+                                        @codigo_vendedor, 
+                                        @vendedor, 
+                                        @auto_vendedor, 
+                                        @fecha_pedido, 
+                                        @pedido, 
+                                        @condicion_pago, 
+                                        @usuario, 
+                                        @codigo_usuario, 
+                                        @codigo_sucursal, 
+                                        @hora, 
+                                        @transporte, 
+                                        @codigo_transporte, 
+                                        @monto_divisa, 
+                                        @despachado, 
+                                        @dir_despacho, 
+                                        @estacion, 
+                                        @auto_recibo, 
+                                        @recibo, 
+                                        @renglones, 
+                                        @saldo_pendiente, 
+                                        @ano_relacion, 
+                                        @comprobante_retencion_islr, 
+                                        @dias_validez, 
+                                        @auto_usuario, 
+                                        @auto_transporte, 
+                                        @situacion, 
+                                        @signo, 
+                                        @serie, 
+                                        @tarifa, 
+                                        @tipo_remision, 
+                                        @documento_remision, 
+                                        @auto_remision, 
+                                        @documento_nombre, 
+                                        @subtotal_impuesto, 
+                                        @subtotal, 
+                                        @auto_cxc, 
+                                        @tipo_cliente, 
+                                        @planilla, 
+                                        @expediente, 
+                                        @anticipo_iva, 
+                                        @terceros_iva, 
+                                        @neto, 
+                                        @costo, 
+                                        @utilidad, 
+                                        @utilidadp, 
+                                        @documento_tipo, 
+                                        @ci_titular, 
+                                        @nombre_titular, 
+                                        @ci_beneficiario, 
+                                        @nombre_beneficiario, 
+                                        @clave, 
+                                        @denominacion_fiscal, 
+                                        @cambio, 
+                                        @estatus_validado, 
+                                        @cierre, 
+                                        @fecha_retencion, 
+                                        @estatus_cierre_contable, 
+                                        @cierre_ftp, 
+                                        @porct_bono_por_pago_divisa, 
+                                        @cnt_divisa_aplica_bono_por_pago_divisa, 
+                                        @monto_bono_por_pago_divisa, 
+                                        @monto_bono_en_divisa_por_pago_divisa, 
+                                        @monto_por_vuelto_en_efectivo, 
+                                        @monto_por_vuelto_en_divisa, 
+                                        @monto_por_vuelto_en_pago_movil, 
+                                        @cnt_divisa_por_vuelto_en_divisa, 
+                                        @estatus_bono_por_pago_divisa, 
+                                        @estatus_vuelto_por_pago_movil, 
+                                        @estatus_fiscal, 
+                                        @z_fiscal, 
+                                        @aplicar_igtf, 
+                                        @tasa_igtf, 
+                                        @base_aplica_igtf_mon_act, 
+                                        @base_aplica_igtf_mon_div, 
+                                        @monto_igtf, 
+                                        @estatus_mostrar_libro_venta, 
+                                        @estatus_credito, 
+                                        @tasa_actual_sistema)";
+
+                        var parametros = new List<MySqlParameter>();
+
+                        // 1. IDENTIFICADORES Y CLIENTE
+                        parametros.Add(new MySqlParameter("@auto", autoVenta));
+                        parametros.Add(new MySqlParameter("@documento", ficha.DocumentoNro));
+                        parametros.Add(new MySqlParameter("@auto_cliente", ficha.AutoCliente));
+                        parametros.Add(new MySqlParameter("@codigo_cliente", ficha.CodigoCliente));
+                        parametros.Add(new MySqlParameter("@razon_social", ficha.RazonSocial));
+                        parametros.Add(new MySqlParameter("@dir_fiscal", ficha.DirFiscal));
+                        parametros.Add(new MySqlParameter("@ci_rif", ficha.CiRif));
+                        parametros.Add(new MySqlParameter("@tipo_cliente", ficha.TipoCliente));
+
+                        // 2. FECHAS Y TIEMPO
+                        parametros.Add(new MySqlParameter("@fecha", fechaSistema.Date));
+                        parametros.Add(new MySqlParameter("@fecha_vencimiento", fechaVenc.Date));
+                        parametros.Add(new MySqlParameter("@fecha_registro", fechaSistema.Date));
+                        parametros.Add(new MySqlParameter("@fecha_pedido", ficha.FechaPedido));
+                        parametros.Add(new MySqlParameter("@fecha_retencion", fechaNula));
+                        parametros.Add(new MySqlParameter("@hora", fechaSistema.ToShortTimeString()));
+                        parametros.Add(new MySqlParameter("@mes_relacion", mesRelacion));
+                        parametros.Add(new MySqlParameter("@ano_relacion", anoRelacion));
+
+                        // 3. MONTOS, BASES E IMPUESTOS
+                        parametros.Add(new MySqlParameter("@tipo", ficha.Tipo));
+                        parametros.Add(new MySqlParameter("@exento", ficha.Exento));
+                        parametros.Add(new MySqlParameter("@base1", ficha.Base1));
+                        parametros.Add(new MySqlParameter("@base2", ficha.Base2));
+                        parametros.Add(new MySqlParameter("@base3", ficha.Base3));
+                        parametros.Add(new MySqlParameter("@impuesto1", ficha.Impuesto1));
+                        parametros.Add(new MySqlParameter("@impuesto2", ficha.Impuesto2));
+                        parametros.Add(new MySqlParameter("@impuesto3", ficha.Impuesto3));
+                        parametros.Add(new MySqlParameter("@base", ficha.MBase)); // Mapeo de @base
+                        parametros.Add(new MySqlParameter("@impuesto", ficha.Impuesto));
+                        parametros.Add(new MySqlParameter("@total", ficha.Total));
+                        parametros.Add(new MySqlParameter("@tasa1", ficha.Tasa1));
+                        parametros.Add(new MySqlParameter("@tasa2", ficha.Tasa2));
+                        parametros.Add(new MySqlParameter("@tasa3", ficha.Tasa3));
+                        parametros.Add(new MySqlParameter("@subtotal_neto", ficha.SubTotalNeto));
+                        parametros.Add(new MySqlParameter("@subtotal_impuesto", ficha.SubTotalImpuesto));
+                        parametros.Add(new MySqlParameter("@subtotal", ficha.SubTotal));
+                        parametros.Add(new MySqlParameter("@monto_divisa", ficha.MontoDivisa));
+                        parametros.Add(new MySqlParameter("@factor_cambio", ficha.FactorCambio));
+
+                        // 4. RETENCIONES
+                        parametros.Add(new MySqlParameter("@tasa_retencion_iva", ficha.TasaRetencionIva));
+                        parametros.Add(new MySqlParameter("@tasa_retencion_islr", ficha.TasaRetencionIslr));
+                        parametros.Add(new MySqlParameter("@retencion_iva", ficha.RetencionIva));
+                        parametros.Add(new MySqlParameter("@retencion_islr", ficha.TasaRetencionIslr));
+                        parametros.Add(new MySqlParameter("@comprobante_retencion", ficha.ComprobanteRetencion));
+                        parametros.Add(new MySqlParameter("@comprobante_retencion_islr", ficha.ComprobanteRetencionIslr));
+
+                        // 5. CONTROL Y ESTATUS
+                        parametros.Add(new MySqlParameter("@control", ficha.Control));
+                        parametros.Add(new MySqlParameter("@orden_compra", ficha.OrdenCompra));
+                        parametros.Add(new MySqlParameter("@dias", ficha.Dias));
+                        parametros.Add(new MySqlParameter("@nota", ficha.Nota));
+                        parametros.Add(new MySqlParameter("@estatus_anulado", ficha.EstatusAnulado));
+                        parametros.Add(new MySqlParameter("@aplica", ficha.Aplica));
+                        parametros.Add(new MySqlParameter("@situacion", ficha.Situacion));
+                        parametros.Add(new MySqlParameter("@signo", ficha.Signo));
+                        parametros.Add(new MySqlParameter("@serie", ficha.Serie));
+                        parametros.Add(new MySqlParameter("@tarifa", ficha.Tarifa));
+                        parametros.Add(new MySqlParameter("@estatus_validado", ficha.EstatusValidado));
+                        parametros.Add(new MySqlParameter("@cierre", ficha.Cierre));
+                        parametros.Add(new MySqlParameter("@estatus_cierre_contable", ficha.EstatusCierreContable));
+                        parametros.Add(new MySqlParameter("@cierre_ftp", ficha.CierreFtp));
+
+                        // 6. VENDEDOR Y USUARIO
+                        parametros.Add(new MySqlParameter("@codigo_vendedor", ficha.CodigoVendedor));
+                        parametros.Add(new MySqlParameter("@vendedor", ficha.Vendedor));
+                        parametros.Add(new MySqlParameter("@auto_vendedor", ficha.AutoVendedor));
+                        parametros.Add(new MySqlParameter("@usuario", ficha.Usuario));
+                        parametros.Add(new MySqlParameter("@codigo_usuario", ficha.CodigoUsuario));
+                        parametros.Add(new MySqlParameter("@auto_usuario", ficha.AutoUsuario));
+                        parametros.Add(new MySqlParameter("@codigo_sucursal", ficha.CodigoSucursal));
+                        parametros.Add(new MySqlParameter("@estacion", ficha.Estacion));
+
+                        // 7. LOGÍSTICA Y TRANSPORTE
+                        parametros.Add(new MySqlParameter("@transporte", ficha.Transporte));
+                        parametros.Add(new MySqlParameter("@codigo_transporte", ficha.CodigoTransporte));
+                        parametros.Add(new MySqlParameter("@auto_transporte", ficha.AutoTransporte));
+                        parametros.Add(new MySqlParameter("@despachado", ficha.Despachado));
+                        parametros.Add(new MySqlParameter("@dir_despacho", ficha.DirDespacho));
+                        parametros.Add(new MySqlParameter("@telefono", ficha.Telefono));
+
+                        // 8. DESCUENTOS Y UTILIDAD
+                        parametros.Add(new MySqlParameter("@descuento1", ficha.Descuento1));
+                        parametros.Add(new MySqlParameter("@descuento2", ficha.Descuento2));
+                        parametros.Add(new MySqlParameter("@cargos", ficha.Cargos));
+                        parametros.Add(new MySqlParameter("@descuento1p", ficha.Descuento1p));
+                        parametros.Add(new MySqlParameter("@descuento2p", ficha.Descuento2p));
+                        parametros.Add(new MySqlParameter("@cargosp", ficha.Cargosp));
+                        parametros.Add(new MySqlParameter("@neto", ficha.Neto));
+                        parametros.Add(new MySqlParameter("@costo", ficha.Costo));
+                        parametros.Add(new MySqlParameter("@utilidad", ficha.Utilidad));
+                        parametros.Add(new MySqlParameter("@utilidadp", ficha.Utilidadp));
+
+                        // 9. DOCUMENTOS RELACIONADOS
+                        parametros.Add(new MySqlParameter("@auto_recibo", autoRecibo));
+                        parametros.Add(new MySqlParameter("@recibo", reciboNUmero));
+                        parametros.Add(new MySqlParameter("@renglones", ficha.Renglones));
+                        parametros.Add(new MySqlParameter("@saldo_pendiente", ficha.SaldoPendiente));
+                        parametros.Add(new MySqlParameter("@tipo_remision", ficha.TipoRemision));
+                        parametros.Add(new MySqlParameter("@documento_remision", ficha.DocumentoRemision));
+                        parametros.Add(new MySqlParameter("@auto_remision", ficha.AutoRemision));
+                        parametros.Add(new MySqlParameter("@documento_nombre", ficha.DocumentoNombre));
+                        parametros.Add(new MySqlParameter("@auto_cxc", autoCxC));
+                        parametros.Add(new MySqlParameter("@pedido", ficha.Pedido));
+                        parametros.Add(new MySqlParameter("@condicion_pago", ficha.CondicionPago));
+
+                        // 10. TITULARES Y BENEFICIARIOS
+                        parametros.Add(new MySqlParameter("@documento_tipo", ficha.DocumentoTipo));
+                        parametros.Add(new MySqlParameter("@ci_titular", ficha.CiTitular));
+                        parametros.Add(new MySqlParameter("@nombre_titular", ficha.NombreTitular));
+                        parametros.Add(new MySqlParameter("@ci_beneficiario", ficha.CiBeneficiario));
+                        parametros.Add(new MySqlParameter("@nombre_beneficiario", ficha.NombreBeneficiario));
+                        parametros.Add(new MySqlParameter("@denominacion_fiscal", ficha.DenominacionFiscal));
+
+                        // 11. ADUANA / OTROS
+                        parametros.Add(new MySqlParameter("@columna", ficha.Columna));
+                        parametros.Add(new MySqlParameter("@planilla", ficha.Planilla));
+                        parametros.Add(new MySqlParameter("@expediente", ficha.Expendiente));
+                        parametros.Add(new MySqlParameter("@anticipo_iva", ficha.AnticipoIva));
+                        parametros.Add(new MySqlParameter("@terceros_iva", ficha.TercerosIva));
+                        parametros.Add(new MySqlParameter("@dias_validez", ficha.DiasValidez));
+                        parametros.Add(new MySqlParameter("@cambio", ficha.Cambio));
+                        parametros.Add(new MySqlParameter("@clave", "02"));
+
+                        // 12. BONOS Y VUELTOS (DIVISAS)
+                        parametros.Add(new MySqlParameter("@porct_bono_por_pago_divisa", ficha.PorctBonoPorPagoDivisa));
+                        parametros.Add(new MySqlParameter("@cnt_divisa_aplica_bono_por_pago_divisa", ficha.CantDivisaAplicaBonoPorPagoDivisa));
+                        // Notar que aquí usamos los nombres específicos de tu código entVenta
+                        parametros.Add(new MySqlParameter("@monto_bono_por_pago_divisa", ficha.MontoBonoPorPagoDivisa));
+                        parametros.Add(new MySqlParameter("@monto_bono_en_divisa_por_pago_divisa", ficha.MontoBonoEnDivisaPorPagoDivisa));
+                        parametros.Add(new MySqlParameter("@monto_por_vuelto_en_efectivo", ficha.MontoPorVueltoEnEfectivo));
+                        parametros.Add(new MySqlParameter("@monto_por_vuelto_en_divisa", ficha.MontoPorVueltoEnDivisa));
+                        parametros.Add(new MySqlParameter("@monto_por_vuelto_en_pago_movil", ficha.MontoPorVueltoEnPagoMovil));
+                        parametros.Add(new MySqlParameter("@cnt_divisa_por_vuelto_en_divisa", ficha.CantDivisaPorVueltoEnDivisa));
+                        parametros.Add(new MySqlParameter("@estatus_bono_por_pago_divisa", ficha.estatusPorBonoPorPagoDivisa));
+                        parametros.Add(new MySqlParameter("@estatus_vuelto_por_pago_movil", ficha.estatusPorVueltoEnPagoMovil));
+
+                        // 13. CAMPOS FISCALES / IGTF
+                        MySqlParameter _tasaIgtf = new MySqlParameter("@tasa_igtf", MySqlDbType.Decimal);
+                        _tasaIgtf.Value = 0m;
+                        MySqlParameter _base_aplica_igtf_mon_act = new MySqlParameter("@base_aplica_igtf_mon_act", MySqlDbType.Decimal);
+                        _base_aplica_igtf_mon_act.Value = 0m;
+                        MySqlParameter _base_aplica_igtf_mon_div = new MySqlParameter("@base_aplica_igtf_mon_div", MySqlDbType.Decimal);
+                        _base_aplica_igtf_mon_div.Value = 0m;
+                        MySqlParameter _monto_igtf = new MySqlParameter("@monto_igtf", MySqlDbType.Decimal);
+                        _monto_igtf.Value = 0m;
+
+                        parametros.Add(new MySqlParameter("@estatus_fiscal", ficha.estatusFiscal));
+                        parametros.Add(new MySqlParameter("@z_fiscal", ficha.zFiscal));
+                        parametros.Add(new MySqlParameter("@aplicar_igtf", ""));
+                        parametros.Add(_tasaIgtf);
+                        parametros.Add(_base_aplica_igtf_mon_act);
+                        parametros.Add(_base_aplica_igtf_mon_div);
+                        parametros.Add(_monto_igtf);
+                        parametros.Add(new MySqlParameter("@estatus_mostrar_libro_venta", ficha.estatusMostrarLibroVenta));
+                        parametros.Add(new MySqlParameter("@estatus_credito", ""));
+
+                        //OTROS NUEVOS CAMPOS
+                        parametros.Add(new MySqlParameter("@tasa_actual_sistema", ficha.TasaActualSistema));
+
+                        //
+                        var rstNtCr= cn.Database.ExecuteSqlCommand(_sql, parametros.ToArray());
+                        if (rstNtCr == 0)
                         {
-                            auto = autoVenta,
-                            documento = ficha.DocumentoNro,
-                            fecha = fechaSistema.Date,
-                            fecha_vencimiento = fechaVenc.Date,
-                            razon_social = ficha.RazonSocial,
-                            dir_fiscal = ficha.DirFiscal,
-                            ci_rif = ficha.CiRif,
-                            tipo = ficha.Tipo,
-                            exento = ficha.Exento,
-                            base1 = ficha.Base1,
-                            base2 = ficha.Base2,
-                            base3 = ficha.Base3,
-                            impuesto1 = ficha.Impuesto1,
-                            impuesto2 = ficha.Impuesto2,
-                            impuesto3 = ficha.Impuesto3,
-                            @base = ficha.MBase,
-                            impuesto = ficha.Impuesto,
-                            total = ficha.Total,
-                            tasa1 = ficha.Tasa1,
-                            tasa2 = ficha.Tasa2,
-                            tasa3 = ficha.Tasa3,
-                            nota = ficha.Nota,
-                            tasa_retencion_iva = ficha.TasaRetencionIva,
-                            tasa_retencion_islr = ficha.TasaRetencionIslr,
-                            retencion_iva = ficha.RetencionIva,
-                            retencion_islr = ficha.TasaRetencionIslr,
-                            auto_cliente = ficha.AutoCliente,
-                            codigo_cliente = ficha.CodigoCliente,
-                            mes_relacion = mesRelacion,
-                            control = ficha.Control,
-                            fecha_registro = fechaSistema.Date,
-                            orden_compra = ficha.OrdenCompra,
-                            dias = ficha.Dias,
-                            descuento1 = ficha.Descuento1,
-                            descuento2 = ficha.Descuento2,
-                            cargos = ficha.Cargos,
-                            descuento1p = ficha.Descuento1p,
-                            descuento2p = ficha.Descuento2p,
-                            cargosp = ficha.Cargosp,
-                            columna = ficha.Columna,
-                            estatus_anulado = ficha.EstatusAnulado,
-                            aplica = ficha.Aplica,
-                            comprobante_retencion = ficha.ComprobanteRetencion,
-                            subtotal_neto = ficha.SubTotalNeto,
-                            telefono = ficha.Telefono,
-                            factor_cambio = ficha.FactorCambio,
-                            codigo_vendedor = ficha.CodigoVendedor,
-                            vendedor = ficha.Vendedor,
-                            auto_vendedor = ficha.AutoVendedor,
-                            fecha_pedido = ficha.FechaPedido,
-                            pedido = ficha.Pedido,
-                            condicion_pago = ficha.CondicionPago,
-                            usuario = ficha.Usuario,
-                            codigo_usuario = ficha.CodigoUsuario,
-                            codigo_sucursal = ficha.CodigoSucursal,
-                            hora = fechaSistema.ToShortTimeString(),
-                            transporte = ficha.Transporte,
-                            codigo_transporte = ficha.CodigoTransporte,
-                            monto_divisa = ficha.MontoDivisa,
-                            despachado = ficha.Despachado,
-                            dir_despacho = ficha.DirDespacho,
-                            estacion = ficha.Estacion,
-                            auto_recibo = autoRecibo,
-                            recibo = reciboNUmero,
-                            renglones = ficha.Renglones,
-                            saldo_pendiente = ficha.SaldoPendiente,
-                            ano_relacion = anoRelacion,
-                            comprobante_retencion_islr = ficha.ComprobanteRetencionIslr,
-                            dias_validez = ficha.DiasValidez,
-                            auto_usuario = ficha.AutoUsuario,
-                            auto_transporte = ficha.AutoTransporte,
-                            situacion = ficha.Situacion,
-                            signo = ficha.Signo,
-                            serie = ficha.Serie,
-                            tarifa = ficha.Tarifa,
-                            tipo_remision = ficha.TipoRemision,
-                            documento_remision = ficha.DocumentoRemision,
-                            auto_remision = ficha.AutoRemision,
-                            documento_nombre = ficha.DocumentoNombre,
-                            subtotal_impuesto = ficha.SubTotalImpuesto,
-                            subtotal = ficha.SubTotal,
-                            auto_cxc = autoCxC,
-                            tipo_cliente = ficha.TipoCliente,
-                            planilla = ficha.Planilla,
-                            expediente = ficha.Expendiente,
-                            anticipo_iva = ficha.AnticipoIva,
-                            terceros_iva = ficha.TercerosIva,
-                            neto = ficha.Neto,
-                            costo = ficha.Costo,
-                            utilidad = ficha.Utilidad,
-                            utilidadp = ficha.Utilidadp,
-                            documento_tipo = ficha.DocumentoTipo,
-                            ci_titular = ficha.CiTitular,
-                            nombre_titular = ficha.NombreTitular,
-                            ci_beneficiario = ficha.CiBeneficiario,
-                            nombre_beneficiario = ficha.NombreBeneficiario,
-                            clave = "02", //INDICA QUE ES GENERADO POR SISTEMA POS ON LINE
-                            denominacion_fiscal = ficha.DenominacionFiscal,
-                            cambio = ficha.Cambio,
-                            estatus_validado = ficha.EstatusValidado,
-                            cierre = ficha.Cierre,
-                            fecha_retencion = fechaNula,
-                            estatus_cierre_contable = ficha.EstatusCierreContable,
-                            cierre_ftp = ficha.CierreFtp,
-                            //
-                            porct_bono_por_pago_divisa = ficha.PorctBonoPorPagoDivisa,
-                            cnt_divisa_aplica_bono_por_pago_divisa = ficha.CantDivisaAplicaBonoPorPagoDivisa,
-                            monto_bono_por_pago_divisa = ficha.MontoBonoPorPagoDivisa,
-                            monto_bono_en_divisa_por_pago_divisa = ficha.MontoBonoEnDivisaPorPagoDivisa,
-                            monto_por_vuelto_en_efectivo = ficha.MontoPorVueltoEnEfectivo,
-                            monto_por_vuelto_en_divisa = ficha.MontoPorVueltoEnDivisa,
-                            monto_por_vuelto_en_pago_movil = ficha.MontoPorVueltoEnPagoMovil,
-                            cnt_divisa_por_vuelto_en_divisa = ficha.CantDivisaPorVueltoEnDivisa,
-                            estatus_bono_por_pago_divisa = ficha.estatusPorBonoPorPagoDivisa,
-                            estatus_vuelto_por_pago_movil = ficha.estatusPorVueltoEnPagoMovil,
-                            //
-                            estatus_fiscal = ficha.estatusFiscal,
-                            z_fiscal = ficha.zFiscal,
-                            //
-                            aplicar_igtf = "",
-                            tasa_igtf = 0m,
-                            base_aplica_igtf_mon_act = 0m,
-                            base_aplica_igtf_mon_div = 0m,
-                            monto_igtf = 0m,
-                            //
-                            estatus_mostrar_libro_venta = ficha.estatusMostrarLibroVenta,
-                            //
-                            estatus_credito="",
-                        };
-                        cn.ventas.Add(entVenta);
+                            throw new Exception("PROBLEMA AL REGISTAR EL DOCUMENTO DE NOTA CREDITO");
+                        }
                         cn.SaveChanges();
+
+
                         //
                         if (ficha.ClienteSaldo != null)
                         {

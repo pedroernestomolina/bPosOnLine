@@ -256,9 +256,13 @@ namespace DtoLibPos.Documento.Agregar.NotaCredito
             //
             detalleFormaPago = new List<FichaPosResumenDetalleFormaPago>();
             resumenGeneral = new FichaPosResumenGeneral();
+            //
+            TasaActualSistema = 0m;
         }
         //
         public List<FichaPosResumenDetalleFormaPago> detalleFormaPago { get; set; }
         public FichaPosResumenGeneral resumenGeneral { get; set; }
+
+        public decimal TasaActualSistema { get; set; }
     }
 }

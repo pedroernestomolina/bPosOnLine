@@ -150,6 +150,8 @@ namespace DtoLibPos.Documento.Agregar.Factura
         public  FichaPosResumenGeneral resumenGeneral { get; set; }
         //
 
+        public decimal tasaActualSistema { get; set; }
+
 
         public Ficha()
         {
@@ -289,6 +291,8 @@ namespace DtoLibPos.Documento.Agregar.Factura
             //
             detalleFormaPago = new List<FichaPosResumenDetalleFormaPago>();
             resumenGeneral = new FichaPosResumenGeneral();
+            //
+            tasaActualSistema = 0m;
         }
     }
 }
