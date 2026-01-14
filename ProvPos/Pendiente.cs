@@ -177,12 +177,17 @@ namespace ProvPos
                     var p1 = new MySql.Data.MySqlClient.MySqlParameter();
                     var _sql = @"select 
                                     count(*) as cnt 
-                                from p_pendiente ";
+                                from p_pendiente 
+                                where 1=1 ";
                     if (filtro.idOperador != null) 
                     {
-                        _sql += "where id_p_operador=@idOperador";
+                        _sql += "and id_p_operador=@idOperador ";
                         p1.ParameterName = "@idOperador";
                         p1.Value = filtro.idOperador;
+                    }
+                    if (filtro.HabilitarConteoCtasProtegidas==false)
+                    {
+                        _sql += "and estatus_protegido=''";
                     }
                     var cnt= cn.Database.SqlQuery<int>(_sql, p1).FirstOrDefault();
                     result.Entidad = cnt;

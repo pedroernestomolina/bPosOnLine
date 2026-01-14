@@ -7,18 +7,14 @@ using System.Threading.Tasks;
 
 namespace DtoLibPos.Pendiente.Cnt
 {
-    
     public class Filtro
     {
-
         public int? idOperador { get; set; }
-
-
+        public bool HabilitarConteoCtasProtegidas { get; set; }
         public Filtro() 
         {
             idOperador = null;
+            HabilitarConteoCtasProtegidas = true;
         }
-
     }
-
 }
