@@ -62,9 +62,10 @@ namespace ProvPos
                                             SELECT auto_producto 
                                             FROM productos_precios 
                                             where fecha>= curdate()
-                                                and nota not like '%CAMBIO MASIVO%'
+                                                and estatus_cambio_masivo='' 
                                             group by auto_producto
                                         ) as hist on hist.auto_producto=p.auto";
+                            //nota not like '%CAMBIO MASIVO%'
                         }
                         else
                         {
