@@ -44,5 +44,10 @@ namespace ServicePos.MyService
         {
             return ServiceProv.Pendiente_AsignarEstatusCtaProtegida(idCta);
         }
+        public DtoLib.Resultado 
+            Pendiente_QuitarEstatusCtaProtegida(int idCta)
+        {
+            return ServiceProv.Pendiente_QuitarEstatusCtaProtegida(idCta);
+        }
     }
 }

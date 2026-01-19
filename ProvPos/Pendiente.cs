@@ -259,5 +259,33 @@ namespace ProvPos
             //
             return result;
         }
+        public DtoLib.Resultado 
+            Pendiente_QuitarEstatusCtaProtegida(int idCta)
+        {
+            var result = new DtoLib.Resultado();
+            //
+            try
+            {
+                using (var cn = new PosEntities(_cnPos.ConnectionString))
+                {
+                    var _p1 = new MySql.Data.MySqlClient.MySqlParameter("@id", idCta);
+                    var _sql = @"update p_pendiente set
+                                    estatus_protegido='' 
+                                where id=@id";
+                    var rst = cn.Database.ExecuteSqlCommand(_sql, _p1);
+                    if (rst == 0)
+                    {
+                        throw new Exception("PROBLEMA AL DESPROTEGER CUENTA PENDIENTE");
+                    }
+                };
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+            //
+            return result;
+        }
     }
 }

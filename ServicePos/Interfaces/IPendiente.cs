@@ -22,5 +22,7 @@ namespace ServicePos.Interfaces
             Pendiente_VerificarEstatusCtaProtegida(int idCta);
         DtoLib.Resultado
             Pendiente_AsignarEstatusCtaProtegida(int idCta);
+        DtoLib.Resultado
+            Pendiente_QuitarEstatusCtaProtegida(int idCta);
     }
 }
