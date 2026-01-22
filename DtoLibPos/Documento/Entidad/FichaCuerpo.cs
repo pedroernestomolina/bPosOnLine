@@ -131,6 +131,10 @@ namespace DtoLibPos.Documento.Entidad
         public decimal MontoBonoPorPagoDivisa { get; set; }
         public decimal CntDivisaAplicaBonoPorPagoDivisa { get; set; }
         //
+        public decimal porcSegunSistemaBonoPagoDivisa { get; set; }
+        public decimal porcSegunPosBonoPagoDivisa { get; set; }
+        public decimal porcAumentoPrdNoAdmDivisa { get; set; }
+        //
         public FichaCuerpo ()
         {
             DocumentoNro = "";
@@ -252,6 +256,10 @@ namespace DtoLibPos.Documento.Entidad
             baseAplicaIGTFMonDiv = 0.0m;
             //
             Prefijo = "";
+            //
+            porcSegunSistemaBonoPagoDivisa = 0m;
+            porcSegunPosBonoPagoDivisa = 0m;
+            porcAumentoPrdNoAdmDivisa = 0m;
         }
     }
 }

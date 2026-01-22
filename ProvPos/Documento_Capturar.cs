@@ -136,7 +136,10 @@ namespace ProvPos
                                         tasa_igtf as tasaIGTF,
                                         monto_igtf as montoIGTF,
                                         base_aplica_igtf_mon_act as baseAplicaIGTFMonAct,
-                                        base_aplica_igtf_mon_div as baseAplicaIGTFMonDiv
+                                        base_aplica_igtf_mon_div as baseAplicaIGTFMonDiv,
+                                        porc_segun_sistema_por_bono_pago_divisa as porcSegunSistemaBonoPagoDivisa,
+                                        porc_segun_pos_por_bono_pago_divisa as porcSegunPosBonoPagoDivisa,
+                                        porc_aumento_prd_no_adm_por_divisa as porcAumentoPrdNoAdmDivisa
                                     from ventas 
                                     where auto=@idDoc";
                     var _ent = cn.Database.SqlQuery<DtoLibPos.Documento.Entidad.FichaCuerpo>(_sqlEnc, d0).FirstOrDefault();
@@ -243,7 +246,9 @@ namespace ProvPos
                                             vp.precio_factura as precioFactura,
                                             vp.porct_bono_aplicar as bonoAplicar,
                                             vp.precio_cliente as precio,
-                                            v.descuento1p as descuento
+                                            v.descuento1p as descuento,
+                                            vp.es_por_divisa as estatusPrdDivisa,
+                                            vp.aplica_porct_aumento as estatusAplicaPorcAumento
                                     from ventas_precio as vp 
                                     join ventas as v on v.auto=vp.auto_documento
                                     where auto_documento=@id and

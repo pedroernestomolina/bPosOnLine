@@ -210,7 +210,10 @@ namespace ProvPos
                                         monto_igtf, 
                                         estatus_mostrar_libro_venta, 
                                         estatus_credito,
-                                        tasa_actual_sistema) 
+                                        tasa_actual_sistema,
+                                        porc_segun_sistema_por_bono_pago_divisa,
+                                        porc_segun_pos_por_bono_pago_divisa,
+                                        porc_aumento_prd_no_adm_por_divisa) 
                                     VALUES (
                                         @auto, 
                                         @documento, 
@@ -335,7 +338,10 @@ namespace ProvPos
                                         @monto_igtf, 
                                         @estatus_mostrar_libro_venta, 
                                         @estatus_credito, 
-                                        @tasa_actual_sistema)";
+                                        @tasa_actual_sistema,
+                                        @porc_segun_sistema_por_bono_pago_divisa,
+                                        @porc_segun_pos_por_bono_pago_divisa,
+                                        @porc_aumento_prd_no_adm_por_divisa)";
 
                         var parametros = new List<MySqlParameter>();
                         // Identificadores y Fechas
@@ -493,6 +499,11 @@ namespace ProvPos
 
                         //otros NUEVOS
                         parametros.Add(new MySqlParameter("@tasa_actual_sistema", ficha.tasaActualSistema));
+
+                        //mas nuevos
+                        parametros.Add(new MySqlParameter("@porc_segun_sistema_por_bono_pago_divisa", ficha.porcSegunSistemaPorBonoPagoDivisa));
+                        parametros.Add(new MySqlParameter("@porc_segun_pos_por_bono_pago_divisa", ficha.porcSegunPosPorBonoPagoDivisa));
+                        parametros.Add(new MySqlParameter("@porc_aumento_prd_no_adm_por_divisa", ficha.porcAumentoPorPrdNoAdmPorDivisa));
 
                         //
                         var rstVta = cn.Database.ExecuteSqlCommand(_sql, parametros.ToArray());
