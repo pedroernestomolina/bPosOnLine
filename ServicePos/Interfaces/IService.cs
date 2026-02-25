@@ -22,7 +22,8 @@ namespace ServicePos.Interfaces
         IMoneda,
         ICuadreCierre,
         IPosCambioPrecio,
-        IPosItem
+        IPosItem,
+        IPosCtaControl
     {
         DtoLib.ResultadoEntidad<DateTime> 
             FechaServidor();
@@ -31,5 +32,4 @@ namespace ServicePos.Interfaces
         DtoLib.ResultadoEntidad<DateTime>
             Servicio_GetFechaUltBoletin();
     }
-
 }

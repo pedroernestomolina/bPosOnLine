@@ -25,5 +25,8 @@ namespace IPos
             Venta_Item_ActualizarCantidad_Aumentar(DtoLibPos.Venta.Item.ActualizarCantidad.Aumentar.Ficha ficha);
         DtoLib.Resultado
             Venta_Item_ActualizarPrecio(DtoLibPos.Venta.Item.ActualizarPrecio.Ficha ficha);
+        //
+        DtoLib.Resultado
+            Venta_Item_AsignarControlPara_GetLista(DtoLibPos.Venta.Item.Lista.Filtro ficha);
     }
 }

@@ -1665,8 +1665,37 @@ namespace ProvPos
                             cn.SaveChanges();
                         }
                         //
+                        var _p1 = new MySql.Data.MySqlClient.MySqlParameter("@idOperador", ficha.idOperador);
+                        _sql = @"select 
+                                    id_p_control 
+                                from p_operador 
+                                WHERE id = @idOperador";
+                        var _idControl = cn.Database.SqlQuery<int>(_sql, _p1).FirstOrDefault();
+                        if (_idControl == 0 || _idControl == -1)
+                        {
+                            throw new Exception("NO EXISTE PARA ESTE OPERADOR UN CONTROL ASIGNADO");
+                        }
                         //
-
+                        _p1 = new MySql.Data.MySqlClient.MySqlParameter("@idControl", _idControl);
+                        _sql = @"delete from p_control 
+                                    WHERE id = @idControl";
+                        var rt_Control = cn.Database.ExecuteSqlCommand(_sql, _p1);
+                        if (rt_Control == 0)
+                        {
+                            throw new Exception("PROBLEMA AL ELIMINAR CONTROL");
+                        }
+                        cn.SaveChanges();
+                        //
+                        _p1 = new MySql.Data.MySqlClient.MySqlParameter("@idOperador", ficha.idOperador);
+                        _sql = @"update p_operador 
+                                    set id_p_control=-1
+                                WHERE id = @idOperador";
+                        var rt_Operador = cn.Database.ExecuteSqlCommand(_sql, _p1);
+                        if (rt_Operador == 0)
+                        {
+                            throw new Exception("NO SE PUDO ACTUALZAR OPERADOR");
+                        }
+                        //
                         ts.Complete();
                         var ret = new DtoLibPos.Documento.Agregar.Factura.Result()
                         {

@@ -98,7 +98,7 @@
     <Compile Include="PosCambioPrecio\ProcesarCambio\DataItem.cs" />
     <Compile Include="PosCambioPrecio\ProcesarCambio\Ficha.cs" />
     <Compile Include="PosCambioPrecio\ProcesarCambio\LogReg.cs" />
-    <Compile Include="PosItem\ActualizarPrecioPorCambioTasa\Class1.cs" />
+    <Compile Include="PosCtaControl\Obtener\Ficha.cs" />
     <Compile Include="PosItem\ActualizarPrecioPorCambioTasa\Ficha.cs" />
     <Compile Include="PosItem\ActualizarPrecioPorCambioTasa\Item.cs" />
     <Compile Include="Pos\Cierre\Entidad\Ficha.cs" />

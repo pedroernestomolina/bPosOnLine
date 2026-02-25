@@ -22,7 +22,8 @@ namespace IPos
         IMoneda,
         ICuadreCierre,
         IPosCambioPrecio,
-        IPosItem
+        IPosItem,
+        IPosCtaControl
     {
         DtoLib.ResultadoEntidad<DateTime> 
             FechaServidor();

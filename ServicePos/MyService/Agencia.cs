@@ -32,7 +32,5 @@ namespace ServicePos.MyService
         {
             return ServiceProv.Agencia_GetFichaById(id);
         }
-
     }
-
 }

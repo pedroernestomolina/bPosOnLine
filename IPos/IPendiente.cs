@@ -16,12 +16,16 @@ namespace IPos
         DtoLib.ResultadoLista<DtoLibPos.Pendiente.Lista.Ficha> 
             Pendiente_Lista(DtoLibPos.Pendiente.Lista.Filtro filtro);
         DtoLib.Resultado 
-            Pendiente_AbrirCta(int idCta, int idOperador);
+            Pendiente_AbrirCta(int idCta, int idOperador, int idControl);
         DtoLib.ResultadoEntidad<string> 
             Pendiente_VerificarEstatusCtaProtegida(int idCta);
         DtoLib.Resultado
             Pendiente_AsignarEstatusCtaProtegida(int idCta);
         DtoLib.Resultado
             Pendiente_QuitarEstatusCtaProtegida(int idCta);
+        //
+        //
+        DtoLib.ResultadoLista<int>
+            Pendiente_Obtener_IdControlPara_AbrirCta(int idCta);
     }
 }

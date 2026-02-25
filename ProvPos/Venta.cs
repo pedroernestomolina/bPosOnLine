@@ -39,6 +39,53 @@ namespace ProvPos
                         entDeposito.disponible -= ficha.deposito.cantBloq;
                         cnn.SaveChanges();
                         //
+
+
+                        var __p0 = new MySql.Data.MySqlClient.MySqlParameter("@idOperador", ficha.item.idOperador);
+                        var __sql = "select id_p_control from p_operador where id=@idOperador";
+                        var __idControl = cnn.Database.SqlQuery<int>(__sql, __p0).FirstOrDefault();
+                        if (__idControl == -1)
+                        {
+                            __sql = @"INSERT INTO p_control (
+                                            id, 
+                                            id_cliente, 
+                                            estatus_protegida, 
+                                            tasa_pos, 
+                                            tasa_sist) 
+                                        VALUES (
+                                            NULL, 
+                                            '', 
+                                            '', 
+                                            '0.0000', 
+                                            '0.0000')";
+                            var __rt = cnn.Database.ExecuteSqlCommand(__sql);
+                            if (__rt == 0)
+                            {
+                                throw new Exception("PROBLEMA AL INSERTAR REGISTRO CONTROL");
+                            }
+                            cnn.SaveChanges();
+                            //
+                            var __lastId = cnn.Database.SqlQuery<int>("SELECT LAST_INSERT_ID();").FirstOrDefault();
+                            if (__lastId == null)
+                            {
+                                throw new Exception("PROBLEMA AL LEER ID REGISTRO CONTROL");
+                            }
+                            __idControl = __lastId;
+                            //
+                            var __p1 = new MySql.Data.MySqlClient.MySqlParameter("@idOperador", ficha.item.idOperador);
+                            var __p2 = new MySql.Data.MySqlClient.MySqlParameter("@idControl", __idControl);
+                            __sql = @"update p_operador set id_p_control=@idControl 
+                                        where id=@idOperador";
+                            var __rt1 = cnn.Database.ExecuteSqlCommand(__sql, __p1, __p2);
+                            if (__rt1 == 0)
+                            {
+                                throw new Exception("PROBLEMA AL ACTUALIZAR OPERADOR => ID CONTROL");
+                            }
+                            cnn.SaveChanges();
+                        }
+
+
+                        //
                         var _sql = @"INSERT INTO p_venta (
                                         id, 
                                         id_p_operador, 
@@ -68,7 +115,8 @@ namespace ProvPos
                                         id_p_pendiente, 
                                         fPeso, 
                                         fVolumen, 
-                                        estatusDivisa
+                                        estatusDivisa,
+                                        id_p_control
                                     ) VALUES (
                                         NULL, 
                                         @id_p_operador, 
@@ -98,7 +146,8 @@ namespace ProvPos
                                         @id_p_pendiente, 
                                         @fPeso, 
                                         @fVolumen, 
-                                        @estatusDivisa
+                                        @estatusDivisa,
+                                        @id_p_control
                                     )";
                         var p1 = new MySql.Data.MySqlClient.MySqlParameter("@id_p_operador", ficha.item.idOperador);
                         var p2 = new MySql.Data.MySqlClient.MySqlParameter("@auto_producto", ficha.item.autoProducto);
@@ -128,11 +177,12 @@ namespace ProvPos
                         var p26 = new MySql.Data.MySqlClient.MySqlParameter("@fPeso", ficha.item.fPeso);
                         var p27 = new MySql.Data.MySqlClient.MySqlParameter("@fVolumen", ficha.item.fVolumen);
                         var p28 = new MySql.Data.MySqlClient.MySqlParameter("@estatusDivisa", ficha.item.estatusDivisa);
+                        var p29 = new MySql.Data.MySqlClient.MySqlParameter("@id_p_control", __idControl);
                         //
                         var rt = cnn.Database.ExecuteSqlCommand(_sql,
                             p1, p2, p3, p4, p5, p6, p7, p8, p9, p10,
                             p11, p12, p13, p14, p15, p16, p17, p18, p19, p20,
-                            p21, p22, p23, p24, p25, p26, p27, p28);
+                            p21, p22, p23, p24, p25, p26, p27, p28, p29);
                         if (rt == 0) 
                         {
                             throw new Exception("PROBLEMA AL INSERTAR REGISTRO DE VENTA");
@@ -195,7 +245,8 @@ namespace ProvPos
                                     fPeso as fPeso,
                                     fVolumen as fVolumen,
                                     estatusDivisa as estatusDivisa,
-                                    aplicar_porc_aumento as aplicarPorctAumento 
+                                    aplicar_porc_aumento as aplicarPorctAumento,
+                                    id_p_control as idPControl
                                 from p_venta
                                 where id_p_operador=@idOperador 
                                         and id_p_pendiente=-1";
@@ -274,7 +325,7 @@ namespace ProvPos
             Venta_Anular(DtoLibPos.Venta.Anular.Ficha ficha)
         {
             var result = new DtoLib.Resultado();
-        
+            //
             try
             {
                 using (var cnn = new PosEntities(_cnPos.ConnectionString))
@@ -294,6 +345,7 @@ namespace ProvPos
                             entDeposito.disponible += it.cantUndBloq;
                             cnn.SaveChanges();
                         }
+                        //
                         foreach (var it in ficha.items) 
                         {
                             var ent = cnn.p_venta.Find(it.idItem);
@@ -312,7 +364,29 @@ namespace ProvPos
                             cnn.p_venta.Remove(ent);
                             cnn.SaveChanges();
                         }
-
+                        //
+                        var _p1 = new MySql.Data.MySqlClient.MySqlParameter("@idOperador", ficha.IdOperador);
+                        var _sql = @"delete c
+                                        from p_control as c 
+                                        join p_operador as o on o.id_p_control=c.id
+                                    where o.id=@idOperador";
+                        var _rt0 = cnn.Database.ExecuteSqlCommand(_sql, _p1);
+                        if (_rt0 == 0)
+                        {
+                            throw new Exception("PROBLEMA AL ELIMINAR CONTROL");
+                        }
+                        cnn.SaveChanges();
+                        //
+                        _p1 = new MySql.Data.MySqlClient.MySqlParameter("@idOperador", ficha.IdOperador);
+                        _sql = @"update p_operador set id_p_control = -1 
+                                    where id=@idOperador";
+                        var _rt1 = cnn.Database.ExecuteSqlCommand(_sql, _p1);
+                        if (_rt1 == 0)
+                        {
+                            throw new Exception("PROBLEMA AL ACTUALIZAR OPERADOR => ID CONTROL");
+                        }
+                        cnn.SaveChanges();
+                        //
                         ts.Complete();
                     }
                 }
@@ -322,7 +396,7 @@ namespace ProvPos
                 result.Mensaje = e.Message;
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
-
+            //
             return result;
         }
         public DtoLib.Resultado 
@@ -538,6 +612,78 @@ namespace ProvPos
                 result.Mensaje = e.Message;
                 result.Result = DtoLib.Enumerados.EnumResult.isError;
             }
+            return result;
+        }
+        //
+        public DtoLib.Resultado 
+            Venta_Item_AsignarControlPara_GetLista(DtoLibPos.Venta.Item.Lista.Filtro ficha)
+        {
+            var result = new DtoLib.Resultado();
+            //
+            try
+            {
+                using (var cnn = new PosEntities(_cnPos.ConnectionString))
+                {
+                    using (var ts = new TransactionScope())
+                    {
+                        var _sql = @"INSERT INTO p_control (
+                                        id, 
+                                        id_cliente, 
+                                        estatus_protegida, 
+                                        tasa_pos, 
+                                        tasa_sist) 
+                                    VALUES (
+                                        NULL, 
+                                        '', 
+                                        '', 
+                                        '0.0000', 
+                                        '0.0000')";
+                        var rt = cnn.Database.ExecuteSqlCommand(_sql);
+                        if (rt == 0)
+                        {
+                            throw new Exception("PROBLEMA AL INSERTAR REGISTRO CONTROL");
+                        }
+                        cnn.SaveChanges();
+                        //
+                        var lastId = cnn.Database.SqlQuery<int>("SELECT LAST_INSERT_ID();").FirstOrDefault();
+                        if (lastId == null)
+                        {
+                            throw new Exception("PROBLEMA AL LEER ID REGISTRO CONTROL");
+                        }
+                        var _idControl = lastId;
+                        //
+                        var p1 = new MySql.Data.MySqlClient.MySqlParameter("@idOperador", ficha.idOperador);
+                        var p2 = new MySql.Data.MySqlClient.MySqlParameter("@idControl", _idControl);
+                        _sql = @"update p_venta set id_p_control=@idControl 
+                                where id_p_operador=@idOperador 
+                                        and id_p_pendiente=-1";
+                        var rt2 = cnn.Database.ExecuteSqlCommand(_sql, p1, p2);
+                        if (rt2 == 0)
+                        {
+                            throw new Exception("PROBLEMA AL ACTUALIZAR REGISTROS DE VENTA");
+                        }
+                        //
+                        p1 = new MySql.Data.MySqlClient.MySqlParameter("@idOperador", ficha.idOperador);
+                        p2 = new MySql.Data.MySqlClient.MySqlParameter("@idControl", _idControl);
+                        _sql = @"update p_operador set id_p_control=@idControl 
+                                where id=@idOperador";
+                        var rt3 = cnn.Database.ExecuteSqlCommand(_sql, p1, p2);
+                        if (rt3 == 0)
+                        {
+                            throw new Exception("PROBLEMA AL ACTUALIZAR OPERADOR => ID CONTROL");
+                        }
+                        cnn.SaveChanges();
+                        //
+                        ts.Complete();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+            //
             return result;
         }
     }

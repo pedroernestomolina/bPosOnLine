@@ -40,6 +40,9 @@ namespace DtoLibPos.Venta.Item.Entidad
         //
         public string estatusDivisa { get; set; }
         public string aplicarPorctAumento { get; set; }
+        //
+        public int idPControl { get; set; }
+        //
         public Ficha()
         {
             autoDeposito = "";
@@ -73,6 +76,8 @@ namespace DtoLibPos.Venta.Item.Entidad
             //
             estatusDivisa = "";
             aplicarPorctAumento = "";
+            //
+            idPControl = -1;
         }
     }
 }

@@ -21,7 +21,32 @@ namespace ServicePos.MyService
         public DtoLib.Resultado 
             Pendiente_AbrirCta(int idCta, int idOperador)
         {
-            return ServiceProv.Pendiente_AbrirCta(idCta, idOperador);
+            try
+            {
+                var rt = ServiceProv.Pendiente_Obtener_IdControlPara_AbrirCta(idCta);
+                if (rt.Result == DtoLib.Enumerados.EnumResult.isError)
+                {
+                    throw new Exception(rt.Mensaje);
+                }
+                if (rt.Lista.Count == 0)
+                {
+                    throw new Exception("NO EXISTE ID CONTROL PARA ESTA CUENTA");
+                }
+                if (rt.Lista.Count > 1) 
+                {
+                    throw new Exception("EXISTEN VARIOS ID CONTROL PARA ESTA CUENTA");
+                }
+                return ServiceProv.Pendiente_AbrirCta(idCta, idOperador, rt.Lista.ElementAt(0));
+            }
+            catch (Exception e)
+            {
+                var rt = new DtoLib.Resultado()
+                {
+                    Mensaje = e.Message,
+                    Result = DtoLib.Enumerados.EnumResult.isError,
+                };
+                return rt;
+            }
         }
         public DtoLib.ResultadoLista<DtoLibPos.Pendiente.Lista.Ficha> 
             Pendiente_Lista(DtoLibPos.Pendiente.Lista.Filtro filtro)

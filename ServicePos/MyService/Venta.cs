@@ -18,7 +18,42 @@ namespace ServicePos.MyService
         public DtoLib.ResultadoLista<DtoLibPos.Venta.Item.Entidad.Ficha> 
             Venta_Item_GetLista(DtoLibPos.Venta.Item.Lista.Filtro ficha)
         {
-            return ServiceProv.Venta_Item_GetLista(ficha);
+            try
+            {
+                var rt_s1 = ServiceProv.Venta_Item_GetLista(ficha);
+                if (rt_s1.Result == DtoLib.Enumerados.EnumResult.isError)
+                    throw new Exception(rt_s1.Mensaje);
+                //
+                var lst = rt_s1.Lista.GroupBy(g => new { idControl = g.idPControl }).ToList();
+                if (lst.Count > 0)
+                {
+                    if (lst.Count > 1)
+                    {
+                        throw new Exception("PROBLEMA, EN UNA MISMA CUENTA HAY VARIOS ID CONTROLES DIFERENTES");
+                    }
+                    if (lst.ElementAt(0).Key.idControl == -1)
+                    {
+                        var rt_s2 = ServiceProv.Venta_Item_AsignarControlPara_GetLista(ficha);
+                        if (rt_s2.Result == DtoLib.Enumerados.EnumResult.isError)
+                        {
+                            throw new Exception(rt_s2.Mensaje);
+                        }
+                        return ServiceProv.Venta_Item_GetLista(ficha);
+                    }
+                }
+                //
+                return rt_s1;
+            }
+            catch (Exception e)
+            {
+                var rt = new DtoLib.ResultadoLista<DtoLibPos.Venta.Item.Entidad.Ficha>()
+                {
+                    Mensaje = e.Message,
+                    Result = DtoLib.Enumerados.EnumResult.isError,
+                    Lista = null,
+                };
+                return rt;
+            }
         }
         public DtoLib.ResultadoEntidad<DtoLibPos.Venta.Item.Entidad.Ficha> 
             Venta_Item_GetById(int id)
