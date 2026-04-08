@@ -50,6 +50,7 @@ namespace DtoLibPos.Producto.Lista
         public string histPrecio { get; set; }
         //
         public byte[] imagen { get; set; }
+        public byte[] imgCatalogo { get; set; }
         public Ficha()
         {
             Auto = "";
@@ -91,6 +92,7 @@ namespace DtoLibPos.Producto.Lista
             descEmpInv = "";
             //
             imagen = new byte[0];
+            imgCatalogo = null;
         }
     }
 }

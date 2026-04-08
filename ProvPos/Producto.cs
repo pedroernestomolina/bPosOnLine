@@ -41,13 +41,15 @@ namespace ProvPos
                                     pmCompra.nombre as descEmpCompra,
                                     pExtInv.cont_emp_inv_1 as contEmpInv,
                                     pmInv.nombre as descEmpInv,
-                                    extra.imagen as imagen ";
+                                    extra.imagen as imagen,
+                                    cat.img_prd_catalogo as imgCatalogo ";
                     var sql_2 = @" from productos as p 
                                     join productos_deposito as pd on p.auto=pd.auto_producto 
                                     join productos_medida as pmCompra on pmCompra.auto=p.auto_empaque_compra
                                     join productos_ext as pExtInv on pExtInv.auto_producto=p.auto
                                     join productos_medida as pmInv on pmInv.auto=pExtInv.auto_emp_inv_1 
-                                    left join productos_extra as extra on extra.auto_productos=p.auto ";
+                                    left join productos_extra as extra on extra.auto_productos=p.auto
+                                    left join web_catalogo_producto as cat on cat.id_prd_catalogo=p.auto";
                     var sql_3 = " where 1=1 ";
                     var sql_4 = "";
 
