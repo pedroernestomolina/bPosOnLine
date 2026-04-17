@@ -82,6 +82,7 @@
     <Compile Include="ModuloAdm.cs" />
     <Compile Include="Moneda.cs" />
     <Compile Include="MovCaja.cs" />
+    <Compile Include="PedidoWeb.cs" />
     <Compile Include="Pedido_AnularBy_Id.cs" />
     <Compile Include="Pedido_GetFichaBy_Id.cs" />
     <Compile Include="Pedido_GetIdBy_Numero.cs" />

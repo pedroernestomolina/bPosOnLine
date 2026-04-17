@@ -61,6 +61,7 @@
     <Compile Include="IMoneda.cs" />
     <Compile Include="IMovCaja.cs" />
     <Compile Include="IPedido.cs" />
+    <Compile Include="IPedidoWeb.cs" />
     <Compile Include="IPendiente.cs" />
     <Compile Include="IPermiso.cs" />
     <Compile Include="IPosCambioPrecio.cs" />

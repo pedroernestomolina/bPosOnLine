@@ -60,6 +60,7 @@
     <Compile Include="Interfaces\IMoneda.cs" />
     <Compile Include="Interfaces\IMovCaja.cs" />
     <Compile Include="Interfaces\IPedido.cs" />
+    <Compile Include="Interfaces\IPedidoWeb.cs" />
     <Compile Include="Interfaces\IPendiente.cs" />
     <Compile Include="Interfaces\IPermiso.cs" />
     <Compile Include="Interfaces\IPosCambioPrecio.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="MyService\Moneda.cs" />
     <Compile Include="MyService\MovCaja.cs" />
     <Compile Include="MyService\Pedido.cs" />
+    <Compile Include="MyService\PedidoWeb.cs" />
     <Compile Include="MyService\Pendiente.cs" />
     <Compile Include="MyService\Permiso.cs" />
     <Compile Include="MyService\PosCambioPrecio.cs" />
