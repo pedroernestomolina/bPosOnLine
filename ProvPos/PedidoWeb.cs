@@ -145,10 +145,10 @@ namespace ProvPos
             return result;
         }
 
-        public DtoLib.ResultadoEntidad<DtoLibPos.PedidoWeb.CapturarTrasladoPisoVenta>
+        public DtoLib.ResultadoEntidad<DtoLibPos.PedidoWeb.CapturarTrasladoPisoVentaDto>
             PedidoWeb_CapturarTrasladoPisoVenta(int idPedido)
         {
-            var result = new DtoLib.ResultadoEntidad<DtoLibPos.PedidoWeb.CapturarTrasladoPisoVenta>();
+            var result = new DtoLib.ResultadoEntidad<DtoLibPos.PedidoWeb.CapturarTrasladoPisoVentaDto>();
             //
             try
             {
@@ -187,14 +187,14 @@ namespace ProvPos
                                 join productos_deposito as dep on dep.auto_producto=p.auto and dep.auto_deposito=ped.id_deposito
                                 where ped.id=@idPedido";
                     var pId = new MySql.Data.MySqlClient.MySqlParameter("@idPedido", idPedido);
-                    var data = cnn.Database.SqlQuery<DtoLibPos.PedidoWeb.ItemsTrasladarPisoVenta>(sql, pId).ToList();
+                    var data = cnn.Database.SqlQuery<DtoLibPos.PedidoWeb.ItemsTrasladarPisoVentaDto>(sql, pId).ToList();
 
                     if (data == null || data.Count == 0)
                     {
                         throw new Exception("No se encontraron detalles para el pedido");
                     }
 
-                    var entidad = new DtoLibPos.PedidoWeb.CapturarTrasladoPisoVenta
+                    var entidad = new DtoLibPos.PedidoWeb.CapturarTrasladoPisoVentaDto
                     {
                         Items = data
                     };

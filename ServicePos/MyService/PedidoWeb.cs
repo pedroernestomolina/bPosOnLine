@@ -22,7 +22,7 @@ namespace ServicePos.MyService
             return ServiceProv.PedidoWeb_ObtenerPedidoWeb(idPedido);
         }
 
-        public DtoLib.ResultadoEntidad<DtoLibPos.PedidoWeb.CapturarTrasladoPisoVenta> 
+        public DtoLib.ResultadoEntidad<DtoLibPos.PedidoWeb.CapturarTrasladoPisoVentaDto> 
             PedidoWeb_CapturarTrasladoPisoVenta(int idPedido)
         {
             return ServiceProv.PedidoWeb_CapturarTrasladoPisoVenta(idPedido);

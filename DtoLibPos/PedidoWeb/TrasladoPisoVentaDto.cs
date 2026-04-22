@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DtoLibPos.PedidoWeb
 {
-    public class ItemsTrasladarPisoVenta
+    public class ItemsTrasladarPisoVentaDto
     {
         public string idProducto { get; set; }
         public string idDepartamento { get; set; }
@@ -34,8 +34,8 @@ namespace DtoLibPos.PedidoWeb
         public decimal exDisponible { get; set; }
     }
 
-    public class CapturarTrasladoPisoVenta
+    public class CapturarTrasladoPisoVentaDto
     {
-        public List<ItemsTrasladarPisoVenta> Items { get; set; }
+        public List<ItemsTrasladarPisoVentaDto> Items { get; set; }
     }
 }

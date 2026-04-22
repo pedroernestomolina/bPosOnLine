@@ -14,7 +14,7 @@ namespace ServicePos.Interfaces
         DtoLib.ResultadoEntidad<DtoLibPos.PedidoWeb.EntidadDto>
             PedidoWeb_ObtenerPedidoWeb(int idPedido);
 
-        DtoLib.ResultadoEntidad<DtoLibPos.PedidoWeb.CapturarTrasladoPisoVenta>
+        DtoLib.ResultadoEntidad<DtoLibPos.PedidoWeb.CapturarTrasladoPisoVentaDto>
             PedidoWeb_CapturarTrasladoPisoVenta(int idPedido);
     }
 }
