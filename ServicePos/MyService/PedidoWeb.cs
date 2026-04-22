@@ -15,5 +15,17 @@ namespace ServicePos.MyService
         {
             return ServiceProv.PedidoWeb_ObtenerListaPedidos(filtro);
         }
+
+        public DtoLib.ResultadoEntidad<DtoLibPos.PedidoWeb.EntidadDto> 
+            PedidoWeb_ObtenerPedidoWeb(int idPedido)
+        {
+            return ServiceProv.PedidoWeb_ObtenerPedidoWeb(idPedido);
+        }
+
+        public DtoLib.ResultadoEntidad<DtoLibPos.PedidoWeb.CapturarTrasladoPisoVenta> 
+            PedidoWeb_CapturarTrasladoPisoVenta(int idPedido)
+        {
+            return ServiceProv.PedidoWeb_CapturarTrasladoPisoVenta(idPedido);
+        }
     }
 }

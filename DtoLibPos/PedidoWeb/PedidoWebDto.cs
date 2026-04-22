@@ -32,4 +32,26 @@ namespace DtoLibPos.PedidoWeb
         public string DescDeposito { get; set; }
         public int IdWebCliente { get; set; }
     }
+    public class PedidoWebDetalleDto
+    {
+        public int Id { get; set; }
+        public string IdProducto { get; set; }
+        public string DescProducto { get; set; }
+        public string DescWebProducto { get; set; }
+        public int CntSolicitada { get; set; }
+        public string IdEmpq { get; set; }
+        public string DescEmpq { get; set; }
+        public int ContEmpq { get; set; }
+        public string EstatusPrdHot { get; set; }
+        public string EstatusPrdDivisa { get; set; }
+        public decimal PrecioNetoMonLocal { get; set; }
+        public decimal PrecioFullMonRef { get; set; }
+        public decimal ImporteNetoMonLocal { get; set; }
+        public decimal ImporteMonRef { get; set; }
+    }
+    public class EntidadDto 
+    {
+        public PedidoWebDto Encabezado { get; set; }
+        public List<PedidoWebDetalleDto> Detalles { get; set; }
+    }
 }

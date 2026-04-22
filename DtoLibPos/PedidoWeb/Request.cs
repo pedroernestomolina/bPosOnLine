@@ -6,10 +6,6 @@ using System.Threading.Tasks;
 
 namespace DtoLibPos.PedidoWeb
 {
-    public class Request 
-    { 
-    }
-
     public enum EstatusProceso {SinDefinir=-1, SinProcesar=0, Procesado};
 
     public class FiltroPedidoWebListaRequest

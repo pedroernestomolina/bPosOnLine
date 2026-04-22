@@ -90,6 +90,7 @@
     <Compile Include="MovCaja\Registrar\Ficha.cs" />
     <Compile Include="PedidoWeb\PedidoWebDto.cs" />
     <Compile Include="PedidoWeb\Request.cs" />
+    <Compile Include="PedidoWeb\TrasladoPisoVenta.cs" />
     <Compile Include="Pedido\Entidad\Ficha.cs" />
     <Compile Include="Pedido\Guardar\Ficha.cs" />
     <Compile Include="Pedido\Lista\Ficha.cs" />
