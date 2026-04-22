@@ -16,5 +16,8 @@ namespace ServicePos.Interfaces
 
         DtoLib.ResultadoEntidad<DtoLibPos.PedidoWeb.CapturarTrasladoPisoVentaDto>
             PedidoWeb_CapturarTrasladoPisoVenta(int idPedido);
+
+        DtoLib.Resultado
+            PedidoWeb_TrasladarPisoVenta(DtoLibPos.PedidoWeb.AplicarTrasladoPisoVentaRequest traslado);
     }
 }

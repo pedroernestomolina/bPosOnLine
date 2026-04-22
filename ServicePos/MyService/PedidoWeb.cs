@@ -27,5 +27,11 @@ namespace ServicePos.MyService
         {
             return ServiceProv.PedidoWeb_CapturarTrasladoPisoVenta(idPedido);
         }
+
+        public DtoLib.Resultado 
+            PedidoWeb_TrasladarPisoVenta(DtoLibPos.PedidoWeb.AplicarTrasladoPisoVentaRequest traslado)
+        {
+            return ServiceProv.PedidoWeb_TrasladarPisoVenta(traslado);
+        }
     }
 }

@@ -210,9 +210,206 @@ namespace ProvPos
             return result;
         }
 
-        public DtoLib.ResultadoEntidad<DtoLibPos.PedidoWeb.EntidadDto> PedidoWeb_TrasladoPisoVenta()
+        public DtoLib.Resultado
+            PedidoWeb_TrasladarPisoVenta(DtoLibPos.PedidoWeb.AplicarTrasladoPisoVentaRequest traslado)
         {
-            throw new NotImplementedException();
+            var result = new DtoLib.Resultado();
+            //
+            try
+            {
+                using (var cnn = new PosEntities(_cnPos.ConnectionString))
+                using (var tx = cnn.Database.BeginTransaction())
+                {
+                    foreach (var item in traslado.ItemBloqEx)
+                    {
+                        // Obtener registro actual
+                        var sqlSelect = @"select reservada, disponible 
+                                          from productos_deposito 
+                                          where auto_producto=@idProducto and auto_deposito=@idDeposito 
+                                          for update";
+                        var p1 = new MySql.Data.MySqlClient.MySqlParameter("@idProducto", item.idProducto);
+                        var p2 = new MySql.Data.MySqlClient.MySqlParameter("@idDeposito", item.idDeposito);
+                        var datos = cnn.Database.SqlQuery<TempDeposito>(sqlSelect, p1, p2).FirstOrDefault();
+                        if (datos == null)
+                        {
+                            throw new Exception("Producto/Depósito no encontrado");
+                        }
+
+                        var nuevaReservada = datos.reservada + item.cntBloquear;
+                        var nuevoDisponible = datos.disponible - item.cntBloquear;
+
+                        if (nuevoDisponible < 0)
+                        {
+                            throw new Exception("Existencia no disponible para el producto/deposito solicitado");
+                        }
+
+                        var sqlUpdate = @"update productos_deposito 
+                                          set reservada=@reservada, disponible=@disponible 
+                                          where auto_producto=@idProducto and auto_deposito=@idDeposito";
+                        var p3 = new MySql.Data.MySqlClient.MySqlParameter("@reservada", nuevaReservada);
+                        var p4 = new MySql.Data.MySqlClient.MySqlParameter("@disponible", nuevoDisponible);
+
+                        cnn.Database.ExecuteSqlCommand(sqlUpdate, p3, p4, p1, p2);
+                    }
+                    cnn.SaveChanges();
+
+                    // Insertar en p_control y capturar el ID generado
+                    var sqlInsertControl = @"
+                        insert into p_control
+                        (id_cliente, estatus_protegida, tasa_pos, tasa_sist)
+                        values
+                        (@id_cliente, @estatus_protegida, @tasa_pos, @tasa_sist);
+                        select LAST_INSERT_ID();";
+                    var pCtrl1 = new MySql.Data.MySqlClient.MySqlParameter("@id_cliente", "");
+                    var pCtrl2 = new MySql.Data.MySqlClient.MySqlParameter("@estatus_protegida", "");
+                    var pCtrl3 = new MySql.Data.MySqlClient.MySqlParameter("@tasa_pos", MySql.Data.MySqlClient.MySqlDbType.Decimal);
+                    pCtrl3.Value = 0m;
+                    var pCtrl4 = new MySql.Data.MySqlClient.MySqlParameter("@tasa_sist", MySql.Data.MySqlClient.MySqlDbType.Decimal);
+                    pCtrl4.Value = 0m;
+
+                    var idPControl = cnn.Database.SqlQuery<int>(sqlInsertControl, pCtrl1, pCtrl2, pCtrl3, pCtrl4).First();
+
+                    // Actualizar p_operador con el id_p_control generado
+                    var sqlUpdateOperador = @"
+                        update p_operador
+                        set id_p_control=@id_p_control
+                        where id=@id_operador";
+                    var pOp1 = new MySql.Data.MySqlClient.MySqlParameter("@id_p_control", idPControl);
+                    var pOp2 = new MySql.Data.MySqlClient.MySqlParameter("@id_operador", traslado.IdOperador);
+                    cnn.Database.ExecuteSqlCommand(sqlUpdateOperador, pOp1, pOp2);
+                    cnn.SaveChanges();
+
+                    foreach (var item in traslado.ItemsPisoVta)
+                    {
+                        var sqlInsert = @"
+                                            insert into p_venta
+                                            (
+                                                id_p_operador,
+                                                auto_producto,
+                                                auto_departamento,
+                                                auto_grupo,
+                                                auto_subGrupo,
+                                                auto_tasa,
+                                                codigo,
+                                                nombre,
+                                                cantidad,
+                                                pneto,
+                                                pdivisaFull,
+                                                tarifaPrecio,
+                                                tasaIva,
+                                                tipoIva,
+                                                categoria,
+                                                decimales,
+                                                empaqueDescripcion,
+                                                empaqueContenido,
+                                                estatusPesado,
+                                                costoUnd,
+                                                costoPromedioUnd,
+                                                costoCompra,
+                                                costoPromedio,
+                                                auto_deposito,
+                                                id_p_pendiente,
+                                                fPeso,
+                                                fVolumen,
+                                                estatusDivisa,
+                                                aplicar_porc_aumento,
+                                                id_p_control
+                                            )
+                                            values
+                                            (
+                                                @id_p_operador,
+                                                @auto_producto,
+                                                @auto_departamento,
+                                                @auto_grupo,
+                                                @auto_subGrupo,
+                                                @auto_tasa,
+                                                @codigo,
+                                                @nombre,
+                                                @cantidad,
+                                                @pneto,
+                                                @pdivisaFull,
+                                                @tarifaPrecio,
+                                                @tasaIva,
+                                                @tipoIva,
+                                                @categoria,
+                                                @decimales,
+                                                @empaqueDescripcion,
+                                                @empaqueContenido,
+                                                @estatusPesado,
+                                                @costoUnd,
+                                                @costoPromedioUnd,
+                                                @costoCompra,
+                                                @costoPromedio,
+                                                @auto_deposito,
+                                                @id_p_pendiente,
+                                                @fPeso,
+                                                @fVolumen,
+                                                @estatusDivisa,
+                                                @aplicar_porc_aumento,
+                                                @id_p_control
+                                            )";
+
+                        var p1 = new MySql.Data.MySqlClient.MySqlParameter("@id_p_operador", traslado.IdOperador);
+                        var p2 = new MySql.Data.MySqlClient.MySqlParameter("@auto_producto", item.idProducto);
+                        var p3 = new MySql.Data.MySqlClient.MySqlParameter("@auto_departamento", item.idDepartamento);
+                        var p4 = new MySql.Data.MySqlClient.MySqlParameter("@auto_grupo", item.idGrupo);
+                        var p5 = new MySql.Data.MySqlClient.MySqlParameter("@auto_subGrupo", item.idSubGrupo);
+                        var p6 = new MySql.Data.MySqlClient.MySqlParameter("@auto_tasa", item.idTasaFiscal);
+                        var p7 = new MySql.Data.MySqlClient.MySqlParameter("@codigo", item.codigoPrd);
+                        var p8 = new MySql.Data.MySqlClient.MySqlParameter("@nombre", item.nombrePrd);
+                        var p9 = new MySql.Data.MySqlClient.MySqlParameter("@cantidad", item.cntSolicitada);
+                        var p10 = new MySql.Data.MySqlClient.MySqlParameter("@pneto", item.pNeto);
+                        var p11 = new MySql.Data.MySqlClient.MySqlParameter("@pdivisaFull", item.pDivisaFull);
+                        var p12 = new MySql.Data.MySqlClient.MySqlParameter("@tarifaPrecio", "");
+                        var p13 = new MySql.Data.MySqlClient.MySqlParameter("@tasaIva", item.tasaFiscal);
+                        var p14 = new MySql.Data.MySqlClient.MySqlParameter("@tipoIva", "");
+                        var p15 = new MySql.Data.MySqlClient.MySqlParameter("@categoria", item.categoriaPrd);
+                        var p16 = new MySql.Data.MySqlClient.MySqlParameter("@decimales", item.decimalesPrd);
+                        var p17 = new MySql.Data.MySqlClient.MySqlParameter("@empaqueDescripcion", item.descEmpq);
+                        var p18 = new MySql.Data.MySqlClient.MySqlParameter("@empaqueContenido", item.contEmpq);
+                        var p19 = new MySql.Data.MySqlClient.MySqlParameter("@estatusPesado", item.estatusPesado);
+                        var p20 = new MySql.Data.MySqlClient.MySqlParameter("@costoUnd", item.costoUnd);
+                        var p21 = new MySql.Data.MySqlClient.MySqlParameter("@costoPromedioUnd", item.costoPromUnd);
+                        var p22 = new MySql.Data.MySqlClient.MySqlParameter("@costoCompra", item.costoCompra);
+                        var p23 = new MySql.Data.MySqlClient.MySqlParameter("@costoPromedio", item.costoProm);
+                        var p24 = new MySql.Data.MySqlClient.MySqlParameter("@auto_deposito", traslado.IdDeposito);
+                        var p25 = new MySql.Data.MySqlClient.MySqlParameter("@id_p_pendiente", -1);
+                        var p26 = new MySql.Data.MySqlClient.MySqlParameter("@fPeso", item.pesoPrd);
+                        var p27 = new MySql.Data.MySqlClient.MySqlParameter("@fVolumen", item.volumenPrd);
+                        var p28 = new MySql.Data.MySqlClient.MySqlParameter("@estatusDivisa", item.estatusDivisa);
+                        var p29 = new MySql.Data.MySqlClient.MySqlParameter("@aplicar_porc_aumento", "");
+                        var p30 = new MySql.Data.MySqlClient.MySqlParameter("@id_p_control", idPControl);
+
+                        var rt =cnn.Database.ExecuteSqlCommand(
+                            sqlInsert,
+                            p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15,
+                            p16, p17, p18, p19, p20, p21, p22, p23, p24, p25, p26, p27, p28, p29, p30
+                        );
+                        cnn.SaveChanges();
+
+                        if (rt <= 0)
+                        {
+                            throw new Exception("Error al insertar el detalle del traslado a piso de venta");
+                        }   
+                    }
+                    tx.Commit();
+                    result.Result = DtoLib.Enumerados.EnumResult.isOk;
+                }
+            }
+            catch (Exception e)
+            {
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+                result.Mensaje = e.Message;
+            }
+            //
+            return result;
+        }
+
+        // Clase auxiliar interna para mapear los datos de productos_deposito
+        class TempDeposito
+        {
+            public decimal reservada { get; set; }
+            public decimal disponible { get; set; }
         }
     }
 }
