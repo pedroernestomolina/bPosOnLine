@@ -154,6 +154,44 @@ namespace ProvPos
             {
                 using (var cnn = new PosEntities(_cnPos.ConnectionString))
                 {
+                    // Obtener datos del pedido web solicitado
+                    var sqlDatos = @"
+                        select 
+                            id as Id,
+                            fecha_registro as FechaRegistro,
+                            nombre_entidad as NombreEntidad,
+                            ciRif_entidad as CiRifEntidad,
+                            dir_entidad as DirEntidad,
+                            telefono_entidad as TelefonoEntidad,
+                            id_sucursal as IdSucursal,
+                            id_deposito as IdDeposito,
+                            desc_sucursal as DescSucursal,
+                            desc_deposito as DescDeposito,
+                            id_web_cliente as IdWebCliente,
+                            importe_mon_ref as ImporteMonRef,
+                            importe_mon_local as ImporteMonLocal,
+                            tasa_cambio as TasaCambio,
+                            tasa_sistema as TasaSistema,
+                            cnt_articulos as CntArticulos,
+                            cnt_items as CntItems,
+                            pedido_nro as PedidoNro,
+                            estatus_anulado as EstatusAnulado,
+                            estatus_procesado as EstatusProcesado
+                        from web_catalogo_pedido
+                        where id=@idPedido";
+                    var pDatos = new MySql.Data.MySqlClient.MySqlParameter("@idPedido", idPedido);
+                    var datosPedido = cnn.Database.SqlQuery<DtoLibPos.PedidoWeb.CapturarEncTrasladarPisoVentaDto>(sqlDatos, pDatos).FirstOrDefault();
+
+                    if (datosPedido == null)
+                    {
+                        throw new Exception("PedidoWeb no encontrado");
+                    }
+
+                    var entidad = new DtoLibPos.PedidoWeb.CapturarTrasladoPisoVentaDto
+                    {
+                        Datos = datosPedido
+                    };
+
                     var sql = @"
                                 select 
                                     p.auto as IdProducto,
@@ -179,7 +217,9 @@ namespace ProvPos
                                     p.peso as PesoPrd,
                                     p.volumen as VolumenPrd,
                                     det.estatus_prd_divisa as EstatusDivisa,
-                                    dep.disponible as ExDisponible
+                                    dep.disponible as ExDisponible,
+                                    p.divisa as CostoDivisa,
+                                    p.contenido_compras as ContEmpqCompra
                                 from web_catalogo_pedido as ped
                                 join web_catalogo_pedido_detalles as det on det.id_pedido=ped.id
                                 join productos as p on p.auto=det.id_producto
@@ -187,17 +227,15 @@ namespace ProvPos
                                 join productos_deposito as dep on dep.auto_producto=p.auto and dep.auto_deposito=ped.id_deposito
                                 where ped.id=@idPedido";
                     var pId = new MySql.Data.MySqlClient.MySqlParameter("@idPedido", idPedido);
-                    var data = cnn.Database.SqlQuery<DtoLibPos.PedidoWeb.ItemsTrasladarPisoVentaDto>(sql, pId).ToList();
+                    var data = cnn.Database.SqlQuery<DtoLibPos.PedidoWeb.CapturarItemTrasladarPisoVentaDto>(sql, pId).ToList();
 
                     if (data == null || data.Count == 0)
                     {
                         throw new Exception("No se encontraron detalles para el pedido");
                     }
 
-                    var entidad = new DtoLibPos.PedidoWeb.CapturarTrasladoPisoVentaDto
-                    {
-                        Items = data
-                    };
+                    entidad.Items = data;
+
                     result.Entidad = entidad;
                 }
             }
@@ -256,27 +294,101 @@ namespace ProvPos
                     // Insertar en p_control y capturar el ID generado
                     var sqlInsertControl = @"
                         insert into p_control
-                        (id_cliente, estatus_protegida, tasa_pos, tasa_sist)
+                        (id_cliente, estatus_protegida, tasa_pos, tasa_sist, id_pedidoweb, nro_pedidoweb)
                         values
-                        (@id_cliente, @estatus_protegida, @tasa_pos, @tasa_sist);
+                        (@id_cliente, @estatus_protegida, @tasa_pos, @tasa_sist, @id_pedidoweb, @nro_pedidoweb);
                         select LAST_INSERT_ID();";
-                    var pCtrl1 = new MySql.Data.MySqlClient.MySqlParameter("@id_cliente", "");
+                    var pCtrl1 = new MySql.Data.MySqlClient.MySqlParameter("@id_cliente", traslado.IdCliente);
                     var pCtrl2 = new MySql.Data.MySqlClient.MySqlParameter("@estatus_protegida", "");
                     var pCtrl3 = new MySql.Data.MySqlClient.MySqlParameter("@tasa_pos", MySql.Data.MySqlClient.MySqlDbType.Decimal);
-                    pCtrl3.Value = 0m;
+                    pCtrl3.Value = traslado.TasaCambioPos;
                     var pCtrl4 = new MySql.Data.MySqlClient.MySqlParameter("@tasa_sist", MySql.Data.MySqlClient.MySqlDbType.Decimal);
                     pCtrl4.Value = 0m;
+                    var pCtrl5 = new MySql.Data.MySqlClient.MySqlParameter("@id_pedidoweb", MySql.Data.MySqlClient.MySqlDbType.Int32);
+                    pCtrl5.Value = traslado.IdPedidoWeb;
+                    var pCtrl6 = new MySql.Data.MySqlClient.MySqlParameter("@nro_pedidoweb", MySql.Data.MySqlClient.MySqlDbType.Int32);
+                    pCtrl6.Value = traslado.NroPedidoWeb;
 
-                    var idPControl = cnn.Database.SqlQuery<int>(sqlInsertControl, pCtrl1, pCtrl2, pCtrl3, pCtrl4).First();
+                    var idPControl = cnn.Database.SqlQuery<int>(sqlInsertControl, pCtrl1, pCtrl2, pCtrl3, pCtrl4, pCtrl5, pCtrl6).First();
+
+                    // Insertar en p_pendiente y capturar el ID generado
+                    var sqlInsertPendiente = @"
+                        insert into p_pendiente
+                        (
+                            id_p_operador,
+                            auto_cliente,
+                            cirif_cliente,
+                            nombre_cliente,
+                            feche,
+                            hora,
+                            monto,
+                            monto_divisa,
+                            renglones,
+                            auto_sucursal,
+                            auto_deposito,
+                            auto_vendedor,
+                            estatus_protegido,
+                            id_p_control
+                        )
+                        values
+                        (
+                            @id_p_operador,
+                            @auto_cliente,
+                            @cirif_cliente,
+                            @nombre_cliente,
+                            @feche,
+                            @hora,
+                            @monto,
+                            @monto_divisa,
+                            @renglones,
+                            @auto_sucursal,
+                            @auto_deposito,
+                            @auto_vendedor,
+                            @estatus_protegido,
+                            @id_p_control
+                        );
+                        select LAST_INSERT_ID();";
+
+                    var pPend1 = new MySql.Data.MySqlClient.MySqlParameter("@id_p_operador", traslado.IdOperador);
+                    var pPend2 = new MySql.Data.MySqlClient.MySqlParameter("@auto_cliente", traslado.IdCliente);
+                    var pPend3 = new MySql.Data.MySqlClient.MySqlParameter("@cirif_cliente", traslado.CiRifEntidad);
+                    var pPend4 = new MySql.Data.MySqlClient.MySqlParameter("@nombre_cliente", traslado.NombreEntidad);
+                    var pPend5 = new MySql.Data.MySqlClient.MySqlParameter("@feche", DateTime.Now.Date);
+                    var pPend6 = new MySql.Data.MySqlClient.MySqlParameter("@hora", DateTime.Now.ToString("HH:mm:ss"));
+                    var pPend7 = new MySql.Data.MySqlClient.MySqlParameter("@monto", traslado.ImporteNetoMonLocal);
+                    var pPend8 = new MySql.Data.MySqlClient.MySqlParameter("@monto_divisa", traslado.ImporteFullMonRef);
+                    var pPend9 = new MySql.Data.MySqlClient.MySqlParameter("@renglones", traslado.CntRenglones);
+                    var pPend10 = new MySql.Data.MySqlClient.MySqlParameter("@auto_sucursal", traslado.IdSucursal);
+                    var pPend11 = new MySql.Data.MySqlClient.MySqlParameter("@auto_deposito", traslado.IdDeposito);
+                    var pPend12 = new MySql.Data.MySqlClient.MySqlParameter("@auto_vendedor", traslado.IdVendedor);
+                    var pPend13 = new MySql.Data.MySqlClient.MySqlParameter("@estatus_protegido", "");
+                    var pPend14 = new MySql.Data.MySqlClient.MySqlParameter("@id_p_control", idPControl);
+
+                    int idPPendiente = 0;
+                    idPPendiente = cnn.Database.SqlQuery<int>(
+                        sqlInsertPendiente,
+                        pPend1, pPend2, pPend3, pPend4, pPend5, pPend6, pPend7, pPend8, pPend9,
+                        pPend10, pPend11, pPend12, pPend13, pPend14
+                    ).First();
+                    cnn.SaveChanges();
 
                     // Actualizar p_operador con el id_p_control generado
                     var sqlUpdateOperador = @"
                         update p_operador
                         set id_p_control=@id_p_control
                         where id=@id_operador";
-                    var pOp1 = new MySql.Data.MySqlClient.MySqlParameter("@id_p_control", idPControl);
+                    var pOp1 = new MySql.Data.MySqlClient.MySqlParameter("@id_p_control", -1);
                     var pOp2 = new MySql.Data.MySqlClient.MySqlParameter("@id_operador", traslado.IdOperador);
                     cnn.Database.ExecuteSqlCommand(sqlUpdateOperador, pOp1, pOp2);
+                    cnn.SaveChanges();
+
+                    // Actualizar estatus pedidoweb
+                    var sqlUpdatePedidoWeb= @"
+                        update web_catalogo_pedido
+                        set estatus_procesado='2'
+                        where id=@id_pedidoweb";
+                    var pPedWeb = new MySql.Data.MySqlClient.MySqlParameter("@id_pedidoweb", traslado.IdPedidoWeb);
+                    cnn.Database.ExecuteSqlCommand(sqlUpdatePedidoWeb, pPedWeb);
                     cnn.SaveChanges();
 
                     foreach (var item in traslado.ItemsPisoVta)
@@ -373,7 +485,7 @@ namespace ProvPos
                         var p22 = new MySql.Data.MySqlClient.MySqlParameter("@costoCompra", item.costoCompra);
                         var p23 = new MySql.Data.MySqlClient.MySqlParameter("@costoPromedio", item.costoProm);
                         var p24 = new MySql.Data.MySqlClient.MySqlParameter("@auto_deposito", traslado.IdDeposito);
-                        var p25 = new MySql.Data.MySqlClient.MySqlParameter("@id_p_pendiente", -1);
+                        var p25 = new MySql.Data.MySqlClient.MySqlParameter("@id_p_pendiente", idPPendiente);
                         var p26 = new MySql.Data.MySqlClient.MySqlParameter("@fPeso", item.pesoPrd);
                         var p27 = new MySql.Data.MySqlClient.MySqlParameter("@fVolumen", item.volumenPrd);
                         var p28 = new MySql.Data.MySqlClient.MySqlParameter("@estatusDivisa", item.estatusDivisa);

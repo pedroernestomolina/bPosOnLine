@@ -235,11 +235,13 @@ namespace ProvPos
                                     Usu.nombre as usuDesc,
                                     Usu.codigo as usuCod,
                                     vend.codigo as codVend,
-                                    vend.nombre as nombreVend
+                                    vend.nombre as nombreVend,
+                                    pCtrl.nro_pedidoweb as nroPedidoWeb
                                 from p_pendiente as Pend 
                                 join p_operador as Ope on Ope.id=Pend.id_p_operador 
                                 join usuarios as Usu on Usu.auto=Ope.auto_usuario 
-                                join vendedores as vend on vend.auto=Pend.auto_vendedor ";
+                                join vendedores as vend on vend.auto=Pend.auto_vendedor
+                                join p_control as pCtrl on pCtrl.id=Pend.id_p_control ";
                     var _sql_2 = " where 1=1 ";
                     if (filtro.idOperador.HasValue)
                     {

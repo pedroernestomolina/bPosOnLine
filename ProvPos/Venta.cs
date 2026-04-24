@@ -365,6 +365,36 @@ namespace ProvPos
                             cnn.SaveChanges();
                         }
                         //
+
+                        var _pOeperador1 = new MySql.Data.MySqlClient.MySqlParameter("@idOperador", ficha.IdOperador);
+                        var _sqlOperador = @"select 
+                                                id_p_control 
+                                            from p_operador 
+                                            WHERE id = @idOperador";
+                        var _idControl = cnn.Database.SqlQuery<int>(_sqlOperador, _pOeperador1).FirstOrDefault();
+                        if (_idControl == 0 || _idControl == -1)
+                        {
+                            throw new Exception("NO EXISTE PARA ESTE OPERADOR UN CONTROL ASIGNADO");
+                        }
+
+                        var _pCtrl = new MySql.Data.MySqlClient.MySqlParameter("@idControl", _idControl);
+                        var _sqlPControl = @"select 
+                                                id_pedidoweb 
+                                            from p_control 
+                                            WHERE id = @idControl";
+                        var _idPedidoWeb = cnn.Database.SqlQuery<int>(_sqlPControl, _pCtrl).FirstOrDefault();
+                        if (_idPedidoWeb != -1)
+                        {
+                            var _pUpdateWebCatPed = new MySql.Data.MySqlClient.MySqlParameter("@idPedidoWeb", _idPedidoWeb);
+                            var _sqlUpdateWebCatPedido = @"update web_catalogo_pedido set estatus_procesado='0' where id=@idPedidoWeb";
+                            var rstUpdateWebCatPed = cnn.Database.ExecuteSqlCommand(_sqlUpdateWebCatPedido, _pUpdateWebCatPed);
+                            if (rstUpdateWebCatPed == 0)
+                            {
+                                throw new Exception("PROBLEMA AL ACTUALIZAR ESTATUS PEDIDO WEB");
+                            }
+                        }
+
+                        //
                         var _p1 = new MySql.Data.MySqlClient.MySqlParameter("@idOperador", ficha.IdOperador);
                         var _sql = @"delete c
                                         from p_control as c 
@@ -436,6 +466,45 @@ namespace ProvPos
                         }
                         cnn.p_venta.Remove(ent);
                         cnn.SaveChanges();
+
+                        //
+
+                        var _pOperador1 = new MySql.Data.MySqlClient.MySqlParameter("@idOperador", ficha.idOperador);
+                        var _sqlOperador = @"select 
+                                                id_p_control 
+                                            from p_operador 
+                                            WHERE id = @idOperador";
+                        var _idControl = cnn.Database.SqlQuery<int>(_sqlOperador, _pOperador1).FirstOrDefault();
+                        if (_idControl == 0 || _idControl == -1)
+                        {
+                            throw new Exception("NO EXISTE PARA ESTE OPERADOR UN CONTROL ASIGNADO");
+                        }
+
+                        var _sqlPVenta = @"select count(*) as cn 
+                                            from p_venta
+                                            where id_p_control=@idPControl";
+                        var _pPVenta1 = new MySql.Data.MySqlClient.MySqlParameter("@idPControl", _idControl);
+                        var cnItems = cnn.Database.SqlQuery<int>(_sqlPVenta, _pPVenta1).FirstOrDefault();
+                        if (cnItems==0)
+                        {
+                            var _pCtrl = new MySql.Data.MySqlClient.MySqlParameter("@idControl", _idControl);
+                            var _sqlPControl = @"select 
+                                                    id_pedidoweb 
+                                                from p_control 
+                                                WHERE id = @idControl";
+                            var _idPedidoWeb = cnn.Database.SqlQuery<int>(_sqlPControl, _pCtrl).FirstOrDefault();
+                            if (_idPedidoWeb != -1)
+                            {
+                                var _pUpdateWebCatPed = new MySql.Data.MySqlClient.MySqlParameter("@idPedidoWeb", _idPedidoWeb);
+                                var _sqlUpdateWebCatPedido = @"update web_catalogo_pedido set estatus_procesado='0' where id=@idPedidoWeb";
+                                var rstUpdateWebCatPed = cnn.Database.ExecuteSqlCommand(_sqlUpdateWebCatPedido, _pUpdateWebCatPed);
+                                if (rstUpdateWebCatPed == 0)
+                                {
+                                    throw new Exception("PROBLEMA AL ACTUALIZAR ESTATUS PEDIDO WEB");
+                                }
+                            }
+                        }
+                        //
 
                         ts.Complete();
                     }

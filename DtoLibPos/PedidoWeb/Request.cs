@@ -50,14 +50,36 @@ namespace DtoLibPos.PedidoWeb
 
     public class AplicarTrasladoPisoVentaRequest
     {
+        public int IdPedidoWeb { get; set; }
+        public int NroPedidoWeb { get; set; }
+        public string IdCliente { get; set; }
+        public string NombreEntidad { get; set; }
+        public string CiRifEntidad { get; set; }
+        public decimal TasaCambioPos { get; set; } 
         public int IdOperador { get; set; }
+        public string IdSucursal { get; set; }
         public string IdDeposito { get; set; }
+        public string IdVendedor { get; set; }
+        public decimal ImporteNetoMonLocal { get; set; }
+        public decimal ImporteFullMonRef { get; set; }
+        public int CntRenglones { get; set; }
         public List<ItemsDepositoBloquearExRequest> ItemBloqEx { get; set; }
         public List<ItemsPisoVentaRequest> ItemsPisoVta { get; set; }
         public AplicarTrasladoPisoVentaRequest()
         {
+            IdPedidoWeb = -1;
+            NroPedidoWeb = -1;
+            IdCliente = "";
+            NombreEntidad = "";
+            CiRifEntidad = "";
+            TasaCambioPos = 0m;
             IdOperador = -1;
+            IdSucursal = "";
             IdDeposito = "";
+            IdVendedor = "";
+            ImporteNetoMonLocal = 0m;
+            ImporteFullMonRef = 0m;
+            CntRenglones = 0;
             ItemBloqEx = new List<ItemsDepositoBloquearExRequest>();
             ItemsPisoVta = new List<ItemsPisoVentaRequest>();
         }

@@ -1676,6 +1676,38 @@ namespace ProvPos
                             throw new Exception("NO EXISTE PARA ESTE OPERADOR UN CONTROL ASIGNADO");
                         }
                         //
+
+                        var _pCtrl = new MySql.Data.MySqlClient.MySqlParameter("@idControl", _idControl);
+                        var _sqlPControl = @"select 
+                                                id_pedidoweb 
+                                            from p_control 
+                                            WHERE id = @idControl";
+                        var _idPedidoWeb = cn.Database.SqlQuery<int>(_sqlPControl, _pCtrl).FirstOrDefault();
+                        if (_idPedidoWeb != -1)
+                        {
+                            var _pUpdateWebCatPed = new MySql.Data.MySqlClient.MySqlParameter("@idPedidoWeb", _idPedidoWeb);
+                            var _sqlUpdateWebCatPedido = @"update web_catalogo_pedido set estatus_procesado='1' where id=@idPedidoWeb";
+                            var rstUpdateWebCatPed = cn.Database.ExecuteSqlCommand(_sqlUpdateWebCatPedido, _pUpdateWebCatPed);
+                            if (rstUpdateWebCatPed == 0) 
+                            {
+                                throw new Exception("PROBLEMA AL ACTUALIZAR ESTATUS PEDIDO WEB");
+                            }
+
+                            var _pInsertPedWebVenta1 = new MySql.Data.MySqlClient.MySqlParameter("@idPedidoWeb", _idPedidoWeb);
+                            var _pInsertPedWebVenta2 = new MySql.Data.MySqlClient.MySqlParameter("@autoVenta", autoVenta);
+                            var _sqlInsertPedWebVenta = @"INSERT INTO web_catalogo_pedido_venta (
+                                                                `id`,
+                                                                `id_pedidoweb`, 
+                                                                `auto_venta`) 
+                                                            VALUES (NULL, @idPedidoWeb, @autoVenta)";
+                            var rstInsertPedWebVenta = cn.Database.ExecuteSqlCommand(_sqlInsertPedWebVenta, _pInsertPedWebVenta1, _pInsertPedWebVenta2);
+                            if (rstInsertPedWebVenta == 0) 
+                            {
+                                throw new Exception("PROBLEMA AL INSERTAR VINCULO ENTRE PEDIDO WEB - VENTA ");
+                            }
+                        }
+
+                        //
                         _p1 = new MySql.Data.MySqlClient.MySqlParameter("@idControl", _idControl);
                         _sql = @"delete from p_control 
                                     WHERE id = @idControl";

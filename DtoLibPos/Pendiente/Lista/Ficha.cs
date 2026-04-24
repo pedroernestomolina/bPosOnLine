@@ -25,6 +25,7 @@ namespace DtoLibPos.Pendiente.Lista
         public string usuCod { get; set; }
         public string codVend { get; set; }
         public string nombreVend { get; set; }
+        public int nroPedidoWeb { get; set; }
 
 
         public Ficha()
@@ -45,6 +46,7 @@ namespace DtoLibPos.Pendiente.Lista
             usuCod = "";
             codVend = "";
             nombreVend = "";
+            nroPedidoWeb = -1;
         }
     }
 }
