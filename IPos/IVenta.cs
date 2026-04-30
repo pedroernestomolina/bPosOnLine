@@ -28,5 +28,8 @@ namespace IPos
         //
         DtoLib.Resultado
             Venta_Item_AsignarControlPara_GetLista(DtoLibPos.Venta.Item.Lista.Filtro ficha);
+        //
+        DtoLib.ResultadoEntidad<int?>
+            Venta_VerificarVtaEnProceso(int idOperador);
     }
 }

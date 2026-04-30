@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace ServicePos.Interfaces
 {
     public interface IVenta
@@ -25,5 +24,8 @@ namespace ServicePos.Interfaces
             Venta_Item_ActualizarCantidad_Aumentar(DtoLibPos.Venta.Item.ActualizarCantidad.Aumentar.Ficha ficha);
         DtoLib.Resultado
             Venta_Item_ActualizarPrecio(DtoLibPos.Venta.Item.ActualizarPrecio.Ficha ficha);
+        //
+        DtoLib.ResultadoEntidad<int?>
+            Venta_VerificarVtaEnProceso(int idOperador);
     }
 }

@@ -755,5 +755,35 @@ namespace ProvPos
             //
             return result;
         }
+        //
+        public DtoLib.ResultadoEntidad<int?> 
+            Venta_VerificarVtaEnProceso(int idOperador)
+        {
+            var result = new DtoLib.ResultadoEntidad<int?>(); 
+            //
+            try
+            {
+                using (var cnn = new PosEntities(_cnPos.ConnectionString))
+                {
+                    var _p1 = new MySql.Data.MySqlClient.MySqlParameter("@idOperador", idOperador);
+                    var _sql = @"SELECT 
+                                        DISTINCT ctrl.id
+                                    FROM `p_operador` as op
+                                    left join p_control as ctrl on ctrl.id= op.id_p_control
+                                    left join p_venta as vta on vta.id_p_control=ctrl.id
+                                    WHERE op.id =@idOperador";
+                    var rt = cnn.Database.SqlQuery<int?>(_sql, _p1).FirstOrDefault();
+                    //
+                    result.Entidad = rt;
+                }
+            }
+            catch (Exception e)
+            {
+                result.Mensaje = e.Message;
+                result.Result = DtoLib.Enumerados.EnumResult.isError;
+            }
+            //
+            return result;
+        }
     }
 }

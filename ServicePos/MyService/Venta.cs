@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace ServicePos.MyService
 {
     public partial class Service : IService
@@ -85,7 +84,10 @@ namespace ServicePos.MyService
         {
             return ServiceProv.Venta_Item_ActualizarPrecio(ficha);
         }
-
+        public DtoLib.ResultadoEntidad<int?> 
+            Venta_VerificarVtaEnProceso(int idOperador)
+        {
+            return ServiceProv.Venta_VerificarVtaEnProceso(idOperador);
+        }
     }
-
 }
